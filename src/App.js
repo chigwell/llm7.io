@@ -1,4 +1,68 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+
+function ConsoleAnimation() {
+  const [lines, setLines] = useState([]);
+  const [currentCommandIndex, setCurrentCommandIndex] = useState(0);
+  const [currentText, setCurrentText] = useState('');
+
+  const commands = useMemo(() => [
+    'import openai',
+    '',
+    'client = openai.OpenAI(',
+    '    base_url="https://api.llm7.io/v1",',
+    '    api_key="unused"',
+    ')',
+    '',
+    'response = client.chat.completions.create(',
+    '    model="gpt-4o-mini-2024-07-18",',
+    '    messages=[',
+    '        {"role": "user", "content": "Tell me a story."}',
+    '    ]',
+    ')',
+    '',
+    'print(response.choices[0].message.content)'
+  ], []);
+
+  useEffect(() => {
+    if (currentCommandIndex >= commands.length) return;
+
+    const command = commands[currentCommandIndex];
+    let i = 0;
+
+    // Immediately add first character for new line
+    if (command.length > 0) {
+      setCurrentText(command.charAt(0));
+      i = 1;
+    }
+
+    const interval = setInterval(() => {
+      if (i < command.length) {
+        setCurrentText(prev => prev + command.charAt(i));
+        i++;
+      } else {
+        clearInterval(interval);
+        setLines(prev => [...prev, command]);
+        setCurrentText('');
+
+        setTimeout(() => {
+          setCurrentCommandIndex(prev => prev + 1);
+        }, command === '' ? 0 : 400);
+      }
+    }, 35);
+
+    return () => clearInterval(interval);
+  }, [currentCommandIndex, commands]);
+
+  return (
+    <pre className="bg-gray-800 text-white p-2 md:p-4 rounded-lg shadow-md font-mono overflow-x-auto text-xs md:text-sm w-full max-w-4xl mx-4">
+      {lines.join('\n')}
+      {lines.length > 0 && '\n'}
+      {currentText}
+      <span className="animate-pulse">█</span>
+    </pre>
+  );
+}
+
 
 function App() {
   const [models, setModels] = useState([]);
@@ -28,23 +92,7 @@ function App() {
       </p>
 
       <h2 className="text-xl font-semibold mb-2">Example Usage</h2>
-      <pre className="bg-gray-800 text-white p-4 rounded-lg shadow-md font-mono">
-{`import openai
-
-client = openai.OpenAI(
-    base_url="https://api.llm7.io/v1",
-    api_key="unused"
-)
-
-response = client.chat.completions.create(
-    model="gpt-4o-mini-2024-07-18",
-    messages=[
-        {"role": "user", "content": "Tell me a story."}
-    ]
-)
-
-print(response.choices[0].message.content)`}
-</pre>
+      <ConsoleAnimation />
 
       <h2 className="text-xl font-semibold mt-6 mb-2">
         Available Models
@@ -63,7 +111,7 @@ print(response.choices[0].message.content)`}
         ))}
       </ul>
 
-      <footer className="mt-12 text-sm text-gray-500">
+      <footer className="mt-12 mb-4 text-sm text-gray-500">
         © 2025 LLM7.io ·
         <a
           href="https://www.linkedin.com/in/eugene-evstafev-716669181/"
