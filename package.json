@@ -1,6 +1,7 @@
 {
   "name": "my-react-app2",
   "version": "0.1.0",
+  "homepage": "https://llm7.io",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
