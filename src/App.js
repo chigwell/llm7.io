@@ -29,20 +29,22 @@ function App() {
 
       <h2 className="text-xl font-semibold mb-2">Example Usage</h2>
       <pre className="bg-gray-800 text-white p-4 rounded-lg shadow-md font-mono">
-{`import { OpenAI } from 'openai';
+{`import openai
 
-const client = new OpenAI({
-  baseURL: 'https://api.llm7.io/v1',
-  apiKey: 'unused',
-});
+client = openai.OpenAI(
+    base_url="https://api.llm7.io/v1",
+    api_key="unused"
+)
 
-const response = await client.chat.completions.create({
-  model: 'gpt-4o-mini-2024-07-18',
-  messages: [{ role: 'user', content: 'Tell me a story.' }],
-});
+response = client.chat.completions.create(
+    model="gpt-4o-mini-2024-07-18",
+    messages=[
+        {"role": "user", "content": "Tell me a story."}
+    ]
+)
 
-console.log(response.choices[0].message.content);`}
-      </pre>
+print(response.choices[0].message.content)`}
+</pre>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">
         Available Models
