@@ -4,10 +4,12 @@
   "homepage": "https://llm7.io",
   "private": true,
   "dependencies": {
+    "@langchain/core": "^0.3.44",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "langchain-llm7": "^2025.4.101555",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-scripts": "5.0.1",

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import LiveExample from './LiveExample';
 
 function ConsoleAnimation() {
   const [lines, setLines] = useState([]);
@@ -16,12 +17,13 @@ function ConsoleAnimation() {
     'response = client.chat.completions.create(',
     '    model="gpt-4o-mini-2024-07-18",',
     '    messages=[',
-    '        {"role": "user", "content": "Tell me a story."}',
+    '        {"role": "user", "content": "Tell me a short story about a brave squirrel."}',
     '    ]',
     ')',
     '',
     'print(response.choices[0].message.content)'
   ], []);
+
 
   useEffect(() => {
     if (currentCommandIndex >= commands.length) return;
@@ -54,7 +56,8 @@ function ConsoleAnimation() {
   }, [currentCommandIndex, commands]);
 
   return (
-    <pre className="bg-gray-800 text-white p-2 md:p-4 rounded-lg shadow-md font-mono overflow-x-auto text-xs md:text-sm w-full max-w-4xl mx-4">
+    <pre style={{ minHeight: '320px' }}
+        className="bg-gray-800 text-white p-2 md:p-4 rounded-lg shadow-md font-mono overflow-x-auto text-xs md:text-sm w-full max-w-4xl mx-4">
       {lines.join('\n')}
       {lines.length > 0 && '\n'}
       {currentText}
@@ -93,6 +96,7 @@ function App() {
 
       <h2 className="text-xl font-semibold mb-2">Example Usage</h2>
       <ConsoleAnimation />
+      <LiveExample />
 
       <h2 className="text-xl font-semibold mt-6 mb-2">
         Available Models
