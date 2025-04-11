@@ -94,6 +94,32 @@ function App() {
         Just start using powerful models instantly.
       </p>
 
+      <div className="flex justify-center items-center flex-wrap space-x-2 mb-8">
+
+        <a href="https://badge.fury.io/py/langchain-llm7" target="_blank" rel="noopener noreferrer">
+            <img src="https://badge.fury.io/py/langchain-llm7.svg" alt="PyPI version" />
+        </a>
+        <a href="https://pepy.tech/project/langchain-llm7" target="_blank" rel="noopener noreferrer">
+             <img src="https://static.pepy.tech/badge/langchain-llm7" alt="PyPI Downloads" />
+        </a>
+        <a href="https://www.npmjs.com/package/langchain-llm7" target="_blank" rel="noopener noreferrer">
+          <img src="https://img.shields.io/npm/v/langchain-llm7" alt="NPM Version" />
+        </a>
+        <a href="https://www.npmjs.com/package/langchain-llm7" target="_blank" rel="noopener noreferrer">
+          <img src="https://img.shields.io/npm/dy/langchain-llm7" alt="NPM Daily Downloads" />
+        </a>
+        <a href="https://www.npmjs.com/package/langchain-llm7" target="_blank" rel="noopener noreferrer">
+           <img src="https://img.shields.io/npm/last-update/langchain-llm7" alt="NPM Last Update" />
+        </a>
+        <a href="https://opensource.org/licenses/Apache-2.0" target="_blank" rel="noopener noreferrer">
+             <img src="https://img.shields.io/pypi/l/langchain-llm7?color=%2340b814" alt="License: Apache 2.0" />
+        </a>
+        <a href="https://api.llm7.io/" target="_blank" rel="noopener noreferrer">
+             <img src="https://img.shields.io/badge/limit-150%20per%20min-brightgreen" alt="Limit: 150 requests per minute" />
+        </a>
+      </div>
+      {/* END: Added Badges Section */}
+
       <h2 className="text-xl font-semibold mb-2">Example Usage</h2>
       <ConsoleAnimation />
       <LiveExample />
