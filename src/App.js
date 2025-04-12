@@ -1,5 +1,20 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import LiveExample from './LiveExample';
+import { useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+function RedirectKofi() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === '/redirect/kofi') {
+      window.location.href = 'https://ko-fi.com/llm7_io';
+    }
+  }, [location]);
+
+  return null;
+}
+
 
 function ConsoleAnimation() {
   const [lines, setLines] = useState([]);
@@ -85,6 +100,11 @@ function App() {
   }, []);
 
   return (
+  <Router>
+      <Routes>
+        <Route path="/redirect/kofi" element={<RedirectKofi />} />
+        {/* Другие маршруты */}
+        <Route path="/" element={
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 font-sans">
       <img src="/logo.png" alt="LLM7 Logo" className="w-40 h-40 mt-8 mb-8" />
 
@@ -115,7 +135,7 @@ function App() {
              <img src="https://img.shields.io/pypi/l/langchain-llm7?color=%2340b814" alt="License: Apache 2.0" />
         </a>
         <a href="https://api.llm7.io/" target="_blank" rel="noopener noreferrer">
-             <img src="https://img.shields.io/badge/limit-150%20per%20min-brightgreen" alt="Limit: 150 requests per minute" />
+             <img src="https://img.shields.io/badge/max_rate-150%20per%20min-brightgreen" alt="max rate: 150 requests per minute" />
         </a>
       </div>
       {/* END: Added Badges Section */}
@@ -153,6 +173,9 @@ function App() {
         </a>
       </footer>
     </div>
+    } />
+      </Routes>
+    </Router>
   );
 }
 
