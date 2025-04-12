@@ -1,4 +1,3 @@
-```markdown
 # LLM7.io Landing Page
 
 This repository contains the source code for the landing page of [LLM7.io](https://llm7.io), a free, open endpoint for accessing top LLMs (Large Language Models) with zero tokens or heavy hardware needed.
@@ -42,7 +41,6 @@ The landing page highlights the core features, usage instructions, and goals of 
    ```
    This creates an optimized production build and serves it.
 
-*(Adjust the commands or paths depending on your build setup and framework.)*
 
 ## Contributing
 
@@ -53,4 +51,5 @@ Contributions are welcome! Feel free to open issues, submit pull requests, or re
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE). Please see the `LICENSE` file for details.
+This project is licensed under the [MIT License](LICENSE). 
+
