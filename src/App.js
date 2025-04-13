@@ -161,6 +161,28 @@ function App() {
         ))}
       </ul>
 
+      <div className="mt-8 px-4 max-w-2xl text-gray-700 text-sm text-center">
+                <p>
+                  LLM7.io is provided free of charge, made possible by donations. The primary aim is
+                  to ensure open access to powerful models for everyone, worldwide. We cannot
+                  guarantee 100% uptime or availability of specific models, and we may switch or
+                  change models at any time. Use this service at your own risk: no warranties, and
+                  any liabilities rest solely with you. Anonymous user data may be analyzed for
+                  research to help us improve future models.
+                </p>
+                <p className="mt-2">
+                  For more details, please see our{' '}
+                  <a
+                    href="https://github.com/chigwell/llm7.io/blob/main/TERMS.md"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:text-blue-800 underline"
+                  >
+                    Terms
+                  </a>.
+                </p>
+              </div>
+
       <footer className="mt-12 mb-4 text-sm text-gray-500">
         © 2025 LLM7.io ·
         <a
