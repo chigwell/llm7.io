@@ -94,7 +94,8 @@ function App() {
       try {
         const response = await fetch('https://api.llm7.io/v1/models');
         const data = await response.json();
-        setModels(data.map(model => model.id));
+        let sortedModels = data.sort((a, b) => a.id.localeCompare(b.id));
+        setModels(sortedModels.map(model => model.id));
       } catch (error) {
         console.error('Error fetching models:', error);
       }
