@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import LiveExample from './LiveExample';
+import StatsChart from './StatsChart';
 import { useLocation } from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -84,6 +85,9 @@ function ConsoleAnimation() {
 
 function App() {
   const [models, setModels] = useState([]);
+  const [statsData, setStatsData] = useState([]);
+  const [isLoadingStats, setIsLoadingStats] = useState(true);
+  const [totalRequests, setTotalRequests] = useState(0);
 
   useEffect(() => {
     const fetchModels = async () => {
@@ -99,11 +103,38 @@ function App() {
     fetchModels();
   }, []);
 
+  useEffect(() => {
+    const fetchStats = async () => {
+      setIsLoadingStats(true);
+      try {
+        const response = await fetch('https://api.llm7.io/stats/days');
+        const data = await response.json();
+        if (data && Array.isArray(data.stats)) {
+            setStatsData(data.stats);
+            let total = 0;
+            data.stats.forEach(item => {
+              total += item.requests_num;
+            });
+            setTotalRequests(total);
+        } else {
+            console.error('Unexpected stats data format:', data);
+            setStatsData([]);
+        }
+      } catch (error) {
+        console.error('Error fetching stats:', error);
+         setStatsData([]);
+      } finally {
+        setIsLoadingStats(false);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
   return (
   <Router>
       <Routes>
         <Route path="/redirect/kofi" element={<RedirectKofi />} />
-        {/* Другие маршруты */}
         <Route path="/" element={
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 font-sans">
       <img src="/logo.png" alt="LLM7 Logo" className="w-40 h-40 mt-8 mb-8" />
@@ -143,6 +174,24 @@ function App() {
       <h2 className="text-xl font-semibold mb-2">Example Usage</h2>
       <ConsoleAnimation />
       <LiveExample />
+
+            {/* --- Statistics Chart Section --- */}
+            <h2 className="text-xl font-semibold mt-6 mb-2">Usage Statistics</h2>
+            <div className="w-full max-w-4xl mx-4 mb-6"> {/* Container for chart and preloader */}
+              {isLoadingStats ? (
+                <div className="text-center p-10 text-gray-500">Loading chart data...</div> // Simple preloader
+              ) : (
+                statsData.length > 0 ? ( // Only render chart if data exists
+                   <>
+                    <StatsChart data={statsData} />
+                    <div>Total requests: {totalRequests}</div>
+                    </>
+                ) : (
+                   <div className="text-center p-10 text-gray-500">Could not load statistics.</div>
+                )
+              )}
+            </div>
+            {/* --- End Statistics Chart Section --- */}
 
       <h2 className="text-xl font-semibold mt-6 mb-2">
         Available Models
