@@ -1,6 +1,6 @@
 # Terms of Service
 
-_Last Updated: 13 April 2025_
+_Last Updated: 15 April 2025_
 
 Thank you for using **LLM7.io** (“the Service”). By accessing or using the Service, you agree to be bound by these terms of service (“Terms”). If you do not agree with all of the Terms, please discontinue use of the Service.
 
@@ -8,7 +8,7 @@ Thank you for using **LLM7.io** (“the Service”). By accessing or using the S
 
 ## 1. Description of the Service
 
-- **LLM7.io** provides free access to powerful language models, supported by **donations**.
+- **LLM7.io** provides free access to powerful language models, supported by **donations** and **optional advertising**.
 - The primary goal is to allow anyone in the world to experiment with large language models without requiring authentication or payment.
 
 ---
@@ -20,7 +20,15 @@ Thank you for using **LLM7.io** (“the Service”). By accessing or using the S
 
 ---
 
-## 3. No Guarantee of Uptime or Accuracy
+## 3. Advertising and Sponsored Content
+
+- To support the Service, we may include **advertising or sponsored content** in the generated outputs.
+- Such content will be clearly marked or contextually distinguishable where possible.
+- By using the Service, you acknowledge and accept the potential presence of **advertising** in model responses.
+
+---
+
+## 4. No Guarantee of Uptime or Accuracy
 
 - The Service is provided on an **“as is”** and **“as available”** basis.
 - We do not guarantee **100% uptime** or the availability of any specific model.
@@ -29,7 +37,7 @@ Thank you for using **LLM7.io** (“the Service”). By accessing or using the S
 
 ---
 
-## 4. Disclaimer of Warranties & Liability
+## 5. Disclaimer of Warranties & Liability
 
 - By using the Service, you acknowledge that **all risks and liabilities are borne by you**.
 - We disclaim all warranties, whether express or implied, including but not limited to the implied warranties of merchantability, fitness for a particular purpose, and non-infringement.
@@ -37,7 +45,7 @@ Thank you for using **LLM7.io** (“the Service”). By accessing or using the S
 
 ---
 
-## 5. Data Usage & Privacy
+## 6. Data Usage & Privacy
 
 - The Service may collect **anonymous user data** for research and improvement of future models.
 - We strive to avoid collecting personally identifying information. Do not share private details during your use of the models.
@@ -45,7 +53,7 @@ Thank you for using **LLM7.io** (“the Service”). By accessing or using the S
 
 ---
 
-## 6. User Conduct
+## 7. User Conduct
 
 By using the Service, you agree to:
 1. Comply with all applicable laws and regulations.
@@ -54,20 +62,20 @@ By using the Service, you agree to:
 
 ---
 
-## 7. Indemnification
+## 8. Indemnification
 
 You agree to defend, indemnify, and hold **LLM7.io** and its contributors harmless from any claims, liabilities, damages, losses, and expenses arising out of your use of the Service or violation of these Terms.
 
 ---
 
-## 8. Changes to These Terms
+## 9. Changes to These Terms
 
 - These Terms may be updated at any time without prior notice.
 - Changes take effect immediately upon posting. Continued use of the Service signifies your agreement to any modified Terms.
 
 ---
 
-## 9. Contact Information
+## 10. Contact Information
 
 If you have any questions regarding these Terms, please contact:
   
