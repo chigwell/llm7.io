@@ -80,7 +80,7 @@ You agree to defend, indemnify, and hold **LLM7.io** and its contributors harmle
 If you have any questions regarding these Terms, please contact:
   
 **Eugene Evstafev**  
-[ee345@cam.ac.uk](mailto:ee345@cam.ac.uk)
+[support@llm7.io](mailto:support@llm7.io)
 
 ---
 
