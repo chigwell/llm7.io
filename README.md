@@ -49,6 +49,12 @@ Contributions are welcome! Feel free to open issues, submit pull requests, or re
 - **Feature Requests:** Open an issue detailing your idea, why it's needed, and potential approaches.
 - **Pull Requests:** Fork the repo and submit a PR with concise commit messages and a clear description.
 
+## Powered By
+
+This project is made possible thanks to [Pollinations](https://github.com/pollinations/pollinations), a creative AI collective supporting open tools and innovation.
+
+![Pollinations Logo](https://avatars.githubusercontent.com/u/86964862?s=200&v=4)
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE). 
