@@ -4,17 +4,6 @@ import StatsChart from './StatsChart';
 import { useLocation } from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-function RedirectKofi() {
-  const location = useLocation();
-
-  useEffect(() => {
-    if (location.pathname === '/redirect/kofi') {
-      window.location.href = 'https://ko-fi.com/llm7_io';
-    }
-  }, [location]);
-
-  return null;
-}
 
 
 function ConsoleAnimation() {
@@ -135,7 +124,6 @@ function App() {
   return (
   <Router>
       <Routes>
-        <Route path="/redirect/kofi" element={<RedirectKofi />} />
         <Route path="/" element={
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 font-sans">
       <img src="/logo.png" alt="LLM7 Logo" className="w-40 h-40 mt-8 mb-8" />
@@ -210,6 +198,7 @@ function App() {
           <li key={model}>{model}</li>
         ))}
       </ul>
+
 
       <div className="mt-8 px-4 max-w-2xl text-gray-700 text-sm text-center">
                 <p>
