@@ -232,6 +232,21 @@ function App() {
         >
           Created by Eugene Evstafev
         </a>
+      <div className="mt-8 px-4 max-w-2xl text-gray-700 text-sm text-center">
+          <a
+            href="https://github.com/pollinations/pollinations"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center space-x-2"
+          >
+            <img
+              src="https://avatars.githubusercontent.com/u/86964862?s=200&v=4"
+              alt="Pollinations Logo"
+              className="w-8 h-8 rounded-full"
+            />
+            <span>Made possible thanks to <strong>Pollinations</strong></span>
+          </a>
+        </div>
       </footer>
     </div>
     } />
