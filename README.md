@@ -110,5 +110,5 @@ This project is made possible thanks to the generous support and infrastructure 
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE). 
+This project is licensed under the [GNU AFFERO GENERAL PUBLIC LICENSE](LICENSE). 
 
