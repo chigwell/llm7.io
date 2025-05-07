@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { ChatLLM7 } from "langchain-llm7";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 
@@ -11,6 +11,24 @@ function LiveExample() {
   const [response, setResponse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [elapsedTime, setElapsedTime] = useState(0);
+  const timerRef = useRef(null);
+
+
+  // Start timer
+  const startTimer = () => {
+    setElapsedTime(0);
+    timerRef.current = setInterval(() => {
+      setElapsedTime(prev => parseFloat((prev + 0.1).toFixed(1)));
+    }, 100);
+  };
+
+  // Stop and reset timer
+  const stopTimer = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = null;
+    setElapsedTime(0);
+  };
 
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
@@ -19,6 +37,7 @@ function LiveExample() {
     setIsLoading(true);
     setError(null);
     setResponse("");
+    startTimer();
 
     const messages = [
       new SystemMessage("You are a helpful AI assistant."),
@@ -27,20 +46,15 @@ function LiveExample() {
 
     try {
       const stream = await chat.stream(messages);
-      // No need for the separate streamedResponse variable
-      // let streamedResponse = "";
       for await (const chunk of stream) {
-      console.log(chunk.text)
-        // Use the functional update form to append the new chunk text
         setResponse(prevResponse => prevResponse + chunk.text);
-        // streamedResponse += chunk.text; // Remove this line
-        // setResponse(streamedResponse); // Remove this line
       }
     } catch (err) {
       console.error("Streaming Error:", err);
       setError(`Error interacting with LLM: ${err.message}. Note: Direct browser calls often fail due to CORS or runtime limitations. A backend proxy is usually required.`);
     } finally {
       setIsLoading(false);
+      stopTimer();
     }
   }, [prompt, isLoading]);
 
@@ -52,21 +66,26 @@ function LiveExample() {
         </label>
         <textarea
           id="prompt"
-          rows="3"
+          rows={3}
           className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="e.g., What is LangChain?"
           disabled={isLoading}
         />
-        <button
-          type="submit"
-          style={{ backgroundColor: isLoading ? '#ccc' : 'rgb(31 41 55 / var(--tw-bg-opacity))' }}
-          disabled={isLoading || !prompt}
-          className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
-        >
-          {isLoading ? 'Generating...' : 'Send Prompt'}
-        </button>
+        <div className="mt-2 flex items-center space-x-2">
+          <button
+            type="submit"
+            style={{ backgroundColor: isLoading ? '#ccc' : 'rgb(31 41 55 / var(--tw-bg-opacity))' }}
+            disabled={isLoading || !prompt}
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
+          >
+            {isLoading ? 'Generating...' : 'Send Prompt'}
+          </button>
+          {isLoading && (
+            <span className="text-xs text-gray-500">{elapsedTime.toFixed(1)} sec</span>
+          )}
+        </div>
       </form>
 
       {error && (

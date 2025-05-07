@@ -77,6 +77,7 @@ function App() {
   const [isLoadingStats, setIsLoadingStats] = useState(true);
   const [totalRequests, setTotalRequests] = useState(0);
 
+
   useEffect(() => {
     const fetchModels = async () => {
       try {
@@ -165,11 +166,11 @@ function App() {
 
             {/* --- Statistics Chart Section --- */}
             <h2 className="text-xl font-semibold mt-6 mb-2">Usage Statistics</h2>
-            <div className="w-full max-w-4xl mx-4 mb-6"> {/* Container for chart and preloader */}
+            <div className="w-full max-w-4xl mx-4 mb-6">
               {isLoadingStats ? (
-                <div className="text-center p-10 text-gray-500">Loading chart data...</div> // Simple preloader
+                <div className="text-center p-10 text-gray-500">Loading chart data...</div>
               ) : (
-                statsData.length > 0 ? ( // Only render chart if data exists
+                statsData.length > 0 ? (
                    <>
                     <StatsChart data={statsData} />
                     <div>Total requests: {totalRequests}</div>
