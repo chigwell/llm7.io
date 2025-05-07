@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import LiveExample from './LiveExample';
 import StatsChart from './StatsChart';
-import { useLocation } from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
@@ -198,6 +197,123 @@ function App() {
           <li key={model}>{model}</li>
         ))}
       </ul>
+<div className="mt-8 px-4 max-w-4xl text-gray-700 text-sm text-center">
+  <h3 className="text-base font-semibold mb-4">This service is made possible thanks to:</h3>
+  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 items-center justify-center">
+    <a
+      href="https://ai.cloudflare.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex flex-col items-center space-y-2"
+    >
+      <div className="h-12 flex items-center justify-center">
+        <img
+          src="https://wsrv.nl/?url=cdn.prod.website-files.com/6640cd28f51f13175e577c05/664e007b3edcb1f1cd6c7871_7a675b16-95cc-5699-bd72-d4ab79b979bf.svg&w=48&output=webp"
+          alt="Cloudflare AI"
+        />
+      </div>
+      <span>Cloudflare</span>
+    </a>
+    <a
+      href="https://platform.openai.com/api-keys"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex flex-col items-center space-y-2"
+    >
+      <div className="h-12 flex items-center justify-center">
+        <img
+          src="https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/6/66/OpenAI_logo_2025_%28symbol%29.svg/330px-OpenAI_logo_2025_%28symbol%29.svg.png&w=48&output=webp"
+          alt="OpenAI"
+        />
+      </div>
+      <span>OpenAI</span>
+    </a>
+    <a
+      href="https://github.com/pollinations/pollinations"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex flex-col items-center space-y-2"
+    >
+      <div className="h-12 flex items-center justify-center">
+        <img
+          src="https://wsrv.nl/?url=avatars.githubusercontent.com/u/86964862&w=48&output=webp"
+          alt="Pollinations"
+        />
+      </div>
+      <span>Pollinations</span>
+    </a>
+    <a
+      href="https://platform.deepseek.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex flex-col items-center space-y-2"
+    >
+      <div className="h-12 flex items-center justify-center">
+        <img
+          src="https://wsrv.nl/?url=registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/deepseek-color.png&w=48&output=webp"
+          alt="DeepSeek"
+        />
+      </div>
+      <span>DeepSeek</span>
+    </a>
+    <a
+      href="https://www.llama.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex flex-col items-center space-y-2"
+    >
+      <div className="h-12 flex items-center justify-center">
+        <img
+          src="https://wsrv.nl/?url=ollama.com/public/ollama.png&w=48&output=webp&h=48"
+          alt="LLaMA / Ollama"
+        />
+      </div>
+      <span>LLaMA / Ollama</span>
+    </a>
+    <a
+      href="https://console.mistral.ai/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex flex-col items-center space-y-2"
+    >
+      <div className="h-12 flex items-center justify-center">
+        <img
+          src="https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Mistral_AI_logo_%282025%E2%80%93%29.svg/500px-Mistral_AI_logo_%282025%E2%80%93%29.svg.png&w=48&output=webp&h=48"
+          alt="Mistral"
+        />
+      </div>
+      <span>Mistral</span>
+    </a>
+    <a
+      href="https://azure.microsoft.com/en-us/products/ai-model-catalog"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex flex-col items-center space-y-2"
+    >
+      <div className="h-12 flex items-center justify-center">
+        <img
+          src="https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Microsoft_Azure.svg/240px-Microsoft_Azure.svg.png&w=48&output=webp"
+          alt="Azure"
+        />
+      </div>
+      <span>Azure</span>
+    </a>
+    <a
+      href="https://www.scaleway.com/en/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex flex-col items-center space-y-2"
+    >
+      <div className="h-12 flex items-center justify-center">
+        <img
+          src="https://wsrv.nl/?url=avatars.githubusercontent.com/u/5185491&w=48&output=webp&h=48"
+          alt="Scaleway"
+        />
+      </div>
+      <span>Scaleway</span>
+    </a>
+  </div>
+</div>
 
 
       <div className="mt-8 px-4 max-w-2xl text-gray-700 text-sm text-center">
@@ -232,21 +348,7 @@ function App() {
         >
           Created by Eugene Evstafev
         </a>
-      <div className="mt-8 px-4 max-w-2xl text-gray-700 text-sm text-center">
-          <a
-            href="https://github.com/pollinations/pollinations"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center space-x-2"
-          >
-            <img
-              src="https://avatars.githubusercontent.com/u/86964862?s=200&v=4"
-              alt="Pollinations Logo"
-              className="w-8 h-8 rounded-full"
-            />
-            <span>Made possible thanks to <strong>Pollinations</strong></span>
-          </a>
-        </div>
+
       </footer>
     </div>
     } />
