@@ -317,12 +317,19 @@ function App() {
         </div>
       <div className="mt-8 px-4 max-w-2xl text-gray-700 text-sm text-center">
                 <p>
-                  LLM7.io is provided free of charge, made possible by donations. The primary aim is
-                  to ensure open access to powerful models for everyone, worldwide. We cannot
-                  guarantee 100% uptime or availability of specific models, and we may switch or
-                  change models at any time. Use this service at your own risk: no warranties, and
-                  any liabilities rest solely with you. Anonymous user data may be analyzed for
-                  research to help us improve future models.
+LLM7.io is offered free of charge thanks to the generosity of donors. Our mission is to make powerful language models openly accessible to everyone, worldwide.
+</p>
+<p>
+Important: Large language models can and do make mistakes—they may hallucinate, invent facts, or present outdated or incorrect information as if it were true. You must verify any critical output independently before relying on it.
+</p>
+<p>
+The Service is provided “as is” and “as available,” with no warranties—express or implied—of any kind (including, without limitation, merchantability, fitness for a particular purpose, or non-infringement). We cannot guarantee uptime, availability of any particular model, or the accuracy, reliability, completeness, or usefulness of any content generated. We may modify, replace or withdraw models at any time without notice.
+</p>
+<p>
+Use at your own risk. You assume full responsibility for all consequences arising from your use of the Service, including any decisions or actions taken in reliance on model outputs. LLM7.io and its contributors shall not be liable for any direct, indirect, incidental, special, consequential or punitive damages, losses or expenses arising from your access to or use of the Service (including but not limited to any damage to or loss of data, business interruption, or personal injury), even if advised of the possibility of such damages.
+</p>
+<p>
+Anonymous usage data may be collected and analysed to improve future models; no personally identifying information is stored or used by LLM7.io.
                 </p>
                 <p className="mt-2">
                   For more details, please see our{' '}
