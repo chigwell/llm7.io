@@ -347,12 +347,20 @@ Anonymous usage data may be collected and analysed to improve future models; no 
       <footer className="mt-12 mb-4 text-sm text-gray-500">
         © 2025 LLM7.io ·
         <a
+            href="mailto:support@llm7.io"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-1 text-blue-600 hover:text-blue-800"
+        >
+            support@llm7.io
+        </a>.
+        <a
           href="https://www.linkedin.com/in/eugene-evstafev-716669181/"
           target="_blank"
           rel="noopener noreferrer"
           className="ml-1 text-blue-600 hover:text-blue-800"
         >
-          Created by Eugene Evstafev
+          Created by Eugene Evstafev.
         </a>
 
       </footer>
