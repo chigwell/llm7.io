@@ -15,7 +15,7 @@ function ConsoleAnimation() {
     '',
     'client = openai.OpenAI(',
     '    base_url="https://api.llm7.io/v1",',
-    '    api_key="unused"',
+    '    api_key="unused"  # Or get it for free at https://token.llm7.io/ for higher rate limits.',
     ')',
     '',
     'response = client.chat.completions.create(',
