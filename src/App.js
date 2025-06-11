@@ -128,9 +128,8 @@ function App() {
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 font-sans">
       <img src="/logo.png" alt="LLM7 Logo" className="w-40 h-40 mt-8 mb-8" />
 
-      <h1 className="text-3xl font-bold mb-4">LLM7.io</h1>
       <p className="text-center mb-6 text-gray-700 px-4">
-        A free, anonymous LLM provider without authorization.<br />
+        A free LLM provider.<br />
         Just start using powerful models instantly.
       </p>
 
@@ -317,7 +316,7 @@ function App() {
         </div>
       <div className="mt-8 px-4 max-w-2xl text-gray-700 text-sm text-center">
                 <p>
-LLM7.io is offered free of charge thanks to the generosity of donors. Our mission is to make powerful language models openly accessible to everyone, worldwide.
+LLM7.io is offered free of charge thanks to the generosity of donors.
 </p>
 <p>
 Important: Large language models can and do make mistakes—they may hallucinate, invent facts, or present outdated or incorrect information as if it were true. You must verify any critical output independently before relying on it.

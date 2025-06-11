@@ -1,13 +1,13 @@
 # Terms of Service
 
-*Last Updated: 9 May 2025*
+*Last Updated: 11 June 2025*
 
 Thank you for using **LLM7.io** (“the Service”). By accessing or using the Service, you agree to be bound by these terms (“Terms”). If you do not accept all of these Terms, please discontinue use immediately.
 
 ### 1. Description of the Service
 
 * LLM7.io provides free, open access to large language models, supported by donations and optional advertising.
-* The Service is designed for experimentation and research; no authentication or payment is required.
+* The Service is designed for experimentation and research; no payment is required.
 
 ### 2. Accuracy, Hallucinations & User Responsibility
 
@@ -45,7 +45,7 @@ You agree to defend, indemnify and hold harmless LLM7.io and its contributors fr
 ### 6. Data Collection & Privacy
 
 * We may collect **anonymous** usage data (e.g., prompts, response metadata) to improve model performance.
-* We do **not** intentionally collect or store personally identifying information.
+* We do **not** intentionally collect personally identifying information.
 
 ### 7. Advertising & Donations
 
