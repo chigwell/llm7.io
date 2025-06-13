@@ -65,7 +65,6 @@ We welcome contributions! Please:
 - Report bugs via GitHub issues
 - Suggest features with use cases
 - Submit PRs with clear descriptions
-- Follow our [code of conduct](https://github.com/chigwell/llm7.io/blob/main/CODE_OF_CONDUCT.md)
 
 ## Powered By
 
