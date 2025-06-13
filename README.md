@@ -1,21 +1,24 @@
 # LLM7.io Landing Page
 
-This repository contains the source code for the landing page of [LLM7.io](https://llm7.io), a free, open endpoint for accessing top LLMs (Large Language Models) with zero tokens or heavy hardware needed.
+This repository contains the source code for the landing page of [LLM7.io](https://llm7.io), a free, open endpoint for accessing top LLMs (Large Language Models) without requiring heavy hardware.
 
 ## Overview
 
 LLM7.io provides:
-- Free access to a variety of powerful LLMs (GPT-4-like, DeepSeek, Mistral, etc.).
-- No API keys, paywalls, or heavy local requirements.
-- An OpenAI-compatible API interface for seamless integration with existing tools.
+- **Free access** to powerful LLMs (GPT-4-like, DeepSeek, Mistral, etc.)
+- **Zero-token access**: Use immediately without any credentials
+- **Optional free tokens**: Get higher rate limits via [token.llm7.io](https://token.llm7.io)
+- **OpenAI-compatible API** for seamless integration with existing tools
 
 The landing page highlights the core features, usage instructions, and goals of the service.
 
 ## Features
 
-- **Responsive and clear layout** showcasing LLM7.io’s core benefits.
-- **Quick start guides** for using Python, Node.js, and more.
-- **Documentation links** so users can jump into building with LLM7.io right away.
+- **Zero-barrier entry**: Start using LLMs instantly without tokens or API keys
+- **Token-powered upgrades**: Free tokens for enhanced rate limits ([Get tokens](https://token.llm7.io))
+- **Responsive design**: Clean layout showcasing LLM7.io's benefits
+- **Quick start guides**: Python, Node.js, and CLI examples
+- **Documentation links**: Jumpstart your LLM integration
 
 ## Getting Started (Local Development)
 
@@ -28,26 +31,41 @@ The landing page highlights the core features, usage instructions, and goals of 
    cd llm7.io
    npm install
    ```
-3. **Run the Development Server**  
+3. **Run Development Server**  
    ```bash
    npm run dev
    ```
-   This starts a local development server. Usually at http://localhost:3000.
+   Access at http://localhost:3000
 
-4. **Build for Production**  
+4. **Production Build**  
    ```bash
    npm run build
    npm run start
    ```
-   This creates an optimized production build and serves it.
 
+## Using LLM7.io API
+### Without tokens (Basic):
+```python
+import openai
+client = openai.OpenAI(base_url="https://llm7.io/v1", api_key="unused")
+response = client.chat.completions.create(model="gpt-4", messages=[...])
+```
+
+### With tokens (Enhanced limits):
+```python
+import openai
+client = openai.OpenAI(
+    base_url="https://llm7.io/v1",
+    api_key="YOUR_FREE_TOKEN"  # Get from https://token.llm7.io
+)
+```
 
 ## Contributing
-
-Contributions are welcome! Feel free to open issues, submit pull requests, or request features.
-- **Bug Reports:** Create a GitHub issue with details on how to reproduce.
-- **Feature Requests:** Open an issue detailing your idea, why it's needed, and potential approaches.
-- **Pull Requests:** Fork the repo and submit a PR with concise commit messages and a clear description.
+We welcome contributions! Please:
+- Report bugs via GitHub issues
+- Suggest features with use cases
+- Submit PRs with clear descriptions
+- Follow our [code of conduct](https://github.com/chigwell/llm7.io/blob/main/CODE_OF_CONDUCT.md)
 
 ## Powered By
 
