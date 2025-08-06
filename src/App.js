@@ -154,7 +154,7 @@ function App() {
              <img src="https://img.shields.io/pypi/l/langchain-llm7?color=%2340b814" alt="License: Apache 2.0" />
         </a>
         <a href="https://api.llm7.io/" target="_blank" rel="noopener noreferrer">
-             <img src="https://img.shields.io/badge/max_rate-150%20per%20min-brightgreen" alt="max rate: 150 requests per minute" />
+             <img src="https://img.shields.io/badge/max_rate-1.3k%20per%20min-brightgreen" alt="max rate: 1.3k requests per minute" />
         </a>
       </div>
       {/* END: Added Badges Section */}
