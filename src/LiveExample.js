@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useMemo } from 'react';
 import { ChatLLM7 } from "langchain-llm7";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 
@@ -6,14 +6,43 @@ const chat = new ChatLLM7({
   stream: true,
 });
 
+const PLACEHOLDERS: string[] = [
+  "Explain OAuth2 vs OIDC in one paragraph.",
+  "Write a SQL query: top 5 users by orders this month.",
+  "Generate unit tests for a pure function (TS, vitest).",
+  "Draft an email asking for payment confirmation (polite, concise).",
+  "Create a regex to validate UK postcode; explain edge cases.",
+  "Design a Postgres schema for a task app with labels.",
+  "Write a FastAPI endpoint with JWT auth (HS256).",
+  "Explain CAPTCHAs trade-offs: Turnstile vs hCaptcha vs ALTCHA.",
+  "Generate a Dockerfile for a Python 3.11 app with Poetry.",
+  "Write a GitLab CI job to run black + pytest + mypy.",
+  "Explain the difference between retries and circuit breakers.",
+  "Give me 3 perf tips for React + Zustand store.",
+  "Write a TypeScript Zod schema for a login form.",
+  "Produce a migration to add a nullable column with default in Postgres.",
+  "Explain vector DB vs Postgres pgvector in 5 sentences.",
+  "Write a bash one-liner to tail logs and highlight ERROR.",
+  "Draft acceptance criteria for a CAPTCHA evaluation epic.",
+  "Create a minimal Terraform GCS bucket example (with versioning).",
+  "Convert UTC 2025-08-05 10:06 to BST and explain the steps.",
+  "Suggest 5 load-testing scenarios for a login flow.",
+  "Generate a short story about a brave squirrel.",
+];
+
+function getRandomPlaceholder(): string {
+  return PLACEHOLDERS[Math.floor(Math.random() * PLACEHOLDERS.length)];
+}
+
 function LiveExample() {
-  const [prompt, setPrompt] = useState("Tell me a short story about a brave squirrel.");
   const [response, setResponse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [elapsedTime, setElapsedTime] = useState(0);
   const timerRef = useRef(null);
 
+  const placeholder = useMemo(() => getRandomPlaceholder(), []);
+  const [prompt, setPrompt] = useState(placeholder);
 
   // Start timer
   const startTimer = () => {
