@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import LiveExample from './LiveExample';
 import StatsChart from './StatsChart';
+import ImageGenerator from './ImageGenerator';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
 
 
 function ConsoleAnimation() {
@@ -140,6 +140,7 @@ function App() {
       <h2 className="text-xl font-semibold mb-2">Example Usage</h2>
       <ConsoleAnimation />
       <LiveExample />
+      <ImageGenerator />
 
             {/* --- Statistics Chart Section --- */}
             <h2 className="text-xl font-semibold mt-6 mb-2">Usage Statistics</h2>

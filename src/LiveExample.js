@@ -146,7 +146,8 @@ function LiveExample() {
   );
 
   return (
-    <div className="bg-white p-4 md:p-6 rounded-lg shadow-md w-full max-w-4xl mx-4 border border-gray-200">
+    <div className="bg-white p-4 md:p-6 rounded-lg shadow-md w-full max-w-4xl mx-4 border border-gray-200 mt-6">
+      <h2 className="text-xl font-semibold mb-3">Text generation</h2>
       {/* Model selector: 50% width on desktop */}
       <div className="mb-3 w-full md:w-1/2">
         <div className="flex items-center justify-between">
