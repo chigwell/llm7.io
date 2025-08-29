@@ -23,11 +23,12 @@ export default function ImageGenerator() {
   );
 
   // Gen state
-  const [imgApiUrl, setImgApiUrl] = useState("");  // canonical (no cache-buster)
+  const [imgApiUrl, setImgApiUrl] = useState(""); // canonical (no cache-buster)
   const [imgViewUrl, setImgViewUrl] = useState(""); // src for <img> (with cache-buster)
   const [isGenerating, setIsGenerating] = useState(false);
   const [isImgLoading, setIsImgLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showMeta, setShowMeta] = useState(false); // <-- NEW: show URL + chips only after load
 
   // Timer
   const [elapsed, setElapsed] = useState(0);
@@ -79,6 +80,7 @@ export default function ImageGenerator() {
   const handleGenerate = (e) => {
     e.preventDefault();
     setError("");
+    setShowMeta(false); // <-- hide meta until success
 
     let w = parseInt(widthPx, 10);
     let h = parseInt(heightPx, 10);
@@ -99,26 +101,25 @@ export default function ImageGenerator() {
     }
 
     if (w > 1500) {
-       w = 1500;
-       setWidthPx("1500");
+      w = 1500;
+      setWidthPx("1500");
     }
     if (h > 1500) {
-         h = 1500;
-         setHeightPx("1500");
+      h = 1500;
+      setHeightPx("1500");
     }
     if (s > 10000000) {
-        s = 10000000;
-        setSeed("10000000");
+      s = 10000000;
+      setSeed("10000000");
     }
     if (prompt.length > 10000) {
-        promtToSent = prompt.slice(0, 10000);
-        setPrompt(promtToSent);
+      promtToSent = prompt.slice(0, 10000);
+      setPrompt(promtToSent);
     }
-
 
     const modelParam = mapModelToParam(modelUi);
     const baseUrl = `https://api.llm7.io/prompt/${encodeURIComponent(
-      prompt.trim()
+      promtToSent.trim()
     )}?w=${w}&h=${h}&seed=${s}&model=${modelParam}`;
 
     // canonical link (no cache-buster)
@@ -138,12 +139,14 @@ export default function ImageGenerator() {
   const handleImgLoad = () => {
     setIsImgLoading(false);
     setIsGenerating(false);
+    setShowMeta(true); // <-- show meta on successful load
     stopTimer();
   };
 
   const handleImgError = () => {
     setIsImgLoading(false);
     setIsGenerating(false);
+    setShowMeta(false); // <-- keep hidden on error
     stopTimer();
     setError("Failed to load image.");
   };
@@ -153,6 +156,20 @@ export default function ImageGenerator() {
     const h = Math.max(parseInt(heightPx || "1", 10) || 1, 1);
     return { aspectRatio: `${w}/${h}` };
   }, [widthPx, heightPx]);
+
+  // Parse query params for highlighting chips (safe if imgApiUrl is empty)
+  const queryPairs = useMemo(() => {
+    if (!imgApiUrl) return [];
+    try {
+      const u = new URL(imgApiUrl);
+      const prompt = decodeURIComponent(u.pathname.split("/").slice(2).join("/"));
+      const arr = Array.from(u.searchParams.entries());
+      arr.unshift(["prompt", prompt]);
+      return arr; // [ [key, value], ... ]
+    } catch {
+      return [];
+    }
+  }, [imgApiUrl]);
 
   return (
     <div className="bg-white p-4 md:p-6 rounded-lg shadow-md w-full max-w-4xl mx-4 border border-gray-200 mt-6">
@@ -252,7 +269,9 @@ export default function ImageGenerator() {
             {isGenerating ? "Generating…" : "Generate"}
           </button>
           {isGenerating && (
-            <span className="text-xs text-gray-500">{elapsed.toFixed(1)} sec</span>
+            <span className="text-xs text-gray-500">
+              {elapsed.toFixed(1)} sec
+            </span>
           )}
         </div>
       </form>
@@ -285,6 +304,33 @@ export default function ImageGenerator() {
               }`}
             />
           </a>
+        )}
+
+        {/* URL + highlighted params (only after successful load) */}
+        {showMeta && imgApiUrl && !isImgLoading && (
+          <div className="mt-3">
+            <div className="text-xs text-gray-600 mb-1">Image URL</div>
+            <a
+              href={imgApiUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-sm font-mono break-all text-blue-700 underline"
+            >
+              {imgApiUrl}
+            </a>
+
+            <div className="mt-2 flex flex-wrap gap-2">
+              {queryPairs.map(([k, v]) => (
+                <span
+                  key={k}
+                  className="text-xs rounded-md border border-gray-200 bg-gray-50 px-2 py-1"
+                >
+                  <span className="font-medium">{k}</span>=
+                  <span className="font-mono">{v}</span>
+                </span>
+              ))}
+            </div>
+          </div>
         )}
 
         {error && (
