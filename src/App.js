@@ -125,14 +125,14 @@ function App() {
         <a href="https://www.npmjs.com/package/langchain-llm7" target="_blank" rel="noopener noreferrer">
           <img src="https://img.shields.io/npm/v/langchain-llm7" alt="NPM Version" />
         </a>
-        <a href="https://www.npmjs.com/package/langchain-llm7" target="_blank" rel="noopener noreferrer">
-           <img src="https://img.shields.io/npm/last-update/langchain-llm7" alt="NPM Last Update" />
-        </a>
-        <a href="https://opensource.org/licenses/Apache-2.0" target="_blank" rel="noopener noreferrer">
-             <img src="https://img.shields.io/pypi/l/langchain-llm7?color=%2340b814" alt="License: Apache 2.0" />
+        <a href="https://api.llm7.io/" target="_blank" rel="noopener noreferrer">
+             <img src="https://img.shields.io/badge/Last_Update-Aug-brightgreen" alt="last update: August 2025" />
         </a>
         <a href="https://api.llm7.io/" target="_blank" rel="noopener noreferrer">
              <img src="https://img.shields.io/badge/max_rate-1.3k%20per%20min-brightgreen" alt="max rate: 1.3k requests per minute" />
+        </a>
+        <a href="https://github.com/chigwell/llm7.io" target="_blank" rel="noopener noreferrer">
+             <img src="https://img.shields.io/github/stars/chigwell/llm7.io" alt="stars/chigwell/llm7.io" />
         </a>
       </div>
       {/* END: Added Badges Section */}
