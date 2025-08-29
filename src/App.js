@@ -72,26 +72,10 @@ function ConsoleAnimation() {
 
 
 function App() {
-  const [models, setModels] = useState([]);
   const [statsData, setStatsData] = useState([]);
   const [isLoadingStats, setIsLoadingStats] = useState(true);
   const [totalRequests, setTotalRequests] = useState(0);
 
-
-  useEffect(() => {
-    const fetchModels = async () => {
-      try {
-        const response = await fetch('https://api.llm7.io/v1/models');
-        const data = await response.json();
-        let sortedModels = data.sort((a, b) => a.id.localeCompare(b.id));
-        setModels(sortedModels.map(model => model.id));
-      } catch (error) {
-        console.error('Error fetching models:', error);
-      }
-    };
-
-    fetchModels();
-  }, []);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -138,14 +122,8 @@ function App() {
         <a href="https://badge.fury.io/py/langchain-llm7" target="_blank" rel="noopener noreferrer">
             <img src="https://badge.fury.io/py/langchain-llm7.svg" alt="PyPI version" />
         </a>
-        <a href="https://pepy.tech/project/langchain-llm7" target="_blank" rel="noopener noreferrer">
-             <img src="https://static.pepy.tech/badge/langchain-llm7" alt="PyPI Downloads" />
-        </a>
         <a href="https://www.npmjs.com/package/langchain-llm7" target="_blank" rel="noopener noreferrer">
           <img src="https://img.shields.io/npm/v/langchain-llm7" alt="NPM Version" />
-        </a>
-        <a href="https://www.npmjs.com/package/langchain-llm7" target="_blank" rel="noopener noreferrer">
-          <img src="https://img.shields.io/npm/dy/langchain-llm7" alt="NPM Daily Downloads" />
         </a>
         <a href="https://www.npmjs.com/package/langchain-llm7" target="_blank" rel="noopener noreferrer">
            <img src="https://img.shields.io/npm/last-update/langchain-llm7" alt="NPM Last Update" />
@@ -181,22 +159,6 @@ function App() {
             </div>
             {/* --- End Statistics Chart Section --- */}
 
-      <h2 className="text-xl font-semibold mt-6 mb-2">
-        Available Models
-        <a
-          href="https://api.llm7.io/v1/models"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="ml-2 text-sm text-blue-600 hover:text-blue-800"
-        >
-          (view all)
-        </a>
-      </h2>
-      <ul className="list-disc list-inside text-gray-600">
-        {models.map((model) => (
-          <li key={model}>{model}</li>
-        ))}
-      </ul>
         <div className="mt-8 px-4 max-w-4xl text-gray-700 text-sm text-center">
           <h3 className="text-base font-semibold mb-4">This service is made possible thanks to:</h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 items-center justify-center">

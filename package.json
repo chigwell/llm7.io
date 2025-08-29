@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@amcharts/amcharts5": "^5.12.1",
+    "@headlessui/react": "^2.2.7",
     "@langchain/core": "^0.3.44",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
