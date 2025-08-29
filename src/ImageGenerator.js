@@ -80,9 +80,10 @@ export default function ImageGenerator() {
     e.preventDefault();
     setError("");
 
-    const w = parseInt(widthPx, 10);
-    const h = parseInt(heightPx, 10);
-    const s = parseInt(seed, 10);
+    let w = parseInt(widthPx, 10);
+    let h = parseInt(heightPx, 10);
+    let s = parseInt(seed, 10);
+    let promtToSent = prompt;
 
     if (!prompt.trim()) {
       setError("Prompt is required.");
@@ -96,6 +97,24 @@ export default function ImageGenerator() {
       setError("Seed must be a non-negative integer.");
       return;
     }
+
+    if (w > 1500) {
+       w = 1500;
+       setWidthPx("1500");
+    }
+    if (h > 1500) {
+         h = 1500;
+         setHeightPx("1500");
+    }
+    if (s > 10000000) {
+        s = 10000000;
+        setSeed("10000000");
+    }
+    if (prompt.length > 10000) {
+        promtToSent = prompt.slice(0, 10000);
+        setPrompt(promtToSent);
+    }
+
 
     const modelParam = mapModelToParam(modelUi);
     const baseUrl = `https://api.llm7.io/prompt/${encodeURIComponent(
