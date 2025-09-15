@@ -3,7 +3,7 @@ import LiveExample from './LiveExample';
 import StatsChart from './StatsChart';
 //import ImageGenerator from './ImageGenerator';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
+//import PricingSection from "./components/PricingSection";
 
 function ConsoleAnimation() {
   const [lines, setLines] = useState([]);
@@ -76,6 +76,38 @@ function App() {
   const [isLoadingStats, setIsLoadingStats] = useState(true);
   const [totalRequests, setTotalRequests] = useState(0);
 
+  const [activeRequests60s, setActiveRequests60s] = useState(0);
+
+  useEffect(() => {
+    let cancelled = false;
+    let inFlight = false;
+
+    const tick = async () => {
+      if (inFlight) return;
+      inFlight = true;
+      try {
+        const res = await fetch("https://api.llm7.io/ping", { cache: "no-store" });
+        if (res.ok) {
+          const data = await res.json();
+          if (!cancelled && typeof data.active_requests_last_60s === "number") {
+            setActiveRequests60s(data.active_requests_last_60s);
+          }
+        }
+      } catch {
+        // swallow; keep polling
+      } finally {
+        inFlight = false;
+      }
+    };
+
+    const id = setInterval(tick, 500);
+    tick(); // initial fetch
+
+    return () => {
+      cancelled = true;
+      clearInterval(id);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -137,10 +169,15 @@ function App() {
       </div>
       {/* END: Added Badges Section */}
 
-      <h2 className="text-xl font-semibold mb-2">Example Usage</h2>
+      <h2 id="example-usage" className="text-xl font-semibold mb-2">Example Usage</h2>
       <ConsoleAnimation />
       <LiveExample />
       {/*<ImageGenerator />*/}
+
+      {/* --- Pricing Section --- */}
+      {/*<PricingSection />*/}
+      {/* --- End Pricing Section --- */}
+
 
             {/* --- Statistics Chart Section --- */}
             <h2 className="text-xl font-semibold mt-6 mb-2">Usage Statistics</h2>
@@ -152,6 +189,9 @@ function App() {
                    <>
                     <StatsChart data={statsData} />
                     <div>Total requests: {totalRequests}</div>
+                      {activeRequests60s !== null && (
+                        <span>Rolling 60s requests: {activeRequests60s}</span>
+                      )}
                     </>
                 ) : (
                    <div className="text-center p-10 text-gray-500">Could not load statistics.</div>
