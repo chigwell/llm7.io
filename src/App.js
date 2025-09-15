@@ -78,6 +78,11 @@ function App() {
 
   const [activeRequests60s, setActiveRequests60s] = useState(0);
 
+  const formatTotalRequests = (num) => {
+    // add dots as thousand separators
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
   useEffect(() => {
     let cancelled = false;
     let inFlight = false;
@@ -188,7 +193,7 @@ function App() {
                 statsData.length > 0 ? (
                    <>
                     <StatsChart data={statsData} />
-                    <div>Total requests: {totalRequests}</div>
+                    <div>Total requests: {formatTotalRequests(totalRequests)}</div>
                       {activeRequests60s !== null && (
                         <span>Rolling 60s requests: {activeRequests60s}</span>
                       )}
