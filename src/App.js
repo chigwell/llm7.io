@@ -77,6 +77,7 @@ function App() {
   const [totalRequests, setTotalRequests] = useState(0);
 
   const [activeRequests60s, setActiveRequests60s] = useState(0);
+  const avg1sRequests = useMemo(() => activeRequests60s / 60, [activeRequests60s]);
 
   const formatTotalRequests = (num) => {
     // add dots as thousand separators
@@ -163,10 +164,10 @@ function App() {
           <img src="https://img.shields.io/npm/v/langchain-llm7" alt="NPM Version" />
         </a>
         <a href="https://api.llm7.io/" target="_blank" rel="noopener noreferrer">
-             <img src="https://img.shields.io/badge/Last_Update-Aug-brightgreen" alt="last update: August 2025" />
+             <img src="https://img.shields.io/badge/Last_Update-Sep-brightgreen" alt="last update: August 2025" />
         </a>
         <a href="https://api.llm7.io/" target="_blank" rel="noopener noreferrer">
-             <img src="https://img.shields.io/badge/max_rate-1.3k%20per%20min-brightgreen" alt="max rate: 1.3k requests per minute" />
+             <img src="https://img.shields.io/badge/max_rate-1.8k%20per%20min-brightgreen" alt="max rate: 1.3k requests per minute" />
         </a>
         <a href="https://github.com/chigwell/llm7.io" target="_blank" rel="noopener noreferrer">
              <img src="https://img.shields.io/github/stars/chigwell/llm7.io" alt="stars/chigwell/llm7.io" />
@@ -195,7 +196,10 @@ function App() {
                     <StatsChart data={statsData} />
                     <div>Total requests: {formatTotalRequests(totalRequests)}</div>
                       {activeRequests60s !== null && (
-                        <span>Rolling 60s requests: {activeRequests60s}</span>
+                      <>
+                        <div>Rolling 60s requests: {activeRequests60s}</div>
+                        <div>Avg req/s (last 60s): {avg1sRequests.toFixed(2)}</div>
+                      </>
                       )}
                     </>
                 ) : (
@@ -353,6 +357,14 @@ Anonymous usage data may be collected and analysed to improve future models; no 
                     className="text-blue-600 hover:text-blue-800 underline"
                   >
                     Terms
+                  </a> and{' '}
+                  <a
+                    href="https://github.com/chigwell/llm7.io/blob/main/PRIVACY.md"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:text-blue-800 underline"
+                  >
+                  Privacy Policy
                   </a>.
                 </p>
               </div>
