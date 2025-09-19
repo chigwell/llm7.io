@@ -1,6 +1,6 @@
 # Terms of Service
 
-**Last updated: 29 August 2025**
+**Last updated: 19 September 2025**
 
 Thank you for using **LLM7.io** (the **“Service”**). By accessing or using the Service, you agree to these Terms of Service (the **“Terms”**). If you do not accept all of the Terms, do not use the Service.
 
@@ -23,6 +23,7 @@ Thank you for using **LLM7.io** (the **“Service”**). By accessing or using t
 - If you use **`token.llm7.io`** to issue access tokens for **LLM7.io**, you must keep those tokens **secret** and **secure**. Tokens are personal and non-transferable.
 - We may **rate-limit**, **suspend**, or **revoke** tokens to protect the Service from abuse.
 - You are responsible for all activity performed using your tokens or account.
+- You agree to receive **transactional/service emails** required to operate your account (e.g., authentication, security, incident or material-change notices). **Optional product updates/announcements** are sent only with your **consent** or, where permitted by law, under **legitimate interests** with a clear **opt-out** (an unsubscribe link is included in every such email).
 
 ---
 
@@ -53,9 +54,12 @@ We may suspend or terminate access for suspected violations.
 ---
 
 ## 7. Data collection & privacy
-- We collect **anonymous usage data** (e.g., timestamps, model identifiers, token counts, basic performance/error metrics) to operate and improve the Service.
-- If you use **`token.llm7.io`** to issue tokens for **LLM7.io**, we will store your **email address** and **minimal related metadata** (e.g., token issuance events, status, expiry, usage counters necessary to enforce limits and prevent abuse).  
-- We **do not sell** personal data. Data are retained **only as long as necessary** to provide and protect the Service and to meet legal obligations.
+Our privacy practices are described in **[PRIVACY.md](./PRIVACY.md)**, which is **incorporated by reference** into these Terms.
+
+- We process minimal personal data necessary to provide and protect the Service (e.g., email via Google OAuth, token/usage data, security logs).  
+- We use Cloudflare as our processor for hosting, storage, networking, and security as described in PRIVACY.md.  
+- We **do not sell** personal data.  
+- Retention and your rights (access, deletion, objection, etc.) are set out in PRIVACY.md.
 
 ---
 
@@ -109,7 +113,7 @@ You must comply with applicable **export control** and **sanctions** laws and ma
 ---
 
 ## 16. Changes to these Terms
-We may update these Terms from time to time. **Changes take effect immediately** upon posting the revised Terms. If you continue using the Service after changes are posted, you **accept** the revised Terms.
+We may update these Terms from time to time. **Changes take effect immediately** upon posting the revised Terms. For **material changes**, we will provide reasonable notice (e.g., in-product notice or email). If you continue using the Service after changes are posted, you **accept** the revised Terms.
 
 ---
 
