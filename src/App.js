@@ -3,7 +3,7 @@ import LiveExample from './LiveExample';
 import StatsChart from './StatsChart';
 //import ImageGenerator from './ImageGenerator';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-//import PricingSection from "./components/PricingSection";
+import PricingSection from "./components/PricingSection";
 
 function ConsoleAnimation() {
   const [lines, setLines] = useState([]);
@@ -181,7 +181,7 @@ function App() {
       {/*<ImageGenerator />*/}
 
       {/* --- Pricing Section --- */}
-      {/*<PricingSection />*/}
+      <PricingSection />
       {/* --- End Pricing Section --- */}
 
 
