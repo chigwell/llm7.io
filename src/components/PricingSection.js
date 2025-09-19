@@ -188,56 +188,70 @@ function BasicSubGoogleBlock({ onClose, onSuccess }) {
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
   const [isTermsAccepted, setIsTermsAccepted] = useState(false);
+
   const btnRef = useRef(null);
 
-  const runSetSub = useCallback(
-    async (credential) => {
-      if (!isTermsAccepted) {
-        setStatus("error");
-        setMessage("Please accept the Terms and Privacy Policy first.");
-        return;
+  // Guards / refs to avoid re-rendering the GSI button
+  const renderedRef = useRef(false);
+  const termsRef = useRef(false);
+  const onSuccessRef = useRef(onSuccess);
+
+  useEffect(() => {
+    termsRef.current = isTermsAccepted;
+  }, [isTermsAccepted]);
+
+  useEffect(() => {
+    onSuccessRef.current = onSuccess;
+  }, [onSuccess]);
+
+  const runSetSub = useCallback(async (credential) => {
+    if (!termsRef.current) {
+      setStatus("error");
+      setMessage("Please accept the Terms and Privacy Policy first.");
+      return;
+    }
+    setStatus("loading");
+    setMessage("Signing in…");
+    try {
+      localStorage.setItem(ID_TOKEN_KEY, credential);
+
+      // 1) Verify
+      const v = await fetch(`${BASE_API_URL}/verify`, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${credential}` },
+      });
+      if (!v.ok) throw new Error("Token verification failed");
+      const data = await v.json();
+      const verifiedEmail = (data && data.email) || "";
+      setEmail(verifiedEmail);
+
+      // 2) Activate
+      setMessage("Activating Basic subscription…");
+      const s = await fetch(`${BASE_API_URL}/set-sub`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${credential}` },
+      });
+      if (!s.ok) {
+        const t = await s.text().catch(() => "");
+        throw new Error(t || "Failed to activate subscription");
       }
-      setStatus("loading");
-      setMessage("Signing in…");
-      try {
-        localStorage.setItem(ID_TOKEN_KEY, credential);
 
-        // 1) Verify token and get email
-        const v = await fetch(`${BASE_API_URL}/verify`, {
-          method: "GET",
-          headers: { Authorization: `Bearer ${credential}` },
-        });
-        if (!v.ok) throw new Error("Token verification failed");
-        const data = await v.json();
-        const verifiedEmail = data && data.email ? data.email : "";
-        setEmail(verifiedEmail);
-
-        // 2) Set subscription=1
-        setMessage("Activating Basic subscription…");
-        const s = await fetch(`${BASE_API_URL}/set-sub`, {
-          method: "POST",
-          headers: { Authorization: `Bearer ${credential}` },
-        });
-        if (!s.ok) {
-          const t = await s.text().catch(() => "");
-          throw new Error(t || "Failed to activate subscription");
-        }
-
-        setStatus("ok");
-        setMessage("Basic subscription activated.");
-        onSuccess(verifiedEmail);
-      } catch (err) {
-        setStatus("error");
-        setMessage(err && err.message ? err.message : "Something went wrong");
-      }
-    },
-    [onSuccess, isTermsAccepted],
-  );
+      setStatus("ok");
+      setMessage("Basic subscription activated.");
+      onSuccessRef.current(verifiedEmail);
+    } catch (err) {
+      setStatus("error");
+      setMessage(err?.message || "Something went wrong");
+    }
+  }, []); // stable
 
   useEffect(() => {
     let cancelled = false;
 
     (async () => {
+      if (renderedRef.current) return; // prevent double-render (incl. StrictMode)
+      renderedRef.current = true;
+
       try {
         await loadGsiOnce();
         if (cancelled) return;
@@ -335,6 +349,7 @@ function BasicSubGoogleBlock({ onClose, onSuccess }) {
     </div>
   );
 }
+
 
 /* ------------------ Pricing UI ------------------ */
 function PricingCard({ plan }) {
