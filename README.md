@@ -96,12 +96,24 @@ This project is made possible thanks to the generous support and infrastructure 
         <sub><b>LLaMA / Ollama</b></sub>
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center">
       <a href="https://console.mistral.ai/" target="_blank">
         <img src="https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Mistral_AI_logo_%282025%E2%80%93%29.svg/500px-Mistral_AI_logo_%282025%E2%80%93%29.svg.png&h=48&output=webp" alt="Mistral" /><br/>
         <sub><b>Mistral</b></sub>
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="https://nebius.ai/" target="_blank">
+        <img src="https://wsrv.nl/?url=https://cdn-1.webcatalog.io/catalog/nebius/nebius-icon-filled-256.webp&w=48&output=webp" alt="Nebius" /><br/>
+        <sub><b>Nebius</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://www.nebulablock.com/" target="_blank">
+        <img src="https://wsrv.nl/?url=https://i.ibb.co/Y7MKnWfT/nebula-block-logo.jpg&w=48&output=webp" alt="Nebula Block" /><br/>
+        <sub><b>Nebula Block</b></sub>
       </a>
     </td>
     <td align="center">

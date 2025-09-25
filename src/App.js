@@ -167,7 +167,7 @@ function App() {
              <img src="https://img.shields.io/badge/Last_Update-Sep-brightgreen" alt="last update: August 2025" />
         </a>
         <a href="https://api.llm7.io/" target="_blank" rel="noopener noreferrer">
-             <img src="https://img.shields.io/badge/max_rate-1.8k%20per%20min-brightgreen" alt="max rate: 1.3k requests per minute" />
+             <img src="https://img.shields.io/badge/max_rate-2.2k%20per%20min-brightgreen" alt="max rate: 1.3k requests per minute" />
         </a>
         <a href="https://github.com/chigwell/llm7.io" target="_blank" rel="noopener noreferrer">
              <img src="https://img.shields.io/github/stars/chigwell/llm7.io" alt="stars/chigwell/llm7.io" />
@@ -211,7 +211,7 @@ function App() {
 
         <div className="mt-8 px-4 max-w-4xl text-gray-700 text-sm text-center">
           <h3 className="text-base font-semibold mb-4">This service is made possible thanks to:</h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 items-center justify-center">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 items-center justify-center">
             <a
               href="https://azure.microsoft.com/en-us/products/ai-model-catalog"
               target="_blank"
@@ -281,6 +281,34 @@ function App() {
                 />
               </div>
               <span>Mistral</span>
+            </a>
+            <a
+              href="https://nebius.ai/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center space-y-2"
+            >
+              <div className="h-12 flex items-center justify-center">
+                <img
+                  src="https://wsrv.nl/?url=https://cdn-1.webcatalog.io/catalog/nebius/nebius-icon-filled-256.webp&w=48&output=webp"
+                  alt="Nebius"
+                />
+              </div>
+              <span>Nebius</span>
+            </a>
+            <a
+              href="https://www.nebulablock.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center space-y-2"
+            >
+              <div className="h-12 flex items-center justify-center">
+                <img
+                  src="https://wsrv.nl/?url=https://i.ibb.co/Y7MKnWfT/nebula-block-logo.jpg&w=48&output=webp"
+                  alt="Nebula Block"
+                />
+              </div>
+              <span>Nebula Block</span>
             </a>
             <a
               href="https://platform.openai.com/api-keys"
