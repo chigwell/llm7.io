@@ -33,13 +33,13 @@ function getRandomPlaceholder() {
 
 function LiveExample() {
   // Models
-  const [models, setModels] = useState([]); // array of string ids
+  const [models, setModels] = useState([]);
   const [modelsLoading, setModelsLoading] = useState(true);
   const [modelsError, setModelsError] = useState(null);
 
   // Combobox states
-  const [selectedModel, setSelectedModel] = useState(""); // committed selection
-  const [query, setQuery] = useState(""); // typed filter
+  const [selectedModel, setSelectedModel] = useState("");
+  const [query, setQuery] = useState("");
 
   // Chat states
   const [response, setResponse] = useState("");
@@ -65,10 +65,10 @@ function LiveExample() {
           .sort((a, b) => a.localeCompare(b));
         if (cancelled) return;
         setModels(ids);
-        const preferred = "gpt-o4-mini-2025-04-16";
+        const preferred = "gpt-5-nano-2025-08-07";
         const def = ids.includes(preferred) ? preferred : ids[0] || "";
         setSelectedModel(def);
-        setQuery(""); // start with empty filter
+        setQuery("");
       } catch {
         if (cancelled) return;
         setModelsError("Failed to load models.");
