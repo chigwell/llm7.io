@@ -47,7 +47,7 @@ The landing page highlights the core features, usage instructions, and goals of 
 ### Without tokens (Basic):
 ```python
 import openai
-client = openai.OpenAI(base_url="https://llm7.io/v1", api_key="unused")
+client = openai.OpenAI(base_url="https://api.llm7.io/v1", api_key="unused")
 response = client.chat.completions.create(model="gpt-4", messages=[...])
 ```
 
@@ -55,7 +55,7 @@ response = client.chat.completions.create(model="gpt-4", messages=[...])
 ```python
 import openai
 client = openai.OpenAI(
-    base_url="https://llm7.io/v1",
+    base_url="https://api.llm7.io/v1",
     api_key="YOUR_FREE_TOKEN"  # Get from https://token.llm7.io
 )
 ```
