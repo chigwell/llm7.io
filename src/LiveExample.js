@@ -65,7 +65,7 @@ function LiveExample() {
           .sort((a, b) => a.localeCompare(b));
         if (cancelled) return;
         setModels(ids);
-        const preferred = "gpt-5-nano-2025-08-07";
+        const preferred = "mistral-small-3.1-24b-instruct-2503";
         const def = ids.includes(preferred) ? preferred : ids[0] || "";
         setSelectedModel(def);
         setQuery("");

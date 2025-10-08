@@ -19,7 +19,7 @@ function ConsoleAnimation() {
     ')',
     '',
     'response = client.chat.completions.create(',
-    '    model="gpt-4.1-nano-2025-04-14",',
+    '    model="mistral-small-3.1-24b-instruct-2503",',
     '    messages=[',
     '        {"role": "user", "content": "Tell me a short story about a brave squirrel."}',
     '    ]',
