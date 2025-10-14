@@ -117,7 +117,7 @@ const styles = {
   modal: {
     background: "#fff",
     borderRadius: 12,
-    width: "min(520px, 100%)", // fit small screens
+    width: "min(520px, 100%)",
     padding: 20,
     boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
   },
@@ -249,7 +249,7 @@ function BasicSubGoogleBlock({ onClose, onSuccess }) {
     let cancelled = false;
 
     (async () => {
-      if (renderedRef.current) return; // prevent double-render (incl. StrictMode)
+      if (renderedRef.current) return;
       renderedRef.current = true;
 
       try {
@@ -439,7 +439,8 @@ export default function PricingSection() {
         "Image gen (no watermark)",
         "OCR",
         "Speech-to-text",
-        "Priority support",
+        "JsonMode",
+        "Function calling",
         "Revenue share**",
       ],
       action: {
