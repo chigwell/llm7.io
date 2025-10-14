@@ -4,27 +4,39 @@ import { ChatLLM7 } from "langchain-llm7";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 
 const PLACEHOLDERS = [
-  "Explain OAuth2 vs OIDC in one paragraph.",
-  "Write a SQL query: top 5 users by orders this month.",
-  "Generate unit tests for a pure function (TS, vitest).",
-  "Draft an email asking for payment confirmation (polite, concise).",
-  "Create a regex to validate UK postcode; explain edge cases.",
-  "Design a Postgres schema for a task app with labels.",
-  "Write a FastAPI endpoint with JWT auth (HS256).",
-  "Explain CAPTCHAs trade-offs: Turnstile vs hCaptcha vs ALTCHA.",
-  "Generate a Dockerfile for a Python 3.11 app with Poetry.",
-  "Write a GitLab CI job to run black + pytest + mypy.",
-  "Explain the difference between retries and circuit breakers.",
-  "Give me 3 perf tips for React + Zustand store.",
-  "Write a TypeScript Zod schema for a login form.",
-  "Produce a migration to add a nullable column with default in Postgres.",
-  "Explain vector DB vs Postgres pgvector in 5 sentences.",
-  "Write a bash one-liner to tail logs and highlight ERROR.",
-  "Draft acceptance criteria for a CAPTCHA evaluation epic.",
-  "Create a minimal Terraform GCS bucket example (with versioning).",
-  "Convert UTC 2025-08-05 10:06 to BST and explain the steps.",
-  "Suggest 5 load-testing scenarios for a login flow.",
-  "Generate a short story about a brave squirrel.",
+  // --- Code Generation & Refactoring ---
+  "Refactor this React class component to a functional component using hooks.",
+  "Write a Go function to upload a file to an S3-compatible bucket.",
+  "Generate a Python script using Pandas to clean a CSV and compute column stats.",
+  "Create a responsive card component using Next.js and Tailwind CSS.",
+  "Write a Rust API endpoint using Axum that returns a JSON payload.",
+  "Generate a `pyproject.toml` for a Poetry project with Black, pytest, and FastAPI.",
+  "Write a custom React hook `useDebounce` and provide a usage example.",
+
+  // --- DevOps & Infrastructure as Code ---
+  "Create a GitHub Actions workflow to test, build, and push a Docker image to GHCR.",
+  "Write a Kubernetes manifest for a simple web app Deployment and Service.",
+  "Generate a Pulumi script in TypeScript to provision a static website on AWS S3.",
+  "Write a bash script to check server health and send a notification if it's down.",
+  "Explain the difference between mutable and immutable infrastructure.",
+
+  // --- System Design & Architecture ---
+  "Explain the trade-offs: REST vs. GraphQL vs. gRPC for microservices.",
+  "Design a Redis caching strategy for a high-traffic e-commerce product page.",
+  "Summarize the CAP theorem and give a real-world example for CP and AP systems.",
+  "Explain ELI5: what is Retrieval-Augmented Generation (RAG)?",
+  "Compare Monorepo vs. Polyrepo, listing two pros and cons for each.",
+
+  // --- Database & Data ---
+  "Optimize a slow Postgres query by adding a composite index; explain why.",
+  "Design a GraphQL schema for a blog with posts, authors, and comments.",
+  "Write a SQL migration to enforce a foreign key constraint with `ON DELETE CASCADE`.",
+  "Create a Zod schema in TypeScript to validate a complex, nested API response.",
+
+  // --- Communication & Personas ---
+  "Act as a senior developer; code-review this TypeScript function for bugs and style.",
+  "Draft a short, clear incident post-mortem for a 15-minute API outage.",
+  "Generate 5 creative names for a new open-source developer tool.",
 ];
 
 function getRandomPlaceholder() {
@@ -127,6 +139,7 @@ function LiveExample() {
         const chat = new ChatLLM7({
           modelName: selectedModel,
           stream: true,
+          temperature: 0.7,
         });
         const stream = await chat.stream(messages);
         for await (const chunk of stream) {
