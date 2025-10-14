@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import LiveExample from './LiveExample';
-import StatsChart from './StatsChart';
+import LiveExample from './components/LiveExample';
+import StatsChart from './components/StatsChart';
 //import ImageGenerator from './ImageGenerator';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import PricingSection from "./components/PricingSection";
@@ -164,7 +164,7 @@ function App() {
           <img src="https://img.shields.io/npm/v/langchain-llm7" alt="NPM Version" />
         </a>
         <a href="https://api.llm7.io/" target="_blank" rel="noopener noreferrer">
-             <img src="https://img.shields.io/badge/Last_Update-Sep-brightgreen" alt="last update: August 2025" />
+             <img src="https://img.shields.io/badge/Last_Update-Oct-brightgreen" alt="last update: October 2025" />
         </a>
         <a href="https://api.llm7.io/" target="_blank" rel="noopener noreferrer">
              <img src="https://img.shields.io/badge/max_rate-2.2k%20per%20min-brightgreen" alt="max rate: 1.3k requests per minute" />
@@ -355,26 +355,26 @@ function App() {
           </div>
         </div>
       <div className="mt-8 px-4 max-w-2xl text-gray-700 text-sm text-center">
-<p align="justify">
-  LLM7.io offers a free tier supported by donors. Paid plans may also be available.
-</p>
-<p align="justify">
-  Plan features, limits and pricing may change at any time.
-</p>
-<p align="justify">
-  <b>Important:</b> Large language models may generate inaccurate or misleading content (“hallucinations”). Do not rely on outputs as legal, medical, financial or other professional advice. You must independently verify any critical output before use.
-</p>
-<p align="justify">
-  The Service is provided “as is” and “as available”, without warranties of any kind (express or implied), including merchantability, fitness for a particular purpose and non-infringement. We do not guarantee uptime, latency, availability of any particular model, or the accuracy, reliability, completeness or timeliness of generated content. We may modify, replace or withdraw models and features at any time without notice.
-</p>
-<p align="justify">
-  To the maximum extent permitted by law, you use the Service at your own risk. LLM7.io and its contributors will not be liable for any direct, indirect, incidental, special, consequential or punitive losses or damages (including loss of data, business interruption or loss of profits) arising from your use of the Service, even if advised of the possibility of such damages. Nothing in this notice excludes or limits liability for death or personal injury caused by negligence, fraud or fraudulent misrepresentation, or any other liability that cannot lawfully be limited or excluded.
-</p>
-<p align="justify">
-  We collect anonymous usage data to improve the Service. In addition, if you use <code>token.llm7.io</code> to issue access tokens for <code>llm7.io</code>, we will store your email address (and minimal related metadata) for the purpose of issuing, managing and securing those tokens, enforcing rate limits and preventing abuse. We do not sell personal data. Data are retained only as long as necessary to provide the Service and to meet legal obligations.
-</p>
-<p align="justify">
-Anonymous usage data may be collected and analysed to improve future models; no personally identifying information is stored or used by LLM7.io.
+        <p align="justify">
+          LLM7.io offers a free tier supported by donors. Paid plans may also be available.
+        </p>
+        <p align="justify">
+          Plan features, limits and pricing may change at any time.
+        </p>
+        <p align="justify">
+          <b>Important:</b> Large language models may generate inaccurate or misleading content (“hallucinations”). Do not rely on outputs as legal, medical, financial or other professional advice. You must independently verify any critical output before use.
+        </p>
+        <p align="justify">
+          The Service is provided “as is” and “as available”, without warranties of any kind (express or implied), including merchantability, fitness for a particular purpose and non-infringement. We do not guarantee uptime, latency, availability of any particular model, or the accuracy, reliability, completeness or timeliness of generated content. We may modify, replace or withdraw models and features at any time without notice.
+        </p>
+        <p align="justify">
+          To the maximum extent permitted by law, you use the Service at your own risk. LLM7.io and its contributors will not be liable for any direct, indirect, incidental, special, consequential or punitive losses or damages (including loss of data, business interruption or loss of profits) arising from your use of the Service, even if advised of the possibility of such damages. Nothing in this notice excludes or limits liability for death or personal injury caused by negligence, fraud or fraudulent misrepresentation, or any other liability that cannot lawfully be limited or excluded.
+        </p>
+        <p align="justify">
+          We collect anonymous usage data to improve the Service. In addition, if you use <code>token.llm7.io</code> to issue access tokens for <code>llm7.io</code>, we will store your email address (and minimal related metadata) for the purpose of issuing, managing and securing those tokens, enforcing rate limits and preventing abuse. We do not sell personal data. Data are retained only as long as necessary to provide the Service and to meet legal obligations.
+        </p>
+        <p align="justify">
+        Anonymous usage data may be collected and analysed to improve future models; no personally identifying information is stored or used by LLM7.io.
                 </p>
                 <p className="mt-2">
                   For more details, please see our{' '}
