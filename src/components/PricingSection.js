@@ -408,7 +408,13 @@ export default function PricingSection() {
       title: "Free (Anonymous)",
       desc: "Start now — no sign-up.",
       price: "$0",
-      features: ["No sign-up", "750 req/h", "45 req/min", "1 req/s"],
+      features: [
+        "No sign-up",
+        "8k chars/req*",
+        "750 req/h",
+        "45 req/min",
+        "1 req/s"
+      ],
       action: { label: "See Example", onClick: scrollToExample },
     },
     {
@@ -417,6 +423,7 @@ export default function PricingSection() {
       price: "$0",
       features: [
         "Free token",
+        "64k chars/req*",
         "4,500 req/h",
         "150 req/min",
         "20 req/s",
@@ -431,7 +438,7 @@ export default function PricingSection() {
       price: "Coming soon",
       period: "",
       features: [
-        "From $2/mo*",
+        "From $2/mo**",
         "9k+ req/h",
         "500+ req/min",
         "100+ req/s",
@@ -441,7 +448,7 @@ export default function PricingSection() {
         "Speech-to-text",
         "JsonMode",
         "Function calling",
-        "Revenue share**",
+        "Revenue share***",
       ],
       action: {
         label: "Join Waitlist",
@@ -489,8 +496,9 @@ export default function PricingSection() {
         </div>
 
         <div style={styles.footnote}>
-          <p>* - Features, limits and pricing may change.</p>
-          <p>** - Partner programme details soon.</p>
+          <p>* - It depends on the model (may be lower).</p>
+          <p>** - Features, limits and pricing may change.</p>
+          <p>*** - Partner programme details soon.</p>
         </div>
       </div>
 
