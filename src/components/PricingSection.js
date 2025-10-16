@@ -423,7 +423,7 @@ export default function PricingSection() {
       price: "$0",
       features: [
         "Free token",
-        "64k chars/req*",
+        "128k chars/req*",
         "4,500 req/h",
         "150 req/min",
         "20 req/s",
