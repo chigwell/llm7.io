@@ -1,0 +1,478 @@
+1:"$Sreact.fragment"
+2:I[59472,["/_next/static/chunks/a57b9add132816f3.js"],"default"]
+3:I[14216,["/_next/static/chunks/a57b9add132816f3.js"],"default"]
+4:I[28272,["/_next/static/chunks/a57b9add132816f3.js"],"PackageManagerProvider"]
+5:I[84767,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"default"]
+6:I[20082,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"default"]
+7:I[55103,["/_next/static/chunks/a57b9add132816f3.js"],"Analytics"]
+8:I[48457,["/_next/static/chunks/a57b9add132816f3.js"],"SpeedInsights"]
+9:I[49191,["/_next/static/chunks/a57b9add132816f3.js","/_next/static/chunks/2a60c40de118aa48.js","/_next/static/chunks/509648a058d8293e.js","/_next/static/chunks/3ba0e3814b139423.js","/_next/static/chunks/3d86c85e70d30f5d.js","/_next/static/chunks/06c6b153eeaf5bef.js","/_next/static/chunks/88e3ea6ba5270218.js"],"default"]
+b:I[18700,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"OutletBoundary"]
+c:"$Sreact.suspense"
+e:I[18700,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"ViewportBoundary"]
+10:I[18700,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"MetadataBoundary"]
+12:I[53024,[],"default"]
+:HL["/_next/static/chunks/2473c16c0c2f6b5f.css","style"]
+:HL["/_next/static/chunks/71fea639c64bef8d.css","style"]
+:HL["/_next/static/chunks/e9b84da6d07baf88.css","style"]
+:HL["/_next/static/media/797e433ab948586e-s.p.dbea232f.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/caa3a2e1cccd8315-s.p.853070df.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+0:{"P":null,"b":"jktXBTXwKuAe0eKl5EBlK","c":["","components","accordion",""],"i":false,"f":[[["",{"children":[["slug","components/accordion","c"],{"children":["__PAGE__",{}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/2473c16c0c2f6b5f.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/71fea639c64bef8d.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/a57b9add132816f3.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":["$","body",null,{"className":"geist_a71539c9-module__T19VSG__variable geist_mono_8d43a2aa-module__8Li5zG__variable antialiased","children":["$","$L2",null,{"children":["$","$L3",null,{"children":["$","$L4",null,{"children":[["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}],"//",["$","$L7",null,{}],"//",["$","$L8",null,{}]]}]}]}]}]}]]}],{"children":[["slug","components/accordion","c"],["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/e9b84da6d07baf88.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/2a60c40de118aa48.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/509648a058d8293e.js","async":true,"nonce":"$undefined"}],["$","script","script-2",{"src":"/_next/static/chunks/3ba0e3814b139423.js","async":true,"nonce":"$undefined"}],["$","script","script-3",{"src":"/_next/static/chunks/3d86c85e70d30f5d.js","async":true,"nonce":"$undefined"}],["$","script","script-4",{"src":"/_next/static/chunks/06c6b153eeaf5bef.js","async":true,"nonce":"$undefined"}],["$","script","script-5",{"src":"/_next/static/chunks/88e3ea6ba5270218.js","async":true,"nonce":"$undefined"}]],["$","div",null,{"className":"min-h-screen","children":["$","$L9",null,{"children":["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]}]}]]}],{"children":["__PAGE__",["$","$1","c",{"children":["$La",[["$","script","script-0",{"src":"/_next/static/chunks/e6d515658f214d0b.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/1c69ca3ea65d82ff.js","async":true,"nonce":"$undefined"}]],["$","$Lb",null,{"children":["$","$c",null,{"name":"Next.MetadataOutlet","children":"$@d"}]}]]}],{},null,false,false]},null,false,false]},null,false,false],["$","$1","h",{"children":[null,["$","$Le",null,{"children":"$@f"}],["$","div",null,{"hidden":true,"children":["$","$L10",null,{"children":["$","$c",null,{"name":"Next.Metadata","children":"$@11"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],false]],"m":"$undefined","G":["$12",[]],"s":false,"S":true}
+13:I[44089,["/_next/static/chunks/a57b9add132816f3.js","/_next/static/chunks/2a60c40de118aa48.js","/_next/static/chunks/509648a058d8293e.js","/_next/static/chunks/3ba0e3814b139423.js","/_next/static/chunks/3d86c85e70d30f5d.js","/_next/static/chunks/06c6b153eeaf5bef.js","/_next/static/chunks/88e3ea6ba5270218.js","/_next/static/chunks/e6d515658f214d0b.js","/_next/static/chunks/1c69ca3ea65d82ff.js"],"default"]
+14:I[98726,["/_next/static/chunks/a57b9add132816f3.js","/_next/static/chunks/2a60c40de118aa48.js","/_next/static/chunks/509648a058d8293e.js","/_next/static/chunks/3ba0e3814b139423.js","/_next/static/chunks/3d86c85e70d30f5d.js","/_next/static/chunks/06c6b153eeaf5bef.js","/_next/static/chunks/88e3ea6ba5270218.js","/_next/static/chunks/e6d515658f214d0b.js","/_next/static/chunks/1c69ca3ea65d82ff.js"],"AccordionShowcase"]
+15:T45e0,"use client";
+
+import type React from "react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { cn } from "@/lib/utils";
+
+/**
+ * Single accordion item definition
+ */
+export interface AccordionItem {
+  /**
+   * Unique identifier for the item. Required for proper ARIA wiring and state management
+   */
+  id: string;
+  /**
+   * Header content shown in the trigger button (e.g., a string or any React node)
+   */
+  header: React.ReactNode;
+  /**
+   * Body content revealed when the item is expanded. Accepts any React node
+   */
+  content: React.ReactNode;
+}
+
+export interface AccordionProps {
+  /**
+   * Array of accordion items to render
+   */
+  items: AccordionItem[];
+  allowMultiple?: boolean;
+  /**
+   * Array of item IDs that should be open by default
+   */
+  defaultOpenIds?: string[];
+  /**
+   * Additional class names for the root element
+   */
+  className?: string;
+}
+
+/**
+ * Mobile-optimized, accessible, animated accordion component
+ */
+export default function Accordion({
+  items,
+  allowMultiple = false,
+  defaultOpenIds = [],
+  className,
+}: AccordionProps) {
+  // Using a Set for constant-time lookups when toggling/opening panels
+  const [openIds, setOpenIds] = useState<Set<string>>(new Set(defaultOpenIds));
+
+  const toggleItem = (id: string) => {
+    setOpenIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        if (!allowMultiple) {
+          next.clear();
+        }
+        next.add(id);
+      }
+      return next;
+    });
+  };
+
+  return (
+    <motion.div
+      className={cn(
+        // Mobile-first responsive design
+        "w-full max-w-none mx-auto rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm shadow-lg overflow-hidden",
+        // Tablet and up
+        "sm:max-w-[90vw] sm:rounded-2xl",
+        // Desktop
+        "lg:w-[600px] lg:max-w-[600px]",
+        className
+      )}
+      initial={{ opacity: 0, y: 20, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+    >
+      {items.map((item, index) => {
+        const isOpen = openIds.has(item.id);
+        const buttonId = `accordion-trigger-${item.id}`;
+        const panelId = `accordion-panel-${item.id}`;
+
+        return (
+          <motion.div
+            key={item.id}
+            className="relative border-b border-border/30 last:border-b-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: index * 0.1 + 0.2, duration: 0.3 }}
+          >
+            {/* Decorative gradient line - hidden on mobile for cleaner look */}
+            <motion.div
+              className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-primary/60 to-transparent hidden sm:block"
+              initial={{ scaleX: 0, opacity: 0 }}
+              animate={{ scaleX: 1, opacity: 1 }}
+              transition={{
+                delay: index * 0.15 + 0.4,
+                duration: 0.8,
+                ease: [0.25, 0.46, 0.45, 0.94],
+              }}
+            />
+
+            {/* Vertical accent line - simplified for mobile */}
+            <motion.div
+              className="absolute left-2 sm:left-4 top-0 w-0.5 h-full bg-gradient-to-b from-primary/30 via-primary/50 to-primary/30 rounded-full"
+              initial={{ scaleY: 0, opacity: 0 }}
+              animate={{ scaleY: 1, opacity: 1 }}
+              transition={{
+                delay: index * 0.15 + 0.6,
+                duration: 0.6,
+                ease: "easeOut",
+              }}
+            />
+
+            <h3 className="relative">
+              <motion.button
+                id={buttonId}
+                type="button"
+                className={cn(
+                  "group relative w-full flex items-center justify-between gap-3",
+                  // Mobile-optimized touch targets and spacing
+                  "py-5 pl-6 pr-4 min-h-[60px]",
+                  // Tablet and up
+                  "sm:py-6 sm:pl-10 sm:pr-6 sm:min-h-[72px]",
+                  // Desktop
+                  "lg:pl-12 lg:pr-8",
+                  "text-left font-medium text-foreground",
+                  "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                  "transition-all duration-200 hover:bg-muted/30",
+                  // Mobile-specific active states
+                  "active:bg-muted/50 active:scale-[0.99]"
+                )}
+                aria-expanded={isOpen}
+                aria-controls={panelId}
+                onClick={() => toggleItem(item.id)}
+                initial={{ opacity: 0, x: -16 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                  delay: index * 0.15 + 0.8,
+                  duration: 0.4,
+                  ease: [0.25, 0.46, 0.45, 0.94],
+                }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <motion.span
+                  className={cn(
+                    "font-semibold tracking-tight flex-1 min-w-0 pr-2",
+                    // Mobile-first typography
+                    "text-base leading-snug",
+                    // Tablet and up
+                    "sm:text-lg sm:leading-relaxed",
+                    // Desktop
+                    "lg:text-xl"
+                  )}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    delay: index * 0.15 + 1.0,
+                    duration: 0.3,
+                    ease: "easeOut",
+                  }}
+                >
+                  {item.header}
+                </motion.span>
+
+                <motion.div
+                  className={cn(
+                    "relative flex items-center justify-center rounded-full bg-primary/10 group-hover:bg-primary/20 group-active:bg-primary/30 transition-colors duration-200 flex-shrink-0",
+                    // Mobile-optimized touch target
+                    "w-10 h-10 min-w-[40px]",
+                    // Tablet and up
+                    "sm:w-12 sm:h-12 sm:min-w-[48px]"
+                  )}
+                  initial={{ opacity: 0, scale: 0, rotate: -90 }}
+                  animate={{
+                    opacity: 1,
+                    scale: 1,
+                    rotate: isOpen ? 180 : 0,
+                  }}
+                  transition={{
+                    opacity: { delay: index * 0.15 + 1.2, duration: 0.2 },
+                    scale: {
+                      delay: index * 0.15 + 1.2,
+                      duration: 0.3,
+                      type: "spring",
+                      stiffness: 200,
+                    },
+                    rotate: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] },
+                  }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2.5}
+                    stroke="currentColor"
+                    className="h-5 w-5 text-primary"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                    />
+                  </svg>
+                </motion.div>
+              </motion.button>
+            </h3>
+
+            <div className="overflow-hidden w-full">
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    key="content"
+                    id={panelId}
+                    role="region"
+                    aria-labelledby={buttonId}
+                    className={cn(
+                      "relative w-full box-border",
+                      // Mobile-optimized spacing
+                      "pl-6 pr-4 pb-6 pt-2",
+                      // Tablet and up
+                      "sm:pl-10 sm:pr-6 sm:pb-8 sm:pt-3",
+                      // Desktop
+                      "lg:pl-12 lg:pr-8"
+                    )}
+                    initial={{ opacity: 0, y: -10, height: 0 }}
+                    animate={{ opacity: 1, y: 0, height: "auto" }}
+                    exit={{ opacity: 0, y: -5, height: 0 }}
+                    transition={{
+                      duration: 0.3,
+                      ease: [0.25, 0.46, 0.45, 0.94],
+                      height: { duration: 0.4 },
+                    }}
+                  >
+                    {/* Vertical accent line for content */}
+                    <div className="absolute left-2 sm:left-4 top-0 w-0.5 h-full bg-gradient-to-b from-primary/40 to-transparent rounded-full" />
+
+                    <div
+                      className={cn(
+                        "text-muted-foreground leading-relaxed w-full overflow-hidden",
+                        // Mobile-first content spacing
+                        "pl-4 text-sm min-h-[80px]",
+                        // Tablet and up
+                        "sm:pl-6 sm:text-base sm:min-h-[100px]",
+                        // Desktop
+                        "lg:text-base"
+                      )}
+                    >
+                      <div className="w-full overflow-hidden break-words">
+                        {item.content}
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        );
+      })}
+    </motion.div>
+  );
+}
+
+export function AccordionShowcase() {
+  return (
+    <div className="min-h-1.5 bg-gradient-to-br from-background via-muted/20 to-background p-4 sm:p-8">
+      <div className="max-w-5xl mx-auto space-y-8 sm:space-y-16">
+        <div className="text-center space-y-4 sm:space-y-6">
+          <div className="relative p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-card/30 backdrop-blur-sm border border-border/50 shadow-2xl">
+            <div className="flex justify-center">
+              <Accordion
+                items={[
+                  {
+                    id: "demo-1",
+                    header: "🚀 Mobile-First Design",
+                    content: (
+                      <div className="space-y-3 sm:space-y-4">
+                        <p className="text-muted-foreground">
+                          Optimized for touch interactions with larger tap
+                          targets, improved spacing, and mobile-first responsive
+                          design that scales beautifully across all devices.
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          <span className="px-2 py-1 sm:px-3 bg-primary/10 text-primary rounded-full text-xs sm:text-sm font-medium">
+                            Touch Optimized
+                          </span>
+                          <span className="px-2 py-1 sm:px-3 bg-primary/10 text-primary rounded-full text-xs sm:text-sm font-medium">
+                            Responsive
+                          </span>
+                          <span className="px-2 py-1 sm:px-3 bg-primary/10 text-primary rounded-full text-xs sm:text-sm font-medium">
+                            Fast
+                          </span>
+                        </div>
+                      </div>
+                    ),
+                  },
+                  {
+                    id: "demo-2",
+                    header: "✨ Smooth Mobile Animations",
+                    content: (
+                      <div className="space-y-3">
+                        <p className="text-muted-foreground">
+                          Optimized animations that perform smoothly on mobile
+                          devices with reduced motion complexity and faster
+                          transitions for better user experience.
+                        </p>
+                        <div className="bg-muted/50 rounded-lg p-3 sm:p-4 border">
+                          <code className="text-xs sm:text-sm text-foreground/80 break-all">
+                            {"duration: 0.3s + spring(200)"}
+                          </code>
+                        </div>
+                      </div>
+                    ),
+                  },
+                  {
+                    id: "demo-3",
+                    header: "📱 Enhanced Touch Experience",
+                    content: (
+                      <div className="space-y-3">
+                        <p className="text-muted-foreground">
+                          Larger touch targets, improved active states, and
+                          mobile-specific interactions for the best possible
+                          touch experience.
+                        </p>
+                        <ul className="space-y-2 ml-2 sm:ml-4">
+                          <li className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0" />
+                            <span className="text-xs sm:text-sm text-muted-foreground">
+                              60px minimum touch targets
+                            </span>
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0" />
+                            <span className="text-xs sm:text-sm text-muted-foreground">
+                              Active state feedback
+                            </span>
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0" />
+                            <span className="text-xs sm:text-sm text-muted-foreground">
+                              Optimized spacing
+                            </span>
+                          </li>
+                        </ul>
+                      </div>
+                    ),
+                  },
+                ]}
+                defaultOpenIds={[]}
+                allowMultiple={true}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function AccordionTheme() {
+  return (
+    <div className="p-4 sm:p-0">
+      <Accordion
+        items={[
+          {
+            id: "demo-1",
+            header: "🚀 Mobile-First Design",
+            content: (
+              <div className="space-y-3 sm:space-y-4">
+                <p className="text-muted-foreground">
+                  Built with mobile users in mind, featuring optimized touch
+                  targets, improved spacing, and responsive design that works
+                  perfectly on any device size.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-2 py-1 sm:px-3 bg-primary/10 text-primary rounded-full text-xs sm:text-sm font-medium">
+                    Touch Friendly
+                  </span>
+                  <span className="px-2 py-1 sm:px-3 bg-primary/10 text-primary rounded-full text-xs sm:text-sm font-medium">
+                    Responsive
+                  </span>
+                  <span className="px-2 py-1 sm:px-3 bg-primary/10 text-primary rounded-full text-xs sm:text-sm font-medium">
+                    Accessible
+                  </span>
+                </div>
+              </div>
+            ),
+          },
+          {
+            id: "demo-2",
+            header: "✨ Optimized Performance",
+            content: (
+              <div className="space-y-3">
+                <p className="text-muted-foreground">
+                  Streamlined animations and optimized rendering for smooth
+                  performance on mobile devices, with reduced complexity where
+                  it matters most.
+                </p>
+                <div className="bg-muted/50 rounded-lg p-3 sm:p-4 border">
+                  <code className="text-xs sm:text-sm text-foreground/80">
+                    {"mobile: { duration: 0.3, spring: 200 }"}
+                  </code>
+                </div>
+              </div>
+            ),
+          },
+          {
+            id: "demo-3",
+            header: "🎯 Enhanced Accessibility",
+            content: (
+              <div className="space-y-3">
+                <p className="text-muted-foreground">
+                  Full ARIA support with mobile-optimized focus management,
+                  larger touch targets, and improved screen reader experience.
+                </p>
+                <ul className="space-y-2 ml-2 sm:ml-4">
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0" />
+                    <span className="text-xs sm:text-sm text-muted-foreground">
+                      WCAG 2.1 compliant touch targets
+                    </span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0" />
+                    <span className="text-xs sm:text-sm text-muted-foreground">
+                      Enhanced focus indicators
+                    </span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0" />
+                    <span className="text-xs sm:text-sm text-muted-foreground">
+                      Screen reader optimized
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            ),
+          },
+        ]}
+        defaultOpenIds={[]}
+      />
+    </div>
+  );
+}
+a:["$","div",null,{"className":"space-y-8","children":["$","$L13",null,{"components":[{"componentName":"Accordion","description":["📁 ",["$","b","1",{"children":"Collapsible Content Panels"}]," - Organize content with smooth ",["$","span","3",{"style":{"color":"#8b5cf6"},"children":"expand/collapse animations"}],". Supports ",["$","span","5",{"style":{"color":"#10b981"},"children":"multiple open items"}],", keyboard navigation, and ",["$","b","7",{"children":"accessibility features"}],"."],"component":"$14","defaultProps":{"allowMultiple":false,"defaultOpenIds":[]},"codeString":"$15","propsInfo":{"componentName":"Accordion","propsInterfaceName":"AccordionProps","props":[{"name":"items","type":"AccordionItem[]","required":true,"description":"Array of accordion items to render","tags":[],"isUnion":false,"unionTypes":"$undefined","enumValues":"$undefined","defaultValue":"$undefined"},{"name":"allowMultiple","type":"boolean","required":false,"description":"$undefined","tags":[],"isUnion":false,"unionTypes":"$undefined","enumValues":"$undefined","defaultValue":false},{"name":"defaultOpenIds","type":"string[]","required":false,"description":"Array of item IDs that should be open by default","tags":[],"isUnion":false,"unionTypes":"$undefined","enumValues":"$undefined","defaultValue":[]},{"name":"className","type":"string","required":false,"description":"Additional class names for the root element","tags":[],"isUnion":false,"unionTypes":"$undefined","enumValues":"$undefined","defaultValue":"$undefined"}],"description":"Mobile-optimized, accessible, animated accordion component","examples":[],"extendsFrom":[]}}]}]}]
+f:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","2",{"name":"theme-color","media":"(prefers-color-scheme: light)","content":"#ffffff"}],["$","meta","3",{"name":"theme-color","media":"(prefers-color-scheme: dark)","content":"#0a0a0a"}]]
+16:I[76071,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"IconMark"]
+11:[["$","title","0",{"children":"Accordion | Components | VUI React UI Library"}],["$","meta","1",{"name":"description","content":"📁 Collapsible Content Panels - Organize content with smooth expand/collapse animations. Supports multiple open items, keyboard navigation, and accessibility features."}],["$","link","2",{"rel":"manifest","href":"/manifest.json","crossOrigin":"$undefined"}],["$","meta","3",{"name":"keywords","content":"Accordion,Components,React UI,VUI,Component,Open Source,Modern UI,Customizable,Interactive"}],["$","meta","4",{"name":"category","content":"Components"}],["$","link","5",{"rel":"canonical","href":"https://vyomaui.design//components/accordion"}],["$","meta","6",{"name":"mobile-web-app-capable","content":"yes"}],["$","meta","7",{"name":"apple-mobile-web-app-title","content":"LLM7.io"}],["$","meta","8",{"name":"apple-mobile-web-app-status-bar-style","content":"default"}],["$","meta","9",{"property":"og:title","content":"Accordion"}],["$","meta","10",{"property":"og:description","content":"📁 Collapsible Content Panels - Organize content with smooth expand/collapse animations. Supports multiple open items, keyboard navigation, and accessibility features."}],["$","meta","11",{"property":"og:url","content":"https://vyomaui.design//components/accordion"}],["$","meta","12",{"property":"og:site_name","content":"VUI React UI Library"}],["$","meta","13",{"property":"og:image","content":"https://vyomaui.design/api/og?title=Accordion&description=%F0%9F%93%81%20%3Cb%3ECollapsible%20Content%20Panels%3C%2Fb%3E%20-%20Organize%20content%20with%20smooth%20%3Cspan%20style%3D%27color%3A%20%238b5cf6%3B%27%3Eexpand%2Fcollapse%20animations%3C%2Fspan%3E.%20Supports%20%3Cspan%20style%3D%27color%3A%20%2310b981%3B%27%3Emultiple%20open%20items%3C%2Fspan%3E%2C%20keyboard%20navigation%2C%20and%20%3Cb%3Eaccessibility%20features%3C%2Fb%3E.&path=%2Fcomponents%2Faccordion"}],["$","meta","14",{"property":"og:image:width","content":"1200"}],["$","meta","15",{"property":"og:image:height","content":"630"}],["$","meta","16",{"property":"og:type","content":"website"}],["$","meta","17",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","18",{"name":"twitter:title","content":"Accordion"}],["$","meta","19",{"name":"twitter:description","content":"📁 Collapsible Content Panels - Organize content with smooth expand/collapse animations. Supports multiple open items, keyboard navigation, and accessibility features."}],["$","meta","20",{"name":"twitter:image","content":"https://vyomaui.design/api/og?title=Accordion&description=%F0%9F%93%81%20%3Cb%3ECollapsible%20Content%20Panels%3C%2Fb%3E%20-%20Organize%20content%20with%20smooth%20%3Cspan%20style%3D%27color%3A%20%238b5cf6%3B%27%3Eexpand%2Fcollapse%20animations%3C%2Fspan%3E.%20Supports%20%3Cspan%20style%3D%27color%3A%20%2310b981%3B%27%3Emultiple%20open%20items%3C%2Fspan%3E%2C%20keyboard%20navigation%2C%20and%20%3Cb%3Eaccessibility%20features%3C%2Fb%3E.&path=%2Fcomponents%2Faccordion"}],["$","meta","21",{"name":"twitter:image:width","content":"1200"}],["$","meta","22",{"name":"twitter:image:height","content":"630"}],["$","link","23",{"rel":"icon","href":"/favicon.ico?favicon.dc98455b.ico","sizes":"48x48","type":"image/x-icon"}],["$","link","24",{"rel":"icon","href":"./favicon.ico","sizes":"any"}],["$","link","25",{"rel":"icon","href":"/favicons/favicon-16x16.png","sizes":"16x16","type":"image/png"}],["$","link","26",{"rel":"icon","href":"/favicons/favicon-32x32.png","sizes":"32x32","type":"image/png"}],["$","link","27",{"rel":"apple-touch-icon","href":"/favicons/apple-touch-icon.png","sizes":"180x180","type":"image/png"}],["$","$L16","28",{}]]
+d:null

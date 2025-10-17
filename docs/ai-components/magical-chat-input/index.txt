@@ -1,0 +1,696 @@
+1:"$Sreact.fragment"
+2:I[59472,["/_next/static/chunks/a57b9add132816f3.js"],"default"]
+3:I[14216,["/_next/static/chunks/a57b9add132816f3.js"],"default"]
+4:I[28272,["/_next/static/chunks/a57b9add132816f3.js"],"PackageManagerProvider"]
+5:I[84767,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"default"]
+6:I[20082,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"default"]
+7:I[55103,["/_next/static/chunks/a57b9add132816f3.js"],"Analytics"]
+8:I[48457,["/_next/static/chunks/a57b9add132816f3.js"],"SpeedInsights"]
+9:I[49191,["/_next/static/chunks/a57b9add132816f3.js","/_next/static/chunks/2a60c40de118aa48.js","/_next/static/chunks/509648a058d8293e.js","/_next/static/chunks/3ba0e3814b139423.js","/_next/static/chunks/3d86c85e70d30f5d.js","/_next/static/chunks/06c6b153eeaf5bef.js","/_next/static/chunks/88e3ea6ba5270218.js"],"default"]
+b:I[18700,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"OutletBoundary"]
+c:"$Sreact.suspense"
+e:I[18700,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"ViewportBoundary"]
+10:I[18700,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"MetadataBoundary"]
+12:I[53024,[],"default"]
+:HL["/_next/static/chunks/2473c16c0c2f6b5f.css","style"]
+:HL["/_next/static/chunks/71fea639c64bef8d.css","style"]
+:HL["/_next/static/chunks/e9b84da6d07baf88.css","style"]
+:HL["/_next/static/media/797e433ab948586e-s.p.dbea232f.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/caa3a2e1cccd8315-s.p.853070df.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+0:{"P":null,"b":"jktXBTXwKuAe0eKl5EBlK","c":["","ai-components","magical-chat-input",""],"i":false,"f":[[["",{"children":[["slug","ai-components/magical-chat-input","c"],{"children":["__PAGE__",{}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/2473c16c0c2f6b5f.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/71fea639c64bef8d.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/a57b9add132816f3.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":["$","body",null,{"className":"geist_a71539c9-module__T19VSG__variable geist_mono_8d43a2aa-module__8Li5zG__variable antialiased","children":["$","$L2",null,{"children":["$","$L3",null,{"children":["$","$L4",null,{"children":[["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}],"//",["$","$L7",null,{}],"//",["$","$L8",null,{}]]}]}]}]}]}]]}],{"children":[["slug","ai-components/magical-chat-input","c"],["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/e9b84da6d07baf88.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/2a60c40de118aa48.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/509648a058d8293e.js","async":true,"nonce":"$undefined"}],["$","script","script-2",{"src":"/_next/static/chunks/3ba0e3814b139423.js","async":true,"nonce":"$undefined"}],["$","script","script-3",{"src":"/_next/static/chunks/3d86c85e70d30f5d.js","async":true,"nonce":"$undefined"}],["$","script","script-4",{"src":"/_next/static/chunks/06c6b153eeaf5bef.js","async":true,"nonce":"$undefined"}],["$","script","script-5",{"src":"/_next/static/chunks/88e3ea6ba5270218.js","async":true,"nonce":"$undefined"}]],["$","div",null,{"className":"min-h-screen","children":["$","$L9",null,{"children":["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]}]}]]}],{"children":["__PAGE__",["$","$1","c",{"children":["$La",[["$","script","script-0",{"src":"/_next/static/chunks/e6d515658f214d0b.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/1c69ca3ea65d82ff.js","async":true,"nonce":"$undefined"}]],["$","$Lb",null,{"children":["$","$c",null,{"name":"Next.MetadataOutlet","children":"$@d"}]}]]}],{},null,false,false]},null,false,false]},null,false,false],["$","$1","h",{"children":[null,["$","$Le",null,{"children":"$@f"}],["$","div",null,{"hidden":true,"children":["$","$L10",null,{"children":["$","$c",null,{"name":"Next.Metadata","children":"$@11"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],false]],"m":"$undefined","G":["$12",[]],"s":false,"S":true}
+13:I[44089,["/_next/static/chunks/a57b9add132816f3.js","/_next/static/chunks/2a60c40de118aa48.js","/_next/static/chunks/509648a058d8293e.js","/_next/static/chunks/3ba0e3814b139423.js","/_next/static/chunks/3d86c85e70d30f5d.js","/_next/static/chunks/06c6b153eeaf5bef.js","/_next/static/chunks/88e3ea6ba5270218.js","/_next/static/chunks/e6d515658f214d0b.js","/_next/static/chunks/1c69ca3ea65d82ff.js"],"default"]
+14:I[84450,["/_next/static/chunks/a57b9add132816f3.js","/_next/static/chunks/2a60c40de118aa48.js","/_next/static/chunks/509648a058d8293e.js","/_next/static/chunks/3ba0e3814b139423.js","/_next/static/chunks/3d86c85e70d30f5d.js","/_next/static/chunks/06c6b153eeaf5bef.js","/_next/static/chunks/88e3ea6ba5270218.js","/_next/static/chunks/e6d515658f214d0b.js","/_next/static/chunks/1c69ca3ea65d82ff.js"],"default"]
+15:T4f5e,
+"use client";
+
+import {
+  Loader2Icon,
+  SendIcon,
+  SquareIcon,
+  XIcon,
+  GlobeIcon,
+  MicIcon,
+  PlusIcon,
+  FlaskConicalIcon,
+} from "lucide-react";
+import type {
+  ComponentProps,
+  HTMLAttributes,
+  KeyboardEventHandler,
+} from "react";
+import {
+  Children,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { Button } from "@/components/ui/buttonShadcn";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
+import { type FormEventHandler } from "react";
+
+type UseAutoResizeTextareaProps = {
+  minHeight: number;
+  maxHeight?: number;
+};
+
+const useAutoResizeTextarea = ({
+  minHeight,
+  maxHeight,
+}: UseAutoResizeTextareaProps) => {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const adjustHeight = useCallback(
+    (reset?: boolean) => {
+      const el = textareaRef.current;
+      if (!el) return;
+
+      // Reset for accurate measurement
+      el.style.height = reset ? `${minHeight}px` : `${minHeight}px`;
+
+      const next = Math.max(
+        minHeight,
+        Math.min(el.scrollHeight, maxHeight ?? Number.POSITIVE_INFINITY)
+      );
+      el.style.height = `${next}px`;
+    },
+    [minHeight, maxHeight]
+  );
+
+  // Initial height
+  useEffect(() => {
+    const el = textareaRef.current;
+    if (el) {
+      el.style.height = `${minHeight}px`;
+    }
+  }, [minHeight]);
+
+  // On resize/orientation change
+  useEffect(() => {
+    const resize = () => adjustHeight();
+    window.addEventListener("resize", resize);
+    window.addEventListener("orientationchange", resize);
+    return () => {
+      window.removeEventListener("resize", resize);
+      window.removeEventListener("orientationchange", resize);
+    };
+  }, [adjustHeight]);
+
+  return { textareaRef, adjustHeight };
+};
+
+const glassPanel =
+  "bg-background/70 dark:bg-background/60 backdrop-blur-xl backdrop-saturate-150 border border-border/50 shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.25)]";
+const glassHover =
+  "hover:bg-background/75 dark:hover:bg-background/65 hover:backdrop-blur-2xl";
+const motionSafe =
+  "motion-safe:transition-all motion-safe:duration-300 motion-reduce:transition-none";
+const subtleFocus =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-0";
+
+export type AIInputProps = HTMLAttributes<HTMLFormElement>;
+export const AIInput = ({ className, ...props }: AIInputProps) => (
+  <form
+    className={cn(
+      "w-full overflow-hidden rounded-2xl",
+      glassPanel,
+      motionSafe,
+      "hover:shadow-[0_12px_40px_rgba(0,0,0,0.10)] dark:hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)]",
+      "scrollbar-none overflow-x-hidden overflow-y-hidden",
+      "[&::-webkit-scrollbar]:hidden [&::-webkit-scrollbar]:w-0",
+      "[-ms-overflow-style:none] [scrollbar-width:none]",
+      "[&_*]:scrollbar-none [&_*::-webkit-scrollbar]:hidden",
+      "[&_*]:[-ms-overflow-style:none] [&_*]:[scrollbar-width:none]",
+      className
+    )}
+    {...props}
+  />
+);
+
+
+export type AIInputTextareaProps = ComponentProps<typeof Textarea> & {
+  minHeight?: number;
+  maxHeight?: number;
+};
+
+export const AIInputTextarea = ({
+  onChange,
+  className,
+  placeholder = "What would you like to cook?",
+  minHeight = 88,
+  maxHeight = 180,
+  ...props
+}: AIInputTextareaProps) => {
+  const { textareaRef, adjustHeight } = useAutoResizeTextarea({
+    minHeight,
+    maxHeight,
+  });
+
+  const handleKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
+    // Respect IME composition to avoid premature submit on mobile
+    // @ts-expect-error - composition API exists on event target at runtime
+    if (e.isComposing) return;
+
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      e.currentTarget.form?.requestSubmit();
+    }
+  };
+
+  return (
+    <Textarea
+      className={cn(
+        "w-full resize-none rounded-none border-none p-3 sm:p-4 shadow-none",
+        "text-base leading-relaxed sm:text-[1rem] font-medium",
+        "bg-transparent dark:bg-transparent",
+        "placeholder:text-muted-foreground/60",
+        "focus-visible:ring-0",
+        motionSafe,
+        // Remove scrollbars
+        "scrollbar-none overflow-hidden overflow-x-hidden overflow-y-hidden",
+        "[&::-webkit-scrollbar]:hidden [&::-webkit-scrollbar]:w-0 [&::-webkit-scrollbar]:h-0",
+        "[-ms-overflow-style:none] [scrollbar-width:none]",
+        // Better mobile tap
+        "touch-manipulation",
+        className
+      )}
+      inputMode="text"
+      autoCorrect="on"
+      spellCheck
+      aria-label="Message"
+      name="message"
+      placeholder={placeholder}
+      ref={textareaRef}
+      onChange={(e) => {
+        adjustHeight();
+        onChange?.(e);
+      }}
+      onKeyDown={handleKeyDown}
+      {...props}
+    />
+  );
+};
+
+export type AIInputToolbarProps = HTMLAttributes<HTMLDivElement>;
+export const AIInputToolbar = ({
+  className,
+  ...props
+}: AIInputToolbarProps) => (
+  <div
+    className={cn(
+      "flex items-center justify-between px-2.5 py-2 sm:px-3 sm:py-2",
+      "bg-gradient-to-r from-background/40 via-background/60 to-background/40",
+      "backdrop-blur-md",
+      motionSafe,
+      className
+    )}
+    {...props}
+  />
+);
+export type AIInputToolsProps = HTMLAttributes<HTMLDivElement>;
+export const AIInputTools = ({ className, ...props }: AIInputToolsProps) => (
+  <div
+    className={cn(
+      "flex items-center gap-1.5 sm:gap-2",
+      "overflow-x-auto overflow-y-hidden no-scrollbar",
+      "max-w-[calc(100vw-6rem)] sm:max-w-none",
+      "pl-1 -ml-1 pr-2",
+      className
+    )}
+    {...props}
+  />
+);
+
+type ColorScheme = "purple" | "orange" | "blue" | "green" | "red";
+
+const colorMap: Record<
+  ColorScheme,
+  { hover: string; active: string; text: string }
+> = {
+  purple: {
+    hover:
+      "hover:bg-purple-50/60 dark:hover:bg-purple-950/40 hover:border-purple-300/40",
+    active:
+      "bg-gradient-to-r from-purple-100/70 via-purple-200/50 to-purple-100/70 dark:from-purple-950/50 dark:via-purple-900/70 dark:to-purple-950/50 border-purple-300/60 dark:border-purple-700/60",
+    text: "text-purple-700 dark:text-purple-300",
+  },
+  orange: {
+    hover:
+      "hover:bg-orange-50/60 dark:hover:bg-orange-950/40 hover:border-orange-300/40",
+    active:
+      "bg-gradient-to-r from-orange-100/70 via-orange-200/50 to-orange-100/70 dark:from-orange-950/50 dark:via-orange-900/70 dark:to-orange-950/50 border-orange-300/60 dark:border-orange-700/60",
+    text: "text-orange-700 dark:text-orange-300",
+  },
+  blue: {
+    hover:
+      "hover:bg-blue-50/60 dark:hover:bg-blue-950/40 hover:border-blue-300/40",
+    active:
+      "bg-gradient-to-r from-blue-100/70 via-blue-200/50 to-blue-100/70 dark:from-blue-950/50 dark:via-blue-900/70 dark:to-blue-950/50 border-blue-300/60 dark:border-blue-700/60",
+    text: "text-blue-700 dark:text-blue-300",
+  },
+  green: {
+    hover:
+      "hover:bg-green-50/60 dark:hover:bg-green-950/40 hover:border-green-300/40",
+    active:
+      "bg-gradient-to-r from-green-100/70 via-green-200/50 to-green-100/70 dark:from-green-950/50 dark:via-green-900/70 dark:to-green-950/50 border-green-300/60 dark:border-green-700/60",
+    text: "text-green-700 dark:text-green-300",
+  },
+  red: {
+    hover:
+      "hover:bg-red-50/60 dark:hover:bg-red-950/40 hover:border-red-300/40",
+    active:
+      "bg-gradient-to-r from-red-100/70 via-red-200/50 to-red-100/70 dark:from-red-950/50 dark:via-red-900/70 dark:to-red-950/50 border-red-300/60 dark:border-red-700/60",
+    text: "text-red-700 dark:text-red-300",
+  },
+};
+
+export type AIInputButtonProps = ComponentProps<typeof Button> & {
+  colorScheme?: ColorScheme;
+};
+
+export const AIInputButton = ({
+  variant = "ghost",
+  className,
+  size,
+  colorScheme = "blue",
+  ...props
+}: AIInputButtonProps) => {
+  const newSize =
+    size ?? (Children.count(props.children) > 1 ? "default" : "icon");
+
+  return (
+    <Button
+      className={cn(
+        "shrink-0 rounded-xl border border-transparent",
+        "text-muted-foreground",
+        motionSafe,
+        "active:scale-95",
+        "backdrop-blur-sm",
+        colorMap[colorScheme].hover,
+        newSize === "default" ? "px-3 py-2" : "h-10 w-10 sm:h-10 sm:w-10",
+        subtleFocus,
+        className
+      )}
+      size={newSize}
+      type="button"
+      variant={variant}
+      {...props}
+    />
+  );
+};
+
+export type AIInputToggleButtonProps = ComponentProps<typeof Button> & {
+  isActive?: boolean;
+  colorScheme?: ColorScheme;
+};
+
+export const AIInputToggleButton = ({
+  variant = "ghost",
+  className,
+  size,
+  isActive = false,
+  colorScheme = "purple",
+  ...props
+}: AIInputToggleButtonProps) => {
+  const newSize =
+    size ?? (Children.count(props.children) > 1 ? "default" : "icon");
+
+  return (
+    <Button
+      aria-pressed={isActive}
+      className={cn(
+        "shrink-0 rounded-xl border",
+        "backdrop-blur-sm",
+        motionSafe,
+        "active:scale-95",
+        newSize === "default" ? "px-3 py-2" : "h-10 w-10 sm:h-10 sm:w-10",
+        isActive
+          ? cn(
+              colorMap[colorScheme].active,
+              colorMap[colorScheme].text,
+              "shadow-md"
+            )
+          : cn(
+              "border-transparent text-muted-foreground",
+              colorMap[colorScheme].hover
+            ),
+        subtleFocus,
+        className
+      )}
+      size={newSize}
+      type="button"
+      variant={isActive ? "outline" : variant}
+      {...props}
+    />
+  );
+};
+
+export type AIInputSubmitProps = ComponentProps<typeof Button> & {
+  status?: "submitted" | "streaming" | "ready" | "error";
+};
+
+export const AIInputSubmit = ({
+  className,
+  variant = "default",
+  size = "icon",
+  status,
+  children,
+  ...props
+}: AIInputSubmitProps) => {
+  let Icon = (
+    <SendIcon className="motion-safe:transition-transform motion-safe:duration-300 group-hover/submit:translate-x-0.5" />
+  );
+  if (status === "submitted") Icon = <Loader2Icon className="animate-spin" />;
+  else if (status === "streaming")
+    Icon = <SquareIcon className="animate-pulse" />;
+  else if (status === "error") Icon = <XIcon className="animate-bounce" />;
+
+  const isDisabled = status === "submitted" || status === "streaming";
+
+  return (
+    <Button
+      aria-label="Send message"
+      className={cn(
+        "rounded-xl rounded-br-2xl border border-transparent",
+        "bg-gradient-to-r from-primary via-primary/90 to-primary",
+        "text-primary-foreground",
+        "shadow-md hover:shadow-lg",
+        "group/submit",
+        motionSafe,
+        "active:scale-95",
+        size === "icon" ? "h-11 w-11 sm:h-11 sm:w-11" : "",
+        subtleFocus,
+        status === "error" &&
+          "bg-gradient-to-r from-destructive via-destructive to-destructive",
+        className
+      )}
+      disabled={isDisabled}
+      size={size}
+      type="submit"
+      variant={variant}
+      {...props}
+    >
+      {children ?? Icon}
+    </Button>
+  );
+};
+
+export type AIInputModelSelectProps = ComponentProps<typeof Select>;
+export const AIInputModelSelect = (props: AIInputModelSelectProps) => (
+  <Select {...props} />
+);
+
+export type AIInputModelSelectTriggerProps = ComponentProps<
+  typeof SelectTrigger
+>;
+export const AIInputModelSelectTrigger = ({
+  className,
+  ...props
+}: AIInputModelSelectTriggerProps) => (
+  <SelectTrigger
+    className={cn(
+      "border border-transparent bg-transparent font-semibold text-muted-foreground",
+      "rounded-xl",
+      motionSafe,
+      glassHover,
+      "hover:scale-[1.015]",
+      "active:scale-95",
+      "backdrop-blur-sm",
+      subtleFocus,
+      "min-w-[120px] sm:min-w-[140px] px-2.5 py-2",
+      className
+    )}
+    {...props}
+  />
+);
+
+export type AIInputModelSelectContentProps = ComponentProps<
+  typeof SelectContent
+>;
+export const AIInputModelSelectContent = ({
+  className,
+  ...props
+}: AIInputModelSelectContentProps) => (
+  <SelectContent
+    className={cn(
+      "rounded-xl",
+      glassPanel,
+      "max-h-[260px] sm:max-h-[300px]",
+      "overflow-hidden overflow-y-auto",
+      "no-scrollbar",
+      motionSafe,
+      className
+    )}
+    {...props}
+  />
+);
+
+export type AIInputModelSelectItemProps = ComponentProps<typeof SelectItem>;
+export const AIInputModelSelectItem = ({
+  className,
+  ...props
+}: AIInputModelSelectItemProps) => (
+  <SelectItem
+    className={cn(
+      "rounded-lg mx-1 my-0.5",
+      "hover:bg-accent/70 focus:bg-accent/70",
+      motionSafe,
+      "cursor-pointer",
+      className
+    )}
+    {...props}
+  />
+);
+
+export type AIInputModelSelectValueProps = ComponentProps<typeof SelectValue>;
+export const AIInputModelSelectValue = ({
+  className,
+  ...props
+}: AIInputModelSelectValueProps) => (
+  <SelectValue className={cn("font-semibold", className)} {...props} />
+);
+
+
+const models = [
+  { id: "gpt-4", name: "GPT-4" },
+  { id: "gpt-3.5-turbo", name: "GPT-3.5 Turbo" },
+  { id: "claude-2", name: "Claude 2" },
+  { id: "claude-instant", name: "Claude Instant" },
+  { id: "palm-2", name: "PaLM 2" },
+  { id: "llama-2-70b", name: "Llama 2 70B" },
+  { id: "llama-2-13b", name: "Llama 2 13B" },
+  { id: "cohere-command", name: "Command" },
+  { id: "mistral-7b", name: "Mistral 7B" },
+];
+
+export default function MagicalChatInput() {
+  const [text, setText] = useState<string>("");
+  const [model, setModel] = useState<string>(models[0].id);
+  const [status, setStatus] = useState<
+    "submitted" | "streaming" | "ready" | "error"
+  >("ready");
+  const [isFocused, setIsFocused] = useState(false);
+  const [isDeepResearchEnabled, setIsDeepResearchEnabled] = useState(false);
+  const [isWebSearchEnabled, setIsWebSearchEnabled] = useState(false);
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    if (!text.trim()) return;
+
+    alert(`You entered: ${text}`);
+    setStatus("submitted");
+    setTimeout(() => setStatus("streaming"), 200);
+    setTimeout(() => setStatus("ready"), 1800);
+  };
+
+  const showFooterPill = text.length > 0;
+  const pillContent = useMemo(() => {
+    if (isWebSearchEnabled || isDeepResearchEnabled) {
+      return (
+        <div className="flex items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm">
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <div className="w-2 h-2 bg-current rounded-full animate-pulse" />
+            <span className="font-medium">Press Enter to send</span>
+          </div>
+          {isWebSearchEnabled && (
+            <div className="flex items-center gap-2 text-purple-600 dark:text-purple-400">
+              <GlobeIcon
+                size={16}
+                className="animate-spin"
+                style={{ animationDuration: "3s" }}
+                aria-hidden
+              />
+              <span className="font-semibold">Web search active</span>
+            </div>
+          )}
+          {isDeepResearchEnabled && (
+            <div className="flex items-center gap-2 text-orange-600 dark:text-orange-400">
+              <FlaskConicalIcon
+                size={16}
+                className="animate-bounce"
+                aria-hidden
+              />
+              <span className="font-semibold">Research mode</span>
+            </div>
+          )}
+        </div>
+      );
+    }
+    return (
+      <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+        <div className="w-1.5 h-1.5 bg-current rounded-full animate-pulse" />
+        <span className="font-medium">Press Enter to send</span>
+      </div>
+    );
+  }, [isWebSearchEnabled, isDeepResearchEnabled]);
+
+  return (
+    <div className="relative group flex items-center justify-center py-6 sm:py-10">
+      {/* Soft ambient gradient glow (mobile-friendly) */}
+      <div
+        aria-hidden
+        className={cn(
+          "absolute inset-0 pointer-events-none",
+          "opacity-60 sm:opacity-80"
+        )}
+      >
+        <div className="absolute inset-0 m-auto max-w-5xl h-[40%] sm:h-[50%] blur-2xl sm:blur-3xl rounded-[48px] bg-gradient-to-r from-primary/15 via-purple-500/15 to-primary/15" />
+      </div>
+
+      <AIInput
+        onSubmit={handleSubmit}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        className={cn(
+          "relative z-10 w-full",
+          "max-w-[min(100%,48rem)]", // 768px max
+          motionSafe,
+          isFocused && "ring-1 ring-primary/30"
+        )}
+      >
+        <AIInputTextarea
+          onChange={(e) => setText(e.target.value)}
+          value={text}
+          className={cn(
+            motionSafe,
+            isFocused && "placeholder:text-muted-foreground/40",
+            text.length > 0 && "font-semibold"
+          )}
+          placeholder="Ask me anything... ✨"
+        />
+
+        <AIInputToolbar
+          className={cn(
+            "items-stretch gap-2",
+            "bg-gradient-to-r from-background/50 via-background/65 to-background/50",
+            text.length > 0 && "backdrop-blur-xl"
+          )}
+        >
+          <AIInputTools>
+            <AIInputButton colorScheme="blue" aria-label="Add attachment">
+              <PlusIcon size={18} />
+            </AIInputButton>
+
+            <AIInputButton colorScheme="green" aria-label="Record voice">
+              <MicIcon size={18} />
+            </AIInputButton>
+
+            <AIInputToggleButton
+              isActive={isWebSearchEnabled}
+              onClick={() => setIsWebSearchEnabled((v) => !v)}
+              colorScheme="purple"
+              aria-label="Toggle web search"
+            >
+              <GlobeIcon size={18} />
+              <span className="hidden sm:inline font-semibold">Web Search</span>
+            </AIInputToggleButton>
+
+            <AIInputToggleButton
+              isActive={isDeepResearchEnabled}
+              onClick={() => setIsDeepResearchEnabled((v) => !v)}
+              colorScheme="orange"
+              aria-label="Toggle research mode"
+            >
+              <FlaskConicalIcon size={18} />
+              <span className="hidden sm:inline font-semibold">Research</span>
+            </AIInputToggleButton>
+
+            <AIInputModelSelect onValueChange={setModel} value={model}>
+              <AIInputModelSelectTrigger className="min-w-[116px] sm:min-w-[140px]">
+                <AIInputModelSelectValue />
+              </AIInputModelSelectTrigger>
+              <AIInputModelSelectContent>
+                {models.map((m) => (
+                  <AIInputModelSelectItem key={m.id} value={m.id}>
+                    <div className="flex items-center justify-between w-full">
+                      <span className="font-medium">{m.name}</span>
+                      {m.id === "gpt-4" && (
+                        <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full ml-3 font-semibold">
+                          Popular
+                        </span>
+                      )}
+                    </div>
+                  </AIInputModelSelectItem>
+                ))}
+              </AIInputModelSelectContent>
+            </AIInputModelSelect>
+          </AIInputTools>
+
+          <AIInputSubmit
+            status={status}
+            className={cn(
+              "relative overflow-hidden z-10",
+              text.length > 0 && "shadow-lg",
+              status === "ready" && text.length > 0 && "animate-none"
+            )}
+          />
+        </AIInputToolbar>
+      </AIInput>
+
+      {/* Footer hint pill */}
+      {showFooterPill && (
+        <div className="absolute -bottom-12 sm:-bottom-14 left-0 right-0 flex justify-center px-3">
+          <div
+            className={cn(
+              "px-4 py-2 sm:px-6 sm:py-3 rounded-full",
+              glassPanel,
+              "text-[0.8rem]",
+              "animate-in fade-in-0 slide-in-from-bottom-2 duration-300"
+            )}
+          >
+            {pillContent}
+          </div>
+        </div>
+      )}
+
+      {/* Subtle success pulse */}
+      {status === "submitted" && (
+        <>
+          <div
+            aria-hidden
+            className="absolute inset-0 rounded-3xl border-2 border-primary/40 animate-ping"
+          />
+          <div
+            aria-hidden
+            className="absolute inset-0 rounded-3xl bg-primary/5 animate-pulse"
+          />
+        </>
+      )}
+    </div>
+  );
+}
+a:["$","div",null,{"className":"space-y-8","children":["$","$L13",null,{"components":[{"componentName":"Magical Chat Input","description":["🔮 ",["$","b","1",{"children":"Magical Chat Input"}]," - A magical chat input component with ",["$","span","3",{"style":{"color":"#8b5cf6"},"children":"smooth animations"}],", ",["$","span","5",{"style":{"color":"#3b82f6"},"children":"cursor effects"}],", and ",["$","span","7",{"style":{"color":"#10b981"},"children":"micro-interactions"}],". ",["$","i","9",{"children":"Perfect for chat applications and AI assistants."}]],"component":"$14","defaultProps":{"placeholder":"What would you like to cook?","minHeight":88,"maxHeight":180,"variant":"default","colorScheme":"purple","isActive":false,"size":"icon"},"codeString":"$15","propsInfo":null}]}]}]
+f:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","2",{"name":"theme-color","media":"(prefers-color-scheme: light)","content":"#ffffff"}],["$","meta","3",{"name":"theme-color","media":"(prefers-color-scheme: dark)","content":"#0a0a0a"}]]
+11:[["$","title","0",{"children":"Magical Chat Input | AI Components | VUI React UI Library"}],["$","meta","1",{"name":"description","content":"🔮 Magical Chat Input - A magical chat input component with smooth animations, cursor effects, and micro-interactions. Perfect for chat applications and AI assistants."}],["$","link","2",{"rel":"manifest","href":"/manifest.json","crossOrigin":"$undefined"}],["$","meta","3",{"name":"keywords","content":"Magical Chat Input,AI Components,React UI,VUI,Component,Open Source,Modern UI,Customizable,Interactive"}],["$","meta","4",{"name":"category","content":"AI Components"}],["$","link","5",{"rel":"canonical","href":"https://vyomaui.design//ai-components/magical-chat-input"}],["$","meta","6",{"name":"mobile-web-app-capable","content":"yes"}],["$","meta","7",{"name":"apple-mobile-web-app-title","content":"LLM7.io"}],["$","meta","8",{"name":"apple-mobile-web-app-status-bar-style","content":"default"}],["$","meta","9",{"property":"og:title","content":"Magical Chat Input"}],["$","meta","10",{"property":"og:description","content":"🔮 Magical Chat Input - A magical chat input component with smooth animations, cursor effects, and micro-interactions. Perfect for chat applications and AI assistants."}],["$","meta","11",{"property":"og:url","content":"https://vyomaui.design//ai-components/magical-chat-input"}],["$","meta","12",{"property":"og:site_name","content":"VUI React UI Library"}],["$","meta","13",{"property":"og:image","content":"https://vyomaui.design/api/og?title=Magical%20Chat%20Input&description=%F0%9F%94%AE%20%3Cb%3EMagical%20Chat%20Input%3C%2Fb%3E%20-%20A%20magical%20chat%20input%20component%20with%20%3Cspan%20style%3D%27color%3A%20%238b5cf6%3B%27%3Esmooth%20animations%3C%2Fspan%3E%2C%20%3Cspan%20style%3D%27color%3A%20%233b82f6%3B%27%3Ecursor%20effects%3C%2Fspan%3E%2C%20and%20%3Cspan%20style%3D%27color%3A%20%2310b981%3B%27%3Emicro-interactions%3C%2Fspan%3E.%20%3Ci%3EPerfect%20for%20chat%20applications%20and%20AI%20assistants.%3C%2Fi%3E&path=%2Fai-components%2Fmagical-chat-input"}],["$","meta","14",{"property":"og:image:width","content":"1200"}],["$","meta","15",{"property":"og:image:height","content":"630"}],["$","meta","16",{"property":"og:type","content":"website"}],["$","meta","17",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","18",{"name":"twitter:title","content":"Magical Chat Input"}],["$","meta","19",{"name":"twitter:description","content":"🔮 Magical Chat Input - A magical chat input component with smooth animations, cursor effects, and micro-interactions. Perfect for chat applications and AI assistants."}],["$","meta","20",{"name":"twitter:image","content":"https://vyomaui.design/api/og?title=Magical%20Chat%20Input&description=%F0%9F%94%AE%20%3Cb%3EMagical%20Chat%20Input%3C%2Fb%3E%20-%20A%20magical%20chat%20input%20component%20with%20%3Cspan%20style%3D%27color%3A%20%238b5cf6%3B%27%3Esmooth%20animations%3C%2Fspan%3E%2C%20%3Cspan%20style%3D%27color%3A%20%233b82f6%3B%27%3Ecursor%20effects%3C%2Fspan%3E%2C%20and%20%3Cspan%20style%3D%27color%3A%20%2310b981%3B%27%3Emicro-interactions%3C%2Fspan%3E.%20%3Ci%3EPerfect%20for%20chat%20applications%20and%20AI%20assistants.%3C%2Fi%3E&path=%2Fai-components%2Fmagical-chat-input"}],["$","meta","21",{"name":"twitter:image:width","content":"1200"}],["$","meta","22",{"name":"twitter:image:height","content":"630"}],["$","link","23",{"rel":"icon","href":"/favicon.ico?favicon.dc98455b.ico","sizes":"48x48","type":"image/x-icon"}],["$","link","24",{"rel":"icon","href":"./favicon.ico","sizes":"any"}],["$","link","25",{"rel":"icon","href":"/favicons/favicon-16x16.png","sizes":"16x16","type":"image/png"}],["$","link","26",{"rel":"icon","href":"/favicons/favicon-32x32.png","sizes":"32x32","type":"image/png"}],["$","link","27",{"rel":"apple-touch-icon","href":"/favicons/apple-touch-icon.png","sizes":"180x180","type":"image/png"}],"$L16"]
+d:null
+17:I[76071,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"IconMark"]
+16:["$","$L17","28",{}]

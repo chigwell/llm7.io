@@ -5,6 +5,8 @@ import ThemeProvider from "@/providers/ThemeProvider";
 import { PackageManagerProvider } from "@/contexts/PackageManagerContext";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import GoogleProvider from "@/components/GoogleProvider";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,48 +19,61 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Vyoma UI | Truly Beyond UI. Designed with Spatial Wisdom Inside.",
-  description: "Truly Beyond UI. Designed with Spatial Wisdom Inside.",
+  title: "LLM7.io | One LLM API. Your Gateway to AI Innovation. Connect to leading AI models with one endpoint. Prototype, build, and scale without switching providers.",
+  description: "Your Gateway to AI Innovation. Connect to leading AI models with one endpoint. Prototype, build, and scale without switching providers.",
   keywords: [
-    "Vyoma UI",
-    "React UI",
-    "Component Library",
-    "Open Source",
-    "Modern UI",
-    "Customizable",
-    "Interactive",
-    "Spatial Design",
-    "VUI",
+    "LLM7",
+    "AI API",
+    "Large Language Models",
+    "AI Integration",
+    "AI Development",
+    "AI Prototyping",
+    "AI Scaling",
+    "Multi-Model AI",
+    "AI Platform",
+    "AI Services",
+    "Machine Learning API",
+    "NLP API",
+    "Conversational AI",
+    "Generative AI",
+    "AI Solutions",
+    "AI Tools",
+    "AI Applications",
+    "AI Innovation",
+    "Unified AI API",
+    "AI Model Access",
+    "AI Model Management",
+    "AI Model Deployment",
   ],
-  metadataBase: new URL("https://vyomaui.design"),
+  metadataBase: new URL("https://llm7.io"),
   alternates: {
-    canonical: "https://vyomaui.design",
+    canonical: "https://llm7.io",
   },
   openGraph: {
-    title: "Vyoma UI",
-    description: "Truly Beyond UI. Designed with Spatial Wisdom Inside.",
-    url: "https://vyomaui.design/",
-    siteName: "Vyoma UI",
+    title: "LLM7.io",
+    description: "Your Gateway to AI Innovation. Connect to leading AI models with one endpoint. Prototype, build, and scale without switching providers.",
+    url: "https://llm7.io",
+    siteName: "LLM7.io",
     type: "website",
     images: [
       {
-        url: "https://vyomaui.design/api/og",
+        url: "https://llm7.io/api/og",
         width: 1200,
         height: 630,
-        alt: "Vyoma UI Logo",
+        alt: "LLM7 Logo",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Vyoma UI",
-    description: "Truly Beyond UI. Designed with Spatial Wisdom Inside.",
+    title: "LLM7.io",
+    description: "Your Gateway to AI Innovation. Connect to leading AI models with one endpoint. Prototype, build, and scale without switching providers.",
     images: [
       {
-        url: "https://vyomaui.design/api/og",
+        url: "https://llm7.io/api/og",
         width: 1200,
         height: 630,
-        alt: "Vyoma UI Logo",
+        alt: "LLM7 Logo",
       },
     ],
     creator: "@srijanbaniyal",
@@ -86,7 +101,7 @@ export const metadata: Metadata = {
     ],
   },
   appleWebApp: {
-    title: "Vyoma UI",
+    title: "LLM7.io",
     statusBarStyle: "default",
     capable: true,
   },
@@ -106,17 +121,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ThemeProvider>
-          <PackageManagerProvider>
-            {children}
-            <Analytics />
-            <SpeedInsights />
-          </PackageManagerProvider>
-        </ThemeProvider>
-      </body>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <GoogleProvider>
+          <ThemeProvider>
+            <PackageManagerProvider>
+              {children}
+              //<Analytics />
+              //<SpeedInsights />
+            </PackageManagerProvider>
+          </ThemeProvider>
+        </GoogleProvider>
+        </body>
     </html>
   );
 }

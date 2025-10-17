@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/buttonShadcn";
 import Link from "next/link";
-import { ArrowRight, Sparkles, Layers, Zap } from "lucide-react";
+import { ArrowRight, Sparkles, Layers, Zap, DownloadCloud, Server } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { Pill } from "@/components/ui/pill";
 import { CountUp } from "@/components/vui/text/CountUp";
@@ -44,6 +44,27 @@ export default function HeroSectionWithWaves() {
   const [vantaLoaded, setVantaLoaded] = useState(false);
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [countVisitors, setCountVisitors] = useState(84); // default value
+
+  // Fetch dynamic stats on mount
+  useEffect(() => {
+    async function fetchStats() {
+      // get the number from https://api.llm7.io/v1/unique-visitors
+      // {"unique_visitors_last_30_days":119795}
+        try {
+            const response = await fetch("https://api.llm7.io/v1/unique-visitors");
+            const data = await response.json();
+            if (data && data.unique_visitors_last_30_days) {
+                const visitors = Math.round(data.unique_visitors_last_30_days / 1000); // convert to 'k'
+                setCountVisitors(visitors);
+            }
+        }
+        catch (error) {
+            console.warn("Failed to fetch visitor stats:", error);
+        }
+    }
+    fetchStats();
+  }, [setCountVisitors]);
 
   // Get the current theme, defaulting to system theme if not explicitly set
   const currentTheme = theme === "system" ? systemTheme : theme;
@@ -108,14 +129,13 @@ export default function HeroSectionWithWaves() {
             const colorConfig = isDarkTheme
               ? {
                   // Dark theme colors (current)
-                  color: 0x1a1a2e,
-                  backgroundColor: 0x0f0f23,
+                  color: 0x3a1d88, // Deep purple
+                  backgroundColor: 0x18a0dd, // Bright muted blue
                   shininess: isMobile ? 25.0 : 30.0,
                 }
               : {
-                  // Light theme colors
-                  color: 0xf0f0f0,
-                  backgroundColor: 0xffffff,
+                  color: 0xe0e0e0, // Very light grey, almost white, for the logo's main visible elements
+                  backgroundColor: 0xffffff, // Pure white (or fully transparent if handled by CSS/canvas alpha)
                   shininess: isMobile ? 35.0 : 40.0,
                 };
 
@@ -186,7 +206,7 @@ export default function HeroSectionWithWaves() {
     : "border-gray-800";
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-24">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden -mt-16 md:-mt-20">
       {/* Fallback background - theme dependent */}
       <div className={`absolute inset-0 ${fallbackBackground} z-0`}></div>
 
@@ -211,7 +231,7 @@ export default function HeroSectionWithWaves() {
         </div>
       )}
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-30">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-30 pt-40 md:pt-40">
         <div className="max-w-5xl mx-auto text-center">
           {/* Main Headline */}
           <div className="space-y-6 md:space-y-8 mb-8 md:mb-12">
@@ -220,7 +240,7 @@ export default function HeroSectionWithWaves() {
               status="active"
               className="mb-6 md:mb-8 bg-background/50 backdrop-blur-sm text-xs md:text-sm text-muted-foreground"
             >
-              {`Introducing LLM7 docs v${vuiVersion}`}
+             {`Introducing LLM7 UI v1.0.0`}
             </Pill>
 
             <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight leading-[0.9] px-2">
@@ -228,26 +248,26 @@ export default function HeroSectionWithWaves() {
                 One LLM API
               </span>
               <br />
-              <span className="bg-gradient-to-r from-primary via-primary to-primary/60 bg-clip-text text-transparent">
-                {/* This appears to be empty in the original */}
+              <span className="bg-gradient-to-r from-primary via-primary to-primary/60 bg-clip-text text-transparent text-6xl">
+                Your Gateway to AI Innovation
               </span>
             </h1>
 
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4">
-              crafted for{" "}
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4" style={{marginBottom: '0'}}>
+              Connect to leading AI models with one endpoint.
               <span className="text-foreground font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text">
-                developers,
+
               </span>{" "}
               <span className="text-foreground font-semibold bg-gradient-to-r from-secondary to-primary bg-clip-text">
-                researchers
+
               </span>
-              , and{" "}
+              {" "}
               <span className="text-foreground font-semibold bg-gradient-to-r from-secondary to-primary bg-clip-text">
-                creators
-              </span>.
+
+              </span>
             </p>
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4">
-              Build, prototype, and explore — from code to creativity.
+Prototype, build, and scale without switching providers.
             </p>
           </div>
 
@@ -256,30 +276,34 @@ export default function HeroSectionWithWaves() {
             <div className="p-4 md:p-6 rounded-2xl border bg-card/50 backdrop-blur-sm">
               <Layers className="w-6 h-6 md:w-8 md:h-8 text-primary mx-auto mb-3 md:mb-4" />
               <h3 className="font-semibold mb-2 text-sm md:text-base">
-                Component Library
+                Model Flexibility
               </h3>
               <p className="text-xs md:text-sm text-muted-foreground">
-                Rich collection of reusable components built with modern
-                standards
+                Switch seamlessly between leading LLMs with a single API — same calls, same SDKs.
+
               </p>
             </div>
             <div className="p-4 md:p-6 rounded-2xl border bg-card/50 backdrop-blur-sm">
               <Zap className="w-6 h-6 md:w-8 md:h-8 text-primary mx-auto mb-3 md:mb-4" />
               <h3 className="font-semibold mb-2 text-sm md:text-base">
-                Lightning Fast
+                Predictable Performance
+
               </h3>
               <p className="text-xs md:text-sm text-muted-foreground">
-                Optimized for performance with minimal bundle size
+                Consistent low-latency inference and throughput controls for reliable production deployments.
+
               </p>
             </div>
             <div className="p-4 md:p-6 rounded-2xl border bg-card/50 backdrop-blur-sm sm:col-span-2 md:col-span-1">
-              <Sparkles className="w-6 h-6 md:w-8 md:h-8 text-primary mx-auto mb-3 md:mb-4" />
+              <DownloadCloud className="w-6 h-6 md:w-8 md:h-8 text-primary mx-auto mb-3 md:mb-4" />
               <h3 className="font-semibold mb-2 text-sm md:text-base">
-                Design System
+                Fine-tune & Local Deploy*
               </h3>
               <p className="text-xs md:text-sm text-muted-foreground">
-                Consistent design language with thoughtful spacing and
-                typography
+                Customise via API, then run securely on your own infrastructure — even offline.
+              </p>
+              <p className="text-xs md:text-sm text-muted-foreground">
+                * (Coming soon)
               </p>
             </div>
           </div>
@@ -291,8 +315,8 @@ export default function HeroSectionWithWaves() {
               className="w-full sm:w-auto px-6 md:px-8 py-4 md:py-6 text-base md:text-lg font-semibold"
               asChild
             >
-              <Link href="/get-started/introduction">
-                Get Started
+              <Link href="https://token.llm7.io/">
+                Get a Free API Key
                 <ArrowRight className="w-4 h-4 md:w-5 md:h-5 ml-2" />
               </Link>
             </Button>
@@ -302,7 +326,9 @@ export default function HeroSectionWithWaves() {
               className="w-full sm:w-auto px-6 md:px-8 py-4 md:py-6 text-base md:text-lg font-semibold backdrop-blur-sm"
               asChild
             >
-              <Link href="/components/accordion">View Components</Link>
+              <Link href="#example">
+                Example
+              </Link>
             </Button>
           </div>
 
@@ -311,8 +337,8 @@ export default function HeroSectionWithWaves() {
             <div>
               <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-primary to-secondary bg-clip-text">
                 <CountUp
-                  to={getDynamicStats().totalComponents}
-                  suffix="+"
+                  to={153}
+                  suffix="m+"
                   duration={2.5}
                   delay={0.5}
                   effect="elastic"
@@ -320,15 +346,15 @@ export default function HeroSectionWithWaves() {
                 />
               </div>
               <div className="text-xs md:text-sm text-muted-foreground">
-                Components
+                API Calls
               </div>
             </div>
             <div className="w-px h-8 md:h-12 bg-gradient-to-b from-transparent via-border to-transparent"></div>
             <div>
               <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
                 <CountUp
-                  to={100}
-                  suffix="%"
+                  to={18}
+                  suffix="+"
                   duration={3}
                   delay={1}
                   effect="bounce"
@@ -337,11 +363,45 @@ export default function HeroSectionWithWaves() {
                 />
               </div>
               <div className="text-xs md:text-sm text-muted-foreground">
-                TypeScript
+                LLM Models
               </div>
             </div>
             <div className="w-px h-8 md:h-12 bg-gradient-to-b from-transparent via-border to-transparent"></div>
             <div>
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
+                <CountUp
+                  to={35}
+                  suffix="k+"
+                  duration={3}
+                  delay={1}
+                  effect="bounce"
+                  colorTransition
+                  hoverEffect
+                />
+              </div>
+              <div className="text-xs md:text-sm text-muted-foreground">
+                Users
+              </div>
+            </div>
+            <div className="w-px h-8 md:h-12 bg-gradient-to-b from-transparent via-border to-transparent"></div>
+            <div>
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
+                <CountUp
+                  to={countVisitors}
+                  suffix="k+"
+                  duration={3}
+                  delay={1}
+                  effect="bounce"
+                  colorTransition
+                  hoverEffect
+                />
+              </div>
+              <div className="text-xs md:text-sm text-muted-foreground">
+                Visitors (30d)
+              </div>
+            </div>
+            <div className="w-px h-8 md:h-12 bg-gradient-to-b from-transparent via-border to-transparent"></div>
+            <div className="hidden lg:inline">
               <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-primary to-secondary bg-clip-text">
                 <CountUp
                   to={999}

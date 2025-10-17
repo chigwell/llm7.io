@@ -319,7 +319,7 @@ export const NavbarLogo = () => {
         <div className="h-10 w-10 rounded-lg flex items-center justify-center shadow-lg">
           <Image
             src="/llm7.png"
-            alt="LLM7"
+            alt="LLM7.io"
             width={40}
             height={40}
             priority
@@ -328,7 +328,7 @@ export const NavbarLogo = () => {
         </div>
       </motion.div>
       <span className="text-lg font-semibold text-neutral-800 dark:text-white">
-        LLM7
+        LLM7.io
       </span>
     </motion.a>
   );
