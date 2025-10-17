@@ -1,0 +1,476 @@
+1:"$Sreact.fragment"
+2:I[59472,["/_next/static/chunks/a57b9add132816f3.js"],"default"]
+3:I[14216,["/_next/static/chunks/a57b9add132816f3.js"],"default"]
+4:I[28272,["/_next/static/chunks/a57b9add132816f3.js"],"PackageManagerProvider"]
+5:I[84767,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"default"]
+6:I[20082,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"default"]
+7:I[55103,["/_next/static/chunks/a57b9add132816f3.js"],"Analytics"]
+8:I[48457,["/_next/static/chunks/a57b9add132816f3.js"],"SpeedInsights"]
+9:I[49191,["/_next/static/chunks/a57b9add132816f3.js","/_next/static/chunks/2a60c40de118aa48.js","/_next/static/chunks/509648a058d8293e.js","/_next/static/chunks/3ba0e3814b139423.js","/_next/static/chunks/3d86c85e70d30f5d.js","/_next/static/chunks/06c6b153eeaf5bef.js","/_next/static/chunks/88e3ea6ba5270218.js"],"default"]
+b:I[18700,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"OutletBoundary"]
+c:"$Sreact.suspense"
+e:I[18700,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"ViewportBoundary"]
+10:I[18700,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"MetadataBoundary"]
+12:I[53024,[],"default"]
+:HL["/_next/static/chunks/2473c16c0c2f6b5f.css","style"]
+:HL["/_next/static/chunks/5567ad284820a802.css","style"]
+:HL["/_next/static/chunks/e9b84da6d07baf88.css","style"]
+:HL["/_next/static/media/797e433ab948586e-s.p.dbea232f.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/caa3a2e1cccd8315-s.p.853070df.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+0:{"P":null,"b":"u1ybXbxuBVVNcSx6m86l5","c":["","backgrounds","wavy-tiles",""],"i":false,"f":[[["",{"children":[["slug","backgrounds/wavy-tiles","c"],{"children":["__PAGE__",{}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/2473c16c0c2f6b5f.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/5567ad284820a802.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/a57b9add132816f3.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":["$","body",null,{"className":"geist_a71539c9-module__T19VSG__variable geist_mono_8d43a2aa-module__8Li5zG__variable antialiased","children":["$","$L2",null,{"children":["$","$L3",null,{"children":["$","$L4",null,{"children":[["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}],"//",["$","$L7",null,{}],"//",["$","$L8",null,{}]]}]}]}]}]}]]}],{"children":[["slug","backgrounds/wavy-tiles","c"],["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/e9b84da6d07baf88.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/2a60c40de118aa48.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/509648a058d8293e.js","async":true,"nonce":"$undefined"}],["$","script","script-2",{"src":"/_next/static/chunks/3ba0e3814b139423.js","async":true,"nonce":"$undefined"}],["$","script","script-3",{"src":"/_next/static/chunks/3d86c85e70d30f5d.js","async":true,"nonce":"$undefined"}],["$","script","script-4",{"src":"/_next/static/chunks/06c6b153eeaf5bef.js","async":true,"nonce":"$undefined"}],["$","script","script-5",{"src":"/_next/static/chunks/88e3ea6ba5270218.js","async":true,"nonce":"$undefined"}]],["$","div",null,{"className":"min-h-screen","children":["$","$L9",null,{"children":["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]}]}]]}],{"children":["__PAGE__",["$","$1","c",{"children":["$La",[["$","script","script-0",{"src":"/_next/static/chunks/e6d515658f214d0b.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/1c69ca3ea65d82ff.js","async":true,"nonce":"$undefined"}]],["$","$Lb",null,{"children":["$","$c",null,{"name":"Next.MetadataOutlet","children":"$@d"}]}]]}],{},null,false,false]},null,false,false]},null,false,false],["$","$1","h",{"children":[null,["$","$Le",null,{"children":"$@f"}],["$","div",null,{"hidden":true,"children":["$","$L10",null,{"children":["$","$c",null,{"name":"Next.Metadata","children":"$@11"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],false]],"m":"$undefined","G":["$12",[]],"s":false,"S":true}
+13:I[44089,["/_next/static/chunks/a57b9add132816f3.js","/_next/static/chunks/2a60c40de118aa48.js","/_next/static/chunks/509648a058d8293e.js","/_next/static/chunks/3ba0e3814b139423.js","/_next/static/chunks/3d86c85e70d30f5d.js","/_next/static/chunks/06c6b153eeaf5bef.js","/_next/static/chunks/88e3ea6ba5270218.js","/_next/static/chunks/e6d515658f214d0b.js","/_next/static/chunks/1c69ca3ea65d82ff.js"],"default"]
+14:I[16238,["/_next/static/chunks/a57b9add132816f3.js","/_next/static/chunks/2a60c40de118aa48.js","/_next/static/chunks/509648a058d8293e.js","/_next/static/chunks/3ba0e3814b139423.js","/_next/static/chunks/3d86c85e70d30f5d.js","/_next/static/chunks/06c6b153eeaf5bef.js","/_next/static/chunks/88e3ea6ba5270218.js","/_next/static/chunks/e6d515658f214d0b.js","/_next/static/chunks/1c69ca3ea65d82ff.js"],"WavyTilesShowcase"]
+15:T371b,"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
+
+declare global {
+  interface Window {
+    VANTA: {
+      WAVES: (config: {
+        el: HTMLElement;
+        mouseControls?: boolean;
+        touchControls?: boolean;
+        gyroControls?: boolean;
+        minHeight?: number;
+        minWidth?: number;
+        scale?: number;
+        scaleMobile?: number;
+        color?: number;
+        backgroundColor?: number;
+        shininess?: number;
+        waveHeight?: number;
+        waveSpeed?: number;
+        zoom?: number;
+        forceAnimate?: boolean;
+      }) => {
+        destroy: () => void;
+      };
+    };
+    THREE: object;
+  }
+}
+
+export default function Background() {
+  const vantaRef = useRef<HTMLDivElement>(null);
+  const vantaEffect = useRef<{ destroy: () => void } | null>(null);
+  const [vantaLoaded, setVantaLoaded] = useState(false);
+  const isMobile = useIsMobile();
+
+  useEffect(() => {
+    const loadVanta = async () => {
+      if (
+        typeof window !== "undefined" &&
+        vantaRef.current &&
+        !vantaEffect.current
+      ) {
+        try {
+          // Load Three.js
+          if (!window.THREE) {
+            const script1 = document.createElement("script");
+            script1.src =
+              "https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js";
+            document.head.appendChild(script1);
+
+            await new Promise((resolve, reject) => {
+              script1.onload = resolve;
+              script1.onerror = reject;
+              setTimeout(reject, 5000); // 5 second timeout
+            });
+          }
+
+          // Load Vanta Waves
+          if (!window.VANTA) {
+            const script2 = document.createElement("script");
+            script2.src =
+              "https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js";
+            document.head.appendChild(script2);
+
+            await new Promise((resolve, reject) => {
+              script2.onload = resolve;
+              script2.onerror = reject;
+              setTimeout(reject, 5000); // 5 second timeout
+            });
+          }
+
+          // Initialize Vanta effect with consistent mobile-optimized settings
+          if (window.VANTA && window.THREE && vantaRef.current) {
+            vantaEffect.current = window.VANTA.WAVES({
+              el: vantaRef.current,
+              mouseControls: true,
+              touchControls: true,
+              gyroControls: false,
+              minHeight: 200.0,
+              minWidth: 200.0,
+              scale: isMobile ? 0.8 : 1.0,
+              scaleMobile: 0.8,
+              color: 0x1a1a2e, // Consistent color scheme
+              backgroundColor: 0x0f0f23, // Consistent background
+              shininess: isMobile ? 25.0 : 30.0,
+              waveHeight: isMobile ? 15.0 : 20.0,
+              waveSpeed: isMobile ? 0.8 : 1.0,
+              zoom: isMobile ? 1.0 : 0.9,
+              forceAnimate: true,
+            });
+            setVantaLoaded(true);
+          }
+        } catch (error) {
+          console.warn("Vanta.js failed to load:", error);
+          setVantaLoaded(false);
+        }
+      }
+    };
+
+    // Add a small delay to ensure DOM is ready
+    const timer = setTimeout(loadVanta, 100);
+
+    return () => {
+      clearTimeout(timer);
+      if (vantaEffect.current) {
+        try {
+          vantaEffect.current.destroy();
+        } catch (error) {
+          console.warn("Error destroying Vanta effect:", error);
+        }
+        vantaEffect.current = null;
+      }
+    };
+  }, [isMobile]);
+
+  return (
+    <section className="relative h-screen flex items-center overflow-hidden">
+      {/* Fallback background - consistent with showcase */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-slate-800 z-0"></div>
+
+      {/* Vanta.js container */}
+      <div
+        ref={vantaRef}
+        className="absolute inset-0 z-10"
+        style={{
+          width: "100%",
+          height: "100%",
+        }}
+      ></div>
+
+      {/* Loading indicator */}
+      {!vantaLoaded && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center">
+          <div
+            className={`${
+              isMobile ? "w-6 h-6" : "w-8 h-8"
+            } border-2 border-white border-t-transparent rounded-full animate-spin`}
+          ></div>
+        </div>
+      )}
+
+      {/* Content - consistent responsive styling */}
+      <div className="relative z-30 flex flex-col items-center justify-center min-h-screen p-4 text-center">
+        <div
+          className={`${
+            isMobile ? "mb-4 space-y-2" : "mb-8 space-y-3 md:space-y-6"
+          }`}
+        >
+          <div className="inline-block">
+            <h1
+              className={`${
+                isMobile ? "text-3xl" : "text-6xl md:text-8xl"
+              } font-black tracking-tighter bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent animate-pulse`}
+            >
+              INTERACTIVE WAVES
+            </h1>
+            <div
+              className={`h-1 w-full bg-gradient-to-r from-transparent via-white to-transparent ${
+                isMobile ? "mt-2" : "mt-4"
+              } animate-pulse`}
+            />
+          </div>
+
+          <p
+            className={`${
+              isMobile
+                ? "text-sm px-4 leading-relaxed"
+                : "text-lg md:text-xl px-0 leading-relaxed"
+            } text-gray-300 max-w-2xl font-light`}
+          >
+            Experience mesmerizing fluid dynamics with
+            <span className="text-white font-medium"> Vanta.js </span>
+            powered interactive waves that respond to your {isMobile ? "touch" : "movement"}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Showcase Component for WavyTiles
+export function WavyTilesShowcase() {
+  const vantaRef = useRef<HTMLDivElement>(null);
+  const vantaEffect = useRef<{ destroy: () => void } | null>(null);
+  const [vantaLoaded, setVantaLoaded] = useState(false);
+  const isMobile = useIsMobile();
+
+  useEffect(() => {
+    const loadVanta = async () => {
+      if (
+        typeof window !== "undefined" &&
+        vantaRef.current &&
+        !vantaEffect.current
+      ) {
+        try {
+          // Load Three.js
+          if (!window.THREE) {
+            const script1 = document.createElement("script");
+            script1.src =
+              "https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js";
+            document.head.appendChild(script1);
+
+            await new Promise((resolve, reject) => {
+              script1.onload = resolve;
+              script1.onerror = reject;
+              setTimeout(reject, 5000);
+            });
+          }
+
+          // Load Vanta Waves
+          if (!window.VANTA) {
+            const script2 = document.createElement("script");
+            script2.src =
+              "https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js";
+            document.head.appendChild(script2);
+
+            await new Promise((resolve, reject) => {
+              script2.onload = resolve;
+              script2.onerror = reject;
+              setTimeout(reject, 5000);
+            });
+          }
+
+          // Initialize Vanta effect
+          if (window.VANTA && window.THREE && vantaRef.current) {
+            vantaEffect.current = window.VANTA.WAVES({
+              el: vantaRef.current,
+              mouseControls: true,
+              touchControls: true,
+              gyroControls: false,
+              minHeight: 200.0,
+              minWidth: 200.0,
+              scale: isMobile ? 0.8 : 1.0,
+              scaleMobile: 0.8,
+              color: 0x1a1a2e,
+              backgroundColor: 0x0f0f23,
+              shininess: isMobile ? 25.0 : 30.0,
+              waveHeight: isMobile ? 15.0 : 20.0,
+              waveSpeed: isMobile ? 0.8 : 1.0,
+              zoom: isMobile ? 1.0 : 0.9,
+              forceAnimate: true,
+            });
+            setVantaLoaded(true);
+          }
+        } catch (error) {
+          console.warn(`Vanta.js failed to load: ${error}`);
+          setVantaLoaded(false);
+        }
+      }
+    };
+
+    const timer = setTimeout(loadVanta, 100);
+
+    return () => {
+      clearTimeout(timer);
+      if (vantaEffect.current) {
+        try {
+          vantaEffect.current.destroy();
+        } catch (error) {
+          console.warn("Error destroying Vanta effect:", error);
+        }
+        vantaEffect.current = null;
+      }
+    };
+  }, [isMobile]);
+
+  return (
+    <div className="space-y-6 md:space-y-8">
+      <div className="space-y-4 md:space-y-6">
+        {/* Showcase Container */}
+        <div className="relative w-full h-96 rounded-lg overflow-hidden border">
+          {/* Fallback background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-slate-800"></div>
+
+          {/* Vanta.js container */}
+          <div
+            ref={vantaRef}
+            className="absolute inset-0"
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+          ></div>
+
+          {/* Loading indicator */}
+          {!vantaLoaded && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div
+                className={`${
+                  isMobile ? "w-6 h-6" : "w-8 h-8"
+                } border-2 border-white border-t-transparent rounded-full animate-spin`}
+              ></div>
+            </div>
+          )}
+
+          {/* Overlay content */}
+          <div className="absolute inset-0 flex items-center justify-center z-10">
+            <div className="text-center text-white">
+              <h2
+                className={`${
+                  isMobile ? "text-2xl" : "text-4xl"
+                } font-bold mb-2 md:mb-4`}
+              >
+                Interactive Waves
+              </h2>
+              <p className={`${isMobile ? "text-sm" : "text-lg"} opacity-80`}>
+                {isMobile
+                  ? "Touch to interact"
+                  : "Move your mouse to interact with the waves"}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function WavyTilesTheme() {
+  const vantaRef = useRef<HTMLDivElement>(null);
+  const vantaEffect = useRef<{ destroy: () => void } | null>(null);
+  const [vantaLoaded, setVantaLoaded] = useState(false);
+  const isMobile = useIsMobile();
+
+  useEffect(() => {
+    const loadVanta = async () => {
+      if (
+        typeof window !== "undefined" &&
+        vantaRef.current &&
+        !vantaEffect.current
+      ) {
+        try {
+          // Load Three.js
+          if (!window.THREE) {
+            const script1 = document.createElement("script");
+            script1.src =
+              "https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js";
+            document.head.appendChild(script1);
+
+            await new Promise((resolve, reject) => {
+              script1.onload = resolve;
+              script1.onerror = reject;
+              setTimeout(reject, 5000);
+            });
+          }
+
+          // Load Vanta Waves
+          if (!window.VANTA) {
+            const script2 = document.createElement("script");
+            script2.src =
+              "https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js";
+            document.head.appendChild(script2);
+
+            await new Promise((resolve, reject) => {
+              script2.onload = resolve;
+              script2.onerror = reject;
+              setTimeout(reject, 5000);
+            });
+          }
+
+          // Initialize Vanta effect
+          if (window.VANTA && window.THREE && vantaRef.current) {
+            vantaEffect.current = window.VANTA.WAVES({
+              el: vantaRef.current,
+              mouseControls: true,
+              touchControls: true,
+              gyroControls: false,
+              minHeight: 200.0,
+              minWidth: 200.0,
+              scale: isMobile ? 0.8 : 1.0,
+              scaleMobile: 0.8,
+              color: 0x1a1a2e,
+              backgroundColor: 0x0f0f23,
+              shininess: isMobile ? 25.0 : 30.0,
+              waveHeight: isMobile ? 15.0 : 20.0,
+              waveSpeed: isMobile ? 0.8 : 1.0,
+              zoom: isMobile ? 1.0 : 0.9,
+              forceAnimate: true,
+            });
+            setVantaLoaded(true);
+          }
+        } catch (error) {
+          console.warn("Vanta.js failed to load:", error);
+          setVantaLoaded(false);
+        }
+      }
+    };
+
+    const timer = setTimeout(loadVanta, 100);
+
+    return () => {
+      clearTimeout(timer);
+      if (vantaEffect.current) {
+        try {
+          vantaEffect.current.destroy();
+        } catch (error) {
+          console.warn("Error destroying Vanta effect:", error);
+        }
+        vantaEffect.current = null;
+      }
+    };
+  }, [isMobile]);
+
+  return (
+    <div className="relative w-full h-96 bg-black overflow-hidden rounded-lg">
+      {/* Vanta.js container */}
+      <div
+        ref={vantaRef}
+        className="absolute inset-0"
+        style={{
+          width: "100%",
+          height: "100%",
+        }}
+      ></div>
+
+      {/* Loading indicator */}
+      {!vantaLoaded && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div
+            className={`${
+              isMobile ? "w-6 h-6" : "w-8 h-8"
+            } border-2 border-white border-t-transparent rounded-full animate-spin`}
+          ></div>
+        </div>
+      )}
+
+      {/* Overlay content */}
+      <div className="absolute inset-0 flex items-center justify-center z-10">
+        <div className="text-center text-white">
+          <h2
+            className={`${
+              isMobile ? "text-2xl" : "text-4xl"
+            } font-bold mb-2 md:mb-4`}
+          >
+            Interactive Waves
+          </h2>
+          <p className={`${isMobile ? "text-sm" : "text-lg"} opacity-80`}>
+            {isMobile
+              ? "Touch to interact"
+              : "Move your mouse to interact with the waves"}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+a:["$","div",null,{"className":"space-y-8","children":["$","$L13",null,{"components":[{"componentName":"Wavy Tiles","description":["🌊 ",["$","b","1",{"children":"Animated Wave Pattern"}]," - Dynamic tiled background with ",["$","span","3",{"style":{"color":"#3b82f6"},"children":"fluid wave animations"}]," and ",["$","span","5",{"style":{"color":"#f59e0b"},"children":"customizable colors"}],". Features ",["$","span","7",{"style":{"color":"#10b981"},"children":"performance optimization"}]," and ",["$","b","9",{"children":"responsive scaling"}],"."],"component":"$14","defaultProps":{},"codeString":"$15","propsInfo":null}]}]}]
+f:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","2",{"name":"theme-color","media":"(prefers-color-scheme: light)","content":"#ffffff"}],["$","meta","3",{"name":"theme-color","media":"(prefers-color-scheme: dark)","content":"#0a0a0a"}]]
+16:I[76071,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"IconMark"]
+11:[["$","title","0",{"children":"Wavy Tiles | Backgrounds | VUI React UI Library"}],["$","meta","1",{"name":"description","content":"🌊 Animated Wave Pattern - Dynamic tiled background with fluid wave animations and customizable colors. Features performance optimization and responsive scaling."}],["$","link","2",{"rel":"manifest","href":"/manifest.json","crossOrigin":"$undefined"}],["$","meta","3",{"name":"keywords","content":"Wavy Tiles,Backgrounds,React UI,VUI,Component,Open Source,Modern UI,Customizable,Interactive"}],["$","meta","4",{"name":"category","content":"Backgrounds"}],["$","link","5",{"rel":"canonical","href":"https://vyomaui.design//backgrounds/wavy-tiles"}],["$","meta","6",{"name":"mobile-web-app-capable","content":"yes"}],["$","meta","7",{"name":"apple-mobile-web-app-title","content":"LLM7.io"}],["$","meta","8",{"name":"apple-mobile-web-app-status-bar-style","content":"default"}],["$","meta","9",{"property":"og:title","content":"Wavy Tiles"}],["$","meta","10",{"property":"og:description","content":"🌊 Animated Wave Pattern - Dynamic tiled background with fluid wave animations and customizable colors. Features performance optimization and responsive scaling."}],["$","meta","11",{"property":"og:url","content":"https://vyomaui.design//backgrounds/wavy-tiles"}],["$","meta","12",{"property":"og:site_name","content":"VUI React UI Library"}],["$","meta","13",{"property":"og:image","content":"https://vyomaui.design/api/og?title=Wavy%20Tiles&description=%F0%9F%8C%8A%20%3Cb%3EAnimated%20Wave%20Pattern%3C%2Fb%3E%20-%20Dynamic%20tiled%20background%20with%20%3Cspan%20style%3D%27color%3A%20%233b82f6%3B%27%3Efluid%20wave%20animations%3C%2Fspan%3E%20and%20%3Cspan%20style%3D%27color%3A%20%23f59e0b%3B%27%3Ecustomizable%20colors%3C%2Fspan%3E.%20Features%20%3Cspan%20style%3D%27color%3A%20%2310b981%3B%27%3Eperformance%20optimization%3C%2Fspan%3E%20and%20%3Cb%3Eresponsive%20scaling%3C%2Fb%3E.&path=%2Fbackgrounds%2Fwavy-tiles"}],["$","meta","14",{"property":"og:image:width","content":"1200"}],["$","meta","15",{"property":"og:image:height","content":"630"}],["$","meta","16",{"property":"og:type","content":"website"}],["$","meta","17",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","18",{"name":"twitter:title","content":"Wavy Tiles"}],["$","meta","19",{"name":"twitter:description","content":"🌊 Animated Wave Pattern - Dynamic tiled background with fluid wave animations and customizable colors. Features performance optimization and responsive scaling."}],["$","meta","20",{"name":"twitter:image","content":"https://vyomaui.design/api/og?title=Wavy%20Tiles&description=%F0%9F%8C%8A%20%3Cb%3EAnimated%20Wave%20Pattern%3C%2Fb%3E%20-%20Dynamic%20tiled%20background%20with%20%3Cspan%20style%3D%27color%3A%20%233b82f6%3B%27%3Efluid%20wave%20animations%3C%2Fspan%3E%20and%20%3Cspan%20style%3D%27color%3A%20%23f59e0b%3B%27%3Ecustomizable%20colors%3C%2Fspan%3E.%20Features%20%3Cspan%20style%3D%27color%3A%20%2310b981%3B%27%3Eperformance%20optimization%3C%2Fspan%3E%20and%20%3Cb%3Eresponsive%20scaling%3C%2Fb%3E.&path=%2Fbackgrounds%2Fwavy-tiles"}],["$","meta","21",{"name":"twitter:image:width","content":"1200"}],["$","meta","22",{"name":"twitter:image:height","content":"630"}],["$","link","23",{"rel":"icon","href":"/favicon.ico?favicon.dc98455b.ico","sizes":"48x48","type":"image/x-icon"}],["$","link","24",{"rel":"icon","href":"./favicon.ico","sizes":"any"}],["$","link","25",{"rel":"icon","href":"/favicons/favicon-16x16.png","sizes":"16x16","type":"image/png"}],["$","link","26",{"rel":"icon","href":"/favicons/favicon-32x32.png","sizes":"32x32","type":"image/png"}],["$","link","27",{"rel":"apple-touch-icon","href":"/favicons/apple-touch-icon.png","sizes":"180x180","type":"image/png"}],["$","$L16","28",{}]]
+d:null

@@ -1,0 +1,602 @@
+1:"$Sreact.fragment"
+2:I[59472,["/_next/static/chunks/a57b9add132816f3.js"],"default"]
+3:I[14216,["/_next/static/chunks/a57b9add132816f3.js"],"default"]
+4:I[28272,["/_next/static/chunks/a57b9add132816f3.js"],"PackageManagerProvider"]
+5:I[84767,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"default"]
+6:I[20082,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"default"]
+7:I[55103,["/_next/static/chunks/a57b9add132816f3.js"],"Analytics"]
+8:I[48457,["/_next/static/chunks/a57b9add132816f3.js"],"SpeedInsights"]
+9:I[49191,["/_next/static/chunks/a57b9add132816f3.js","/_next/static/chunks/2a60c40de118aa48.js","/_next/static/chunks/509648a058d8293e.js","/_next/static/chunks/3ba0e3814b139423.js","/_next/static/chunks/3d86c85e70d30f5d.js","/_next/static/chunks/06c6b153eeaf5bef.js","/_next/static/chunks/88e3ea6ba5270218.js"],"default"]
+b:I[18700,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"OutletBoundary"]
+c:"$Sreact.suspense"
+e:I[18700,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"ViewportBoundary"]
+10:I[18700,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"MetadataBoundary"]
+12:I[53024,[],"default"]
+:HL["/_next/static/chunks/2473c16c0c2f6b5f.css","style"]
+:HL["/_next/static/chunks/5567ad284820a802.css","style"]
+:HL["/_next/static/chunks/e9b84da6d07baf88.css","style"]
+:HL["/_next/static/media/797e433ab948586e-s.p.dbea232f.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/caa3a2e1cccd8315-s.p.853070df.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+0:{"P":null,"b":"u1ybXbxuBVVNcSx6m86l5","c":["","components","tooltip",""],"i":false,"f":[[["",{"children":[["slug","components/tooltip","c"],{"children":["__PAGE__",{}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/2473c16c0c2f6b5f.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/5567ad284820a802.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/a57b9add132816f3.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":["$","body",null,{"className":"geist_a71539c9-module__T19VSG__variable geist_mono_8d43a2aa-module__8Li5zG__variable antialiased","children":["$","$L2",null,{"children":["$","$L3",null,{"children":["$","$L4",null,{"children":[["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}],"//",["$","$L7",null,{}],"//",["$","$L8",null,{}]]}]}]}]}]}]]}],{"children":[["slug","components/tooltip","c"],["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/e9b84da6d07baf88.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/2a60c40de118aa48.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/509648a058d8293e.js","async":true,"nonce":"$undefined"}],["$","script","script-2",{"src":"/_next/static/chunks/3ba0e3814b139423.js","async":true,"nonce":"$undefined"}],["$","script","script-3",{"src":"/_next/static/chunks/3d86c85e70d30f5d.js","async":true,"nonce":"$undefined"}],["$","script","script-4",{"src":"/_next/static/chunks/06c6b153eeaf5bef.js","async":true,"nonce":"$undefined"}],["$","script","script-5",{"src":"/_next/static/chunks/88e3ea6ba5270218.js","async":true,"nonce":"$undefined"}]],["$","div",null,{"className":"min-h-screen","children":["$","$L9",null,{"children":["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]}]}]]}],{"children":["__PAGE__",["$","$1","c",{"children":["$La",[["$","script","script-0",{"src":"/_next/static/chunks/e6d515658f214d0b.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/1c69ca3ea65d82ff.js","async":true,"nonce":"$undefined"}]],["$","$Lb",null,{"children":["$","$c",null,{"name":"Next.MetadataOutlet","children":"$@d"}]}]]}],{},null,false,false]},null,false,false]},null,false,false],["$","$1","h",{"children":[null,["$","$Le",null,{"children":"$@f"}],["$","div",null,{"hidden":true,"children":["$","$L10",null,{"children":["$","$c",null,{"name":"Next.Metadata","children":"$@11"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],false]],"m":"$undefined","G":["$12",[]],"s":false,"S":true}
+13:I[44089,["/_next/static/chunks/a57b9add132816f3.js","/_next/static/chunks/2a60c40de118aa48.js","/_next/static/chunks/509648a058d8293e.js","/_next/static/chunks/3ba0e3814b139423.js","/_next/static/chunks/3d86c85e70d30f5d.js","/_next/static/chunks/06c6b153eeaf5bef.js","/_next/static/chunks/88e3ea6ba5270218.js","/_next/static/chunks/e6d515658f214d0b.js","/_next/static/chunks/1c69ca3ea65d82ff.js"],"default"]
+14:I[63364,["/_next/static/chunks/a57b9add132816f3.js","/_next/static/chunks/2a60c40de118aa48.js","/_next/static/chunks/509648a058d8293e.js","/_next/static/chunks/3ba0e3814b139423.js","/_next/static/chunks/3d86c85e70d30f5d.js","/_next/static/chunks/06c6b153eeaf5bef.js","/_next/static/chunks/88e3ea6ba5270218.js","/_next/static/chunks/e6d515658f214d0b.js","/_next/static/chunks/1c69ca3ea65d82ff.js"],"default"]
+15:T63ad,"use client";
+
+import type React from "react";
+import { useState } from "react";
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
+
+interface ToolTipProps {
+  children: React.ReactNode;
+  content: React.ReactNode;
+  side?: "top" | "bottom" | "left" | "right";
+  variant?: "default" | "dark" | "gradient" | "glass" | "colorful";
+  size?: "sm" | "md" | "lg";
+  delayDuration?: number;
+  disabled?: boolean;
+  className?: string;
+  maxWidth?: string;
+  forceOpen?: boolean;
+}
+
+function ToolTip({
+  children,
+  content,
+  side = "top",
+  variant = "default",
+  size = "md",
+  delayDuration = 200,
+  disabled = false,
+  className,
+  maxWidth = "200px",
+  forceOpen = false,
+}: ToolTipProps) {
+  const variantStyles = {
+    default: "bg-background text-foreground border border-border shadow-md",
+    dark: "bg-gray-900 text-white border border-gray-700 shadow-lg",
+    gradient:
+      "bg-gradient-to-r from-purple-500 to-pink-500 text-white border-0 shadow-lg",
+    glass:
+      "bg-background/80 backdrop-blur-md text-foreground border border-border/50 shadow-xl",
+    colorful:
+      "bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white border-0 shadow-lg",
+  };
+
+  const sizeStyles = {
+    sm: "px-2 py-1 text-xs",
+    md: "px-3 py-2 text-sm",
+    lg: "px-4 py-3 text-base",
+  };
+
+  if (disabled) {
+    return <>{children}</>;
+  }
+
+  return (
+    <Tooltip delayDuration={delayDuration} open={forceOpen ? true : undefined}>
+      <TooltipTrigger asChild>{children}</TooltipTrigger>
+      <TooltipContent
+        side={side}
+        className={cn(
+          "animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
+          "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2",
+          "data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+          "z-50 rounded-lg",
+          variantStyles[variant],
+          sizeStyles[size],
+          className
+        )}
+        style={{ maxWidth }}
+      >
+        {content}
+      </TooltipContent>
+    </Tooltip>
+  );
+}
+
+// Mobile-friendly tooltip that shows/hides on tap
+function MobileTooltipDemo({ 
+  children, 
+  content, 
+  variant = "default", 
+  size = "md",
+  side = "top",
+  maxWidth = "200px"
+}: {
+  children: React.ReactNode;
+  content: React.ReactNode;
+  variant?: "default" | "dark" | "gradient" | "glass" | "colorful";
+  size?: "sm" | "md" | "lg";
+  side?: "top" | "bottom" | "left" | "right";
+  maxWidth?: string;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const isMobile = useIsMobile();
+
+  if (!isMobile) {
+    return (
+      <ToolTip content={content} variant={variant} size={size} side={side} maxWidth={maxWidth}>
+        {children}
+      </ToolTip>
+    );
+  }
+
+  return (
+    <ToolTip 
+      content={content} 
+      variant={variant} 
+      size={size} 
+      side={side}
+      maxWidth={maxWidth}
+      forceOpen={isOpen}
+    >
+      <div 
+        onClick={() => setIsOpen(!isOpen)}
+        onBlur={() => setIsOpen(false)}
+        className="cursor-pointer"
+      >
+        {children}
+      </div>
+    </ToolTip>
+  );
+}
+
+export default function ToolTipShowcase() {
+  const isMobile = useIsMobile();
+  
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background p-4 md:p-8">
+      <div className="max-w-7xl mx-auto space-y-8 md:space-y-16">
+        {/* Hero Section */}
+        <div className="text-center space-y-4 md:space-y-6">
+          {/* Main Demo */}
+          <div className="relative p-4 md:p-8 rounded-3xl bg-card/30 backdrop-blur-sm border border-border/50 shadow-2xl">
+            {isMobile && (
+              <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-200 dark:border-blue-800">
+                <p className="text-xs text-blue-700 dark:text-blue-300 text-center">
+                  💡 Tap buttons to see tooltips on mobile
+                </p>
+              </div>
+            )}
+            <div className="flex justify-center gap-3 md:gap-6 flex-wrap">
+              <MobileTooltipDemo
+                content="Clean default styling that adapts to your theme"
+                variant="default"
+                size={isMobile ? "sm" : "md"}
+              >
+                <button className={`${isMobile ? 'px-4 py-2 text-sm' : 'px-6 py-3'} bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium`}>
+                  Default Style
+                </button>
+              </MobileTooltipDemo>
+              <MobileTooltipDemo
+                content="Beautiful gradient styling with vibrant colors"
+                variant="gradient"
+                size={isMobile ? "sm" : "md"}
+              >
+                <button className={`${isMobile ? 'px-4 py-2 text-sm' : 'px-6 py-3'} bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all font-medium`}>
+                  Gradient Magic
+                </button>
+              </MobileTooltipDemo>
+              <MobileTooltipDemo
+                content="Glassmorphism effect with backdrop blur"
+                variant="glass"
+                size={isMobile ? "sm" : "md"}
+              >
+                <button className={`${isMobile ? 'px-4 py-2 text-sm' : 'px-6 py-3'} bg-background/20 backdrop-blur-sm border border-border rounded-lg hover:bg-background/30 transition-all font-medium`}>
+                  Glass Effect
+                </button>
+              </MobileTooltipDemo>
+            </div>
+          </div>
+        </div>
+
+        {/* Variant Styles */}
+        <div className="space-y-8 md:space-y-12">
+          <div className="text-center space-y-2">
+            <h2 className="text-2xl md:text-3xl font-bold">Variant Styles</h2>
+            <p className="text-muted-foreground text-sm md:text-base">
+              Choose the perfect style for your design system
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+            {/* Default Variant */}
+            <div className="space-y-4">
+              <div className="text-center space-y-2">
+                <h3 className="text-lg md:text-xl font-semibold text-blue-700 dark:text-blue-300">
+                  Default
+                </h3>
+                <p className="text-xs md:text-sm text-muted-foreground">
+                  Theme-adaptive styling
+                </p>
+              </div>
+              <div className="bg-gradient-to-br from-blue-50/30 to-blue-100/20 dark:from-blue-950/20 dark:to-blue-900/10 p-4 md:p-6 rounded-2xl border border-blue-200/30 dark:border-blue-800/20">
+                <div className="text-center">
+                  <MobileTooltipDemo 
+                    content="Clean default styling that adapts to your theme"
+                    size={isMobile ? "sm" : "md"}
+                  >
+                    <button className={`${isMobile ? 'px-4 py-2 text-sm' : 'px-6 py-3'} bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium`}>
+                      {isMobile ? 'Tap for Default' : 'Hover for Default'}
+                    </button>
+                  </MobileTooltipDemo>
+                </div>
+              </div>
+            </div>
+
+            {/* Dark Variant */}
+            <div className="space-y-4">
+              <div className="text-center space-y-2">
+                <h3 className="text-lg md:text-xl font-semibold text-gray-700 dark:text-gray-300">
+                  Dark
+                </h3>
+                <p className="text-xs md:text-sm text-muted-foreground">
+                  Always dark theme
+                </p>
+              </div>
+              <div className="bg-gradient-to-br from-gray-50/30 to-gray-100/20 dark:from-gray-950/20 dark:to-gray-900/10 p-4 md:p-6 rounded-2xl border border-gray-200/30 dark:border-gray-800/20">
+                <div className="text-center">
+                  <MobileTooltipDemo
+                    content="Dark themed tooltip for modern interfaces"
+                    variant="dark"
+                    size={isMobile ? "sm" : "md"}
+                  >
+                    <button className={`${isMobile ? 'px-4 py-2 text-sm' : 'px-6 py-3'} bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors font-medium`}>
+                      {isMobile ? 'Tap for Dark' : 'Hover for Dark'}
+                    </button>
+                  </MobileTooltipDemo>
+                </div>
+              </div>
+            </div>
+
+            {/* Gradient Variant */}
+            <div className="space-y-4">
+              <div className="text-center space-y-2">
+                <h3 className="text-lg md:text-xl font-semibold text-purple-700 dark:text-purple-300">
+                  Gradient
+                </h3>
+                <p className="text-xs md:text-sm text-muted-foreground">
+                  Vibrant gradient styling
+                </p>
+              </div>
+              <div className="bg-gradient-to-br from-purple-50/30 to-pink-100/20 dark:from-purple-950/20 dark:to-pink-900/10 p-4 md:p-6 rounded-2xl border border-purple-200/30 dark:border-purple-800/20">
+                <div className="text-center">
+                  <MobileTooltipDemo
+                    content="Beautiful gradient styling with vibrant colors"
+                    variant="gradient"
+                    size={isMobile ? "sm" : "md"}
+                  >
+                    <button className={`${isMobile ? 'px-4 py-2 text-sm' : 'px-6 py-3'} bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all font-medium`}>
+                      {isMobile ? 'Tap for Gradient' : 'Hover for Gradient'}
+                    </button>
+                  </MobileTooltipDemo>
+                </div>
+              </div>
+            </div>
+
+            {/* Glass Variant */}
+            <div className="space-y-4">
+              <div className="text-center space-y-2">
+                <h3 className="text-lg md:text-xl font-semibold text-cyan-700 dark:text-cyan-300">
+                  Glass
+                </h3>
+                <p className="text-xs md:text-sm text-muted-foreground">
+                  Glassmorphism effect
+                </p>
+              </div>
+              <div className="bg-gradient-to-br from-cyan-50/30 to-blue-100/20 dark:from-cyan-950/20 dark:to-blue-900/10 p-4 md:p-6 rounded-2xl border border-cyan-200/30 dark:border-cyan-800/20">
+                <div className="text-center">
+                  <MobileTooltipDemo
+                    content="Glassmorphism effect with backdrop blur"
+                    variant="glass"
+                    size={isMobile ? "sm" : "md"}
+                  >
+                    <button className={`${isMobile ? 'px-4 py-2 text-sm' : 'px-6 py-3'} bg-background/20 backdrop-blur-sm border border-border rounded-lg hover:bg-background/30 transition-all font-medium`}>
+                      {isMobile ? 'Tap for Glass' : 'Hover for Glass'}
+                    </button>
+                  </MobileTooltipDemo>
+                </div>
+              </div>
+            </div>
+
+            {/* Colorful Variant */}
+            <div className="space-y-4">
+              <div className="text-center space-y-2">
+                <h3 className="text-lg md:text-xl font-semibold text-rainbow bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  Colorful
+                </h3>
+                <p className="text-xs md:text-sm text-muted-foreground">
+                  Multi-color gradient
+                </p>
+              </div>
+              <div className="bg-gradient-to-br from-blue-50/30 via-purple-50/20 to-pink-100/20 dark:from-blue-950/20 dark:via-purple-950/10 dark:to-pink-900/10 p-4 md:p-6 rounded-2xl border border-gradient-to-r border-blue-200/30 dark:border-blue-800/20">
+                <div className="text-center">
+                  <MobileTooltipDemo
+                    content="Vibrant multi-color gradient design"
+                    variant="colorful"
+                    size={isMobile ? "sm" : "md"}
+                  >
+                    <button className={`${isMobile ? 'px-4 py-2 text-sm' : 'px-6 py-3'} bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white rounded-lg hover:scale-105 transition-transform font-medium`}>
+                      {isMobile ? 'Tap for Colorful' : 'Hover for Colorful'}
+                    </button>
+                  </MobileTooltipDemo>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Position Demonstration */}
+        <div className="space-y-6 md:space-y-8">
+          <div className="text-center space-y-2">
+            <h2 className="text-2xl md:text-3xl font-bold">Position Options</h2>
+            <p className="text-muted-foreground text-sm md:text-base">
+              Tooltips can appear from any direction
+            </p>
+          </div>
+
+          <div className="bg-gradient-to-br from-muted/50 to-muted/30 p-8 md:p-16 rounded-3xl border border-border/50">
+            <div className="flex flex-col items-center space-y-8 md:space-y-12">
+              <MobileTooltipDemo
+                content="Tooltip positioned at the top"
+                side="top"
+                variant="gradient"
+                size={isMobile ? "sm" : "md"}
+              >
+                <button className={`${isMobile ? 'px-4 py-2 text-sm' : 'px-6 py-3'} bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors shadow-lg`}>
+                  Top Position
+                </button>
+              </MobileTooltipDemo>
+
+              <div className="flex space-x-8 md:space-x-16">
+                <MobileTooltipDemo
+                  content="Tooltip positioned to the left"
+                  side="left"
+                  variant="dark"
+                  size={isMobile ? "sm" : "md"}
+                >
+                  <button className={`${isMobile ? 'px-4 py-2 text-sm' : 'px-6 py-3'} bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors shadow-lg`}>
+                    Left Position
+                  </button>
+                </MobileTooltipDemo>
+
+                <MobileTooltipDemo
+                  content="Tooltip positioned to the right"
+                  side="right"
+                  variant="colorful"
+                  size={isMobile ? "sm" : "md"}
+                >
+                  <button className={`${isMobile ? 'px-4 py-2 text-sm' : 'px-6 py-3'} bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors shadow-lg`}>
+                    Right Position
+                  </button>
+                </MobileTooltipDemo>
+              </div>
+
+              <MobileTooltipDemo
+                content="Tooltip positioned at the bottom"
+                side="bottom"
+                variant="glass"
+                size={isMobile ? "sm" : "md"}
+              >
+                <button className={`${isMobile ? 'px-4 py-2 text-sm' : 'px-6 py-3'} bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors shadow-lg`}>
+                  Bottom Position
+                </button>
+              </MobileTooltipDemo>
+            </div>
+          </div>
+        </div>
+
+        {/* Size Options */}
+        <div className="space-y-6 md:space-y-8">
+          <div className="text-center space-y-2">
+            <h2 className="text-2xl md:text-3xl font-bold">Size Variations</h2>
+            <p className="text-muted-foreground text-sm md:text-base">
+              Different sizes for different content amounts
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+            <div className="text-center space-y-4">
+              <h3 className="text-base md:text-lg font-semibold text-orange-700 dark:text-orange-300">
+                Small
+              </h3>
+              <div className="bg-gradient-to-br from-orange-50/30 to-amber-100/20 dark:from-orange-950/20 dark:to-amber-900/10 p-4 md:p-6 rounded-2xl border border-orange-200/30 dark:border-orange-800/20">
+                <MobileTooltipDemo content="Small tooltip" size="sm" variant="default">
+                  <button className={`${isMobile ? 'px-3 py-2 text-xs' : 'px-4 py-2'} bg-muted text-muted-foreground rounded-lg hover:bg-muted/80 transition-colors`}>
+                    Small Size
+                  </button>
+                </MobileTooltipDemo>
+              </div>
+            </div>
+
+            <div className="text-center space-y-4">
+              <h3 className="text-base md:text-lg font-semibold text-blue-700 dark:text-blue-300">
+                Medium
+              </h3>
+              <div className="bg-gradient-to-br from-blue-50/30 to-blue-100/20 dark:from-blue-950/20 dark:to-blue-900/10 p-4 md:p-6 rounded-2xl border border-blue-200/30 dark:border-blue-800/20">
+                <MobileTooltipDemo
+                  content="Medium sized tooltip with more content"
+                  size="md"
+                  variant="gradient"
+                >
+                  <button className={`${isMobile ? 'px-4 py-2 text-sm' : 'px-6 py-3'} bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors`}>
+                    Medium Size
+                  </button>
+                </MobileTooltipDemo>
+              </div>
+            </div>
+
+            <div className="text-center space-y-4">
+              <h3 className="text-base md:text-lg font-semibold text-purple-700 dark:text-purple-300">
+                Large
+              </h3>
+              <div className="bg-gradient-to-br from-purple-50/30 to-violet-100/20 dark:from-purple-950/20 dark:to-violet-900/10 p-4 md:p-6 rounded-2xl border border-purple-200/30 dark:border-purple-800/20">
+                <MobileTooltipDemo
+                  content="Large tooltip with even more detailed content and comprehensive information"
+                  size={isMobile ? "md" : "lg"}
+                  variant="colorful"
+                >
+                  <button className={`${isMobile ? 'px-4 py-2 text-sm' : 'px-8 py-4 text-lg'} bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/80 transition-colors`}>
+                    Large Size
+                  </button>
+                </MobileTooltipDemo>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Rich Content */}
+        <div className="space-y-6 md:space-y-8">
+          <div className="text-center space-y-2">
+            <h2 className="text-2xl md:text-3xl font-bold">Rich Content Examples</h2>
+            <p className="text-muted-foreground text-sm md:text-base">
+              Tooltips can contain complex layouts and interactive elements
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+            <div className="text-center space-y-4">
+              <h3 className="text-base md:text-lg font-semibold text-blue-700 dark:text-blue-300">
+                User Profile
+              </h3>
+              <div className="bg-gradient-to-br from-blue-50/30 to-blue-100/20 dark:from-blue-950/20 dark:to-blue-900/10 p-4 md:p-6 rounded-2xl border border-blue-200/30 dark:border-blue-800/20">
+                <MobileTooltipDemo
+                  content={
+                    <div className="space-y-2">
+                      <div className="font-semibold">User Profile</div>
+                      <div className="text-sm opacity-90">John Doe</div>
+                      <div className="text-xs opacity-75">
+                        Software Engineer
+                      </div>
+                    </div>
+                  }
+                  variant="dark"
+                  maxWidth="180px"
+                  size={isMobile ? "sm" : "md"}
+                >
+                  <div className={`${isMobile ? 'w-12 h-12' : 'w-16 h-16'} bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold cursor-pointer hover:scale-110 transition-transform mx-auto ${isMobile ? 'text-sm' : ''}`}>
+                    JD
+                  </div>
+                </MobileTooltipDemo>
+              </div>
+            </div>
+
+            <div className="text-center space-y-4">
+              <h3 className="text-base md:text-lg font-semibold text-green-700 dark:text-green-300">
+                Status Indicator
+              </h3>
+              <div className="bg-gradient-to-br from-green-50/30 to-emerald-100/20 dark:from-green-950/20 dark:to-emerald-900/10 p-4 md:p-6 rounded-2xl border border-green-200/30 dark:border-green-800/20">
+                <div className="flex justify-center">
+                  <MobileTooltipDemo
+                    content={
+                      <div className="space-y-2">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                          <span className="font-medium">Online</span>
+                        </div>
+                        <div className="text-sm">Last seen: Just now</div>
+                      </div>
+                    }
+                    variant="glass"
+                    side="top"
+                    size={isMobile ? "sm" : "md"}
+                  >
+                    <div className={`${isMobile ? 'w-4 h-4' : 'w-6 h-6'} bg-green-400 rounded-full cursor-pointer hover:scale-125 transition-transform`}></div>
+                  </MobileTooltipDemo>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center space-y-4">
+              <h3 className="text-base md:text-lg font-semibold text-purple-700 dark:text-purple-300">
+                Progress Tracker
+              </h3>
+              <div className="bg-gradient-to-br from-purple-50/30 to-violet-100/20 dark:from-purple-950/20 dark:to-violet-900/10 p-4 md:p-6 rounded-2xl border border-purple-200/30 dark:border-purple-800/20">
+                <MobileTooltipDemo
+                  content={
+                    <div className="space-y-2">
+                      <div className="font-medium">Progress: 75%</div>
+                      <div className={`${isMobile ? 'w-24 h-1.5' : 'w-32 h-2'} bg-gray-200 rounded-full overflow-hidden`}>
+                        <div className="w-3/4 h-full bg-gradient-to-r from-green-400 to-blue-500 rounded-full"></div>
+                      </div>
+                      <div className="text-xs opacity-75">
+                        3 of 4 tasks completed
+                      </div>
+                    </div>
+                  }
+                  variant="gradient"
+                  side="top"
+                  maxWidth="180px"
+                  size={isMobile ? "sm" : "md"}
+                >
+                  <div className={`${isMobile ? 'px-4 py-2 text-sm' : 'px-6 py-3'} bg-muted rounded-lg cursor-pointer hover:bg-muted/80 transition-colors`}>
+                    Project Status
+                  </div>
+                </MobileTooltipDemo>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function ToolTipTheme() {
+  const isMobile = useIsMobile();
+  
+  return (
+    <div className="text-center space-y-4 md:space-y-6">
+      {/* Main Demo */}
+      <div className="relative p-4 md:p-8 rounded-3xl bg-card/30 backdrop-blur-sm border border-border/50 shadow-2xl">
+        {isMobile && (
+          <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-200 dark:border-blue-800">
+            <p className="text-xs text-blue-700 dark:text-blue-300 text-center">
+              💡 Tap buttons to see tooltips on mobile
+            </p>
+          </div>
+        )}
+        <div className="flex justify-center gap-3 md:gap-6 flex-wrap">
+          <MobileTooltipDemo
+            content="Clean default styling that adapts to your theme"
+            variant="default"
+            size={isMobile ? "sm" : "md"}
+          >
+            <button className={`${isMobile ? 'px-4 py-2 text-sm' : 'px-6 py-3'} bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium`}>
+              Default Style
+            </button>
+          </MobileTooltipDemo>
+          <MobileTooltipDemo
+            content="Beautiful gradient styling with vibrant colors"
+            variant="gradient"
+            size={isMobile ? "sm" : "md"}
+          >
+            <button className={`${isMobile ? 'px-4 py-2 text-sm' : 'px-6 py-3'} bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all font-medium`}>
+              Gradient Magic
+            </button>
+          </MobileTooltipDemo>
+          <MobileTooltipDemo
+            content="Glassmorphism effect with backdrop blur"
+            variant="glass"
+            size={isMobile ? "sm" : "md"}
+          >
+            <button className={`${isMobile ? 'px-4 py-2 text-sm' : 'px-6 py-3'} bg-background/20 backdrop-blur-sm border border-border rounded-lg hover:bg-background/30 transition-all font-medium`}>
+              Glass Effect
+            </button>
+          </MobileTooltipDemo>
+        </div>
+      </div>
+    </div>
+  );
+}
+a:["$","div",null,{"className":"space-y-8","children":["$","$L13",null,{"components":[{"componentName":"Tooltip","description":["💬 ",["$","b","1",{"children":"Smart Tooltip System"}]," - Context-aware tooltips with ",["$","span","3",{"style":{"color":"#3b82f6"},"children":"auto-positioning"}],", ",["$","span","5",{"style":{"color":"#10b981"},"children":"arrow indicators"}],", and ",["$","span","7",{"style":{"color":"#f59e0b"},"children":"delay controls"}],". Includes ",["$","b","9",{"children":"rich content support"}]," and ",["$","b","11",{"children":"accessibility features"}],"."],"component":"$14","defaultProps":{"side":"top","variant":"default","size":"md","delayDuration":200,"disabled":false,"maxWidth":"200px","forceOpen":false},"codeString":"$15","propsInfo":{"componentName":"ToolTip","propsInterfaceName":"ToolTipProps","props":[{"name":"children","type":"React.ReactNode","required":true,"description":"$undefined","tags":[],"isUnion":false,"unionTypes":"$undefined","enumValues":"$undefined","defaultValue":"$undefined"},{"name":"content","type":"React.ReactNode","required":true,"description":"$undefined","tags":[],"isUnion":false,"unionTypes":"$undefined","enumValues":"$undefined","defaultValue":"$undefined"},{"name":"side","type":"\"top\" | \"bottom\" | \"left\" | \"right\"","required":false,"description":"$undefined","tags":[],"isUnion":true,"unionTypes":["\"top\"","\"bottom\"","\"left\"","\"right\""],"enumValues":["\"top\"","\"bottom\"","\"left\"","\"right\""],"defaultValue":"top"},{"name":"variant","type":"\"default\" | \"dark\" | \"gradient\" | \"glass\" | \"colorful\"","required":false,"description":"$undefined","tags":[],"isUnion":true,"unionTypes":["\"default\"","\"dark\"","\"gradient\"","\"glass\"","\"colorful\""],"enumValues":["\"default\"","\"dark\"","\"gradient\"","\"glass\"","\"colorful\""],"defaultValue":"default"},{"name":"size","type":"\"sm\" | \"md\" | \"lg\"","required":false,"description":"$undefined","tags":[],"isUnion":true,"unionTypes":["\"sm\"","\"md\"","\"lg\""],"enumValues":["\"sm\"","\"md\"","\"lg\""],"defaultValue":"md"},{"name":"delayDuration","type":"number","required":false,"description":"$undefined","tags":[],"isUnion":false,"unionTypes":"$undefined","enumValues":"$undefined","defaultValue":200},{"name":"disabled","type":"boolean","required":false,"description":"$undefined","tags":[],"isUnion":false,"unionTypes":"$undefined","enumValues":"$undefined","defaultValue":false},{"name":"className","type":"string","required":false,"description":"$undefined","tags":[],"isUnion":false,"unionTypes":"$undefined","enumValues":"$undefined","defaultValue":"$undefined"},{"name":"maxWidth","type":"string","required":false,"description":"$undefined","tags":[],"isUnion":false,"unionTypes":"$undefined","enumValues":"$undefined","defaultValue":"200px"},{"name":"forceOpen","type":"boolean","required":false,"description":"$undefined","tags":[],"isUnion":false,"unionTypes":"$undefined","enumValues":"$undefined","defaultValue":false}],"description":"$undefined","examples":[],"extendsFrom":[]}}]}]}]
+f:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","2",{"name":"theme-color","media":"(prefers-color-scheme: light)","content":"#ffffff"}],["$","meta","3",{"name":"theme-color","media":"(prefers-color-scheme: dark)","content":"#0a0a0a"}]]
+16:I[76071,["/_next/static/chunks/22560f474f160079.js","/_next/static/chunks/bbcbcba42ee21d12.js"],"IconMark"]
+11:[["$","title","0",{"children":"Tooltip | Components | VUI React UI Library"}],["$","meta","1",{"name":"description","content":"💬 Smart Tooltip System - Context-aware tooltips with auto-positioning, arrow indicators, and delay controls. Includes rich content support and accessibility features."}],["$","link","2",{"rel":"manifest","href":"/manifest.json","crossOrigin":"$undefined"}],["$","meta","3",{"name":"keywords","content":"Tooltip,Components,React UI,VUI,Component,Open Source,Modern UI,Customizable,Interactive"}],["$","meta","4",{"name":"category","content":"Components"}],["$","link","5",{"rel":"canonical","href":"https://vyomaui.design//components/tooltip"}],["$","meta","6",{"name":"mobile-web-app-capable","content":"yes"}],["$","meta","7",{"name":"apple-mobile-web-app-title","content":"LLM7.io"}],["$","meta","8",{"name":"apple-mobile-web-app-status-bar-style","content":"default"}],["$","meta","9",{"property":"og:title","content":"Tooltip"}],["$","meta","10",{"property":"og:description","content":"💬 Smart Tooltip System - Context-aware tooltips with auto-positioning, arrow indicators, and delay controls. Includes rich content support and accessibility features."}],["$","meta","11",{"property":"og:url","content":"https://vyomaui.design//components/tooltip"}],["$","meta","12",{"property":"og:site_name","content":"VUI React UI Library"}],["$","meta","13",{"property":"og:image","content":"https://vyomaui.design/api/og?title=Tooltip&description=%F0%9F%92%AC%20%3Cb%3ESmart%20Tooltip%20System%3C%2Fb%3E%20-%20Context-aware%20tooltips%20with%20%3Cspan%20style%3D%27color%3A%20%233b82f6%3B%27%3Eauto-positioning%3C%2Fspan%3E%2C%20%3Cspan%20style%3D%27color%3A%20%2310b981%3B%27%3Earrow%20indicators%3C%2Fspan%3E%2C%20and%20%3Cspan%20style%3D%27color%3A%20%23f59e0b%3B%27%3Edelay%20controls%3C%2Fspan%3E.%20Includes%20%3Cb%3Erich%20content%20support%3C%2Fb%3E%20and%20%3Cb%3Eaccessibility%20features%3C%2Fb%3E.&path=%2Fcomponents%2Ftooltip"}],["$","meta","14",{"property":"og:image:width","content":"1200"}],["$","meta","15",{"property":"og:image:height","content":"630"}],["$","meta","16",{"property":"og:type","content":"website"}],["$","meta","17",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","18",{"name":"twitter:title","content":"Tooltip"}],["$","meta","19",{"name":"twitter:description","content":"💬 Smart Tooltip System - Context-aware tooltips with auto-positioning, arrow indicators, and delay controls. Includes rich content support and accessibility features."}],["$","meta","20",{"name":"twitter:image","content":"https://vyomaui.design/api/og?title=Tooltip&description=%F0%9F%92%AC%20%3Cb%3ESmart%20Tooltip%20System%3C%2Fb%3E%20-%20Context-aware%20tooltips%20with%20%3Cspan%20style%3D%27color%3A%20%233b82f6%3B%27%3Eauto-positioning%3C%2Fspan%3E%2C%20%3Cspan%20style%3D%27color%3A%20%2310b981%3B%27%3Earrow%20indicators%3C%2Fspan%3E%2C%20and%20%3Cspan%20style%3D%27color%3A%20%23f59e0b%3B%27%3Edelay%20controls%3C%2Fspan%3E.%20Includes%20%3Cb%3Erich%20content%20support%3C%2Fb%3E%20and%20%3Cb%3Eaccessibility%20features%3C%2Fb%3E.&path=%2Fcomponents%2Ftooltip"}],["$","meta","21",{"name":"twitter:image:width","content":"1200"}],["$","meta","22",{"name":"twitter:image:height","content":"630"}],["$","link","23",{"rel":"icon","href":"/favicon.ico?favicon.dc98455b.ico","sizes":"48x48","type":"image/x-icon"}],["$","link","24",{"rel":"icon","href":"./favicon.ico","sizes":"any"}],["$","link","25",{"rel":"icon","href":"/favicons/favicon-16x16.png","sizes":"16x16","type":"image/png"}],["$","link","26",{"rel":"icon","href":"/favicons/favicon-32x32.png","sizes":"32x32","type":"image/png"}],["$","link","27",{"rel":"apple-touch-icon","href":"/favicons/apple-touch-icon.png","sizes":"180x180","type":"image/png"}],["$","$L16","28",{}]]
+d:null

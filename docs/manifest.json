@@ -1,25 +1,31 @@
 {
-  "short_name": "LLM.io",
-  "name": "LLM.io",
-  "icons": [
-    {
-      "src": "favicon-llm7.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "web-app-manifest-192x192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "web-app-manifest-512x512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
-}
+    "name": "Vyoma UI ",
+    "short_name": "VUI",
+    "description": "Truly Beyond UI. Designed with Spatial Wisdom Inside",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#000000",
+    "theme_color":"#ffffff",
+    "icons": [
+      {
+        "src": "/favicons/favicon-16x16.png",
+        "sizes": "16x16",
+        "type": "image/png"
+      },
+      {
+        "src": "/favicons/favicon-32x32.png",
+        "sizes": "32x32",
+        "type": "image/png"
+      },
+      {
+        "src": "/favicons/web-app-manifest-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/favicons/web-app-manifest-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }
