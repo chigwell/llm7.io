@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Icons } from "@/components/ui/Icons";
 import { Button } from "@/components/ui/buttonShadcn";
-import { Github, Linkedin, Twitter, Heart, Send } from "lucide-react";
+import { Github, Linkedin, Twitter, Heart } from "lucide-react";
 
 export default function Footer() {
   // This prevents the footer from rendering during initial hydration
@@ -27,18 +27,19 @@ export default function Footer() {
           {/* Brand section */}
           <div className="sm:col-span-2 space-y-4 md:space-y-6">
             <Link href="/" className="flex items-center gap-2 md:gap-3 group">
-              <img src="/llm7.png" alt="LLM7.io Logo" className="w-8 h-8 md:w-10 md:h-10" />
+              <Icons.logo className="w-8 h-8 md:w-10 md:h-10 group-hover:scale-110 transition-transform duration-200" />
               <div>
-                <h2 className="text-xl md:text-2xl font-bold">LLM7.io</h2>
+                <h2 className="text-xl md:text-2xl font-bold">Vyoma UI</h2>
                 <p className="text-xs md:text-sm text-muted-foreground">
-                  An affordable LLM provider. Just start using powerful models instantly.
+                  Truly Beyond UI
                 </p>
               </div>
             </Link>
 
             <p className="text-sm md:text-base text-muted-foreground max-w-md leading-relaxed">
-                Empowering developers with seamless access to cutting-edge language models at unbeatable prices.
-
+              A modern UI design system crafted with spatial wisdom and
+              thoughtful design. Build beautiful interfaces that feel natural
+              and intuitive.
             </p>
 
             <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
@@ -46,11 +47,11 @@ export default function Footer() {
               <Heart className="w-3 h-3 md:w-4 md:h-4 text-red-500 fill-current" />
               <span>by</span>
               <Link
-                href="https://www.linkedin.com/in/eugene-evstafev/"
+                href="https://www.srijanbaniyal.com"
                 target="_blank"
                 className="text-foreground hover:text-primary transition-colors font-medium"
               >
-                Eugene Evstafev
+                @srijanbaniyal
               </Link>
             </div>
 
@@ -63,7 +64,7 @@ export default function Footer() {
                 asChild
               >
                 <Link
-                  href="https://github.com/chigwell/llm7.io"
+                  href="https://github.com/Srijan-Baniyal/vyoma-ui"
                   target="_blank"
                   className="gap-2 justify-center sm:justify-start"
                 >
@@ -78,7 +79,7 @@ export default function Footer() {
                 asChild
               >
                 <Link
-                  href="https://www.linkedin.com/groups/13256119/"
+                  href="https://www.linkedin.com/in/srijan-baniyal/"
                   target="_blank"
                   className="gap-2 justify-center sm:justify-start"
                 >
@@ -93,67 +94,18 @@ export default function Footer() {
                 asChild
               >
                 <Link
-                  href="https://x.com/eugeneevstafev?s=21"
+                  href="https://x.com/compose/"
                   target="_blank"
                   className="gap-2 justify-center sm:justify-start"
                 >
                   <Twitter className="w-4 h-4" />
-                  X
-                </Link>
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="w-full sm:w-auto"
-                asChild
-              >
-                <Link
-                  href="https://t.me/llm7io"
-                  target="_blank"
-                  className="gap-2 justify-center sm:justify-start"
-                >
-                  <Send className="w-4 h-4" />
-                  Telegram
+                  Share
                 </Link>
               </Button>
             </div>
           </div>
 
-
-          <div className="space-y-4 md:space-y-6">
-            <h3 className="font-semibold text-foreground text-sm md:text-base">
-              Links
-            </h3>
-            <ul className="space-y-2 md:space-y-3 text-sm">
-              <li>
-                <Link
-                  href="#featured-heading-plans"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Plans
-                </Link>
-              </li>
-                <li>
-                <Link
-                    href="#example"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                    Example
-                </Link>
-                </li>
-                <li>
-                <Link
-                    href="https://token.llm7.io"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                    Dashboard
-                </Link>
-                </li>
-
-            </ul>
-          </div>
-
-          {/* Documentation links
+          {/* Documentation links */}
           <div className="space-y-4 md:space-y-6">
             <h3 className="font-semibold text-foreground text-sm md:text-base">
               Documentation
@@ -192,7 +144,7 @@ export default function Footer() {
                 </Link>
               </li>
             </ul>
-          </div>*/}
+          </div>
 
           {/* Legal links */}
           <div className="space-y-4 md:space-y-6">
@@ -202,7 +154,7 @@ export default function Footer() {
             <ul className="space-y-2 md:space-y-3 text-sm">
               <li>
                 <Link
-                  href="https://github.com/chigwell/llm7.io/blob/main/PRIVACY.md"
+                  href="/privacy-policy"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Privacy Policy
@@ -210,7 +162,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="https://github.com/chigwell/llm7.io/blob/main/TERMS.md"
+                  href="/tos"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Terms of Service
@@ -218,7 +170,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="https://github.com/chigwell/llm7.io/blob/main/LICENSE"
+                  href="/license"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   License
@@ -232,42 +184,38 @@ export default function Footer() {
         <div className="pt-6 md:pt-8 border-t">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-4">
             <p className="text-xs md:text-sm text-muted-foreground text-center md:text-left">
-              © {new Date().getFullYear()} LLM7.io All rights reserved.
+              © {new Date().getFullYear()} Vyoma UI. All rights reserved.
             </p>
 
             <div className="text-center">
               <p className="text-xs text-muted-foreground mb-2">Powered by</p>
               {/* Mobile-friendly tech stack */}
               <div className="flex flex-wrap justify-center items-center gap-2 text-xs text-muted-foreground max-w-sm md:max-w-none">
-                <span>Azure</span>
+                <span>Next.js</span>
                 <span className="hidden sm:inline">•</span>
-                <span>Cloudflare</span>
+                <span>TypeScript</span>
                 <span className="hidden sm:inline">•</span>
-                <span>DeepSeek</span>
+                <span>Tailwind CSS</span>
                 <span className="hidden sm:inline">•</span>
-                <span>Ollama</span>
+                <span>Shadcn UI</span>
                 <span className="hidden sm:inline">•</span>
-                <span>Mistral</span>
+                <span>GSAP</span>
                 <span className="hidden sm:inline">•</span>
-                <span>Nebius</span>
+                <span>Motion</span>
                 <span className="hidden lg:inline">•</span>
-                <span className="hidden lg:inline">Nebula Block</span>
+                <span className="hidden lg:inline">Three.js</span>
                 <span className="hidden lg:inline">•</span>
-                <span className="hidden lg:inline">OpenAI</span>
+                <span className="hidden lg:inline">Vanta.js</span>
                 <span className="hidden lg:inline">•</span>
-                <span className="hidden lg:inline">Pollinations</span>
-                <span className="hidden lg:inline">•</span>
-                <span className="hidden lg:inline">Scaleway</span>
+                <span className="hidden lg:inline">Animate.js</span>
               </div>
               {/* Secondary row for larger screens */}
               <div className="hidden lg:flex justify-center items-center gap-2 text-xs text-muted-foreground mt-1">
-                <span className="lg:hidden">Nebula Block</span>
+                <span className="lg:hidden">Three.js</span>
                 <span className="lg:hidden">•</span>
-                <span className="lg:hidden">OpenAI</span>
+                <span className="lg:hidden">Vanta.js</span>
                 <span className="lg:hidden">•</span>
-                <span className="lg:hidden">Pollinations</span>
-                <span className="lg:hidden">•</span>
-                <span className="lg:hidden">Scaleway</span>
+                <span className="lg:hidden">Animate.js</span>
               </div>
             </div>
           </div>
@@ -276,7 +224,7 @@ export default function Footer() {
         {/* Large brand text */}
         <div className="w-full flex mt-12 md:mt-16 items-center justify-center">
           <h1 className="text-center text-3xl sm:text-4xl md:text-6xl lg:text-8xl xl:text-[8rem] font-black bg-gradient-to-b from-foreground/10 to-foreground/5 bg-clip-text text-transparent select-none leading-none">
-            LLM7.io
+            VYOMA UI
           </h1>
         </div>
       </div>

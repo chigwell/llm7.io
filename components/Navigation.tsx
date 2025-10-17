@@ -33,29 +33,29 @@ async function getGitHubStars(): Promise<number> {
 
     // Parse the JSON response
     const data = await response.json();
-
+    
     // Return just the star count
     return data.stars;
   } catch (error) {
     // If anything fails, log it and return 0
     console.error("Error fetching GitHub stars:", error);
-    return 96;
+    return 0;
   }
 }
 
 export default function Navigation() {
   const navItems = [
     {
-      name: "Plans",
-      link: "#featured-heading-plans",
+      name: "Components",
+      link: "/components/accordion",
     },
     {
-      name: "Example",
-      link: "#example",
+      name: "Showcase",
+      link: "/showcase",
     },
     {
-      name: "Dashboard",
-      link: "https://token.llm7.io",
+      name: "Theme(Beta)",
+      link: "/themes",
     },
   ];
 

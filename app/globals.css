@@ -3,10 +3,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-html {
-  scroll-behavior: smooth;
-}
-
 ::selection {
   background-color: oklch(0.7 0.15 200);
   color: oklch(1 0 0);

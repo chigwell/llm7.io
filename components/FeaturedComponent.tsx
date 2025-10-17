@@ -2,21 +2,11 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useState, useCallback, useEffect, useMemo, useRef } from "react";
-import { MessageSquare, Grid3x3, CircleDot } from "lucide-react";
+import { useState } from "react";
+import { MessageSquare, Grid3x3, CircleDot, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/buttonShadcn";
-import { GoogleLogin, CredentialResponse, GoogleOAuthProvider } from "@react-oauth/google";
 
-/* -------------------------
-   Constants
-   ------------------------- */
-const GA_CLIENT_ID = "264062651955-8qamru5vjtu9kc1tk2trsgte5e10hm0m.apps.googleusercontent.com";
-const BASE_API_URL = "https://llm7-api.chigwel137.workers.dev";
-const ID_TOKEN_KEY = "id_token";
-
-/* -------------------------
-   Types / Data
-   ------------------------- */
+// Data model for featured items
 interface FeaturedItem {
   name: string;
   description: string;
@@ -26,277 +16,241 @@ interface FeaturedItem {
 }
 
 const items: FeaturedItem[] = [
-  { name: "Free (Anonymous)", description: "AI-powered chat interface...", icon: <MessageSquare className="w-8 h-8" />, route: "/ai-components/magical-chat-input", accent: "purple" },
-  { name: "Free (Token-based)", description: "Apple-inspired responsive grid...", icon: <Grid3x3 className="w-8 h-8" />, route: "/components/bento-grid", accent: "blue" },
-  { name: "Subscription Waitlist", description: "Physics-based iOS style wheel...", icon: <CircleDot className="w-8 h-8" />, route: "/components/wheel-picker", accent: "amber" },
+  {
+    name: "Magical Chat Input",
+    description:
+      "AI-powered chat interface with fluid cursor + micro-interactions. Perfect for conversational & assistant UIs.",
+    icon: <MessageSquare className="w-8 h-8" />,
+    route: "/ai-components/magical-chat-input",
+    accent: "purple",
+  },
+  {
+    name: "Bento Grid",
+    description:
+      "Apple-inspired responsive grid layout with elegant hover depth & adaptive sizing for rich showcases.",
+    icon: <Grid3x3 className="w-8 h-8" />,
+    route: "/components/bento-grid",
+    accent: "blue",
+  },
+  {
+    name: "Wheel Picker",
+    description:
+      "Physics‑based iOS style wheel for natural selection gestures with momentum & smooth scroll feel.",
+    icon: <CircleDot className="w-8 h-8" />,
+    route: "/components/wheel-picker",
+    accent: "amber",
+  },
 ];
 
-const accentClasses = {
-  purple: { ring: "ring-purple-400/40", bg: "from-purple-600/20 to-violet-600/20", glow: "", text: "text-purple-300", grad: "" },
-  blue: { ring: "ring-sky-400/40", bg: "from-sky-600/20 to-cyan-600/20", glow: "", text: "text-sky-300", grad: "" },
-  amber: { ring: "ring-amber-400/40", bg: "from-amber-600/20 to-orange-600/20", glow: "", text: "text-amber-300", grad: "" },
-} as const;
-
-/* -------------------------
-   Helper: exchange / activate token
-   ------------------------- */
-async function verifyAndActivate(idToken: string, setMessage?: (m: string) => void) {
-  if (setMessage) setMessage("Verifying token…");
-  // store token locally
-  localStorage.setItem(ID_TOKEN_KEY, idToken);
-
-  // 1) Verify on API
-  const v = await fetch(`${BASE_API_URL}/verify`, {
-    method: "GET",
-    headers: { Authorization: `Bearer ${idToken}` },
-  });
-  if (!v.ok) {
-    const txt = await v.text().catch(() => "");
-    throw new Error(txt || "Token verification failed");
-  }
-  const data = await v.json();
-  const verifiedEmail = (data && data.email) || "";
-
-  if (setMessage) setMessage("Activating Basic subscription…");
-
-  // 2) Activate
-  const s = await fetch(`${BASE_API_URL}/set-sub`, {
-    method: "POST",
-    headers: { Authorization: `Bearer ${idToken}` },
-  });
-  if (!s.ok) {
-    const txt = await s.text().catch(() => "");
-    throw new Error(txt || "Failed to activate subscription");
-  }
-
-  return verifiedEmail;
-}
-
-/* -------------------------
-   BasicSubGoogleBlock (rewritten to use @react-oauth/google)
-   ------------------------- */
-function BasicSubGoogleBlock({ onClose, onSuccess }: { onClose: () => void; onSuccess: (email?: string) => void }) {
-  const [status, setStatus] = useState<"idle" | "loading" | "ok" | "error">("idle");
-  const [message, setMessage] = useState("");
-  const [email, setEmail] = useState("");
-  const [isTermsAccepted, setIsTermsAccepted] = useState(false);
-  const mountedRef = useRef(false);
-
-  useEffect(() => {
-    mountedRef.current = true;
-    return () => {
-      mountedRef.current = false;
-    };
-  }, []);
-
-  const onCredentialResponse = useCallback(
-    async (response: CredentialResponse) => {
-      const credential = response.credential;
-      if (!credential) {
-        setStatus("error");
-        setMessage("No credential returned from Google");
-        return;
-      }
-      if (!isTermsAccepted) {
-        setStatus("error");
-        setMessage("Please accept the Terms and Privacy Policy first.");
-        return;
-      }
-
-      setStatus("loading");
-      setMessage("Signing in…");
-
-      try {
-        const verifiedEmail = await verifyAndActivate(credential, setMessage);
-        if (!mountedRef.current) return;
-        setEmail(verifiedEmail || "");
-        setStatus("ok");
-        setMessage("Basic subscription activated.");
-        onSuccess(verifiedEmail);
-      } catch (err: any) {
-        setStatus("error");
-        setMessage(err?.message || "Something went wrong");
-      }
-    },
-    [isTermsAccepted, onSuccess]
-  );
-
-  const handleGoogleError = useCallback(() => {
-    console.error("Google sign-in failed");
-    setStatus("error");
-    setMessage("Google sign-in failed. Please try again.");
-  }, []);
-
-  return (
-    <div className="space-y-4">
-      <div className="text-xl font-semibold">Join the Waitlist</div>
-      <p className="text-sm text-muted-foreground">Sign in with Google to subscribe</p>
-
-      <div className="mt-3">
-        {status === "loading" && !message && (
-          <div className="flex items-center justify-center h-10 w-full bg-gray-100 dark:bg-gray-800 rounded-md">
-            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-500" />
-          </div>
-        )}
-
-        {status === "error" && (
-          <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md text-sm text-red-700 dark:text-red-300">
-            Error: {message}
-          </div>
-        )}
-
-        <div className={`flex justify-center ${isTermsAccepted ? "opacity-100" : "opacity-60 pointer-events-none"}`} style={{ minHeight: 48 }}>
-          <GoogleLogin
-            onSuccess={onCredentialResponse}
-            onError={handleGoogleError}
-          />
-        </div>
-      </div>
-
-      <div className="flex items-start gap-2 mt-3 text-xs text-muted-foreground">
-        <input
-          id="terms-accept"
-          type="checkbox"
-          checked={isTermsAccepted}
-          onChange={(e) => setIsTermsAccepted(e.target.checked)}
-          className="w-4 h-4 rounded border-border mt-0.5"
-        />
-        <label htmlFor="terms-accept" className="cursor-pointer">
-          I agree to the{" "}
-          <a href="https://github.com/chigwell/llm7.io/blob/main/TERMS.md" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-            Terms of Service
-          </a>{" "}
-          and acknowledge the{" "}
-          <a href="https://github.com/chigwell/llm7.io/blob/main/PRIVACY.md" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-            Privacy Policy
-          </a>
-          .
-        </label>
-      </div>
-
-      {status !== "idle" && (
-        <p className="text-sm text-muted-foreground mt-3">
-          {message} {email ? <>({email})</> : null}
-        </p>
-      )}
-
-      <div className="flex justify-end">
-        <Button variant="outline" onClick={onClose}>
-          Close
-        </Button>
-      </div>
-    </div>
-  );
-}
-
-/* -------------------------
-   Pricing card + main export
-   ------------------------- */
-function PricingCard({ plan }: any) {
-  const handleClick = useCallback(() => {
-    if (plan.action.href) {
-      window.open(plan.action.href, "_blank", "noopener,noreferrer");
-      return;
-    }
-    if (plan.action.onClick) plan.action.onClick();
-  }, [plan]);
-
-  return (
-    <div className="bg-card/40 backdrop-blur-xl border border-border/50 rounded-2xl p-6 md:p-7 flex flex-col shadow-lg h-full">
-      <h3 className="text-lg md:text-xl font-semibold mb-2">{plan.title}</h3>
-      <p className="text-sm text-muted-foreground mb-4">{plan.desc}</p>
-
-      <div className="flex items-baseline gap-2 mb-4">
-        <div className="text-2xl font-bold">{plan.price}</div>
-        {plan.period ? <div className="text-lg opacity-70">/{plan.period}</div> : null}
-      </div>
-
-      <ul className="space-y-3 mb-6 flex-grow">
-        {plan.features.map((info: string, idx: number) => (
-          <li key={idx} className="flex items-start gap-2">
-            <span className="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 border border-green-300 text-green-800 flex items-center justify-center text-xs font-bold">✓</span>
-            <span className="text-sm">{info}</span>
-          </li>
-        ))}
-      </ul>
-
-      <Button className={`w-full ${plan.action.buttonStyle ? "" : "bg-background hover:bg-accent"}`} variant={plan.action.buttonStyle ? "default" : "outline"} onClick={handleClick}>
-        {plan.action.label}
-      </Button>
-    </div>
-  );
-}
+// Accent styling helpers centralised for consistency
+const accentClasses: Record<FeaturedItem["accent"], { ring: string; bg: string; glow: string; text: string; grad: string }> = {
+  purple: {
+    ring: "ring-purple-400/40",
+    bg: "from-purple-600/20 to-violet-600/20",
+    glow: "shadow-[0_0_0_1px_rgba(147,51,234,0.4)] shadow-purple-600/30",
+    text: "text-purple-300",
+    grad: "from-purple-500/30 via-violet-500/20 to-purple-600/30",
+  },
+  blue: {
+    ring: "ring-sky-400/40",
+    bg: "from-sky-600/20 to-cyan-600/20",
+    glow: "shadow-[0_0_0_1px_rgba(2,132,199,0.4)] shadow-cyan-600/30",
+    text: "text-sky-300",
+    grad: "from-sky-500/30 via-cyan-500/20 to-sky-600/30",
+  },
+  amber: {
+    ring: "ring-amber-400/40",
+    bg: "from-amber-600/20 to-orange-600/20",
+    glow: "shadow-[0_0_0_1px_rgba(217,119,6,0.4)] shadow-amber-600/30",
+    text: "text-amber-300",
+    grad: "from-amber-500/30 via-orange-500/20 to-amber-600/30",
+  },
+};
 
 export default function FeaturedComponents() {
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
-  const [modal, setModal] = useState<string | null>(null);
-  const [justActivatedEmail, setJustActivatedEmail] = useState("");
-
-  const scrollToExample = useCallback(() => {
-    const el = document.getElementById("example");
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, []);
-
-  const plans = useMemo(
-    () => [
-      { title: "Free (Anonymous)", desc: "Start now — no sign-up.", price: "$0", features: ["No sign-up", "8k chars/req*", "750 req/h", "45 req/min", "1 req/s"], action: { label: "See Example", onClick: scrollToExample } },
-      { title: "Free (Token-based)", desc: "Higher limits with a free token.", price: "$0", features: ["Free token", "128k chars/req*", "4,500 req/h", "150 req/min", "20 req/s", "20+ LLMs", "Image gen (watermark)"], action: { label: "Get Free Token", href: "https://token.llm7.io/" } },
-      { title: "Subscription Waitlist", desc: "For production apps.", price: "Coming soon", period: "", features: ["From $2/mo**", "9k+ req/h", "500+ req/min", "100+ req/s", "30+ LLMs", "Image gen (no watermark)", "OCR", "Speech-to-text", "JsonMode", "Function calling", "Revenue share***"], action: { label: "Join Waitlist", onClick: () => setModal("basic"), buttonStyle: { background: "#212121", color: "#fff", border: "1px solid #212121" } } },
-    ],
-    [scrollToExample]
-  );
 
   return (
-    <GoogleOAuthProvider clientId={GA_CLIENT_ID}>
-      <section aria-labelledby="featured-heading-plans" className="relative py-20 md:py-28 overflow-hidden bg-gradient-to-b from-background via-background to-background/95">
-        {/* ... header / other UI unchanged ... */}
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="text-center mb-14 md:mb-20">
-            <motion.h2 id="featured-heading-plans" initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }} className="mt-6 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
-              <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">Pick a plan that grows with your goals.</span>
-            </motion.h2>
-            <motion.p initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }} className="mt-4 max-w-2xl mx-auto text-sm md:text-base text-muted-foreground leading-relaxed">
-              Compare the benefits and limits below to find the right fit.
-            </motion.p>
-          </div>
+    <section
+      aria-labelledby="featured-heading"
+      className="relative py-20 md:py-28 overflow-hidden bg-gradient-to-b from-background via-background to-background/95"
+    >
+      {/* Ambient background: subtle grid + blurred gradient orbs (very low opacity for uniform dark theme) */}
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:42px_42px] opacity-10" />
+        <motion.div
+          className="absolute -top-40 -left-32 w-[520px] h-[520px] rounded-full bg-gradient-to-br from-purple-600/25 via-violet-700/10 to-transparent blur-3xl opacity-20"
+          animate={{ scale: [1, 1.08, 1], opacity: [0.18, 0.28, 0.18] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute -bottom-44 -right-32 w-[560px] h-[560px] rounded-full bg-gradient-to-tr from-sky-600/25 via-cyan-700/10 to-transparent blur-3xl opacity-20"
+          animate={{ scale: [1, 1.1, 1], opacity: [0.18, 0.3, 0.18] }}
+          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12">
-            {plans.map((plan, i) => (
-              <motion.div key={plan.title} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.55, delay: i * 0.1 }}>
-                <PricingCard key={i} plan={plan} />
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+        {/* Header */}
+        <div className="text-center mb-14 md:mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 via-secondary/10 to-primary/10 border border-border/40 backdrop-blur-sm text-xs md:text-sm font-medium"
+          >
+            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              Curated Highlights
+            </span>
+          </motion.div>
+          <motion.h2
+            id="featured-heading"
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="mt-6 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight"
+          >
+            <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
+              Featured Components
+            </span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-4 max-w-2xl mx-auto text-sm md:text-base text-muted-foreground leading-relaxed"
+          >
+            Production‑ready, animated, and accessible building blocks to accelerate your UI development.
+          </motion.p>
+        </div>
+
+        {/* Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12">
+          {items.map((item, i) => {
+            const accent = accentClasses[item.accent];
+            return (
+              <motion.div
+                key={item.name}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.55, delay: i * 0.1 }}
+                onHoverStart={() => setHoverIndex(i)}
+                onHoverEnd={() => setHoverIndex(null)}
+              >
+                <Link
+                  href={item.route}
+                  className="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-2xl h-full"
+                >
+                  <div
+                    className={
+                      "relative overflow-hidden rounded-2xl border border-border/50 bg-card/40 backdrop-blur-xl p-6 md:p-7 flex flex-col shadow-lg transition-colors duration-300 hover:border-border/40" +
+                      " " + accent.glow
+                    }
+                  >
+                    {/* Localized soft gradient highlight */}
+                    <motion.div
+                      aria-hidden="true"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: hoverIndex === i ? 1 : 0 }}
+                      transition={{ duration: 0.4 }}
+                      className={`absolute inset-0 bg-gradient-to-br ${accent.grad}`}>
+                    </motion.div>
+
+                    {/* Subtle moving sheen */}
+                    <motion.div
+                      aria-hidden="true"
+                      initial={{ x: "-120%" }}
+                      animate={{ x: hoverIndex === i ? "120%" : "-120%" }}
+                      transition={{ duration: 1.8, ease: "easeInOut", repeat: hoverIndex === i ? Infinity : 0 }}
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12"
+                    />
+
+                    {/* Icon */}
+                    <div
+                      className={`relative w-14 h-14 rounded-xl flex items-center justify-center mb-5 border border-white/10 bg-gradient-to-br ${accent.bg}`}
+                    >
+                      <motion.div
+                        aria-hidden="true"
+                        animate={{
+                          scale: hoverIndex === i ? [1, 1.08, 1] : 1,
+                          rotate: hoverIndex === i ? [0, -3, 3, -3, 0] : 0,
+                        }}
+                        transition={{ duration: 1.6, ease: "easeInOut", repeat: hoverIndex === i ? Infinity : 0 }}
+                        className="text-white"
+                      >
+                        {item.icon}
+                      </motion.div>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="text-lg md:text-xl font-semibold mb-2 tracking-tight">
+                      <span className="bg-gradient-to-r from-white to-white/90 bg-clip-text text-black dark:text-white group-hover:from-primary group-hover:to-secondary transition-colors duration-300">
+                        {item.name}
+                      </span>
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-xs md:text-sm text-muted-foreground/90 leading-relaxed flex-grow">
+                      {item.description}
+                    </p>
+
+                    {/* CTA */}
+                    <div className="mt-5 flex items-center gap-2 text-xs font-medium">
+                      <motion.span
+                        animate={{ x: hoverIndex === i ? [0, 4, 0] : 0 }}
+                        transition={{ duration: 1.4, repeat: hoverIndex === i ? Infinity : 0, ease: "easeInOut" }}
+                        className={`${accent.text}`}
+                      >
+                        Explore
+                      </motion.span>
+                      <ArrowRight className={`w-4 h-4 ${accent.text}`} />
+                    </div>
+                  </div>
+                </Link>
               </motion.div>
-            ))}
-          </div>
-
-          <div className="text-xs text-muted-foreground space-y-1">
-            <p>* - It depends on the model (may be lower).</p>
-            <p>** - Features, limits and pricing may change.</p>
-            <p>*** - Partner programme details soon.</p>
-          </div>
+            );
+          })}
         </div>
-      </section>
 
-      {modal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setModal(null)}>
-          <div className="bg-background rounded-xl border border-border shadow-xl w-full max-w-md p-6" onClick={(e) => e.stopPropagation()}>
-            {modal === "basic" ? (justActivatedEmail ? (
-              <div className="space-y-4">
-                <div className="text-xl font-semibold flex items-center gap-2"><span className="text-green-500">✅</span> All set</div>
-                <p className="text-sm text-muted-foreground">We will notify you when subscriptions are available.</p>
-                <div className="flex justify-end"><Button onClick={() => setModal(null)}>Close</Button></div>
-              </div>
-            ) : (
-              <BasicSubGoogleBlock onClose={() => setModal(null)} onSuccess={(email) => setJustActivatedEmail(email || "")} />
-            )) : (
-              <div className="space-y-4">
-                <div className="text-xl font-semibold">Join the Waitlist</div>
-                <p className="text-sm text-muted-foreground">Thanks for your interest. Subscriptions will open soon. This is a placeholder dialog—no data is collected here.</p>
-                <div className="flex justify-end"><Button variant="outline" onClick={() => setModal(null)}>Close</Button></div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-    </GoogleOAuthProvider>
+        {/* View all components CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55, delay: 0.2 }}
+          className="text-center"
+        >
+          <Button
+            size="lg"
+            variant="outline"
+            asChild
+            className="relative px-8 py-5 font-semibold backdrop-blur-xl bg-card/40 border-border/50 hover:border-primary/40 transition-colors group overflow-hidden"
+          >
+            <Link href="/components/accordion" className="inline-flex items-center gap-2">
+              <motion.div
+                aria-hidden="true"
+                initial={{ x: "-110%" }}
+                whileHover={{ x: "110%" }}
+                transition={{ duration: 1.4, ease: "easeInOut" }}
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent skew-x-12"
+              />
+              <span className="relative z-10">Explore All Components</span>
+              <motion.span
+                aria-hidden="true"
+                animate={{ x: [0, 5, 0] }}
+                transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                className="relative z-10"
+              >
+                <ArrowRight className="w-5 h-5" />
+              </motion.span>
+            </Link>
+          </Button>
+        </motion.div>
+      </div>
+    </section>
   );
 }
