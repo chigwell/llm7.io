@@ -248,9 +248,9 @@ export default function HeroSectionWithWaves() {
                 One LLM API
               </span>
               <br />
-              <span className="bg-gradient-to-r from-primary via-primary to-primary/60 bg-clip-text text-transparent text-6xl">
-                Your Gateway to AI Innovation
-              </span>
+              <span className="bg-gradient-to-r from-primary via-primary to-primary/60 bg-clip-text text-transparent text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
+                  Your Gateway to AI Innovation
+                </span>
             </h1>
 
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4" style={{marginBottom: '0'}}>
@@ -333,94 +333,94 @@ Prototype, build, and scale without switching providers.
           </div>
 
           {/* Stats */}
-          <div className="flex justify-center items-center gap-8 md:gap-16 text-center px-4">
-            <div>
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-primary to-secondary bg-clip-text">
-                <CountUp
-                  to={153}
-                  suffix="m+"
-                  duration={2.5}
-                  delay={0.5}
-                  effect="elastic"
-                  hoverEffect
-                />
+          <div className="flex justify-center items-center gap-4 sm:gap-6 md:gap-8 lg:gap-16 text-center px-4">
+              <div>
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-primary to-secondary bg-clip-text">
+                  <CountUp
+                    to={153}
+                    suffix="m+"
+                    duration={2.5}
+                    delay={0.5}
+                    effect="elastic"
+                    hoverEffect
+                  />
+                </div>
+                <div className="text-xs md:text-sm text-muted-foreground">
+                  API Calls
+                </div>
               </div>
-              <div className="text-xs md:text-sm text-muted-foreground">
-                API Calls
+              <div className="w-px h-8 md:h-12 bg-gradient-to-b from-transparent via-border to-transparent"></div>
+              <div>
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
+                  <CountUp
+                    to={18}
+                    suffix="+"
+                    duration={3}
+                    delay={1}
+                    effect="bounce"
+                    colorTransition
+                    hoverEffect
+                  />
+                </div>
+                <div className="text-xs md:text-sm text-muted-foreground">
+                  LLM Models
+                </div>
+              </div>
+              <div className="w-px h-8 md:h-12 bg-gradient-to-b from-transparent via-border to-transparent"></div>
+              <div>
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
+                  <CountUp
+                    to={35}
+                    suffix="k+"
+                    duration={3}
+                    delay={1}
+                    effect="bounce"
+                    colorTransition
+                    hoverEffect
+                  />
+                </div>
+                <div className="text-xs md:text-sm text-muted-foreground">
+                  Users
+                </div>
+              </div>
+              <div className="w-px h-8 md:h-12 bg-gradient-to-b from-transparent via-border to-transparent"></div>
+              <div>
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
+                  <CountUp
+                    to={countVisitors}
+                    suffix="k+"
+                    duration={3}
+                    delay={1}
+                    effect="bounce"
+                    colorTransition
+                    hoverEffect
+                  />
+                </div>
+                <div className="text-xs md:text-sm text-muted-foreground">
+                  Visitors (30d)
+                </div>
+              </div>
+              <div className="w-px h-8 md:h-12 bg-gradient-to-b from-transparent via-border to-transparent"></div>
+              <div className="hidden lg:inline">
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-primary to-secondary bg-clip-text">
+                  <CountUp
+                    to={999}
+                    format="compact"
+                    duration={2}
+                    delay={1.5}
+                    hoverEffect
+                    renderValue={() => (
+                      <span className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent">
+                        ∞
+                      </span>
+                    )}
+                  />
+                </div>
+                <div className="text-xs md:text-sm text-muted-foreground">
+                  Possibilities
+                </div>
               </div>
             </div>
-            <div className="w-px h-8 md:h-12 bg-gradient-to-b from-transparent via-border to-transparent"></div>
-            <div>
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
-                <CountUp
-                  to={18}
-                  suffix="+"
-                  duration={3}
-                  delay={1}
-                  effect="bounce"
-                  colorTransition
-                  hoverEffect
-                />
-              </div>
-              <div className="text-xs md:text-sm text-muted-foreground">
-                LLM Models
-              </div>
-            </div>
-            <div className="w-px h-8 md:h-12 bg-gradient-to-b from-transparent via-border to-transparent"></div>
-            <div>
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
-                <CountUp
-                  to={35}
-                  suffix="k+"
-                  duration={3}
-                  delay={1}
-                  effect="bounce"
-                  colorTransition
-                  hoverEffect
-                />
-              </div>
-              <div className="text-xs md:text-sm text-muted-foreground">
-                Users
-              </div>
-            </div>
-            <div className="w-px h-8 md:h-12 bg-gradient-to-b from-transparent via-border to-transparent"></div>
-            <div>
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
-                <CountUp
-                  to={countVisitors}
-                  suffix="k+"
-                  duration={3}
-                  delay={1}
-                  effect="bounce"
-                  colorTransition
-                  hoverEffect
-                />
-              </div>
-              <div className="text-xs md:text-sm text-muted-foreground">
-                Visitors (30d)
-              </div>
-            </div>
-            <div className="w-px h-8 md:h-12 bg-gradient-to-b from-transparent via-border to-transparent"></div>
-            <div className="hidden lg:inline">
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-primary to-secondary bg-clip-text">
-                <CountUp
-                  to={999}
-                  format="compact"
-                  duration={2}
-                  delay={1.5}
-                  hoverEffect
-                  renderValue={() => (
-                    <span className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent">
-                      ∞
-                    </span>
-                  )}
-                />
-              </div>
-              <div className="text-xs md:text-sm text-muted-foreground">
-                Possibilities
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
