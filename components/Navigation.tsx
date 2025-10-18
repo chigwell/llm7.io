@@ -132,7 +132,7 @@ export default function Navigation() {
           ))}
           <div className="flex w-full flex-col gap-4 mt-6">
           <Link
-              href="https://github.com/Srijan-Baniyal/vyoma-ui"
+              href="https://github.com/chigwell/llm7.io"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setIsMobileMenuOpen(false)}
