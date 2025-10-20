@@ -240,8 +240,8 @@ export default function FeaturedComponents() {
   const plans = useMemo(
     () => [
       { title: "Free (Anonymous)", desc: "Start now — no sign-up.", price: "$0", features: ["No sign-up", "8k chars/req*", "750 req/h", "45 req/min", "1 req/s"], action: { label: "See Example", onClick: scrollToExample } },
-      { title: "Free (Token-based)", desc: "Higher limits with a free token.", price: "$0", features: ["Free token", "128k chars/req*", "4,500 req/h", "150 req/min", "20 req/s", "20+ LLMs", "Image gen (watermark)"], action: { label: "Get Free Token", href: "https://token.llm7.io/" } },
-      { title: "Subscription Waitlist", desc: "For production apps.", price: "Coming soon", period: "", features: ["From $2/mo**", "9k+ req/h", "500+ req/min", "100+ req/s", "30+ LLMs", "Image gen (no watermark)", "OCR", "Speech-to-text", "JsonMode", "Function calling", "Revenue share***"], action: { label: "Join Waitlist", onClick: () => setModal("basic"), buttonStyle: { background: "#212121", color: "#fff", border: "1px solid #212121" } } },
+      { title: "Free (Token-based)", desc: "Higher limits with a free token.", price: "$0", features: ["Free token", "128k chars/req*", "4,500 req/h", "150 req/min", "20 req/s", "10+ LLMs", "Image gen (watermark)"], action: { label: "Get Free Token", href: "https://token.llm7.io/" } },
+      { title: "Subscription Waitlist", desc: "For production apps.", price: "Coming soon", period: "", features: ["From $2/mo**", "9k+ req/h", "500+ req/min", "100+ req/s", "20+ LLMs", "Image gen (no watermark)", "OCR", "Speech-to-text", "JsonMode", "Function calling", "Revenue share***"], action: { label: "Join Waitlist", onClick: () => setModal("basic"), buttonStyle: { background: "#212121", color: "#fff", border: "1px solid #212121" } } },
     ],
     [scrollToExample]
   );
