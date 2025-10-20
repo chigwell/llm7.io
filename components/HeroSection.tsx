@@ -45,26 +45,41 @@ export default function HeroSectionWithWaves() {
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [countVisitors, setCountVisitors] = useState(84); // default value
+  const [requestCount, setRequestCount] = useState(156); // default value in millions
 
   // Fetch dynamic stats on mount
   useEffect(() => {
     async function fetchStats() {
-      // get the number from https://api.llm7.io/v1/unique-visitors
+      // get the number of visitors from https://api.llm7.io/v1/unique-visitors
       // {"unique_visitors_last_30_days":119795}
-        try {
-            const response = await fetch("https://api.llm7.io/v1/unique-visitors");
-            const data = await response.json();
-            if (data && data.unique_visitors_last_30_days) {
-                const visitors = Math.round(data.unique_visitors_last_30_days / 1000); // convert to 'k'
-                setCountVisitors(visitors);
-            }
+      try {
+        const response = await fetch("https://api.llm7.io/v1/unique-visitors");
+        const data = await response.json();
+        if (data && data.unique_visitors_last_30_days) {
+          const visitors = Math.round(data.unique_visitors_last_30_days / 1000); // convert to 'k'
+          setCountVisitors(visitors);
         }
-        catch (error) {
-            console.warn("Failed to fetch visitor stats:", error);
+      } catch (error) {
+        console.warn("Failed to fetch visitor stats:", error);
+      }
+
+      // get the number of requests from https://api.llm7.io/stats/counts
+      // {"total_requests": 3461778}
+      try {
+        const response = await fetch("https://api.llm7.io/stats/counts");
+        const data = await response.json();
+        if (data && data.total_requests) {
+          // Convert to millions and round to nearest integer
+          const requestsInMillions = Math.round(data.total_requests / 1000000);
+          setRequestCount(requestsInMillions);
         }
+      } catch (error) {
+        console.warn("Failed to fetch request stats:", error);
+        // Keep the default value of 156m+ if there's an error
+      }
     }
     fetchStats();
-  }, [setCountVisitors]);
+  }, [setCountVisitors, setRequestCount]);
 
   // Get the current theme, defaulting to system theme if not explicitly set
   const currentTheme = theme === "system" ? systemTheme : theme;
@@ -337,7 +352,7 @@ Prototype, build, and scale without switching providers.
               <div>
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-primary to-secondary bg-clip-text">
                   <CountUp
-                    to={153}
+                    to={requestCount}
                     suffix="m+"
                     duration={2.5}
                     delay={0.5}
@@ -353,7 +368,7 @@ Prototype, build, and scale without switching providers.
               <div>
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
                   <CountUp
-                    to={18}
+                    to={10}
                     suffix="+"
                     duration={3}
                     delay={1}
@@ -370,7 +385,7 @@ Prototype, build, and scale without switching providers.
               <div>
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
                   <CountUp
-                    to={35}
+                    to={39}
                     suffix="k+"
                     duration={3}
                     delay={1}
