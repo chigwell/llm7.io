@@ -45,7 +45,7 @@ export default function HeroSectionWithWaves() {
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [countVisitors, setCountVisitors] = useState(84); // default value
-  const [requestCount, setRequestCount] = useState(156); // default value in millions
+  const [requestCount, setRequestCount] = useState(164); // default value in millions
 
   // Fetch dynamic stats on mount
   useEffect(() => {
