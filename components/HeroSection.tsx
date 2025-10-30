@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/buttonShadcn";
 import Link from "next/link";
-import { ArrowRight, Sparkles, Layers, Zap, DownloadCloud, Server } from "lucide-react";
+import { ArrowRight, Sparkles, Bug, Layers, Zap, DownloadCloud, Server } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { Pill } from "@/components/ui/pill";
 import { CountUp } from "@/components/vui/text/CountUp";
@@ -251,11 +251,11 @@ export default function HeroSectionWithWaves() {
           {/* Main Headline */}
           <div className="space-y-6 md:space-y-8 mb-8 md:mb-12">
             <Pill
-              icon={<Sparkles className="w-3 h-3 md:w-4 md:h-4" />}
-              status="active"
+              icon={<Bug className="w-3 h-3 md:w-4 md:h-4" />}
+              status="error"
               className="mb-6 md:mb-8 bg-background/50 backdrop-blur-sm text-xs md:text-sm text-muted-foreground"
             >
-             {`Introducing LLM7 UI v1.0.0`}
+             {`LLM7.io: temporary model availability issues`}
             </Pill>
 
             <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight leading-[0.9] px-2">
