@@ -28,7 +28,7 @@ interface ChartData {
 type TooltipData = ChartData;
 
 // Maximum number of data points to keep
-const MAX_DATA_POINTS = 1000;
+const MAX_DATA_POINTS = 500;
 
 // Initial empty data array
 const initialData: ChartData[] = [];
@@ -147,7 +147,7 @@ export default function ActiveRequestsChart() {
     fetchData();
 
     // Set up interval for subsequent fetches
-    const intervalId = setInterval(fetchData, 500);
+    const intervalId = setInterval(fetchData, 1000);
 
     // Clean up interval on unmount
     return () => clearInterval(intervalId);
