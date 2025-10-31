@@ -44,8 +44,8 @@ export default function HeroSectionWithWaves() {
   const [vantaLoaded, setVantaLoaded] = useState(false);
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const [countVisitors, setCountVisitors] = useState(84); // default value
-  const [requestCount, setRequestCount] = useState(164); // default value in millions
+  const [countVisitors, setCountVisitors] = useState(128);
+  const [requestCount, setRequestCount] = useState(165);
 
   // Fetch dynamic stats on mount
   useEffect(() => {
@@ -54,7 +54,7 @@ export default function HeroSectionWithWaves() {
         const response = await fetch("https://api.llm7.io/v1/unique-visitors");
         const data = await response.json();
         if (data && data.unique_visitors_last_30_days) {
-          const visitors = Math.round(data.unique_visitors_last_30_days / 1000); // convert to 'k'
+          const visitors = Math.round(data.unique_visitors_last_30_days / 1000);
           setCountVisitors(visitors);
         }
       } catch (error) {
