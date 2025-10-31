@@ -1,6 +1,6 @@
 # Terms of Service
 
-**Last updated: 19 September 2025**
+**Last updated: 31 October 2025**
 
 Thank you for using **LLM7.io** (the **“Service”**). By accessing or using the Service, you agree to these Terms of Service (the **“Terms”**). If you do not accept all of the Terms, do not use the Service.
 
@@ -94,9 +94,13 @@ You agree to **defend, indemnify, and hold harmless** us and our contributors fr
 ---
 
 ## 13. Term, suspension, and termination
-- These Terms apply while you use the Service.  
-- We may **suspend or terminate** access at any time (e.g., for security, abuse, legal, or operational reasons).  
-- Upon termination, your right to use the Service ceases immediately; sections that by their nature should survive (e.g., 6–12, 15) will continue to apply.
+* These Terms apply while you use the Service.
+* We may **suspend, restrict, or terminate** access **at any time and at our sole discretion**, including (but not limited to) cases of:
+
+  * **security risks**, **suspected fraud**, **abuse**, or **unreasonable or non-meaningful usage** as determined **automatically or manually** by our internal systems, partner systems, or administrators;
+  * **operational**, **legal**, or **compliance** reasons.
+* Access may be limited or permanently withdrawn **without notice or compensation**.
+* Upon termination, your right to use the Service ceases immediately; sections that by their nature should survive (e.g., 6–12, 15) will continue to apply.
 
 ---
 
