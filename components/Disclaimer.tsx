@@ -78,47 +78,69 @@ export default function Disclaimer({
             >
               <h2 className="text-xl font-semibold text-foreground">Disclaimer</h2>
               <div className="mt-8 px-4 max-w-2xl text-gray-700 text-sm text-center">
-                  <p className="text-justify">
-                    LLM7.io offers a free tier supported by donors. Paid plans may also be available.
-                  </p>
-                  <p className="text-justify">
-                    Plan features, limits and pricing may change at any time.
-                  </p>
-                  <p className="text-justify">
-                    <b>Important:</b> Large language models may generate inaccurate or misleading content ("hallucinations"). Do not rely on outputs as legal, medical, financial or other professional advice. You must independently verify any critical output before use.
-                  </p>
-                  <p className="text-justify">
-                    The Service is provided "as is" and "as available", without warranties of any kind (express or implied), including merchantability, fitness for a particular purpose and non-infringement. We do not guarantee uptime, latency, availability of any particular model, or the accuracy, reliability, completeness or timeliness of generated content. We may modify, replace or withdraw models and features at any time without notice.
-                  </p>
-                  <p className="text-justify">
-                    To the maximum extent permitted by law, you use the Service at your own risk. LLM7.io and its contributors will not be liable for any direct, indirect, incidental, special, consequential or punitive losses or damages (including loss of data, business interruption or loss of profits) arising from your use of the Service, even if advised of the possibility of such damages. Nothing in this notice excludes or limits liability for death or personal injury caused by negligence, fraud or fraudulent misrepresentation, or any other liability that cannot lawfully be limited or excluded.
-                  </p>
-                  <p className="text-justify">
-                    We collect anonymous usage data to improve the Service. In addition, if you use <code>token.llm7.io</code> to issue access tokens for <code>llm7.io</code>, we will store your email address (and minimal related metadata) for the purpose of issuing, managing and securing those tokens, enforcing rate limits and preventing abuse. We do not sell personal data. Data are retained only as long as necessary to provide the Service and to meet legal obligations.
-                  </p>
-                  <p className="text-justify">
-                    Anonymous usage data may be collected and analysed to improve future models; no personally identifying information is stored or used by LLM7.io.
-                  </p>
-                  <p className="mt-2">
-                    For more details, please see our{' '}
-                    <a
-                      href="https://github.com/chigwell/llm7.io/blob/main/TERMS.md"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:text-blue-800 underline"
-                    >
-                      Terms
-                    </a> and{' '}
-                    <a
-                      href="https://github.com/chigwell/llm7.io/blob/main/PRIVACY.md"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:text-blue-800 underline"
-                    >
-                      Privacy Policy
-                    </a>.
-                  </p>
-                </div>
+                <p className="text-justify">
+                  LLM7.io offers a free tier supported by donors. Paid plans may also be available.
+                </p>
+                <p className="text-justify">
+                  Plan features, limits, and pricing may change at any time.
+                </p>
+                <p className="text-justify">
+                  <b>Important:</b> Large language models may generate inaccurate or misleading content ("hallucinations").
+                  Do not rely on outputs as legal, medical, financial, or other professional advice. You must independently
+                  verify any critical output before use.
+                </p>
+                <p className="text-justify">
+                  The Service is provided "as is" and "as available", without warranties of any kind (express or implied),
+                  including merchantability, fitness for a particular purpose, and non-infringement. We do not guarantee
+                  uptime, latency, availability of any particular model, or the accuracy, reliability, completeness, or
+                  timeliness of generated content. We may modify, replace, restrict, or withdraw models and features at any
+                  time without notice.
+                </p>
+                <p className="text-justify">
+                  Access to the Service may be <b>suspended, restricted, or terminated at any time</b>, at our sole discretion,
+                  including where there is a <b>risk of fraud, abuse, or unreasonable or non-meaningful use</b>, as determined
+                  automatically or manually by our internal systems, partner systems, or administrators. Such actions may occur
+                  without prior notice or compensation.
+                </p>
+                <p className="text-justify">
+                  To the maximum extent permitted by law, you use the Service at your own risk. LLM7.io and its contributors
+                  will not be liable for any direct, indirect, incidental, special, consequential, or punitive losses or damages
+                  (including loss of data, business interruption, or loss of profits) arising from your use of the Service, even
+                  if advised of the possibility of such damages. Nothing in this notice excludes or limits liability for death or
+                  personal injury caused by negligence, fraud or fraudulent misrepresentation, or any other liability that cannot
+                  lawfully be limited or excluded.
+                </p>
+                <p className="text-justify">
+                  We collect anonymous usage data to improve the Service. If you use <code>token.llm7.io</code> to issue access
+                  tokens for <code>llm7.io</code>, we will store your email address (and minimal related metadata) for the purpose
+                  of issuing, managing, and securing those tokens, enforcing rate limits, and preventing abuse. We do not sell
+                  personal data. Data are retained only as long as necessary to provide the Service and to meet legal obligations.
+                </p>
+                <p className="text-justify">
+                  Anonymous usage data may be collected and analysed to improve future models; no personally identifying
+                  information is stored or used by LLM7.io.
+                </p>
+                <p className="mt-2">
+                  For more details, please see our{" "}
+                  <a
+                    href="https://github.com/chigwell/llm7.io/blob/main/TERMS.md"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:text-blue-800 underline"
+                  >
+                    Terms
+                  </a>{" "}
+                  and{" "}
+                  <a
+                    href="https://github.com/chigwell/llm7.io/blob/main/PRIVACY.md"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:text-blue-800 underline"
+                  >
+                    Privacy Policy
+                  </a>.
+                </p>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
