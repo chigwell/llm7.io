@@ -381,7 +381,7 @@ Prototype, build, and scale without switching providers.
               <div>
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
                   <CountUp
-                    to={39}
+                    to={47}
                     suffix="k+"
                     duration={3}
                     delay={1}
