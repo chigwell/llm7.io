@@ -61,8 +61,6 @@ export default function HeroSectionWithWaves() {
         console.warn("Failed to fetch visitor stats:", error);
       }
 
-      // get the number of requests from https://api.llm7.io/stats/counts
-      // {"total_requests": 3461778}
       try {
         const response = await fetch("https://api.llm7.io/stats/counts");
         const data = await response.json();
