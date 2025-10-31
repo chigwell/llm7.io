@@ -50,8 +50,6 @@ export default function HeroSectionWithWaves() {
   // Fetch dynamic stats on mount
   useEffect(() => {
     async function fetchStats() {
-      // get the number of visitors from https://api.llm7.io/v1/unique-visitors
-      // {"unique_visitors_last_30_days":119795}
       try {
         const response = await fetch("https://api.llm7.io/v1/unique-visitors");
         const data = await response.json();
