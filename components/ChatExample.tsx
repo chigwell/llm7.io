@@ -574,7 +574,7 @@ type ApiModel = {
   modalities: {
     input: string[];
   };
- model_tier: (tier: string) => string;
+ model_tier: string;
 };
 
 // Transform API model to our format
