@@ -574,6 +574,7 @@ type ApiModel = {
   modalities: {
     input: string[];
   };
+ model_tier: (tier: string) => string;
 };
 
 // Transform API model to our format
@@ -592,6 +593,7 @@ const transformApiModel = (apiModel: ApiModel) => {
     // Store additional info for potential future use
     owned_by: apiModel.owned_by,
     modalities: apiModel.modalities,
+    model_tier: apiModel.model_tier,
   };
 };
 
@@ -638,10 +640,12 @@ export default function MagicalChatInput() {
         // Sort models alphabetically by name
         transformedModels.sort((a, b) => a.name.localeCompare(b.name));
 
-        setModels(transformedModels);
+        const filteredModels = transformedModels.filter(m => m.model_tier !== "top");
+
+        setModels(filteredModels);
 
         // Set the default model to the first one if no model is selected
-        if (!model && transformedModels.length > 0) {
+        if (!model && filteredModels.length > 0) {
           setModel(transformedModels[0].id);
         }
       } catch (error) {
