@@ -673,59 +673,85 @@ export default function MagicalChatInput() {
     setElapsedTime(0);
   };
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault();
-    if (!text.trim()) return;
-
-    setStatus("submitted");
-    setError(null);
-    setResponse("");
-    setShowResponse(true);
-    startTimer();
-
-    try {
-      // Make API request to generate text
-      const response = await fetch('https://api.llm7.io/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model: model,
-          messages: [
-            { role: "system", content: "You are a helpful AI assistant." },
-            { role: "user", content: text }
-          ],
-          stream: false,
-          temperature: 0.7,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to generate text: ${response.status} ${response.statusText}`);
+  async function fetchWithTimeout(
+      input: RequestInfo | URL,
+      init: RequestInit = {},
+      timeoutMs = 180_000
+    ): Promise<Response> {
+      const controller = new AbortController();
+      const id = setTimeout(() => controller.abort(), timeoutMs);
+      try {
+        const res = await fetch(input, { ...init, signal: controller.signal });
+        return res;
+      } finally {
+        clearTimeout(id);
       }
+    }
 
-      const data = await response.json();
-      let generatedText = data.choices[0].message.content;
-      if (generatedText.startsWith('{"choices":[')) {
-        try {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+      e.preventDefault();
+      if (!text.trim()) return;
+
+      setStatus("submitted");
+      setError(null);
+      setResponse("");
+      setShowResponse(true);
+      startTimer();
+
+      try {
+        const response = await fetchWithTimeout(
+          "https://api.llm7.io/v1/chat/completions",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model,
+              messages: [
+                { role: "system", content: "You are a helpful AI assistant." },
+                { role: "user", content: text },
+              ],
+              stream: false,
+              temperature: 0.7,
+            }),
+          },
+          180_000 // 180 seconds
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            `Failed to generate text: ${response.status} ${response.statusText}`
+          );
+        }
+
+        const data = await response.json();
+        let generatedText: string = data.choices[0]?.message?.content ?? "";
+
+        if (generatedText.startsWith('{"choices":[')) {
+          try {
             const parsed = JSON.parse(generatedText);
             generatedText = parsed.choices[0].message.content;
-        } catch (jsonError) {
-            console.error('Error parsing generated text as JSON:', jsonError);
+          } catch (jsonError) {
+            console.error("Error parsing generated text as JSON:", jsonError);
+          }
         }
-      }
 
-      setResponse(generatedText);
-      setStatus("ready");
-    } catch (error) {
-      console.error('Error generating text:', error);
-      setError(error instanceof Error ? error.message : 'Unknown error');
-      setStatus("error");
-    } finally {
-      stopTimer();
-    }
-  };
+        setResponse(generatedText);
+        setStatus("ready");
+      } catch (err) {
+        if (err instanceof DOMException && err.name === "AbortError") {
+          setError("Request timed out after 180s.");
+        } else {
+          console.error("Error generating text:", err);
+          setError(err instanceof Error ? err.message : "Unknown error");
+        }
+        setStatus("error");
+      } finally {
+        stopTimer();
+      }
+    };
+
 
   const showFooterPill = text.length > 0;
   const pillContent = useMemo(() => {
