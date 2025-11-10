@@ -286,7 +286,7 @@ export default function UsageSummaryChartCard() {
           <div className="w-full bg-card rounded-lg shadow-sm border border-border">
             <div className="flex items-center gap-3 px-4 py-3 border-b border-border">
               <div>
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-1">Global usage (tokens vs requests)</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-1">Global usage</h2>
                 <p className="text-muted-foreground text-sm">Aggregated totals across all users</p>
               </div>
               <div className="ml-auto flex items-center gap-2">
