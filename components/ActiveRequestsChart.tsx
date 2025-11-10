@@ -53,7 +53,7 @@ export default function ActiveRequestsChart() {
       if (container) {
         setDimensions({
           width: container.offsetWidth,
-          height: 400
+          height: 200
         });
       }
     };
