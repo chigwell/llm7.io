@@ -30,7 +30,7 @@ export default function UsageSummaryChartCard() {
     root: am5.Root;
     xAxis: am5xy.CategoryAxis<am5xy.AxisRenderer>;
     colSeries: am5xy.ColumnSeries;
-    lineSeries: am5xy.LineSeries;
+    //lineSeries: am5xy.LineSeries;
   } | null>(null);
   const abortRef = useRef<AbortController | null>(null);
 
