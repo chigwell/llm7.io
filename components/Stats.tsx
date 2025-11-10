@@ -7,24 +7,28 @@ import axios from "axios";
 import * as am5 from "@amcharts/amcharts5";
 import * as am5xy from "@amcharts/amcharts5/xy";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
-import { useTheme } from "next-themes";
 import am5themes_Dark from "@amcharts/amcharts5/themes/Dark";
-
+import { useTheme } from "next-themes";
 
 const SUMMARY_URL = "https://ee137.uk/llm7-usage-summary";
+
+type Point = { bucket: string; total_tokens: number; requests: number };
 
 export default function UsageSummaryChartCard() {
   const { theme, systemTheme } = useTheme();
   const resolved = theme === "system" ? systemTheme : theme;
   const isDark = resolved === "dark";
-  const labelFill = isDark ? am5.color(0xe2e8f0) /* slate-200 */ : am5.color(0x1f2937) /* gray-800 */;
-  const [range, setRange] = useState("7d"); // "24h" | "7d"
+
+  const labelFill = isDark ? am5.color(0xe2e8f0) : am5.color(0x1f2937);
+
+  const [range, setRange] = useState<"24h" | "7d">("7d");
   const [loading, setLoading] = useState(false);
-  const [points, setPoints] = useState<{ bucket: string; total_tokens: number; requests: number }[]>([]);
+  const [points, setPoints] = useState<Point[]>([]);
+
   const chartDivRef = useRef<HTMLDivElement | null>(null);
   const chartRef = useRef<{
     root: am5.Root;
-    xAxis: am5xy.CategoryAxis;
+    xAxis: am5xy.CategoryAxis<am5xy.AxisRenderer>;
     colSeries: am5xy.ColumnSeries;
     lineSeries: am5xy.LineSeries;
   } | null>(null);
@@ -44,11 +48,7 @@ export default function UsageSummaryChartCard() {
   }, []);
 
   const loadData = useCallback(async () => {
-    if (abortRef.current) {
-      try {
-        abortRef.current.abort();
-      } catch {}
-    }
+    abortRef.current?.abort();
     const controller = new AbortController();
     abortRef.current = controller;
 
@@ -72,7 +72,7 @@ export default function UsageSummaryChartCard() {
       const groupKey: "hour" | "day" = payload.group_by === "hour" ? "hour" : "day";
       const stats = Array.isArray(payload.stats) ? payload.stats : [];
 
-      const mapped = stats
+      const mapped: Point[] = stats
         .slice()
         .reverse()
         .map((r: any) => ({
@@ -97,23 +97,26 @@ export default function UsageSummaryChartCard() {
     loadData();
   }, [range, loadData]);
 
+  // full cleanup on unmount
   useEffect(() => {
-      return () => {
-        abortRef.current?.abort();
-        if (chartRef.current) {
-          chartRef.current.root.dispose();
-          chartRef.current = null;
-        }
-      };
-    }, []);
-
-  useEffect(() => {
+    return () => {
+      abortRef.current?.abort();
       if (chartRef.current) {
         chartRef.current.root.dispose();
         chartRef.current = null;
       }
-    }, [isDark]);
+    };
+  }, []);
 
+  // tear down chart on theme change so we can rebuild with the new theme
+  useEffect(() => {
+    if (chartRef.current) {
+      chartRef.current.root.dispose();
+      chartRef.current = null;
+    }
+  }, [isDark]);
+
+  // also tear down while "loading" to show just the spinner
   useEffect(() => {
     if (loading && chartRef.current) {
       chartRef.current.root.dispose();
@@ -121,16 +124,13 @@ export default function UsageSummaryChartCard() {
     }
   }, [loading]);
 
+  // build chart
   useEffect(() => {
     if (loading) return;
-      if (!chartDivRef.current || chartRef.current) return;
+    if (!chartDivRef.current || chartRef.current) return;
 
-      const root = am5.Root.new(chartDivRef.current);
-      root.setThemes(
-        isDark
-          ? [am5themes_Animated.new(root), am5themes_Dark.new(root)]
-          : [am5themes_Animated.new(root)]
-      );
+    const root = am5.Root.new(chartDivRef.current);
+    root.setThemes(isDark ? [am5themes_Animated.new(root), am5themes_Dark.new(root)] : [am5themes_Animated.new(root)]);
     root.numberFormatter.set("numberFormat", "#,###");
 
     const chart = root.container.children.push(
@@ -142,8 +142,10 @@ export default function UsageSummaryChartCard() {
         paddingLeft: 0,
         paddingRight: 0,
         layout: root.verticalLayout,
-      })
+      }),
     );
+
+    const colorSet = chart.get("colors") as am5.ColorSet | undefined;
 
     chart.set("scrollbarX", am5.Scrollbar.new(root, { orientation: "horizontal" }));
     chart.set("cursor", am5xy.XYCursor.new(root, { behavior: "none" }));
@@ -167,7 +169,7 @@ export default function UsageSummaryChartCard() {
         categoryField: "bucket",
         renderer: xRenderer,
         tooltip: am5.Tooltip.new(root, {}),
-      })
+      }),
     );
 
     const yAxisLeft = chart.yAxes.push(
@@ -175,7 +177,7 @@ export default function UsageSummaryChartCard() {
         renderer: am5xy.AxisRendererY.new(root, { strokeOpacity: 0.1 }),
         min: 0,
         extraMax: 0.05,
-      })
+      }),
     );
 
     const yAxisRightRenderer = am5xy.AxisRendererY.new(root, { opposite: true });
@@ -184,7 +186,7 @@ export default function UsageSummaryChartCard() {
         renderer: yAxisRightRenderer,
         min: 0,
         extraMax: 0.05,
-      })
+      }),
     );
     yAxisRightRenderer.grid.template.set("forceHidden", true);
 
@@ -195,18 +197,25 @@ export default function UsageSummaryChartCard() {
         yAxis: yAxisLeft,
         valueYField: "total_tokens",
         categoryXField: "bucket",
-        tooltip: am5.Tooltip.new(root, { pointerOrientation: "horizontal", labelText: "{valueY} {name}" }),
-      })
+        tooltip: am5.Tooltip.new(root, {
+          pointerOrientation: "horizontal",
+          labelText: "{valueY} {name}",
+        }),
+      }),
     );
+
     colSeries.columns.template.setAll({
       strokeOpacity: 0,
       cornerRadiusTL: 6,
       cornerRadiusTR: 6,
       tooltipY: am5.percent(10),
     });
-    colSeries.columns.template.adapters.add("fill", (fill, target) => {
-      const idx = colSeries.dataItems.indexOf(target.dataItem);
-      return chart.get("colors").getIndex(idx);
+
+    // Safe colour adapter (no am5xy.Column type needed)
+    colSeries.columns.template.adapters.add("fill", (_fill, target) => {
+      const idx = (colSeries.columns as unknown as { indexOf: (t: unknown) => number }).indexOf(target);
+      const safeIdx = idx >= 0 ? idx : 0;
+      return colorSet?.getIndex(safeIdx) ?? am5.color(0x94a3b8);
     });
 
     const lineSeries = chart.series.push(
@@ -217,8 +226,11 @@ export default function UsageSummaryChartCard() {
         valueYField: "requests",
         categoryXField: "bucket",
         maskBullets: false,
-        tooltip: am5.Tooltip.new(root, { pointerOrientation: "horizontal", labelText: "{valueY} {name}" }),
-      })
+        tooltip: am5.Tooltip.new(root, {
+          pointerOrientation: "horizontal",
+          labelText: "{valueY} {name}",
+        }),
+      }),
     );
     lineSeries.strokes.template.setAll({ strokeWidth: 3 });
     lineSeries.bullets.push(() =>
@@ -229,7 +241,7 @@ export default function UsageSummaryChartCard() {
           stroke: root.interfaceColors.get("background"),
           fill: lineSeries.get("fill"),
         }),
-      })
+      }),
     );
 
     const legend = chart.children.push(am5.Legend.new(root, { centerX: am5.p50, x: am5.p50 }));
@@ -240,26 +252,25 @@ export default function UsageSummaryChartCard() {
 
     chartRef.current = { root, xAxis, colSeries, lineSeries };
 
-    if (points?.length) {
+    if (points.length) {
       xAxis.data.setAll(points);
       colSeries.data.setAll(points);
       lineSeries.data.setAll(points);
     }
+
+    // set label colours after creation
     yAxisLeft.get("renderer")!.labels.template.setAll({ fill: labelFill });
     yAxisRight.get("renderer")!.labels.template.setAll({ fill: labelFill });
-
-    // Legend labels
     legend.labels.template.setAll({ fill: labelFill });
     legend.valueLabels.template.setAll({ fill: labelFill });
 
     return () => {
-      if (chartRef.current?.root) {
-        chartRef.current.root.dispose();
-        chartRef.current = null;
-      }
+      chartRef.current?.root.dispose();
+      chartRef.current = null;
     };
-  }, [loading, points, isDark]);
+  }, [loading, points, isDark, labelFill]);
 
+  // push data if chart exists
   useEffect(() => {
     if (!chartRef.current || loading) return;
     const { xAxis, colSeries, lineSeries } = chartRef.current;
@@ -272,17 +283,11 @@ export default function UsageSummaryChartCard() {
     <div className="w-full">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="w-full max-w-3xl mx-auto">
-          {/* Card */}
           <div className="w-full bg-card rounded-lg shadow-sm border border-border">
-            {/* Header */}
             <div className="flex items-center gap-3 px-4 py-3 border-b border-border">
               <div>
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-1">
-                  Global usage (tokens vs requests)
-                </h2>
-                <p className="text-muted-foreground text-sm">
-                  Aggregated totals across all users
-                </p>
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-1">Global usage (tokens vs requests)</h2>
+                <p className="text-muted-foreground text-sm">Aggregated totals across all users</p>
               </div>
               <div className="ml-auto flex items-center gap-2">
                 <span className="text-xs opacity-75">24h</span>
@@ -307,7 +312,6 @@ export default function UsageSummaryChartCard() {
               </div>
             </div>
 
-            {/* Content */}
             <div className="px-4 py-4" style={{ minHeight: 360 }}>
               {loading ? (
                 <div className="w-full h-[340px] flex items-center justify-center">
@@ -318,7 +322,7 @@ export default function UsageSummaryChartCard() {
                 </div>
               ) : (
                 <div
-                  key={isDark ? "dark" : "light"}
+                  key={isDark ? "dark" : "light"} // force remount on theme change
                   ref={chartDivRef}
                   id="usageSummaryChart"
                   style={{ width: "100%", height: 340 }}
@@ -326,7 +330,6 @@ export default function UsageSummaryChartCard() {
               )}
             </div>
           </div>
-          {/* /Card */}
         </div>
       </div>
     </div>
