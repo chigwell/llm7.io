@@ -29,6 +29,7 @@ type TooltipData = ChartData;
 
 // Maximum number of data points to keep
 const MAX_DATA_POINTS = 500;
+const Z_INDEX = { value: 50, time: 10 };
 
 // Initial empty data array
 const initialData: ChartData[] = [];
@@ -39,7 +40,7 @@ export default function ActiveRequestsChart() {
   const [data, setData] = useState<ChartData[]>(initialData);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [dimensions, setDimensions] = useState({ width: 768, height: 400 });
+  const [dimensions, setDimensions] = useState({ width: 768, height: 200 });
 
   // Get the current theme, defaulting to system theme if not explicitly set
   const currentTheme = theme === "system" ? systemTheme : theme;
@@ -114,11 +115,13 @@ export default function ActiveRequestsChart() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const result: ApiResponse = await response.json();
+      // Calculate current level of active requests ( / 60) and return int number
+      const currLevel = Math.round(result.active_requests_last_60s / 60);
 
       // Add new data point
       const newDataPoint: ChartData = {
         date: new Date(),
-        value: result.active_requests_last_60s,
+        value: currLevel,
       };
 
       // Update data, keeping only the latest MAX_DATA_POINTS
@@ -304,7 +307,7 @@ const AreaChart = withTooltip<AreaChartProps, TooltipData>(
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="text-center mb-8">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
-              Active Requests (Last 60s)
+              Active Requests
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Real-time monitoring of API requests
@@ -401,12 +404,13 @@ const AreaChart = withTooltip<AreaChartProps, TooltipData>(
               <div className="absolute top-0 left-0">
                 <TooltipWithBounds
                   key={Math.random()}
-                  top={tooltipTop - 12}
-                  left={tooltipLeft + 12}
-                  style={tooltipStyles}
+                  top={tooltipTop -40}
+                  left={tooltipLeft +12}
+                  style={{ ...tooltipStyles, zIndex: Z_INDEX.value, pointerEvents: "none" }}
                 >
                   {`${getValue(tooltipData)} requests`}
                 </TooltipWithBounds>
+
                 <Tooltip
                   top={innerHeight + margin.top - 14}
                   left={tooltipLeft}
@@ -414,12 +418,15 @@ const AreaChart = withTooltip<AreaChartProps, TooltipData>(
                     ...defaultStyles,
                     ...tooltipStyles,
                     minWidth: 72,
-                    textAlign: 'center',
-                    transform: 'translateX(-50%)',
+                    textAlign: "center",
+                    transform: "translateX(-50%)",
+                    zIndex: Z_INDEX.time,
+                    pointerEvents: "none",
                   }}
                 >
                   {formatDate(getDate(tooltipData))}
                 </Tooltip>
+
               </div>
             )}
           </div>
