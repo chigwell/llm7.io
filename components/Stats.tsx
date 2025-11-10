@@ -12,7 +12,7 @@ import { useTheme } from "next-themes";
 
 const SUMMARY_URL = "https://ee137.uk/llm7-usage-summary";
 
-type Point = { bucket: string; total_tokens: number; requests: number };
+type Point = { bucket: string; total_tokens: number };
 
 export default function UsageSummaryChartCard() {
   const { theme, systemTheme } = useTheme();
@@ -78,7 +78,7 @@ export default function UsageSummaryChartCard() {
         .map((r: any) => ({
           bucket: fmtBucket(r[groupKey], groupKey),
           total_tokens: Number(r.in_tokens || 0) + Number(r.out_tokens || 0),
-          requests: Number(r.requests || 0),
+          //requests: Number(r.requests || 0),
         }));
 
       setPoints(mapped);
@@ -218,7 +218,7 @@ export default function UsageSummaryChartCard() {
       return colorSet?.getIndex(safeIdx) ?? am5.color(0x94a3b8);
     });
 
-    const lineSeries = chart.series.push(
+    /*const lineSeries = chart.series.push(
       am5xy.LineSeries.new(root, {
         name: "Requests",
         xAxis,
@@ -242,7 +242,7 @@ export default function UsageSummaryChartCard() {
           fill: lineSeries.get("fill"),
         }),
       }),
-    );
+    );*/
 
     const legend = chart.children.push(am5.Legend.new(root, { centerX: am5.p50, x: am5.p50 }));
     legend.data.setAll(chart.series.values);
@@ -250,12 +250,12 @@ export default function UsageSummaryChartCard() {
     colSeries.appear();
     chart.appear(800, 100);
 
-    chartRef.current = { root, xAxis, colSeries, lineSeries };
+    chartRef.current = { root, xAxis, colSeries }; //, lineSeries
 
     if (points.length) {
       xAxis.data.setAll(points);
       colSeries.data.setAll(points);
-      lineSeries.data.setAll(points);
+      //lineSeries.data.setAll(points);
     }
 
     // set label colours after creation
@@ -273,10 +273,10 @@ export default function UsageSummaryChartCard() {
   // push data if chart exists
   useEffect(() => {
     if (!chartRef.current || loading) return;
-    const { xAxis, colSeries, lineSeries } = chartRef.current;
+    const { xAxis, colSeries } = chartRef.current; //, lineSeries
     xAxis.data.setAll(points);
     colSeries.data.setAll(points);
-    lineSeries.data.setAll(points);
+    //lineSeries.data.setAll(points);
   }, [points, loading]);
 
   return (
