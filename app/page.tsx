@@ -7,6 +7,7 @@ import ActiveRequestsChart from '@/components/ActiveRequestsChart';
 import ChatExample from "@/components/ChatExample";
 import Disclaimer from "@/components/Disclaimer";
 import ConsoleAnimation from "@/components/CodeExample";
+import UsageSummaryChartCard from "@/components/Stats";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <ChatExample />
       <FeaturedComponent />
       <ActiveRequestsChart />
+      <UsageSummaryChartCard />
       <Disclaimer/>
       <Footer />
     </>
