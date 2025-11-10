@@ -115,8 +115,7 @@ export default function ActiveRequestsChart() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const result: ApiResponse = await response.json();
-      // Calculate current level of active requests ( / 60) and return int number
-      const currLevel = Math.round(result.active_requests_last_60s / 60);
+      const currLevel = result.active_requests_last_60s;
 
       // Add new data point
       const newDataPoint: ChartData = {
