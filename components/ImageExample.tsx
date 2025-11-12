@@ -541,17 +541,18 @@ export default function ImageGenerationInput() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="text-center">
           <motion.h3
-            id="featured-heading"
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="mt-6 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight"
-          >
-            <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
-              Image Generation
-            </span>
-          </motion.h3>
+              id="featured-heading"
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="mt-6 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight flex items-center justify-center gap-3"
+            >
+              <ImageIcon className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
+              <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
+                Image Generation
+              </span>
+            </motion.h3>
         </div>
       </div>
       <div className="relative group flex items-center justify-center py-6 sm:py-10">
