@@ -361,28 +361,29 @@ Prototype, build, and scale without switching providers.
                 </div>
               </div>
               <div className="w-px h-8 md:h-12 bg-gradient-to-b from-transparent via-border to-transparent"></div>
-              <div>
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
-                  <CountUp
-                    to={10}
-                    suffix="+"
-                    duration={3}
-                    delay={1}
-                    effect="bounce"
-                    colorTransition
-                    hoverEffect
-                  />
+                <div>
+                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
+                    <CountUp
+                      to={54}
+                      suffix="B+"
+                      duration={3}
+                      delay={1}
+                      effect="bounce"
+                      colorTransition
+                      hoverEffect
+                    />
+                  </div>
+                  <div className="text-xs md:text-sm text-muted-foreground">
+                    Tokens processed
+                  </div>
                 </div>
-                <div className="text-xs md:text-sm text-muted-foreground">
-                  LLM Models
-                </div>
-              </div>
               <div className="w-px h-8 md:h-12 bg-gradient-to-b from-transparent via-border to-transparent"></div>
               <div>
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
                   <CountUp
-                    to={47}
-                    suffix="k+"
+                    to={10}
+                      suffix="k+"
+                      prefix="$"
                     duration={3}
                     delay={1}
                     effect="bounce"
@@ -391,7 +392,7 @@ Prototype, build, and scale without switching providers.
                   />
                 </div>
                 <div className="text-xs md:text-sm text-muted-foreground">
-                  Users
+                  User savings
                 </div>
               </div>
               <div className="w-px h-8 md:h-12 bg-gradient-to-b from-transparent via-border to-transparent"></div>
