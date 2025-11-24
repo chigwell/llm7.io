@@ -54,6 +54,10 @@ export default function Navigation() {
       link: "#example",
     },
     {
+      name: "Docs",
+      link: "https://docs.llm7.io/quickstart",
+    },
+    {
       name: "Dashboard",
       link: "https://token.llm7.io",
     },
