@@ -627,13 +627,44 @@ export default function MagicalChatInput() {
         setIsLoadingModels(true);
         setModelsError(null);
 
-        const response = await fetch('https://api.llm7.io/v1/models');
+        /*const response = await fetch('https://api.llm7.io/v1/models');
 
         if (!response.ok) {
           throw new Error(`Failed to fetch models: ${response.status} ${response.statusText}`);
-        }
+        }*/
 
-        const apiModels: ApiModel[] = await response.json();
+        const apiModels: ApiModel[] = [
+            {
+                  id: "default",
+                  object: "model",
+                  created: 1764003930,
+                  owned_by: "llm7",
+                  modalities: {
+                    input: ["text", "image"],
+                  },
+                  model_tier: "standard",
+            },
+            {
+                  id: "fast",
+                  object: "model",
+                  created: 1764003931,
+                  owned_by: "llm7",
+                  modalities: {
+                    input: ["text", "image"],
+                  },
+                  model_tier: "standard",
+            },
+            {
+                  id: "pro",
+                  object: "model",
+                  created: 1764003931,
+                  owned_by: "llm7",
+                  modalities: {
+                    input: ["text", "image"],
+                  },
+                  model_tier: "pro",
+            }
+        ]
 
         // Transform the API models to our format
         const transformedModels = apiModels.map(transformApiModel);
