@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import { Gauge, Rocket, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/buttonShadcn";
@@ -9,7 +9,7 @@ type ModelCard = {
   name: string;
   tagline: string;
   description: string;
-  icon: JSX.Element;
+  icon: ReactNode;
   accent: "purple" | "emerald" | "amber";
   cta: string;
 };
