@@ -612,6 +612,7 @@ export default function MagicalChatInput() {
   const [models, setModels] = useState<Array<{id: string, name: string}>>([]);
   const [isLoadingModels, setIsLoadingModels] = useState(true);
   const [modelsError, setModelsError] = useState<string | null>(null);
+  const [showProModal, setShowProModal] = useState(false);
 
   // New states for generation
   const [response, setResponse] = useState<string>("");
@@ -719,6 +720,13 @@ export default function MagicalChatInput() {
         clearTimeout(id);
       }
     }
+
+  const handleModelChange = useCallback((value: string) => {
+    setModel(value);
+    if (value.toLowerCase() === "pro") {
+      setShowProModal(true);
+    }
+  }, []);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
       e.preventDefault();
@@ -882,7 +890,7 @@ export default function MagicalChatInput() {
             )}
           >
             <AIInputTools>
-              <AIInputModelSelect onValueChange={setModel} value={model} disabled={isLoadingModels}>
+              <AIInputModelSelect onValueChange={handleModelChange} value={model} disabled={isLoadingModels}>
                 <AIInputModelSelectTrigger className="min-w-[116px] sm:min-w-[140px]">
                   {isLoadingModels ? (
                     <div className="flex items-center gap-2">
@@ -965,6 +973,37 @@ export default function MagicalChatInput() {
           </div>
         )}
       </div>
+
+      {showProModal && (
+        <div className="fixed inset-0 z-40 flex items-center justify-center px-4" onClick={() => setShowProModal(false)}>
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+          <div
+            className="relative w-full max-w-md rounded-2xl border border-border/60 bg-gradient-to-br from-background/95 via-background to-background/90 shadow-2xl p-6 space-y-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-sm uppercase tracking-[0.12em] text-muted-foreground">Pro only</p>
+                <h4 className="text-2xl font-semibold leading-tight mt-1">Pro models need a Pro subscription</h4>
+              </div>
+              <Button variant="ghost" size="icon" onClick={() => setShowProModal(false)} aria-label="Close">
+                <XIcon className="h-5 w-5" />
+              </Button>
+            </div>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Pro routes the most capable models and is available to Pro subscribers. Get instant access with a token and come back to chat.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-2 justify-end">
+              <Button variant="outline" onClick={() => setShowProModal(false)}>Maybe later</Button>
+              <Button asChild>
+                <a href="https://token.llm7.io/" target="_blank" rel="noopener noreferrer">
+                  Get Pro access
+                </a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Response Display - Same width as input */}
       {showResponse && (
