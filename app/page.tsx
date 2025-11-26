@@ -4,6 +4,7 @@ import HeroSection from "@/components/HeroSection";
 import Navigation from "@/components/Navigation";
 import PartnerLogosTicker from "@/components/PartnerLogosTicker";
 import ActiveRequestsChart from '@/components/ActiveRequestsChart';
+import ModelShowcase from "@/components/ModelShowcase";
 import ChatExample from "@/components/ChatExample";
 import Disclaimer from "@/components/Disclaimer";
 import ConsoleAnimation from "@/components/CodeExample";
@@ -20,6 +21,7 @@ export default function Home() {
       <ChatExample />
       <ImageGenerationInput />
       <FeaturedComponent />
+      <ModelShowcase />
       <ActiveRequestsChart />
       <UsageSummaryChartCard />
       <Disclaimer/>

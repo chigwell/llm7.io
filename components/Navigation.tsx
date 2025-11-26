@@ -50,6 +50,10 @@ export default function Navigation() {
       link: "#featured-heading-plans",
     },
     {
+      name: "Models",
+      link: "#models",
+    },
+    {
       name: "Example",
       link: "#example",
     },
