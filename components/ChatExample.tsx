@@ -615,12 +615,8 @@ export default function MagicalChatInput() {
   const [showProModal, setShowProModal] = useState(false);
 
   const recordClick = useCallback((source: number) => {
-    const url = `http://api.llm7.io/record-click?source=${source}`;
+    const url = `https://api.llm7.io/record-click?source=${source}`;
     try {
-      if (typeof navigator !== "undefined" && navigator.sendBeacon) {
-        navigator.sendBeacon(url);
-        return;
-      }
       fetch(url, { method: "GET", keepalive: true, mode: "no-cors" }).catch(() => {});
     } catch (_err) {
       // ignore tracking failures

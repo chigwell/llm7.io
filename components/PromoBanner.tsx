@@ -11,12 +11,8 @@ export default function PromoBanner() {
   const code = "VIBECODE2025NOV";
 
   const recordClick = useCallback((source: number) => {
-    const url = `http://api.llm7.io/record-click?source=${source}`;
+    const url = `https://api.llm7.io/record-click?source=${source}`;
     try {
-      if (navigator.sendBeacon) {
-        navigator.sendBeacon(url);
-        return;
-      }
       fetch(url, { method: "GET", keepalive: true, mode: "no-cors" }).catch(() => {});
     } catch (_err) {
       // Swallow errors to avoid impacting UX

@@ -212,12 +212,8 @@ type Plan = {
 function PricingCard({ plan }: { plan: Plan }) {
   const recordClick = useCallback((source?: number) => {
     if (!source) return;
-    const url = `http://api.llm7.io/record-click?source=${source}`;
+    const url = `https://api.llm7.io/record-click?source=${source}`;
     try {
-      if (typeof navigator !== "undefined" && navigator.sendBeacon) {
-        navigator.sendBeacon(url);
-        return;
-      }
       fetch(url, { method: "GET", keepalive: true, mode: "no-cors" }).catch(() => {});
     } catch (_err) {
       // ignore
