@@ -79,7 +79,7 @@ export default function Disclaimer({
               <h2 className="text-xl font-semibold text-foreground">Disclaimer</h2>
               <div className="mt-8 px-4 max-w-2xl text-gray-700 text-sm text-center">
                 <p className="text-justify">
-                  LLM7.io offers a free tier supported by donors. Paid plans may also be available.
+                  LLM7.io offers a free tier supported by donors and two paid subscriptions: <b>Vibe</b> (higher limits for chat and images) and <b>Pro</b> (highest limits plus JSON mode, function calling, and Pro models).
                 </p>
                 <p className="text-justify">
                   Plan features, limits, and pricing may change at any time.
