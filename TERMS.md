@@ -1,6 +1,6 @@
 # Terms of Service
 
-**Last updated: 31 October 2025**
+**Last updated: 26 November 2025**
 
 Thank you for using **LLM7.io** (the **“Service”**). By accessing or using the Service, you agree to these Terms of Service (the **“Terms”**). If you do not accept all of the Terms, do not use the Service.
 
@@ -13,7 +13,9 @@ Thank you for using **LLM7.io** (the **“Service”**). By accessing or using t
 
 ## 2. Description of the Service
 - LLM7.io provides access to large language models through a web UI and API.
-- A **free tier** is offered and is supported by donors; **paid plans** may also be available.
+- A **free tier** is offered and is supported by donors; **paid plans** are available:
+  - **Vibe** ($5/month): Up to **10 text requests/s**, **600 text requests/min**, **5,000 text requests/hour**; **10 images/s**, **60 images/min**. Intended for agents, side projects, and internal tools.
+  - **Pro** ($12/month): Up to **25 text requests/s**, **1,500 text requests/min**, **15,000 text requests/hour**; **20 images/s**, **120 images/min**. Includes JSON mode, function calling, Pro models, and speech-to-text for production apps/APIs.
 - **Features, limits, models, and pricing may change at any time** without notice.
 - The Service is intended for experimentation, development, and research. It is **not** for life-critical, safety-critical, or emergency use.
 
@@ -104,10 +106,11 @@ You agree to **defend, indemnify, and hold harmless** us and our contributors fr
 
 ---
 
-## 14. Paid plans and billing (if applicable)
-- Fees, billing cycles, usage limits, and overage rules are described at the point of purchase.  
-- We may update prices or plan limits; changes take effect upon renewal or as otherwise notified.  
-- Taxes may apply. Refunds (if any) are governed by the plan’s specific terms.
+## 14. Paid plans and billing
+- Paid subscriptions are purchased via **token.llm7.io**. Plans are currently **monthly**: **Vibe** ($5/month) and **Pro** ($12/month) with the limits described in Section 2.
+- Promotional codes (e.g., **VIBECODE2025NOV**) may offer discounts (currently 50% off the first month if redeemed by **30 November 2025**); promotions can change or end at our discretion.
+- We may update prices, plan limits, or features. Changes apply on renewal or as otherwise notified.
+- Taxes may apply. Refunds (if any) follow the terms shown at purchase and any mandatory consumer protections in your jurisdiction.
 
 ---
 

@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Last updated:** 19 September 2025
+**Last updated:** 26 November 2025
 
 This Privacy Policy explains how **LLM7.io** (“we”, “us”, “our”) collects and processes your personal data when you use our website and API, including `token.llm7.io`. We operate from the United Kingdom and comply with the **UK GDPR** and, where applicable, the **EU GDPR**.
 
@@ -19,8 +19,9 @@ This Privacy Policy explains how **LLM7.io** (“we”, “us”, “our”) col
 - **Email address** from **Google OAuth** at sign-in/registration.  
 - Minimal OAuth metadata required to verify your sign-in (e.g., `email_verified`).
 
-**Tokens & usage (service operation)**
+**Tokens, subscriptions & usage (service operation)**
 - Token issuance/revocation, expiry, status.
+- Subscription plan selection/status (e.g., Free, Vibe, Pro), renewal dates, and applied promotions (e.g., promo codes).
 - Usage counters/quotas and timestamps for rate-limiting, abuse prevention, reliability, and troubleshooting.
 - Basic performance/error metrics.
 
@@ -33,7 +34,7 @@ We do **not** intentionally collect special category data. We do **not** sell pe
 
 ## 3. Purposes and legal bases
 
-- **Provide and operate the service** (account, sign-in, token management, API access).  
+- **Provide and operate the service** (account, sign-in, token management, subscriptions, API access).  
   *Legal basis:* **Contract** (Art. 6(1)(b)).
 
 - **Secure, monitor, and improve the service** (rate-limits, fraud/abuse prevention, reliability, debugging).  
@@ -41,6 +42,9 @@ We do **not** intentionally collect special category data. We do **not** sell pe
 
 - **Legal compliance** (e.g., responding to lawful requests).  
   *Legal basis:* **Legal obligation** (Art. 6(1)(c)).
+
+- **Billing/fulfilment** (processing subscription status and promotions; payment is handled by our payment processor—card details are not stored on our servers).  
+  *Legal basis:* **Contract** (Art. 6(1)(b)).
 
 - **Communications** (see Section 6).  
   *Legal basis:* **Contract** (transactional/service emails) and **Consent** (optional updates), or **Legitimate interests** where permitted with a clear opt-out.
