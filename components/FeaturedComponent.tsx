@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
-import { useState, useCallback, useEffect, useMemo, useRef } from "react";
+import { useState, useCallback, useEffect, useMemo, useRef, ReactNode } from "react";
 import { MessageSquare, Grid3x3, CircleDot } from "lucide-react";
 import { Button } from "@/components/ui/buttonShadcn";
 import { GoogleLogin, CredentialResponse, GoogleOAuthProvider } from "@react-oauth/google";
@@ -192,7 +192,23 @@ function BasicSubGoogleBlock({ onClose, onSuccess }: { onClose: () => void; onSu
 /* -------------------------
    Pricing card + main export
    ------------------------- */
-function PricingCard({ plan }: any) {
+type Plan = {
+  title: string;
+  desc: string;
+  price: string;
+  period?: string;
+  features?: string[];
+  image?: string;
+  subTiers?: Array<{ label: string; rows: Array<string | ReactNode> }>;
+  action: {
+    label: string;
+    href?: string;
+    onClick?: () => void;
+    buttonStyle?: any;
+  };
+};
+
+function PricingCard({ plan }: { plan: Plan }) {
   const handleClick = useCallback(() => {
     if (plan.action.href) {
       window.open(plan.action.href, "_blank", "noopener,noreferrer");
@@ -203,7 +219,15 @@ function PricingCard({ plan }: any) {
 
   return (
     <div className="bg-card/40 backdrop-blur-xl border border-border/50 rounded-2xl p-6 md:p-7 flex flex-col shadow-lg h-full">
-      <h3 className="text-lg md:text-xl font-semibold mb-2">{plan.title}</h3>
+      <div className="flex items-center gap-3 mb-2">
+        {plan.image ? (
+          <div className="relative h-12 w-12 rounded-xl overflow-hidden border border-border/60 bg-muted/50 flex-shrink-0">
+            <Image src={plan.image} alt={`${plan.title} badge`} fill sizes="48px" className="object-contain p-2" />
+          </div>
+        ) : null}
+        <h3 className="text-lg md:text-xl font-semibold leading-tight">{plan.title}</h3>
+      </div>
+
       <p className="text-sm text-muted-foreground mb-4">{plan.desc}</p>
 
       <div className="flex items-baseline gap-2 mb-4">
@@ -211,16 +235,39 @@ function PricingCard({ plan }: any) {
         {plan.period ? <div className="text-lg opacity-70">/{plan.period}</div> : null}
       </div>
 
-      <ul className="space-y-3 mb-6 flex-grow">
-        {plan.features.map((info: string, idx: number) => (
-          <li key={idx} className="flex items-start gap-2">
-            <span className="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 border border-green-300 text-green-800 flex items-center justify-center text-xs font-bold">✓</span>
-            <span className="text-sm">{info}</span>
-          </li>
-        ))}
-      </ul>
+      {plan.subTiers ? (
+        <div className="space-y-4 mb-6 flex-grow">
+          {plan.subTiers.map((tier, idx) => (
+            <div key={tier.label} className="rounded-xl border border-border/60 bg-muted/20 p-3">
+              <div className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground mb-2">{tier.label}</div>
+              <ul className="space-y-2">
+                {tier.rows.map((row, rIdx) => (
+                  <li key={rIdx} className="flex items-start gap-2 text-sm">
+                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 border border-green-300 text-green-800 flex items-center justify-center text-xs font-bold">✓</span>
+                    <span>{row}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <ul className="space-y-3 mb-6 flex-grow">
+          {(plan.features || []).map((info: string, idx: number) => (
+            <li key={idx} className="flex items-start gap-2">
+              <span className="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 border border-green-300 text-green-800 flex items-center justify-center text-xs font-bold">✓</span>
+              <span className="text-sm">{info}</span>
+            </li>
+          ))}
+        </ul>
+      )}
 
-      <Button className={`w-full ${plan.action.buttonStyle ? "" : "bg-background hover:bg-accent"}`} variant={plan.action.buttonStyle ? "default" : "outline"} onClick={handleClick}>
+      <Button
+        className={`w-full ${plan.action.buttonStyle ? "" : "bg-background hover:bg-accent"}`}
+        variant={plan.action.buttonStyle ? "default" : "outline"}
+        style={plan.action.buttonStyle}
+        onClick={handleClick}
+      >
         {plan.action.label}
       </Button>
     </div>
@@ -228,7 +275,6 @@ function PricingCard({ plan }: any) {
 }
 
 export default function FeaturedComponents() {
-  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const [modal, setModal] = useState<string | null>(null);
   const [justActivatedEmail, setJustActivatedEmail] = useState("");
 
@@ -238,9 +284,68 @@ export default function FeaturedComponents() {
   }, []);
   const plans = useMemo(
     () => [
-      { title: "Free (Anonymous)", desc: "Start now — no sign-up.", price: "$0", features: ["No sign-up", "8k chars/req*", "750 req/h", "30 req/min", "1 req/s"], action: { label: "See Example", onClick: scrollToExample } },
-      { title: "Free (Token-based)", desc: "Higher limits with a free token.", price: "$0", features: ["Free token", "128k chars/req*", "1,500 req/h", "60 req/min", "5 req/s", "Image gen (watermark)"], action: { label: "Get Free Token", href: "https://token.llm7.io/" } },
-      { title: "Subscription Waitlist", desc: "For production apps.", price: "Coming soon", period: "", features: ["From $2/mo**", "9k+ req/h", "500+ req/min", "100+ req/s", "Image gen (no watermark)", "OCR", "Speech-to-text", "JsonMode", "Function calling", "Revenue share***"], action: { label: "Join Waitlist", onClick: () => setModal("basic"), buttonStyle: { background: "#212121", color: "#fff", border: "1px solid #212121" } } },
+      {
+        title: "Free",
+        desc: "Start instantly as anonymous or use a free token for higher limits.",
+        price: "$0",
+        subTiers: [
+          {
+            label: "Anonymous",
+            rows: ["No sign-up", "8k chars/r*, 750 r/h, 30 r/m, 1 r/s"],
+          },
+          {
+            label: "With free token",
+            rows: [
+              "Free token",
+              "128k chars/req*",
+              "1,500 r/h, 60 r/m, 5 r/s",
+              "Image gen (watermark)",
+              <span key="token-link">
+                Get your token at{" "}
+                <a href="https://token.llm7.io/" className="text-primary underline underline-offset-4" target="_blank" rel="noreferrer">
+                  token.llm7.io
+                </a>
+              </span>,
+            ],
+          },
+        ],
+        action: { label: "See Example", onClick: scrollToExample },
+      },
+      {
+        title: "Vibe",
+        desc: "Higher limits for chat and images—great for agents and internal tools.",
+        price: "$5",
+        period: "m",
+        image: "/vibe.png",
+        features: [
+          "Up to 10 text req/s",
+          "Up to 600 text req/min",
+          "Up to 5,000 text req/hour",
+          "Up to 10 images/s",
+          "Up to 60 images/min",
+          "Ideal for agents, side projects, and internal tools",
+        ],
+        action: { label: "Choose Vibe", href: "https://token.llm7.io/?subscription=show", buttonStyle: { background: "#2e34c8", color: "#fff", border: "1px solid #212121" } },
+      },
+      {
+        title: "Pro",
+        desc: "Production plan with higher limits, JSON mode, functions, and Pro models.",
+        price: "$12",
+        period: "m",
+        image: "/pro.png",
+        features: [
+          "Up to 25 text req/s",
+          "Up to 1,500 text req/min",
+          "Up to 15,000 text req/hour",
+          "Up to 20 images/s",
+          "Up to 120 images/min",
+          "JSON mode",
+          "Function calling",
+          "Pro models",
+          "Speech-to-text for production apps and APIs",
+        ],
+        action: { label: "Go Pro", href: "https://token.llm7.io/?subscription=show", buttonStyle: { background: "#d83030", color: "#fff", border: "1px solid #212121" } },
+      },
     ],
     [scrollToExample]
   );
@@ -268,9 +373,13 @@ export default function FeaturedComponents() {
           </div>
 
           <div className="text-xs text-muted-foreground space-y-1">
-            <p>* - It depends on the model (may be lower).</p>
-            <p>** - Features, limits and pricing may change.</p>
-            <p>*** - Partner programme details soon.</p>
+            <p>* Limits depend on the model and may be lower.</p>
+            <p>** Features, limits, and pricing may change.</p>
+            <p>If you need more capacity, please contact us via {" "}
+             <a href="mailto:support@llm7.io?subject=Subscription Inquiry&body=Hey, I would like to discuss subscription options." className="text-primary underline underline-offset-4">
+                support@llm7.io
+                </a>.</p>
+
           </div>
         </div>
       </section>
