@@ -10,6 +10,19 @@ export default function PromoBanner() {
   const [dismissed, setDismissed] = useState(false);
   const code = "VIBECODE2025NOV";
 
+  const recordClick = useCallback((source: number) => {
+    const url = `http://api.llm7.io/record-click?source=${source}`;
+    try {
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(url);
+        return;
+      }
+      fetch(url, { method: "GET", keepalive: true, mode: "no-cors" }).catch(() => {});
+    } catch (_err) {
+      // Swallow errors to avoid impacting UX
+    }
+  }, []);
+
   useEffect(() => {
     const target = document.getElementById("plans");
     if (!target) return;
@@ -38,7 +51,8 @@ export default function PromoBanner() {
       .catch(() => {
         setCopied(false);
       });
-  }, [code]);
+    recordClick(1);
+  }, [code, recordClick]);
 
   if (!revealed || dismissed) return null;
 
@@ -48,7 +62,10 @@ export default function PromoBanner() {
         <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center px-4 sm:px-6 py-4 pr-16">
           <button
             className="absolute top-3 right-3 text-muted-foreground hover:text-foreground"
-            onClick={() => setDismissed(true)}
+            onClick={() => {
+              setDismissed(true);
+              recordClick(3);
+            }}
             aria-label="Close promotion"
           >
             <XIcon className="h-4 w-4" />
@@ -79,7 +96,10 @@ export default function PromoBanner() {
           </div>
 
           <div className="flex items-center gap-2 sm:self-start mr-8">
-            <Button asChild>
+            <Button
+              asChild
+              onClick={() => recordClick(2)}
+            >
               <a href="https://token.llm7.io/" target="_blank" rel="noreferrer">
                 Subscribe
               </a>

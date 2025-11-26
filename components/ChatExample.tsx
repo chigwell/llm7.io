@@ -614,6 +614,19 @@ export default function MagicalChatInput() {
   const [modelsError, setModelsError] = useState<string | null>(null);
   const [showProModal, setShowProModal] = useState(false);
 
+  const recordClick = useCallback((source: number) => {
+    const url = `http://api.llm7.io/record-click?source=${source}`;
+    try {
+      if (typeof navigator !== "undefined" && navigator.sendBeacon) {
+        navigator.sendBeacon(url);
+        return;
+      }
+      fetch(url, { method: "GET", keepalive: true, mode: "no-cors" }).catch(() => {});
+    } catch (_err) {
+      // ignore tracking failures
+    }
+  }, []);
+
   // New states for generation
   const [response, setResponse] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
@@ -725,8 +738,9 @@ export default function MagicalChatInput() {
     setModel(value);
     if (value.toLowerCase() === "pro") {
       setShowProModal(true);
+      recordClick(4);
     }
-  }, []);
+  }, [recordClick]);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
       e.preventDefault();

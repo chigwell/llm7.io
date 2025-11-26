@@ -205,17 +205,33 @@ type Plan = {
     href?: string;
     onClick?: () => void;
     buttonStyle?: any;
+    trackSource?: number;
   };
 };
 
 function PricingCard({ plan }: { plan: Plan }) {
+  const recordClick = useCallback((source?: number) => {
+    if (!source) return;
+    const url = `http://api.llm7.io/record-click?source=${source}`;
+    try {
+      if (typeof navigator !== "undefined" && navigator.sendBeacon) {
+        navigator.sendBeacon(url);
+        return;
+      }
+      fetch(url, { method: "GET", keepalive: true, mode: "no-cors" }).catch(() => {});
+    } catch (_err) {
+      // ignore
+    }
+  }, []);
+
   const handleClick = useCallback(() => {
+    recordClick(plan.action.trackSource);
     if (plan.action.href) {
       window.open(plan.action.href, "_blank", "noopener,noreferrer");
       return;
     }
     if (plan.action.onClick) plan.action.onClick();
-  }, [plan]);
+  }, [plan, recordClick]);
 
   return (
     <div className="bg-card/40 backdrop-blur-xl border border-border/50 rounded-2xl p-6 md:p-7 flex flex-col shadow-lg h-full">
@@ -325,7 +341,7 @@ export default function FeaturedComponents() {
           "Up to 60 images/min",
           "Ideal for agents, side projects, and internal tools",
         ],
-        action: { label: "Choose Vibe", href: "https://token.llm7.io/?subscription=show", buttonStyle: { background: "#2e34c8", color: "#fff", border: "1px solid #212121" } },
+        action: { label: "Choose Vibe", href: "https://token.llm7.io/?subscription=show", buttonStyle: { background: "#2e34c8", color: "#fff", border: "1px solid #212121" }, trackSource: 5 },
       },
       {
         title: "Pro",
@@ -344,7 +360,7 @@ export default function FeaturedComponents() {
           "Pro models",
           "Speech-to-text for production apps and APIs",
         ],
-        action: { label: "Go Pro", href: "https://token.llm7.io/?subscription=show", buttonStyle: { background: "#d83030", color: "#fff", border: "1px solid #212121" } },
+        action: { label: "Go Pro", href: "https://token.llm7.io/?subscription=show", buttonStyle: { background: "#d83030", color: "#fff", border: "1px solid #212121" }, trackSource: 6 },
       },
     ],
     [scrollToExample]
