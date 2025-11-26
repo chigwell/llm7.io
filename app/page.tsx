@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import PartnerLogosTicker from "@/components/PartnerLogosTicker";
 import ActiveRequestsChart from '@/components/ActiveRequestsChart';
 import ModelShowcase from "@/components/ModelShowcase";
+import PromoBanner from "@/components/PromoBanner";
 import ChatExample from "@/components/ChatExample";
 import Disclaimer from "@/components/Disclaimer";
 import ConsoleAnimation from "@/components/CodeExample";
@@ -26,6 +27,7 @@ export default function Home() {
       <UsageSummaryChartCard />
       <Disclaimer/>
       <Footer />
+      <PromoBanner />
     </>
   );
 }

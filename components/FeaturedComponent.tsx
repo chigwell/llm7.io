@@ -352,7 +352,7 @@ export default function FeaturedComponents() {
 
   return (
     <GoogleOAuthProvider clientId={GA_CLIENT_ID}>
-      <section aria-labelledby="featured-heading-plans" className="relative py-20 md:py-28 overflow-hidden bg-gradient-to-b from-background via-background to-background/95">
+      <section id="plans" aria-labelledby="featured-heading-plans" className="relative py-20 md:py-28 overflow-hidden bg-gradient-to-b from-background via-background to-background/95">
         {/* ... header / other UI unchanged ... */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center mb-14 md:mb-20">
