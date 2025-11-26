@@ -337,7 +337,7 @@ export default function FeaturedComponents() {
           "Up to 60 images/min",
           "Ideal for agents, side projects, and internal tools",
         ],
-        action: { label: "Choose Vibe", href: "https://token.llm7.io/?subscription=show", buttonStyle: { background: "#2e34c8", color: "#fff", border: "1px solid #212121" }, trackSource: 5 },
+        action: { label: "Choose Vibe", href: "https://token.llm7.io/?subscription=show", buttonStyle: { background: "black", color: "#fff", border: "1px solid #212121" }, trackSource: 5 },
       },
       {
         title: "Pro",
@@ -356,7 +356,7 @@ export default function FeaturedComponents() {
           "Pro models",
           "Speech-to-text for production apps and APIs",
         ],
-        action: { label: "Go Pro", href: "https://token.llm7.io/?subscription=show", buttonStyle: { background: "#d83030", color: "#fff", border: "1px solid #212121" }, trackSource: 6 },
+        action: { label: "Go Pro", href: "https://token.llm7.io/?subscription=show", buttonStyle: { background: "#2e34c8", color: "#fff", border: "1px solid #212121" }, trackSource: 6 },
       },
     ],
     [scrollToExample]
