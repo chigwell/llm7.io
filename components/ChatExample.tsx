@@ -915,9 +915,7 @@ export default function MagicalChatInput() {
                 </AIInputModelSelectContent>
               </AIInputModelSelect>
               <a
-                href="https://api.llm7.io/v1/models"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#models"
                 className="text-gray-600 hover:text-gray-800"
                 title="See all models"
                 aria-label="See all models"
