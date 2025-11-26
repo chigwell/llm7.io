@@ -45,7 +45,7 @@ export default function PromoBanner() {
   return (
     <div className="fixed inset-x-0 bottom-4 z-40 px-4 flex justify-center">
       <div className="w-full max-w-4xl rounded-2xl border border-border/60 bg-gradient-to-r from-primary/10 via-background to-primary/10 backdrop-blur-md shadow-2xl">
-        <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center px-4 sm:px-6 py-4">
+        <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center px-4 sm:px-6 py-4 pr-16">
           <button
             className="absolute top-3 right-3 text-muted-foreground hover:text-foreground"
             onClick={() => setDismissed(true)}
@@ -78,7 +78,7 @@ export default function PromoBanner() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 sm:self-start">
+          <div className="flex items-center gap-2 sm:self-start mr-8">
             <Button asChild>
               <a href="https://token.llm7.io/" target="_blank" rel="noreferrer">
                 Subscribe
