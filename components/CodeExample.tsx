@@ -18,7 +18,7 @@ export default function ConsoleAnimation() {
     ')',
     '',
     'response = client.chat.completions.create(',
-    '    model="default",',
+    '    model="default",  # You can also use "fast" or "pro" models',
     '    messages=[',
     '        {"role": "user", "content": "Tell me a short story about a brave squirrel."}',
     '    ]',
