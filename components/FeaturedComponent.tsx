@@ -303,14 +303,14 @@ export default function FeaturedComponents() {
         subTiers: [
           {
             label: "Anonymous",
-            rows: ["No sign-up", "8k chars/r*, 750 r/h, 30 r/m, 1 r/s"],
+            rows: ["No sign-up", "8k chars/r*, 100 r/h, 10 r/m, 1 r/s"],
           },
           {
             label: "With free token",
             rows: [
               "Free token",
               "128k chars/req*",
-              "1,500 r/h, 60 r/m, 5 r/s",
+              "200 r/h, 30 r/m, 2 r/s",
               "Image gen (watermark)",
               <span key="token-link">
                 Get your token at{" "}
