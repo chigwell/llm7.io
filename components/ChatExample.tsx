@@ -24,6 +24,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { GoogleLogin, CredentialResponse, GoogleOAuthProvider } from "@react-oauth/google";
 import { Button } from "@/components/ui/buttonShadcn";
 import {
   Select,
@@ -36,6 +37,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { type FormEventHandler } from "react";
 import { motion, TargetAndTransition } from "framer-motion";
+
+const GA_CLIENT_ID = "264062651955-8qamru5vjtu9kc1tk2trsgte5e10hm0m.apps.googleusercontent.com";
+const BASE_API_URL = "https://llm7-api.chigwel137.workers.dev";  // http://localhost:8787
+const ID_TOKEN_KEY = "id_token";
 
 // TypingText component
 // Fix: Update the type definition to match Framer Motion's Variants type
@@ -613,9 +618,16 @@ export default function MagicalChatInput() {
   const [isLoadingModels, setIsLoadingModels] = useState(true);
   const [modelsError, setModelsError] = useState<string | null>(null);
   const [showProModal, setShowProModal] = useState(false);
+  const [apiToken, setApiToken] = useState<string | null>(null);
+  const [userEmail, setUserEmail] = useState<string>("");
+  const [userSub, setUserSub] = useState<number>(0);
+  const [authStatus, setAuthStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [showAuthButton, setShowAuthButton] = useState(false);
+  const [isEligiblePro, setIsEligiblePro] = useState(false);
 
   const recordClick = useCallback((source: number) => {
-    const url = `https://api.llm7.io/record-click?source=${source}`;
+    const url = `http://api.llm7.io/record-click?source=${source}`;
     try {
       fetch(url, { method: "GET", keepalive: true, mode: "no-cors" }).catch(() => {});
     } catch (_err) {
@@ -629,6 +641,158 @@ export default function MagicalChatInput() {
   const [elapsedTime, setElapsedTime] = useState<number>(0);
   const [showResponse, setShowResponse] = useState<boolean>(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const getCookie = useCallback((name: string) => {
+    if (typeof document === "undefined") return "";
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(";").shift() || "";
+    return "";
+  }, []);
+
+  const persistCookie = useCallback((name: string, value: string, days = 30) => {
+    if (typeof document === "undefined") return;
+    const maxAge = days * 24 * 60 * 60;
+    document.cookie = `${name}=${encodeURIComponent(value)}; path=/; max-age=${maxAge}; SameSite=Lax`;
+  }, []);
+
+  const clearCookie = useCallback((name: string) => {
+    if (typeof document === "undefined") return;
+    document.cookie = `${name}=; path=/; max-age=0; SameSite=Lax`;
+  }, []);
+
+  const persistIdToken = useCallback((token: string) => {
+    try {
+      localStorage.setItem(ID_TOKEN_KEY, token);
+      persistCookie(ID_TOKEN_KEY, token, 30);
+    } catch (_err) {
+      // ignore
+    }
+  }, [persistCookie]);
+
+  const clearIdToken = useCallback(() => {
+    try {
+      localStorage.removeItem(ID_TOKEN_KEY);
+    } catch (_err) {
+      // ignore
+    }
+    clearCookie(ID_TOKEN_KEY);
+  }, [clearCookie]);
+
+  const persistApiToken = useCallback((token: string) => {
+    setApiToken(token);
+    persistCookie("LLM7_API_TOKEN", token, 30);
+  }, [persistCookie]);
+
+  const fetchApiToken = useCallback(async (idToken: string, sub: number) => {
+    const existing = getCookie("LLM7_API_TOKEN");
+    if (existing) {
+      setApiToken(existing);
+      return existing;
+    }
+
+    if (sub === 3) {
+      try {
+        const ensureRes = await fetch(`${BASE_API_URL}/tokens/ensure`, {
+          method: "GET",
+          headers: { Authorization: `Bearer ${idToken}` },
+        });
+        if (ensureRes.ok) {
+          const ensureData = await ensureRes.json().catch(() => ({}));
+          if (ensureData?.token) {
+            persistApiToken(ensureData.token as string);
+            return ensureData.token as string;
+          }
+        }
+      } catch (_err) {
+        // ignore and continue
+      }
+    }
+
+    try {
+      const listRes = await fetch(`${BASE_API_URL}/tokens`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
+      });
+      if (listRes.ok) {
+        const tokens = await listRes.json().catch(() => []);
+        if (Array.isArray(tokens) && tokens.length > 0 && tokens[0].token) {
+          persistApiToken(tokens[0].token as string);
+          return tokens[0].token as string;
+        }
+      }
+    } catch (_err) {
+      // ignore and try creating
+    }
+
+    const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+    try {
+      const createRes = await fetch(`${BASE_API_URL}/tokens`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify({ name: "Web chat token", expires_at: expiresAt }),
+      });
+      if (createRes.ok) {
+        const data = await createRes.json().catch(() => ({}));
+        if (data?.token) {
+          persistApiToken(data.token as string);
+          return data.token as string;
+        }
+      }
+    } catch (_err) {
+      // ignore token creation errors
+    }
+    return null;
+  }, [getCookie, persistApiToken]);
+
+  const verifyIdToken = useCallback(async (idToken: string) => {
+    setAuthStatus("loading");
+    setAuthError(null);
+    try {
+      const v = await fetch(`${BASE_API_URL}/verify`, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${idToken}` },
+      });
+      if (!v.ok) throw new Error("Verification failed");
+      const data = await v.json().catch(() => ({}));
+      const email = data?.email || "";
+      const subVal = typeof data?.sub === "number" ? data.sub : 0;
+      setUserEmail(email);
+      setUserSub(subVal);
+      setIsEligiblePro(subVal === 3);
+      persistIdToken(idToken);
+      if (subVal === 3) {
+        await fetchApiToken(idToken, subVal);
+        setAuthStatus("ready");
+        return true;
+      } else {
+        setApiToken(null);
+        clearCookie("LLM7_API_TOKEN");
+        setAuthStatus("ready");
+        return false;
+      }
+    } catch (err: any) {
+      setAuthStatus("error");
+      setAuthError(err?.message || "Unable to verify subscription");
+      clearIdToken();
+      setApiToken(null);
+      setUserSub(0);
+      return false;
+    }
+  }, [fetchApiToken, persistIdToken, clearIdToken, clearCookie]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const storedId = (typeof localStorage !== "undefined" && localStorage.getItem(ID_TOKEN_KEY)) || getCookie(ID_TOKEN_KEY);
+    if (storedId) {
+      verifyIdToken(storedId).catch(() => {});
+    }
+  }, [getCookie, verifyIdToken]);
 
   // Fetch models from API
   useEffect(() => {
@@ -733,10 +897,42 @@ export default function MagicalChatInput() {
   const handleModelChange = useCallback((value: string) => {
     setModel(value);
     if (value.toLowerCase() === "pro") {
+      if (userSub === 3 && apiToken) return;
       setShowProModal(true);
       recordClick(4);
     }
-  }, [recordClick]);
+  }, [recordClick, userSub, apiToken]);
+
+  const handleCredential = useCallback(
+    async (response: CredentialResponse) => {
+      const credential = response.credential;
+      if (!credential) {
+        setAuthStatus("error");
+        setAuthError("No credential returned from Google");
+        return;
+      }
+      const ok = await verifyIdToken(credential);
+      if (ok) {
+        setShowProModal(false);
+        setShowAuthButton(false);
+      } else {
+        setAuthError("Pro models require a Pro subscription.");
+      }
+    },
+    [verifyIdToken]
+  );
+
+  const handleGoogleError = useCallback(() => {
+    setAuthStatus("error");
+    setAuthError("Google sign-in failed. Please try again.");
+  }, []);
+
+  useEffect(() => {
+    if (showProModal && userSub === 3 && apiToken) {
+      const t = setTimeout(() => setShowProModal(false), 3000);
+      return () => clearTimeout(t);
+    }
+  }, [showProModal, userSub, apiToken]);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
       e.preventDefault();
@@ -749,13 +945,16 @@ export default function MagicalChatInput() {
       startTimer();
 
       try {
+        const headers: Record<string, string> = {
+          "Content-Type": "application/json",
+        };
+        if (apiToken) headers.Authorization = `Bearer ${apiToken}`;
+
         const response = await fetchWithTimeout(
           "https://api.llm7.io/v1/chat/completions",
           {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
+            headers,
             body: JSON.stringify({
               model,
               messages: [
@@ -839,7 +1038,7 @@ export default function MagicalChatInput() {
   }, [isWebSearchEnabled, isDeepResearchEnabled]);
 
   return (
-    <>
+    <GoogleOAuthProvider clientId={GA_CLIENT_ID}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="text-center">
           <motion.h3
@@ -854,7 +1053,7 @@ export default function MagicalChatInput() {
               <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
                 Text Generation
               </span>
-            </motion.h3>
+          </motion.h3>
         </div>
       </div>
       <div className="relative group flex items-center justify-center py-6 sm:py-10">
@@ -1001,15 +1200,49 @@ export default function MagicalChatInput() {
               </Button>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Pro routes the most capable models and is available to Pro subscribers. Get instant access with a token and come back to chat.
+              Pro routes the most capable models and is available only to Pro subscribers.
             </p>
-            <div className="flex flex-col sm:flex-row gap-2 justify-end">
-              <Button variant="outline" onClick={() => setShowProModal(false)}>Maybe later</Button>
-              <Button asChild>
-                <a href="https://token.llm7.io/" target="_blank" rel="noopener noreferrer">
-                  Get Pro access
+            {authStatus === "ready" && userSub !== 3 && (
+              <div className="rounded-xl border border-amber-500/50 bg-amber-500/10 text-amber-900 dark:text-amber-100 text-sm p-3 space-y-1">
+                <div className="font-semibold">Pro required</div>
+                <p>You are signed in but not on a Pro subscription. Pro models need Pro.</p>
+                <a className="text-primary underline text-xs" href="https://token.llm7.io/?subscription=show" target="_blank" rel="noreferrer">
+                  Upgrade to Pro
                 </a>
-              </Button>
+              </div>
+            )}
+            {userSub === 3 && apiToken ? (
+              <div className="rounded-xl border border-green-500/40 bg-green-500/10 text-green-900 dark:text-green-200 text-sm p-3">
+                Pro access confirmed{userEmail ? ` for ${userEmail}` : ""}. You can close this dialog and continue with Pro models.
+              </div>
+            ) : apiToken ? (
+              <div className="rounded-xl border border-amber-500/50 bg-amber-500/10 text-amber-900 dark:text-amber-100 text-sm p-3 space-y-1">
+                <div className="font-semibold">Pro only</div>
+                <p>Pro models require a Pro subscription. You appear to be on a different plan.</p>
+                <a className="text-primary underline text-xs" href="https://token.llm7.io/?subscription=show" target="_blank" rel="noreferrer">
+                  Upgrade to Pro
+                </a>
+              </div>
+            ) : null}
+            <div className="flex flex-col sm:flex-row gap-2 justify-end">
+              {!apiToken && !showAuthButton && (
+                <Button variant="outline" onClick={() => setShowAuthButton(true)}>
+                  I already have a Pro subscription
+                </Button>
+              )}
+              {showAuthButton && !apiToken && (
+                <div className="flex items-center gap-2">
+                  <GoogleLogin onSuccess={handleCredential} onError={handleGoogleError} />
+                  {authStatus === "loading" && <Loader2Icon className="h-4 w-4 animate-spin text-primary" />}
+                </div>
+              )}
+              {userSub !== 3 && (
+                <Button asChild>
+                  <a href="https://token.llm7.io/" target="_blank" rel="noopener noreferrer">
+                    Get Pro access
+                  </a>
+                </Button>
+              )}
             </div>
           </div>
         </div>
@@ -1078,6 +1311,6 @@ export default function MagicalChatInput() {
           </div>
         </div>
       )}
-    </>
+    </GoogleOAuthProvider>
   );
 }

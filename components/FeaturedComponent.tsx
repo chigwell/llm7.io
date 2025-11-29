@@ -11,7 +11,7 @@ import { GoogleLogin, CredentialResponse, GoogleOAuthProvider } from "@react-oau
    Constants
    ------------------------- */
 const GA_CLIENT_ID = "264062651955-8qamru5vjtu9kc1tk2trsgte5e10hm0m.apps.googleusercontent.com";
-const BASE_API_URL = "https://llm7-api.chigwel137.workers.dev";
+const BASE_API_URL = "http://localhost:8787";  //"https://llm7-api.chigwel137.workers.dev";
 const ID_TOKEN_KEY = "id_token";
 
 /* -------------------------

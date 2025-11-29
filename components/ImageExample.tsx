@@ -435,6 +435,13 @@ export default function ImageGenerationInput() {
   const [elapsedTime, setElapsedTime] = useState<number>(0);
   const [showImage, setShowImage] = useState<boolean>(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const getCookie = useCallback((name: string) => {
+    if (typeof document === "undefined") return "";
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(";").shift() || "";
+    return "";
+  }, []);
 
   // Timer functions
   const startTimer = () => {
@@ -476,13 +483,15 @@ export default function ImageGenerationInput() {
       startTimer();
 
       try {
+        const headers: Record<string, string> = { "Content-Type": "application/json" };
+        const token = getCookie("LLM7_API_TOKEN");
+        if (token) headers.Authorization = `Bearer ${token}`;
+
         const response = await fetchWithTimeout(
           "https://api.llm7.io/v1/images/generations",
           {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
+            headers,
             body: JSON.stringify({
               model,
               prompt,
