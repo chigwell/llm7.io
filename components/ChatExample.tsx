@@ -948,7 +948,15 @@ export default function MagicalChatInput() {
         const headers: Record<string, string> = {
           "Content-Type": "application/json",
         };
-        if (apiToken) headers.Authorization = `Bearer ${apiToken}`;
+        let token = apiToken ?? "";
+
+          if (token && token.includes("%")) {
+            token = decodeURIComponent(token);
+          }
+
+          if (token) {
+            headers.Authorization = `Bearer ${token}`;
+          }
 
         const response = await fetchWithTimeout(
           "https://api.llm7.io/v1/chat/completions",

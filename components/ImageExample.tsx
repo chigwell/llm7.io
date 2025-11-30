@@ -484,8 +484,22 @@ export default function ImageGenerationInput() {
 
       try {
         const headers: Record<string, string> = { "Content-Type": "application/json" };
-        const token = getCookie("LLM7_API_TOKEN");
-        if (token) headers.Authorization = `Bearer ${token}`;
+        const rawToken = getCookie("LLM7_API_TOKEN");
+
+            let token: string | undefined;
+
+            if (rawToken) {
+              // In case the cookie value is URL-encoded (has %2B, %2F, etc.)
+              try {
+                token = decodeURIComponent(rawToken);
+              } catch {
+                token = rawToken;
+              }
+            }
+
+            if (token) {
+              headers.Authorization = `Bearer ${token}`;
+            }
 
         const response = await fetchWithTimeout(
           "https://api.llm7.io/v1/images/generations",
