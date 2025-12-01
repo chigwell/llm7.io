@@ -11,7 +11,7 @@ import { GoogleLogin, CredentialResponse, GoogleOAuthProvider } from "@react-oau
    Constants
    ------------------------- */
 const GA_CLIENT_ID = "264062651955-8qamru5vjtu9kc1tk2trsgte5e10hm0m.apps.googleusercontent.com";
-const BASE_API_URL = "http://localhost:8787";  //"https://llm7-api.chigwel137.workers.dev";
+const BASE_API_URL = "https://llm7-api.chigwel137.workers.dev";  //"https://llm7-api.chigwel137.workers.dev";
 const ID_TOKEN_KEY = "id_token";
 
 /* -------------------------
@@ -71,124 +71,6 @@ async function verifyAndActivate(idToken: string, setMessage?: (m: string) => vo
 
   return verifiedEmail;
 }
-
-/* -------------------------
-   BasicSubGoogleBlock (rewritten to use @react-oauth/google)
-   ------------------------- */
-function BasicSubGoogleBlock({ onClose, onSuccess }: { onClose: () => void; onSuccess: (email?: string) => void }) {
-  const [status, setStatus] = useState<"idle" | "loading" | "ok" | "error">("idle");
-  const [message, setMessage] = useState("");
-  const [email, setEmail] = useState("");
-  const [isTermsAccepted, setIsTermsAccepted] = useState(false);
-  const mountedRef = useRef(false);
-
-  useEffect(() => {
-    mountedRef.current = true;
-    return () => {
-      mountedRef.current = false;
-    };
-  }, []);
-
-  const onCredentialResponse = useCallback(
-    async (response: CredentialResponse) => {
-      const credential = response.credential;
-      if (!credential) {
-        setStatus("error");
-        setMessage("No credential returned from Google");
-        return;
-      }
-      if (!isTermsAccepted) {
-        setStatus("error");
-        setMessage("Please accept the Terms and Privacy Policy first.");
-        return;
-      }
-
-      setStatus("loading");
-      setMessage("Signing in…");
-
-      try {
-        const verifiedEmail = await verifyAndActivate(credential, setMessage);
-        if (!mountedRef.current) return;
-        setEmail(verifiedEmail || "");
-        setStatus("ok");
-        setMessage("Basic subscription activated.");
-        onSuccess(verifiedEmail);
-      } catch (err: any) {
-        setStatus("error");
-        setMessage(err?.message || "Something went wrong");
-      }
-    },
-    [isTermsAccepted, onSuccess]
-  );
-
-  const handleGoogleError = useCallback(() => {
-    console.error("Google sign-in failed");
-    setStatus("error");
-    setMessage("Google sign-in failed. Please try again.");
-  }, []);
-
-  return (
-    <div className="space-y-4">
-      <div className="text-xl font-semibold">Join the Waitlist</div>
-      <p className="text-sm text-muted-foreground">Sign in with Google to subscribe</p>
-
-      <div className="mt-3">
-        {status === "loading" && !message && (
-          <div className="flex items-center justify-center h-10 w-full bg-gray-100 dark:bg-gray-800 rounded-md">
-            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-500" />
-          </div>
-        )}
-
-        {status === "error" && (
-          <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md text-sm text-red-700 dark:text-red-300">
-            Error: {message}
-          </div>
-        )}
-
-        <div className={`flex justify-center ${isTermsAccepted ? "opacity-100" : "opacity-60 pointer-events-none"}`} style={{ minHeight: 48 }}>
-          <GoogleLogin
-            onSuccess={onCredentialResponse}
-            onError={handleGoogleError}
-          />
-        </div>
-      </div>
-
-      <div className="flex items-start gap-2 mt-3 text-xs text-muted-foreground">
-        <input
-          id="terms-accept"
-          type="checkbox"
-          checked={isTermsAccepted}
-          onChange={(e) => setIsTermsAccepted(e.target.checked)}
-          className="w-4 h-4 rounded border-border mt-0.5"
-        />
-        <label htmlFor="terms-accept" className="cursor-pointer">
-          I agree to the{" "}
-          <a href="https://github.com/chigwell/llm7.io/blob/main/TERMS.md" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-            Terms of Service
-          </a>{" "}
-          and acknowledge the{" "}
-          <a href="https://github.com/chigwell/llm7.io/blob/main/PRIVACY.md" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-            Privacy Policy
-          </a>
-          .
-        </label>
-      </div>
-
-      {status !== "idle" && (
-        <p className="text-sm text-muted-foreground mt-3">
-          {message} {email ? <>({email})</> : null}
-        </p>
-      )}
-
-      <div className="flex justify-end">
-        <Button variant="outline" onClick={onClose}>
-          Close
-        </Button>
-      </div>
-    </div>
-  );
-}
-
 /* -------------------------
    Pricing card + main export
    ------------------------- */
@@ -303,14 +185,14 @@ export default function FeaturedComponents() {
         subTiers: [
           {
             label: "Anonymous",
-            rows: ["No sign-up", "8k chars/r*, 100 r/h, 10 r/m, 1 r/s"],
+            rows: ["No sign-up", "8k chars/r*, 60 r/h, 10 r/m, 1 r/s"],
           },
           {
             label: "With free token",
             rows: [
               "Free token",
               "128k chars/req*",
-              "200 r/h, 30 r/m, 2 r/s",
+              "100 r/h, 20 r/m, 2 r/s",
               "Image gen (watermark)",
               <span key="token-link">
                 Get your token at{" "}
@@ -395,28 +277,6 @@ export default function FeaturedComponents() {
           </div>
         </div>
       </section>
-
-      {modal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setModal(null)}>
-          <div className="bg-background rounded-xl border border-border shadow-xl w-full max-w-md p-6" onClick={(e) => e.stopPropagation()}>
-            {modal === "basic" ? (justActivatedEmail ? (
-              <div className="space-y-4">
-                <div className="text-xl font-semibold flex items-center gap-2"><span className="text-green-500">✅</span> All set</div>
-                <p className="text-sm text-muted-foreground">We will notify you when subscriptions are available.</p>
-                <div className="flex justify-end"><Button onClick={() => setModal(null)}>Close</Button></div>
-              </div>
-            ) : (
-              <BasicSubGoogleBlock onClose={() => setModal(null)} onSuccess={(email) => setJustActivatedEmail(email || "")} />
-            )) : (
-              <div className="space-y-4">
-                <div className="text-xl font-semibold">Join the Waitlist</div>
-                <p className="text-sm text-muted-foreground">Thanks for your interest. Subscriptions will open soon. This is a placeholder dialog—no data is collected here.</p>
-                <div className="flex justify-end"><Button variant="outline" onClick={() => setModal(null)}>Close</Button></div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
     </GoogleOAuthProvider>
   );
 }
