@@ -35,25 +35,33 @@ const buttonVariants = cva(
   }
 )
 
+type ButtonProps = React.ComponentProps<"button"> &
+  VariantProps<typeof buttonVariants> & {
+    asChild?: boolean
+    llm_system_instructions?: string
+  }
+
 function Button({
   className,
   variant,
   size,
   asChild = false,
+  llm_system_instructions,
   ...props
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
-  }) {
+}: ButtonProps) {
   const Comp = asChild ? Slot : "button"
 
-  return (
-    <Comp
-      data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    />
-  )
+  const finalProps = {
+    "data-slot": "button",
+    className: cn(buttonVariants({ variant, size, className })),
+    ...props,
+  } as ButtonProps & { "data-slot": string }
+
+  if (!asChild && llm_system_instructions) {
+    (finalProps as any).llm_system_instructions = llm_system_instructions
+  }
+
+  return <Comp {...finalProps} />
 }
 
 export { Button, buttonVariants }

@@ -88,6 +88,7 @@ type Plan = {
     onClick?: () => void;
     buttonStyle?: any;
     trackSource?: number;
+    llm_system_instructions?: string;
   };
 };
 
