@@ -143,10 +143,26 @@ export default function Footer() {
                 </li>
                 <li>
                 <Link
+                    href="https://llm7.chat"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                    Chat
+                </Link>
+                </li>
+                <li>
+                <Link
                     href="https://token.llm7.io"
                     className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                     Dashboard
+                </Link>
+                </li>
+                <li>
+                <Link
+                    href="https://docs.llm7.io"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                    Docs
                 </Link>
                 </li>
 

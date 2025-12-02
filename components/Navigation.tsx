@@ -50,8 +50,8 @@ export default function Navigation() {
       link: "#featured-heading-plans",
     },
     {
-      name: "Models",
-      link: "#models",
+      name: "Chat",
+      link: "https://llm7.chat",
     },
     {
       name: "Example",
