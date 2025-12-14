@@ -6,6 +6,7 @@ import { PackageManagerProvider } from "@/contexts/PackageManagerContext";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import GoogleProvider from "@/components/GoogleProvider";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 
 const geistSans = Geist({
@@ -122,6 +123,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <GoogleAnalytics />
         <GoogleProvider>
           <ThemeProvider>
             <PackageManagerProvider>
@@ -129,6 +131,8 @@ export default function RootLayout({
             </PackageManagerProvider>
           </ThemeProvider>
         </GoogleProvider>
+        <Analytics />
+        <SpeedInsights />
         </body>
     </html>
   );
