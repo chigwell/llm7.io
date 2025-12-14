@@ -9,7 +9,7 @@ import ModelShowcase from "@/components/ModelShowcase";
 import ChatExample from "@/components/ChatExample";
 import Disclaimer from "@/components/Disclaimer";
 import ConsoleAnimation from "@/components/CodeExample";
-import UsageSummaryChartCard from "@/components/Stats";
+//import UsageSummaryChartCard from "@/components/Stats";
 import ImageGenerationInput from "@/components/ImageExample";
 
 export default function Home() {
@@ -24,7 +24,7 @@ export default function Home() {
       <FeaturedComponent />
       <ModelShowcase />
       <ActiveRequestsChart />
-      <UsageSummaryChartCard />
+      //<UsageSummaryChartCard />
       <Disclaimer/>
       <Footer />
     </>
