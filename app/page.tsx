@@ -24,7 +24,6 @@ export default function Home() {
       <FeaturedComponent />
       <ModelShowcase />
       <ActiveRequestsChart />
-      //<UsageSummaryChartCard />
       <Disclaimer/>
       <Footer />
     </>
