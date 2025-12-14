@@ -7,6 +7,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import GoogleProvider from "@/components/GoogleProvider";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import { Suspense } from "react";
 
 
 const geistSans = Geist({
@@ -123,7 +124,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <GoogleAnalytics />
+        <Suspense fallback={null}>
+          <GoogleAnalytics />
+        </Suspense>
         <GoogleProvider>
           <ThemeProvider>
             <PackageManagerProvider>
