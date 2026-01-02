@@ -19,77 +19,77 @@ const partnerLogos: PartnerLogo[] = [
     name: "Azure",
     logoLight: "/logos/azure-color.svg",
     logoDark: "/logos/azure-color.svg",
-    url: "https://azure.microsoft.com/en-us/products/ai-foundry/models/"
+    url: "https://azure.microsoft.com/en-us/products/ai-foundry/models/?utm_source=llm7.io&utm_medium=llm7.io"
   },
   {
     id: "2",
     name: "Cloudflare",
     logoLight: "/logos/cloudflare-color.svg",
     logoDark: "/logos/cloudflare-color.svg",
-    url: "https://www.cloudflare.com"
+    url: "https://cloudflare.com/?utm_source=llm7.io&utm_medium=llm7.io"
   },
   {
     id: "3",
     name: "DeepSeek",
     logoLight: "/logos/deepseek-color.svg",
     logoDark: "/logos/deepseek-color.svg",
-    url: "https://deepseek.ai"
+    url: "https://deepseek.ai/?utm_source=llm7.io&utm_medium=llm7.io"
   },
   {
     id: "5",
     name: "Google",
     logoLight: "/logos/Google_Symbol_0.svg",
     logoDark: "/logos/Google_Symbol_0.svg",
-    url: "https://cloud.google.com/vertex-ai"
+    url: "https://cloud.google.com/vertex-ai/?utm_source=llm7.io&utm_medium=llm7.io"
   },
   {
     id: "6",
     name: "Mistral AI",
     logoLight: "/logos/MistralAI-light.svg",
     logoDark: "/logos/MistralAI-light.svg",
-    url: "https://www.mistral.ai/"
+    url: "https://mistral.ai/?utm_source=llm7.io&utm_medium=llm7.io"
   },
   {
     id: "7",
     name: "Nebius",
     logoLight: "/logos/idCFFrGr_W_logos.jpeg",
     logoDark: "/logos/idCFFrGr_W_logos.jpeg",
-    url: "https://nebius.ai"
+    url: "https://nebius.com/?utm_source=llm7.io&utm_medium=llm7.io"
   },
   {
     id: "8",
     name: "Nebula Block",
     logoLight: "/logos/nebula-block.png",
     logoDark: "/logos/nebula-block.png",
-    url: "https://www.nebulablock.com/"
+    url: "https://www.nebulablock.com/?utm_source=llm7.io&utm_medium=llm7.io"
   },
   {
     id: "9",
     name: "Ollama",
     logoLight: "/logos/ollama.svg",
     logoDark: "/logos/ollama.webp",
-    url: "https://ollama.com"
+    url: "https://ollama.com/?utm_source=llm7.io&utm_medium=llm7.io"
   },
   {
     id: "10",
     name: "OpenAI",
     logoLight: "/logos/OpenAI-light.svg",
     logoDark: "/logos/OpenAI_Symbol_0.svg",
-    url: "https://www.openai.com/"
+    url: "https://openai.com/?utm_source=llm7.io&utm_medium=llm7.io"
   },
   {
     id: "11",
     name: "Pollinations",
     logoLight: "/logos/pollinations-icon-seeklogo.svg",
     logoDark: "/logos/pollinations_ai_logo_white.svg",
-    url: "https://www.pollinations.ai/"
+    url: "https://pollinations.ai/?utm_source=llm7.io&utm_medium=llm7.io"
   },
   {
     id: "12",
     name: "Scaleway",
     logoLight: "/logos/Scaleway_id_RaUxAYi_0.svg",
     logoDark: "/logos/Scaleway_id_RaUxAYi_0.svg",
-    url: "https://www.scaleway.com/en/"
+    url: "https://www.scaleway.com/?utm_source=llm7.io&utm_medium=llm7.io"
   },
 ];
 
