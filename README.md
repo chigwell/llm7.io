@@ -73,31 +73,31 @@ This project is made possible thanks to the generous support and infrastructure 
 <table>
   <tr>
     <td align="center">
-      <a href="https://azure.microsoft.com/en-us/products/ai-model-catalog" target="_blank">
+      <a href="https://azure.microsoft.com/en-us/products/ai-foundry/models/?utm_source=llm7.io&utm_medium=llm7.io" target="_blank">
         <img src="https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Microsoft_Azure.svg/240px-Microsoft_Azure.svg.png&h=48&output=webp" alt="Azure" /><br/>
         <sub><b>Azure</b></sub>
       </a>
     </td>
     <td align="center">
-      <a href="https://ai.cloudflare.com/" target="_blank">
+      <a href="https://cloudflare.com/?utm_source=llm7.io&utm_medium=llm7.io" target="_blank">
         <img src="https://wsrv.nl/?url=cdn.prod.website-files.com/6640cd28f51f13175e577c05/664e007b3edcb1f1cd6c7871_7a675b16-95cc-5699-bd72-d4ab79b979bf.svg&h=48&output=webp" alt="Cloudflare" /><br/>
         <sub><b>Cloudflare</b></sub>
       </a>
     </td>
     <td align="center">
-      <a href="https://platform.deepseek.com/" target="_blank">
+      <a href="https://deepseek.ai/?utm_source=llm7.io&utm_medium=llm7.io" target="_blank">
         <img src="https://wsrv.nl/?url=registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/deepseek-color.png&h=48&output=webp" alt="DeepSeek" /><br/>
         <sub><b>DeepSeek</b></sub>
       </a>
     </td>
     <td align="center">
-      <a href="https://www.llama.com/" target="_blank">
+      <a href="https://ollama.com/?utm_source=llm7.io&utm_medium=llm7.io" target="_blank">
         <img src="https://wsrv.nl/?url=ollama.com/public/ollama.png&h=48&output=webp" alt="LLaMA / Ollama" /><br/>
         <sub><b>LLaMA / Ollama</b></sub>
       </a>
     </td>
     <td align="center">
-      <a href="https://console.mistral.ai/" target="_blank">
+      <a href="https://mistral.ai/?utm_source=llm7.io&utm_medium=llm7.io" target="_blank">
         <img src="https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Mistral_AI_logo_%282025%E2%80%93%29.svg/500px-Mistral_AI_logo_%282025%E2%80%93%29.svg.png&h=48&output=webp" alt="Mistral" /><br/>
         <sub><b>Mistral</b></sub>
       </a>
@@ -105,31 +105,31 @@ This project is made possible thanks to the generous support and infrastructure 
   </tr>
   <tr>
     <td align="center">
-      <a href="https://nebius.ai/" target="_blank">
+      <a href="https://nebius.com/?utm_source=llm7.io&utm_medium=llm7.io" target="_blank">
         <img src="https://wsrv.nl/?url=https://cdn-1.webcatalog.io/catalog/nebius/nebius-icon-filled-256.webp&w=48&output=webp" alt="Nebius" /><br/>
         <sub><b>Nebius</b></sub>
       </a>
     </td>
     <td align="center">
-      <a href="https://www.nebulablock.com/" target="_blank">
+      <a href="https://www.nebulablock.com/?utm_source=llm7.io&utm_medium=llm7.io" target="_blank">
         <img src="https://wsrv.nl/?url=https://i.ibb.co/Y7MKnWfT/nebula-block-logo.jpg&w=48&output=webp" alt="Nebula Block" /><br/>
         <sub><b>Nebula Block</b></sub>
       </a>
     </td>
     <td align="center">
-      <a href="https://platform.openai.com/api-keys" target="_blank">
+      <a href="https://openai.com/?utm_source=llm7.io&utm_medium=llm7.io" target="_blank">
         <img src="https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/6/66/OpenAI_logo_2025_%28symbol%29.svg/330px-OpenAI_logo_2025_%28symbol%29.svg.png&h=48&output=webp" alt="OpenAI" /><br/>
         <sub><b>OpenAI</b></sub>
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/pollinations/pollinations" target="_blank">
+      <a href="https://pollinations.ai/?utm_source=llm7.io&utm_medium=llm7.io" target="_blank">
         <img src="https://wsrv.nl/?url=avatars.githubusercontent.com/u/86964862&h=48&output=webp" alt="Pollinations" /><br/>
         <sub><b>Pollinations</b></sub>
       </a>
     </td>
     <td align="center">
-      <a href="https://www.scaleway.com/en/" target="_blank">
+      <a href="https://www.scaleway.com/?utm_source=llm7.io&utm_medium=llm7.io" target="_blank">
         <img src="https://wsrv.nl/?url=avatars.githubusercontent.com/u/5185491&h=48&output=webp" alt="Scaleway" /><br/>
         <sub><b>Scaleway</b></sub>
       </a>
