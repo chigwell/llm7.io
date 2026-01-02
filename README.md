@@ -1,4 +1,8 @@
-# LLM7.io Landing Page
+<div align="center">
+  <a target="_blank" href="https://llm7.io">
+   <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=LLM7.io&fontSize=50&fontAlignY=35&animation=fadeIn&fontColor=FFFFFF&descAlignY=55&descAlign=62" alt="Telegram MCP Server" width="100%" />
+  </a>
+</div>
 
 This repository contains the source code for the landing page of [LLM7.io](https://llm7.io), a free, open endpoint for accessing top LLMs (Large Language Models) without requiring heavy hardware.
 
