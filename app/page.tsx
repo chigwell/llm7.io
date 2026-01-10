@@ -2,7 +2,7 @@ import FeaturedComponent from "@/components/FeaturedComponent";
 import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import Navigation from "@/components/Navigation";
-import PartnerLogosTicker from "@/components/PartnerLogosTicker";
+import EcosystemMarquee from "@/components/EcosystemMarquee";
 import ActiveRequestsChart from '@/components/ActiveRequestsChart';
 import ModelShowcase from "@/components/ModelShowcase";
 //import PromoBanner from "@/components/PromoBanner";
@@ -17,7 +17,7 @@ export default function Home() {
     <>
       <Navigation />
       <HeroSection />
-      <PartnerLogosTicker />
+      <EcosystemMarquee />
       <ConsoleAnimation />
       <ChatExample />
       <ImageGenerationInput />
