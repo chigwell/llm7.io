@@ -4,11 +4,17 @@
 import { useEffect } from "react";
 import Script from "next/script";
 
+declare global {
+  interface Window {
+    __gsi_script_registered?: boolean;
+  }
+}
+
 export default function GsiScriptLoader() {
   useEffect(() => {
     // debug guard for HMR etc.
-    if ((window as any).__gsi_script_registered) return;
-    (window as any).__gsi_script_registered = true;
+    if (window.__gsi_script_registered) return;
+    window.__gsi_script_registered = true;
   }, []);
 
   return (

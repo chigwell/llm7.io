@@ -776,9 +776,10 @@ export default function MagicalChatInput() {
         setAuthStatus("ready");
         return false;
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       setAuthStatus("error");
-      setAuthError(err?.message || "Unable to verify subscription");
+      const message = err instanceof Error ? err.message : "Unable to verify subscription";
+      setAuthError(message);
       clearIdToken();
       setApiToken(null);
       setUserSub(0);

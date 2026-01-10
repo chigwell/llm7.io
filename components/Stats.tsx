@@ -13,6 +13,12 @@ import { useTheme } from "next-themes";
 const SUMMARY_URL = "https://ee137.uk/llm7-usage-summary";
 
 type Point = { bucket: string; total_tokens: number, requests: number };
+type SummaryStat = {
+  in_tokens?: number;
+  out_tokens?: number;
+  requests?: number;
+  [key: string]: string | number | undefined;
+};
 
 export default function UsageSummaryChartCard() {
   const { theme, systemTheme } = useTheme();
@@ -60,8 +66,8 @@ export default function UsageSummaryChartCard() {
       let res;
       try {
         res = await axios.get(`${SUMMARY_URL}?range=${winParam}`, { signal: controller.signal });
-      } catch (e: any) {
-        if (winParam === "7d" && e?.response?.status === 400) {
+      } catch (e: unknown) {
+        if (winParam === "7d" && axios.isAxiosError(e) && e.response?.status === 400) {
           res = await axios.get(`${SUMMARY_URL}?range=day`, { signal: controller.signal });
         } else {
           throw e;
@@ -70,20 +76,30 @@ export default function UsageSummaryChartCard() {
 
       const payload = res?.data || {};
       const groupKey: "hour" | "day" = payload.group_by === "hour" ? "hour" : "day";
-      const stats = Array.isArray(payload.stats) ? payload.stats : [];
+      const stats = Array.isArray(payload.stats) ? (payload.stats as SummaryStat[]) : [];
 
       const mapped: Point[] = stats
         .slice()
         .reverse()
-        .map((r: any) => ({
-          bucket: fmtBucket(r[groupKey], groupKey),
-          total_tokens: Number(r.in_tokens || 0) + Number(r.out_tokens || 0),
-          requests: Number(r.requests || 0),
-        }));
+        .map((row) => {
+          const bucketValue = row[groupKey];
+          const bucket = typeof bucketValue === "string" ? bucketValue : "";
+          return {
+            bucket: fmtBucket(bucket, groupKey),
+            total_tokens: Number(row.in_tokens ?? 0) + Number(row.out_tokens ?? 0),
+            requests: Number(row.requests ?? 0),
+          };
+        });
 
       setPoints(mapped);
-    } catch (e: any) {
-      if (!(e && (e.code === "ERR_CANCELED" || e.name === "CanceledError" || e.message === "canceled"))) {
+    } catch (e: unknown) {
+      const isCanceled =
+        axios.isCancel(e) ||
+        (e instanceof Error &&
+          (e.name === "CanceledError" || e.name === "AbortError" || e.message === "canceled")) ||
+        (typeof e === "object" && e !== null && "code" in e && (e as { code?: string }).code === "ERR_CANCELED");
+
+      if (!isCanceled) {
         console.error("Failed to load summary stats", e);
         setPoints([]);
       }

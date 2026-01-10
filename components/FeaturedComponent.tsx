@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { useState, useCallback, useEffect, useMemo, useRef, ReactNode } from "react";
+import { useState, useCallback, useEffect, useMemo, useRef, ReactNode, type CSSProperties } from "react";
 import { MessageSquare, Grid3x3, CircleDot } from "lucide-react";
 import { Button } from "@/components/ui/buttonShadcn";
 import { GoogleLogin, CredentialResponse, GoogleOAuthProvider } from "@react-oauth/google";
@@ -86,7 +86,7 @@ type Plan = {
     label: string;
     href?: string;
     onClick?: () => void;
-    buttonStyle?: any;
+    buttonStyle?: CSSProperties;
     trackSource?: number;
     llm_system_instructions?: string;
   };

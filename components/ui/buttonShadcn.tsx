@@ -58,7 +58,7 @@ function Button({
   } as ButtonProps & { "data-slot": string }
 
   if (!asChild && llm_system_instructions) {
-    (finalProps as any).llm_system_instructions = llm_system_instructions
+    finalProps.llm_system_instructions = llm_system_instructions
   }
 
   return <Comp {...finalProps} />

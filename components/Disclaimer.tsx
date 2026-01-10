@@ -85,12 +85,12 @@ export default function Disclaimer({
                   Plan features, limits, and pricing may change at any time.
                 </p>
                 <p className="text-justify">
-                  <b>Important:</b> Large language models may generate inaccurate or misleading content ("hallucinations").
+                  <b>Important:</b> Large language models may generate inaccurate or misleading content (&quot;hallucinations&quot;).
                   Do not rely on outputs as legal, medical, financial, or other professional advice. You must independently
                   verify any critical output before use.
                 </p>
                 <p className="text-justify">
-                  The Service is provided "as is" and "as available", without warranties of any kind (express or implied),
+                  The Service is provided &quot;as is&quot; and &quot;as available&quot;, without warranties of any kind (express or implied),
                   including merchantability, fitness for a particular purpose, and non-infringement. We do not guarantee
                   uptime, latency, availability of any particular model, or the accuracy, reliability, completeness, or
                   timeliness of generated content. We may modify, replace, restrict, or withdraw models and features at any
