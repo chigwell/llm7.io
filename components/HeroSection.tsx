@@ -248,10 +248,11 @@ export default function HeroSectionWithWaves() {
           <div className="space-y-6 md:space-y-8 mb-8 md:mb-12">
             <Pill
               icon={<Sparkles className="w-3 h-3 md:w-4 md:h-4" />}
-              status="active"
+              variant="warning"
+              status="warning"
               className="mb-6 md:mb-8 bg-background/50 backdrop-blur-sm text-xs md:text-sm text-muted-foreground"
             >
-              {`LLM7.io: models operational`}
+              {`LLM7.io: issues detected`}
             </Pill>
 
             <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight leading-[0.9] px-2">
