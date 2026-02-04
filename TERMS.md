@@ -15,7 +15,7 @@ Thank you for using **LLM7.io** (the **“Service”**). By accessing or using t
 ## 2\. Description of the Service
 
   - LLM7.io provides access to large language models through a web UI and API.
-  - A **free tier** is offered and is supported by donors; a **paid plan** is available:
+  - Access requires an **API token** issued via **token.llm7.io**. A **free tier** is offered and is supported by donors; a **paid plan** is available:
       - **Pro** ($12/month): Up to **25 text requests/s**, **1,500 text requests/min**, **15,000 text requests/hour**. Includes JSON mode, function calling, Pro models, and speech-to-text for production apps/APIs.
   - **Features, limits, models, and pricing may change at any time** without notice.
   - The Service is intended for experimentation, development, and research. It is **not** for life-critical, safety-critical, or emergency use.
