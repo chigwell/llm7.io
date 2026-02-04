@@ -196,13 +196,9 @@ export default function FeaturedComponents() {
     () => [
       {
         title: "Free",
-        desc: "Start instantly as anonymous or use a free token for higher limits.",
+        desc: "Start instantly with a free token for higher limits.",
         price: "$0",
         subTiers: [
-          {
-            label: "Anonymous",
-            rows: ["No sign-up", "8k chars/r*, 60 r/h, 10 r/m, 1 r/s"],
-          },
           {
             label: "With free token",
             rows: [
