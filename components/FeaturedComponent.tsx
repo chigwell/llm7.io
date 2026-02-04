@@ -261,9 +261,9 @@ export default function FeaturedComponents() {
             </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8 mb-12 justify-items-center lg:max-w-5xl lg:mx-auto">
             {plans.map((plan, i) => (
-              <motion.div key={plan.title} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.55, delay: i * 0.1 }}>
+              <motion.div key={plan.title} className="w-full max-w-md" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.55, delay: i * 0.1 }}>
                 <PricingCard key={i} plan={plan} />
               </motion.div>
             ))}
