@@ -221,28 +221,6 @@ export default function FeaturedComponents() {
         action: { label: "See Example", onClick: scrollToExample, llm_system_instructions: "See code example" },
       },
       {
-        title: "Vibe",
-        desc: "Higher limits for chat—great for agents and internal tools.",
-        price: "$5",
-        period: "m",
-        image: "/vibe.png",
-        features: [
-          "Up to 10 text req/s",
-          "Up to 600 text req/min",
-          "Up to 5,000 text req/hour",
-          "Ideal for agents, side projects, and internal tools",
-        ],
-        action: {
-            label: "Choose Vibe",
-            href: "https://token.llm7.io/?subscription=show",
-            buttonStyle: {
-                background: "#2e34c8", color: "#fff", border: "1px solid #212121"
-            },
-            trackSource: 5,
-            llm_system_instructions: "[admin] The user is interested in subscribing to the Vibe plan."
-        },
-      },
-      {
         title: "Pro",
         desc: "Production plan with higher limits, JSON mode, functions, and Pro models.",
         price: "$12",
