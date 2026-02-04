@@ -16,8 +16,8 @@ Thank you for using **LLM7.io** (the **“Service”**). By accessing or using t
 
   - LLM7.io provides access to large language models through a web UI and API.
   - A **free tier** is offered and is supported by donors; **paid plans** are available:
-      - **Vibe** ($5/month): Up to **10 text requests/s**, **600 text requests/min**, **5,000 text requests/hour**; **10 images/s**, **60 images/min**. Intended for agents, side projects, and internal tools.
-      - **Pro** ($12/month): Up to **25 text requests/s**, **1,500 text requests/min**, **15,000 text requests/hour**; **20 images/s**, **120 images/min**. Includes JSON mode, function calling, Pro models, and speech-to-text for production apps/APIs.
+      - **Vibe** ($5/month): Up to **10 text requests/s**, **600 text requests/min**, **5,000 text requests/hour**. Intended for agents, side projects, and internal tools.
+      - **Pro** ($12/month): Up to **25 text requests/s**, **1,500 text requests/min**, **15,000 text requests/hour**. Includes JSON mode, function calling, Pro models, and speech-to-text for production apps/APIs.
   - **Features, limits, models, and pricing may change at any time** without notice.
   - The Service is intended for experimentation, development, and research. It is **not** for life-critical, safety-critical, or emergency use.
 

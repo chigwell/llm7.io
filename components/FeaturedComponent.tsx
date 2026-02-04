@@ -209,7 +209,6 @@ export default function FeaturedComponents() {
               "Free token",
               "128k chars/req*",
               "100 r/h, 20 r/m, 2 r/s",
-              "Image gen (watermark)",
               <span key="token-link">
                 Get your token at{" "}
                 <a href="https://token.llm7.io/" className="text-primary underline underline-offset-4" target="_blank" rel="noreferrer">
@@ -223,7 +222,7 @@ export default function FeaturedComponents() {
       },
       {
         title: "Vibe",
-        desc: "Higher limits for chat and images—great for agents and internal tools.",
+        desc: "Higher limits for chat—great for agents and internal tools.",
         price: "$5",
         period: "m",
         image: "/vibe.png",
@@ -231,8 +230,6 @@ export default function FeaturedComponents() {
           "Up to 10 text req/s",
           "Up to 600 text req/min",
           "Up to 5,000 text req/hour",
-          "Up to 10 images/s",
-          "Up to 60 images/min",
           "Ideal for agents, side projects, and internal tools",
         ],
         action: {
@@ -255,8 +252,6 @@ export default function FeaturedComponents() {
           "Up to 25 text req/s",
           "Up to 1,500 text req/min",
           "Up to 15,000 text req/hour",
-          "Up to 20 images/s",
-          "Up to 120 images/min",
           "JSON mode",
           "Function calling",
           "Pro models",

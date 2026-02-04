@@ -10,7 +10,7 @@ import ChatExample from "@/components/ChatExample";
 import Disclaimer from "@/components/Disclaimer";
 import ConsoleAnimation from "@/components/CodeExample";
 //import UsageSummaryChartCard from "@/components/Stats";
-import ImageGenerationInput from "@/components/ImageExample";
+// import ImageGenerationInput from "@/components/ImageExample";
 
 export default function Home() {
   return (
@@ -20,7 +20,7 @@ export default function Home() {
       <EcosystemMarquee />
       <ConsoleAnimation />
       <ChatExample />
-      <ImageGenerationInput />
+      {/* <ImageGenerationInput /> */}
       <FeaturedComponent />
       <ModelShowcase />
       <ActiveRequestsChart />
