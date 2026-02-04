@@ -233,7 +233,6 @@ export default function FeaturedComponents() {
           "JSON mode",
           "Function calling",
           "Pro models",
-          "Speech-to-text for production apps and APIs",
         ],
         action: {
             label: "Go Pro",
