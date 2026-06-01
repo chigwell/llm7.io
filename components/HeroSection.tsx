@@ -313,10 +313,10 @@ Prototype, build, and scale without switching providers.
             <div className="p-4 md:p-6 rounded-2xl border bg-card/50 backdrop-blur-sm sm:col-span-2 md:col-span-1">
               <BotMessageSquare className="w-6 h-6 md:w-8 md:h-8 text-primary mx-auto mb-3 md:mb-4" />
               <h3 className="font-semibold mb-2 text-sm md:text-base">
-                LLM7 Telegram Agent*
+                LLM7 Agent*
               </h3>
               <p className="text-xs md:text-sm text-muted-foreground">
-                Full-control Telegram automation that can interact on your behalf.
+                Full-control automation that can interact on your behalf.
               </p>
               <p className="text-xs md:text-sm text-muted-foreground">
                 * (Coming soon)
