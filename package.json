@@ -83,6 +83,6 @@
     "tailwindcss": "4.1.12",
     "tw-animate-css": "^1.3.7",
     "typescript": "5.9.2",
-    "wrangler": "^4.43.0"
+    "wrangler": "^4.96.0"
   }
 }

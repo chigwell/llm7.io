@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/buttonShadcn";
 import Link from "next/link";
-import { ArrowRight, Sparkles, CheckCircle, Layers, Zap, DownloadCloud, Server } from "lucide-react";
+import { ArrowRight, Sparkles, CheckCircle, Layers, Zap, BotMessageSquare, Server } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { Pill } from "@/components/ui/pill";
 import { CountUp } from "@/components/vui/text/CountUp";
@@ -42,6 +42,7 @@ export default function HeroSectionWithWaves() {
   const vantaRef = useRef<HTMLDivElement>(null);
   const vantaEffect = useRef<{ destroy: () => void } | null>(null);
   const [vantaLoaded, setVantaLoaded] = useState(false);
+  const [vantaLoading, setVantaLoading] = useState(true);
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [countVisitors, setCountVisitors] = useState(44);
@@ -105,6 +106,7 @@ export default function HeroSectionWithWaves() {
         !vantaEffect.current &&
         mounted
       ) {
+        setVantaLoading(true);
         try {
           // Load Three.js
           if (!window.THREE) {
@@ -170,6 +172,8 @@ export default function HeroSectionWithWaves() {
         } catch (error) {
           console.warn("Vanta.js failed to load:", error);
           setVantaLoaded(false);
+        } finally {
+          setVantaLoading(false);
         }
       }
     };
@@ -201,6 +205,7 @@ export default function HeroSectionWithWaves() {
       }
       vantaEffect.current = null;
       setVantaLoaded(false);
+      setVantaLoading(true);
 
       // The effect will be recreated in the next useEffect cycle
     }
@@ -232,7 +237,7 @@ export default function HeroSectionWithWaves() {
       ></div>
 
       {/* Loading indicator */}
-      {!vantaLoaded && (
+      {vantaLoading && !vantaLoaded && (
         <div className="absolute inset-0 z-20 flex items-center justify-center">
           <div
             className={`${
@@ -306,12 +311,12 @@ Prototype, build, and scale without switching providers.
               </p>
             </div>
             <div className="p-4 md:p-6 rounded-2xl border bg-card/50 backdrop-blur-sm sm:col-span-2 md:col-span-1">
-              <DownloadCloud className="w-6 h-6 md:w-8 md:h-8 text-primary mx-auto mb-3 md:mb-4" />
+              <BotMessageSquare className="w-6 h-6 md:w-8 md:h-8 text-primary mx-auto mb-3 md:mb-4" />
               <h3 className="font-semibold mb-2 text-sm md:text-base">
-                Fine-tune & Local Deploy*
+                LLM7 Telegram Agent*
               </h3>
               <p className="text-xs md:text-sm text-muted-foreground">
-                Customise via API, then run securely on your own infrastructure — even offline.
+                Full-control Telegram automation that can interact on your behalf.
               </p>
               <p className="text-xs md:text-sm text-muted-foreground">
                 * (Coming soon)
@@ -364,7 +369,7 @@ Prototype, build, and scale without switching providers.
                 <div>
                   <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
                     <CountUp
-                      to={57}
+                      to={87}
                       suffix="B+"
                       duration={3}
                       delay={1}
@@ -381,7 +386,7 @@ Prototype, build, and scale without switching providers.
               <div>
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
                   <CountUp
-                    to={12}
+                    to={16}
                       suffix="k+"
                       prefix="$"
                     duration={3}

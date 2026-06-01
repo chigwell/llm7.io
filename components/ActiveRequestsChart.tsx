@@ -430,6 +430,18 @@ const AreaChart = withTooltip<AreaChartProps, TooltipData>(
             )}
           </div>
         </div>
+        <p className="mt-3 max-w-4xl text-center text-xs text-muted-foreground/70">
+          For full detailed numbers of the status of api.llm7.io,{' '}
+          <a
+            href="https://status.llm7.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary/80 underline underline-offset-4 hover:text-primary"
+          >
+            open the status dashboard
+          </a>
+          .
+        </p>
       </div>
     );
   },
