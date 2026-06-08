@@ -101,14 +101,11 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
       style={{
         minWidth: "875px",
         maxWidth: "1200px",
-        backgroundColor: visible
-          ? "rgba(255, 255, 255, 0.1)"
-          : "rgba(255, 255, 255, 0)",
       }}
       className={cn(
-        "relative z-[60] mx-auto hidden w-full max-w-7xl items-center px-6 py-3 lg:grid lg:grid-cols-3",
+        "relative z-[60] mx-auto hidden w-full max-w-7xl items-center px-6 py-3 backdrop-saturate-150 lg:grid lg:grid-cols-3",
         visible
-          ? "border border-white/20 dark:border-white/10 rounded-2xl bg-white/10 dark:bg-black/10 shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+          ? "rounded-2xl border border-border/70 bg-background/85 shadow-[0_8px_32px_rgba(0,0,0,0.12)] supports-[backdrop-filter]:bg-background/75 dark:border-white/10 dark:bg-background/75 dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
           : "border-0",
         className
       )}
@@ -141,7 +138,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
         <motion.a
           onMouseEnter={() => setHovered(idx)}
           onClick={onItemClick}
-          className="relative px-4 py-2.5 text-neutral-700 transition-colors duration-200 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white"
+          className="relative px-4 py-2.5 text-foreground/80 transition-colors duration-200 hover:text-foreground"
           key={`link-${idx}`}
           href={item.link}
           target={item.link.startsWith("http") ? "_blank" : undefined}
@@ -152,7 +149,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
           {hovered === idx && (
             <motion.div
               layoutId="hovered"
-              className="absolute inset-0 h-full w-full rounded-xl bg-white/20 dark:bg-white/10 backdrop-blur-sm"
+              className="absolute inset-0 h-full w-full rounded-xl bg-accent/80 backdrop-blur-sm dark:bg-white/10"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
@@ -188,15 +185,10 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
         damping: 40,
         mass: 0.8,
       }}
-      style={{
-        backgroundColor: visible
-          ? "rgba(255, 255, 255, 0.1)"
-          : "rgba(255, 255, 255, 0)",
-      }}
       className={cn(
-        "relative z-50 mx-auto flex w-full max-w-[calc(100vw-1rem)] flex-col items-center justify-between py-3 lg:hidden",
+        "relative z-50 mx-auto flex w-full max-w-[calc(100vw-1rem)] flex-col items-center justify-between py-3 backdrop-saturate-150 lg:hidden",
         visible
-          ? "border border-white/20 dark:border-white/10 bg-white/10 dark:bg-black/10 shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+          ? "border border-border/70 bg-background/85 shadow-[0_8px_32px_rgba(0,0,0,0.12)] supports-[backdrop-filter]:bg-background/75 dark:border-white/10 dark:bg-background/75 dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
           : "border-0",
         className
       )}
@@ -249,8 +241,8 @@ export const MobileNavMenu = ({
             mass: 0.8,
           }}
           className={cn(
-            "relative z-50 mx-auto flex w-full max-w-[calc(100vw-1rem)] flex-col items-center justify-between gap-2 py-4 lg:hidden",
-            "border border-white/20 dark:border-white/10 bg-white/10 dark:bg-black/10 shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]",
+            "relative z-50 mx-auto flex w-full max-w-[calc(100vw-1rem)] flex-col items-center justify-between gap-2 py-4 backdrop-saturate-150 lg:hidden",
+            "border border-border/70 bg-background/90 shadow-[0_8px_32px_rgba(0,0,0,0.12)] supports-[backdrop-filter]:bg-background/80 dark:border-white/10 dark:bg-background/85 dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]",
             className
           )}
         >
