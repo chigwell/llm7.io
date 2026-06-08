@@ -83,10 +83,10 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
   return (
     <motion.div
       animate={{
-        backdropFilter: visible ? "blur(20px)" : "none",
+        backdropFilter: visible ? "blur(20px)" : "blur(12px)",
         boxShadow: visible
           ? "0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04)"
-          : "blur(0px)",
+          : "0 4px 18px rgba(0, 0, 0, 0.04)",
         width: visible ? "50%" : "100%",
         height: visible ? "100%" : "100%",
         y: visible ? 12 : 0,
@@ -106,7 +106,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
         "relative z-[60] mx-auto hidden w-full max-w-7xl items-center px-6 py-3 backdrop-saturate-150 lg:grid lg:grid-cols-3",
         visible
           ? "rounded-2xl border border-border/70 bg-background/85 shadow-[0_8px_32px_rgba(0,0,0,0.12)] supports-[backdrop-filter]:bg-background/75 dark:border-white/10 dark:bg-background/75 dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
-          : "border-0",
+          : "rounded-2xl border border-border/40 bg-background/45 shadow-[0_4px_18px_rgba(0,0,0,0.04)] supports-[backdrop-filter]:bg-background/35 dark:border-white/10 dark:bg-white/[0.06] dark:shadow-[0_4px_18px_rgba(0,0,0,0.18)]",
         className
       )}
     >
@@ -167,15 +167,15 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
   return (
     <motion.div
       animate={{
-        backdropFilter: visible ? "blur(20px)" : "none",
+        backdropFilter: visible ? "blur(20px)" : "blur(12px)",
         boxShadow: visible
           ? "0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04)"
-          : "none",
-        width: visible ? "95%" : "100%",
+          : "0 4px 18px rgba(0, 0, 0, 0.04)",
+        width: "95%",
         height: visible ? "100%" : "100%",
         paddingRight: visible ? "16px" : "12px",
         paddingLeft: visible ? "16px" : "12px",
-        borderRadius: visible ? "16px" : "0px",
+        borderRadius: "16px",
         y: visible ? 16 : 0,
         scale: visible ? 0.98 : 0.98,
       }}
@@ -189,7 +189,7 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
         "relative z-50 mx-auto flex w-full max-w-[calc(100vw-1rem)] flex-col items-center justify-between py-3 backdrop-saturate-150 lg:hidden",
         visible
           ? "border border-border/70 bg-background/85 shadow-[0_8px_32px_rgba(0,0,0,0.12)] supports-[backdrop-filter]:bg-background/75 dark:border-white/10 dark:bg-background/75 dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
-          : "border-0",
+          : "border border-border/40 bg-background/45 shadow-[0_4px_18px_rgba(0,0,0,0.04)] supports-[backdrop-filter]:bg-background/35 dark:border-white/10 dark:bg-white/[0.06] dark:shadow-[0_4px_18px_rgba(0,0,0,0.18)]",
         className
       )}
     >
