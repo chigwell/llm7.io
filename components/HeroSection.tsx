@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/buttonShadcn";
 import Link from "next/link";
-import { ArrowRight, Sparkles, CheckCircle, Layers, Zap, BotMessageSquare, Server } from "lucide-react";
+import { Activity, ArrowRight, CheckCircle, Layers, Zap, BotMessageSquare, Server } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { Pill } from "@/components/ui/pill";
 import { CountUp } from "@/components/vui/text/CountUp";
@@ -35,6 +35,160 @@ declare global {
     };
     THREE: object;
   }
+}
+
+type StatusTone = "success" | "warning" | "error" | "info";
+
+type HeroStatus = {
+  label: string;
+  detail: string;
+  percent: string | null;
+  tone: StatusTone;
+  status: "active" | "warning" | "error" | "info";
+};
+
+const STATUS_ENDPOINT = "https://api.llm7.io/ping";
+
+function formatStatusPercent(value: number): string {
+  const digits = value >= 0.995 || value === 0 ? 0 : 1;
+  return `${(value * 100).toFixed(digits)}%`;
+}
+
+function createStatusFromPing(payload: unknown): HeroStatus {
+  if (!payload || typeof payload !== "object" || !("model_metrics_last_60s" in payload)) {
+    throw new Error("Unexpected status response");
+  }
+
+  const modelMetrics = (payload as { model_metrics_last_60s?: unknown }).model_metrics_last_60s;
+  const entries = modelMetrics && typeof modelMetrics === "object" ? Object.values(modelMetrics) : [];
+  const totals = entries.reduce(
+    (accumulator, value) => {
+      if (!value || typeof value !== "object") return accumulator;
+
+      const record = value as {
+        success_200?: unknown;
+        errors?: {
+          total?: unknown;
+          timeouts?: unknown;
+        };
+      };
+      const success200 = typeof record.success_200 === "number" && Number.isFinite(record.success_200)
+        ? record.success_200
+        : 0;
+      const errorsTotal = typeof record.errors?.total === "number" && Number.isFinite(record.errors.total)
+        ? record.errors.total
+        : 0;
+      const timeouts = typeof record.errors?.timeouts === "number" && Number.isFinite(record.errors.timeouts)
+        ? record.errors.timeouts
+        : 0;
+
+      return {
+        success200: accumulator.success200 + success200,
+        errorsTotal: accumulator.errorsTotal + errorsTotal,
+        timeouts: accumulator.timeouts + timeouts,
+      };
+    },
+    { success200: 0, errorsTotal: 0, timeouts: 0 }
+  );
+  const totalRequests = totals.success200 + totals.errorsTotal;
+
+  if (totalRequests === 0) {
+    return {
+      label: "LLM7.io: models quiet",
+      detail: "No model traffic in the latest 60-second window.",
+      percent: null,
+      tone: "info",
+      status: "info",
+    };
+  }
+
+  const successRate = totals.success200 / totalRequests;
+  const percent = formatStatusPercent(successRate);
+
+  if (successRate >= 0.98) {
+    return {
+      label: "LLM7.io: models operational",
+      detail: `${percent} HTTP 200 success rate in the latest 60-second window.`,
+      percent,
+      tone: "success",
+      status: "active",
+    };
+  }
+
+  if (successRate >= 0.9) {
+    return {
+      label: "LLM7.io: partial degradation",
+      detail: `${percent} HTTP 200 success rate. Some model responses may fail or slow down.`,
+      percent,
+      tone: "warning",
+      status: "warning",
+    };
+  }
+
+  return {
+    label: "LLM7.io: degraded",
+    detail: `${percent} HTTP 200 success rate. Elevated errors detected.`,
+    percent,
+    tone: "error",
+    status: "error",
+  };
+}
+
+function HeroStatusPill() {
+  const [status, setStatus] = useState<HeroStatus>({
+    label: "LLM7.io: checking model status",
+    detail: "Collecting live availability from the status endpoint.",
+    percent: null,
+    tone: "info",
+    status: "info",
+  });
+
+  useEffect(() => {
+    let disposed = false;
+
+    const fetchStatus = async () => {
+      try {
+        const response = await fetch(STATUS_ENDPOINT, { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error(`Status endpoint returned HTTP ${response.status}`);
+        }
+
+        const nextStatus = createStatusFromPing(await response.json());
+        if (!disposed) setStatus(nextStatus);
+      } catch {
+        if (!disposed) {
+          setStatus({
+            label: "LLM7.io: status delayed",
+            detail: "Live model status is temporarily unavailable.",
+            percent: null,
+            tone: "warning",
+            status: "warning",
+          });
+        }
+      }
+    };
+
+    void fetchStatus();
+    const interval = window.setInterval(fetchStatus, 30_000);
+
+    return () => {
+      disposed = true;
+      window.clearInterval(interval);
+    };
+  }, []);
+
+  return (
+    <Pill
+      icon={<Activity className="w-3 h-3 md:w-4 md:h-4" />}
+      status={status.status}
+      variant={status.tone}
+      className="mb-6 md:mb-8 bg-background/70 backdrop-blur-sm text-xs md:text-sm"
+      title={status.detail}
+      aria-label={`${status.label}. ${status.detail}`}
+    >
+      {status.percent ? `${status.label} · ${status.percent} HTTP 200` : status.label}
+    </Pill>
+  );
 }
 
 export default function HeroSectionWithWaves() {
@@ -251,13 +405,7 @@ export default function HeroSectionWithWaves() {
         <div className="max-w-5xl mx-auto text-center">
           {/* Main Headline */}
           <div className="space-y-6 md:space-y-8 mb-8 md:mb-12">
-            <Pill
-              icon={<Sparkles className="w-3 h-3 md:w-4 md:h-4" />}
-              status="active"
-              className="mb-6 md:mb-8 bg-background/50 backdrop-blur-sm text-xs md:text-sm text-muted-foreground"
-            >
-              {`LLM7.io: models operational`}
-            </Pill>
+            <HeroStatusPill />
 
             <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight leading-[0.9] px-2">
               <span className="bg-gradient-to-r from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent">
