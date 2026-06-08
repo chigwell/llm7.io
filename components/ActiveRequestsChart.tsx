@@ -12,12 +12,7 @@ import { LinearGradient } from '@visx/gradient';
 import { max, extent, bisector } from 'd3-array';
 import { timeFormat } from 'd3-time-format';
 import { useTheme } from 'next-themes';
-
-// Define the data structure for API response
-interface ApiResponse {
-  message: string;
-  active_requests_last_60s: number;
-}
+import { usePingMetrics } from "@/hooks/use-ping-metrics";
 
 // Define the data structure for our chart
 interface ChartData {
@@ -39,8 +34,8 @@ export default function ActiveRequestsChart() {
   const [mounted, setMounted] = useState(false);
   const [data, setData] = useState<ChartData[]>(initialData);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [dimensions, setDimensions] = useState({ width: 768, height: 200 });
+  const { latest, error } = usePingMetrics();
 
   // Get the current theme, defaulting to system theme if not explicitly set
   const currentTheme = theme === "system" ? systemTheme : theme;
@@ -107,53 +102,38 @@ export default function ActiveRequestsChart() {
   const getValue = (d: ChartData) => d.value;
   const bisectDate = bisector<ChartData, Date>((d) => d.date).left;
 
-  // Fetch data from API
-  const fetchData = useCallback(async () => {
-    try {
-      const response = await fetch('https://api.llm7.io/ping');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const result: ApiResponse = await response.json();
-      const currLevel = result.active_requests_last_60s;
-
-      // Add new data point
-      const newDataPoint: ChartData = {
-        date: new Date(),
-        value: currLevel,
-      };
-
-      // Update data, keeping only the latest MAX_DATA_POINTS
-      setData(prevData => {
-        const updatedData = [...prevData, newDataPoint];
-        if (updatedData.length > MAX_DATA_POINTS) {
-          return updatedData.slice(-MAX_DATA_POINTS);
-        }
-        return updatedData;
-      });
-
-      setError(null);
-    } catch (err) {
-      console.error('Error fetching data:', err);
-      //setError(err instanceof Error ? err.message : 'Unknown error');
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  // Set up interval to fetch data every second
   useEffect(() => {
     setMounted(true);
+  }, []);
 
-    // Initial fetch
-    fetchData();
+  useEffect(() => {
+    if (!latest) return;
 
-    // Set up interval for subsequent fetches
-    const intervalId = setInterval(fetchData, 1000);
+    const newDataPoint: ChartData = {
+      date: new Date(latest.collectedAt),
+      value: latest.activeRequestsLast60s,
+    };
 
-    // Clean up interval on unmount
-    return () => clearInterval(intervalId);
-  }, [fetchData]);
+    setData(prevData => {
+      const previousPoint = prevData[prevData.length - 1];
+      if (previousPoint?.date.getTime() === newDataPoint.date.getTime()) {
+        return prevData;
+      }
+
+      const updatedData = [...prevData, newDataPoint];
+      if (updatedData.length > MAX_DATA_POINTS) {
+        return updatedData.slice(-MAX_DATA_POINTS);
+      }
+      return updatedData;
+    });
+    setIsLoading(false);
+  }, [latest]);
+
+  useEffect(() => {
+    if (error) {
+      setIsLoading(false);
+    }
+  }, [error]);
 
   // Don't render until mounted to avoid hydration mismatch
   if (!mounted) {
