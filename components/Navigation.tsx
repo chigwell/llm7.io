@@ -129,7 +129,7 @@ export default function Navigation() {
               key={`mobile-link-${idx}`}
               href={item.link}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="relative text-neutral-600 dark:text-neutral-300 hover:text-foreground transition-colors"
+              className="relative flex min-h-12 w-full items-center rounded-lg px-3 py-3 text-base font-medium text-neutral-600 transition-colors hover:bg-accent hover:text-foreground dark:text-neutral-300"
               target={item.link.startsWith("http") ? "_blank" : undefined}
               rel={
                 item.link.startsWith("http") ? "noopener noreferrer" : undefined

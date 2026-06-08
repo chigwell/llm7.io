@@ -249,7 +249,7 @@ export const MobileNavMenu = ({
             mass: 0.8,
           }}
           className={cn(
-            "relative z-50 mx-auto flex w-full max-w-[calc(100vw-1rem)] flex-col items-center justify-between py-3 lg:hidden",
+            "relative z-50 mx-auto flex w-full max-w-[calc(100vw-1rem)] flex-col items-center justify-between gap-2 py-4 lg:hidden",
             "border border-white/20 dark:border-white/10 bg-white/10 dark:bg-black/10 shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]",
             className
           )}
