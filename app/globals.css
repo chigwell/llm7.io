@@ -7,6 +7,33 @@ html {
   scroll-behavior: smooth;
 }
 
+@keyframes logo-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-33.333%, 0, 0);
+  }
+}
+
+.animate-logo-marquee {
+  animation: logo-marquee 36s linear infinite;
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-logo-marquee {
+    animation: none;
+  }
+}
+
 ::selection {
   background-color: oklch(0.7 0.15 200);
   color: oklch(1 0 0);
