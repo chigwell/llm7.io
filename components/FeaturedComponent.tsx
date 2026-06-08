@@ -204,7 +204,7 @@ export default function FeaturedComponents() {
             rows: [
               "Free token",
               "128k chars/req*",
-              "200 r/h, 40 r/m, 2 r/s",
+              "100 r/h, 40 r/m, 2 r/s",
               <span key="token-link">
                 Get your token at{" "}
                 <a href="https://token.llm7.io/" className="text-primary underline underline-offset-4" target="_blank" rel="noreferrer">
