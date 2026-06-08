@@ -203,6 +203,7 @@ export default function FeaturedComponents() {
             label: "With free token",
             rows: [
               "Free token",
+              "5,000,000 tokens/day",
               "128k chars/req*",
               "100 r/h, 40 r/m, 2 r/s",
               <span key="token-link">
@@ -223,6 +224,7 @@ export default function FeaturedComponents() {
         period: "m",
         image: "/pro.png",
         features: [
+          "5,000,000,000 tokens/day",
           "Up to 25 text req/s",
           "Up to 1,500 text req/min",
           "Up to 15,000 text req/hour",
