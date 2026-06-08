@@ -269,6 +269,7 @@ export default function FeaturedComponents() {
           <div className="text-xs text-muted-foreground space-y-1">
             <p>* Limits depend on the model and may be lower.</p>
             <p>** Features, limits, and pricing may change.</p>
+            <p>Daily token usage is input tokens plus output tokens over a rolling 24-hour window.</p>
             <p>If you need more capacity, please contact us via {" "}
              <a href="mailto:support@llm7.io?subject=Subscription Inquiry&body=Hey, I would like to discuss subscription options." className="text-primary underline underline-offset-4">
                 support@llm7.io
