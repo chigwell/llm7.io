@@ -219,7 +219,7 @@ export default function FeaturedComponents() {
       },
       {
         title: "Pro",
-        desc: "Production plan with higher limits, JSON mode, functions, and Pro models.",
+        desc: "Production subscription with higher limits, JSON mode, functions, and Pro models.",
         price: "$12",
         period: "m",
         image: "/pro.png",
@@ -251,10 +251,10 @@ export default function FeaturedComponents() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center mb-14 md:mb-20">
             <motion.h2 id="featured-heading-plans" initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }} className="mt-6 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
-              <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">Pick a plan that grows with your goals.</span>
+              <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">Choose the right subscription for your usage.</span>
             </motion.h2>
             <motion.p initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }} className="mt-4 max-w-2xl mx-auto text-sm md:text-base text-muted-foreground leading-relaxed">
-              Compare the benefits and limits below to find the right fit.
+              Compare free token access and Pro subscription limits below.
             </motion.p>
           </div>
 
@@ -266,15 +266,16 @@ export default function FeaturedComponents() {
             ))}
           </div>
 
-          <div className="text-xs text-muted-foreground space-y-1">
-            <p>* Limits depend on the model and may be lower.</p>
-            <p>** Features, limits, and pricing may change.</p>
-            <p>Daily token usage is input tokens plus output tokens over a rolling 24-hour window.</p>
-            <p>If you need more capacity, please contact us via {" "}
-             <a href="mailto:support@llm7.io?subject=Subscription Inquiry&body=Hey, I would like to discuss subscription options." className="text-primary underline underline-offset-4">
-                support@llm7.io
-                </a>.</p>
-
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8 justify-items-center lg:max-w-5xl lg:mx-auto">
+            <div className="w-full max-w-md text-xs text-muted-foreground space-y-1">
+              <p>* Limits depend on the model and may be lower.</p>
+              <p>** Features, limits, and pricing may change.</p>
+              <p>Daily token usage is input tokens plus output tokens over a rolling 24-hour window.</p>
+              <p>If you need more capacity, please contact us via {" "}
+               <a href="mailto:support@llm7.io?subject=Subscription Inquiry&body=Hey, I would like to discuss subscription options." className="text-primary underline underline-offset-4">
+                  support@llm7.io
+                  </a>.</p>
+            </div>
           </div>
         </div>
       </section>

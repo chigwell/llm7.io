@@ -82,7 +82,7 @@ export default function Disclaimer({
                   LLM7.io offers a free tier supported by donors and a paid subscription: <b>Pro</b> (highest limits plus JSON mode, function calling, and Pro models).
                 </p>
                 <p className="text-justify">
-                  Plan features, limits, and pricing may change at any time.
+                  Subscription features, limits, and pricing may change at any time.
                 </p>
                 <p className="text-justify">
                   <b>Important:</b> Large language models may generate inaccurate or misleading content (&quot;hallucinations&quot;).

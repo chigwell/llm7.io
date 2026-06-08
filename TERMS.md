@@ -84,7 +84,7 @@ Our privacy practices are described in **[PRIVACY.md](./PRIVACY.md)**, which is 
 ## 9\. Availability and changes
 
   - The Service is provided on a **best-efforts** basis. We do **not** guarantee **uptime**, **latency**, **throughput**, or availability of any particular **model** or **feature**.
-  - Access to specific models and response speed is **not guaranteed**. Paid plans route to available models; if third-party or upstream models are unavailable, responses may be degraded or unavailable.
+  - Access to specific models and response speed is **not guaranteed**. Paid subscriptions route to available models; if third-party or upstream models are unavailable, responses may be degraded or unavailable.
   - We may **modify, replace, or withdraw** models and features at any time. We continuously work to improve availability, but models may be temporarily or permanently unavailable.
 
 -----
@@ -122,10 +122,10 @@ You agree to **defend, indemnify, and hold harmless** us and our contributors fr
 
 -----
 
-## 14\. Paid plans and billing
+## 14\. Paid subscriptions and billing
 
-  - Paid subscriptions are purchased via **token.llm7.io**. Plans are currently **monthly**: **Pro** ($12/month) with the limits described in Section 2.
-  - We may update prices, plan limits, or features. Changes apply on renewal or as otherwise notified.
+  - Paid subscriptions are purchased via **token.llm7.io**. Subscriptions are currently **monthly**: **Pro** ($12/month) with the limits described in Section 2.
+  - We may update prices, subscription limits, or features. Changes apply on renewal or as otherwise notified.
   - Taxes may apply. Refunds (if any) follow the terms shown at purchase and any mandatory consumer protections in your jurisdiction.
 
 -----

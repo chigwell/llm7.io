@@ -46,7 +46,7 @@ async function getGitHubStars(): Promise<number> {
 export default function Navigation() {
   const navItems = [
     {
-      name: "Plans",
+      name: "Subscriptions",
       link: "#featured-heading-plans",
     },
     {

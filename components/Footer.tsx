@@ -130,7 +130,7 @@ export default function Footer() {
                   href="#featured-heading-plans"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Plans
+                  Subscriptions
                 </Link>
               </li>
                 <li>
