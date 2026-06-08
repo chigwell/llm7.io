@@ -105,20 +105,20 @@ function createStatusFromPing(payload: unknown): HeroStatus {
   const successRate = totals.success200 / totalRequests;
   const percent = formatStatusPercent(successRate);
 
-  if (successRate >= 0.98) {
+  if (successRate >= 0.75) {
     return {
       label: "LLM7.io: models operational",
-      detail: `${percent} HTTP 200 success rate in the latest 60-second window.`,
+      detail: `${percent} success rate in the latest 60-second window.`,
       percent,
       tone: "success",
       status: "active",
     };
   }
 
-  if (successRate >= 0.9) {
+  if (successRate >= 0.5) {
     return {
       label: "LLM7.io: partial degradation",
-      detail: `${percent} HTTP 200 success rate. Some model responses may fail or slow down.`,
+      detail: `${percent} success rate. Some model responses may fail or slow down.`,
       percent,
       tone: "warning",
       status: "warning",
@@ -127,7 +127,7 @@ function createStatusFromPing(payload: unknown): HeroStatus {
 
   return {
     label: "LLM7.io: degraded",
-    detail: `${percent} HTTP 200 success rate. Elevated errors detected.`,
+    detail: `${percent} success rate. Elevated errors detected.`,
     percent,
     tone: "error",
     status: "error",
@@ -169,7 +169,7 @@ function HeroStatusPill() {
     };
 
     void fetchStatus();
-    const interval = window.setInterval(fetchStatus, 30_000);
+    const interval = window.setInterval(fetchStatus, 1_000);
 
     return () => {
       disposed = true;
@@ -186,7 +186,7 @@ function HeroStatusPill() {
       title={status.detail}
       aria-label={`${status.label}. ${status.detail}`}
     >
-      {status.percent ? `${status.label} · ${status.percent} HTTP 200` : status.label}
+      {status.percent ? `${status.label} · ${status.percent}` : status.label}
     </Pill>
   );
 }
