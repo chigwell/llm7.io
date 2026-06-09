@@ -2,9 +2,15 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Icons } from "@/components/ui/Icons";
 import { Button } from "@/components/ui/buttonShadcn";
-import { Github, Linkedin, Twitter, Heart, Send } from "lucide-react";
+import {
+  Github,
+  Linkedin,
+  Twitter,
+  Heart,
+  Send,
+} from "lucide-react";
+import { IconBrandDiscordFilled } from "@tabler/icons-react";
 
 export default function Footer() {
   // This prevents the footer from rendering during initial hydration
@@ -114,6 +120,22 @@ export default function Footer() {
                 >
                   <Send className="w-4 h-4" />
                   Telegram
+                </Link>
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full sm:w-auto"
+                asChild
+              >
+                <Link
+                  href="https://discord.gg/dDM9ZcEnZ"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="gap-2 justify-center sm:justify-start"
+                >
+                  <IconBrandDiscordFilled className="w-4 h-4" />
+                  Discord
                 </Link>
               </Button>
             </div>
