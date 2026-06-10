@@ -88,8 +88,6 @@ function ModelCard({ model }: { model: PayModel }) {
           <div className="mt-1 font-semibold">{model.outputPrice}</div>
         </div>
       </div>
-
-      <p className="mt-3 text-xs text-muted-foreground">Prices are per 1M tokens.</p>
     </article>
   );
 }
@@ -147,12 +145,12 @@ export default function PayAsYouGoModels() {
   }, []);
 
   return (
-    <section aria-labelledby="payg-heading" className="mx-auto mt-14 w-full max-w-md md:mt-20 md:max-w-[61rem]">
+    <section aria-labelledby="payg-heading" className="mx-auto mt-[4.5rem] w-full max-w-md md:mt-24 md:max-w-[61rem]">
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">Or pay as you go</p>
           <h3 id="payg-heading" className="mt-2 text-2xl font-bold tracking-tight md:text-3xl">
-            Access frontier models without a fixed plan.
+            Scale frontier model access on your terms.
           </h3>
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
             Join the waitlist for metered billing across premium model routes, with transparent per-token pricing.
@@ -168,6 +166,8 @@ export default function PayAsYouGoModels() {
           <ModelCard key={model.id} model={model} />
         ))}
       </div>
+
+      <p className="mt-4 text-xs text-muted-foreground">Prices are per 1M tokens.</p>
 
       {hiddenCount > 0 ? (
         <div className="mt-5 flex justify-center">
