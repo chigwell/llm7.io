@@ -7,6 +7,7 @@ import { MessageSquare, Grid3x3, CircleDot } from "lucide-react";
 import { Button } from "@/components/ui/buttonShadcn";
 import { StarButton } from "@/components/ui/star-button";
 import { GoogleLogin, CredentialResponse, GoogleOAuthProvider } from "@react-oauth/google";
+import PayAsYouGoModels from "@/components/PayAsYouGoModels";
 
 /* -------------------------
    Constants
@@ -264,6 +265,10 @@ export default function FeaturedComponents() {
                 <PricingCard key={i} plan={plan} />
               </motion.div>
             ))}
+          </div>
+
+          <div className="lg:max-w-5xl lg:mx-auto">
+            <PayAsYouGoModels />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8 justify-items-center lg:max-w-5xl lg:mx-auto">
