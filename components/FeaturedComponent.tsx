@@ -267,11 +267,7 @@ export default function FeaturedComponents() {
             ))}
           </div>
 
-          <div className="lg:max-w-5xl lg:mx-auto">
-            <PayAsYouGoModels />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8 justify-items-center lg:max-w-5xl lg:mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8 justify-items-center lg:max-w-5xl lg:mx-auto mb-12">
             <div className="w-full max-w-md text-xs text-muted-foreground space-y-1">
               <p>* Limits depend on the model and may be lower.</p>
               <p>** Features, limits, and pricing may change.</p>
@@ -281,6 +277,10 @@ export default function FeaturedComponents() {
                   support@llm7.io
                   </a>.</p>
             </div>
+          </div>
+
+          <div className="lg:max-w-5xl lg:mx-auto">
+            <PayAsYouGoModels />
           </div>
         </div>
       </section>

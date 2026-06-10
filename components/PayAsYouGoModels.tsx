@@ -6,7 +6,7 @@ import { CheckCircle2Icon, ChevronDownIcon, ChevronUpIcon, Loader2Icon, XIcon } 
 import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
 import models from "@/data/payAsYouGoModels.json";
 import { Button } from "@/components/ui/buttonShadcn";
-import { Badge } from "@/components/ui/badge";
+import { Pill, type PillProps } from "@/components/ui/pill";
 import { cn } from "@/lib/utils";
 
 const BASE_API_URL = "https://llm7-api.chigwel137.workers.dev";
@@ -24,6 +24,23 @@ type PayModel = {
 };
 
 type WaitlistState = "idle" | "submitting" | "success" | "error";
+type PillVariant = NonNullable<PillProps["variant"]>;
+
+const chipVariants: Record<string, PillVariant> = {
+  audio: "info",
+  coding: "secondary",
+  fast: "success",
+  json: "outline",
+  math: "warning",
+  open: "info",
+  reasoning: "warning",
+  tools: "success",
+  vision: "default",
+};
+
+function getChipVariant(chip: string): PillVariant {
+  return chipVariants[chip.toLowerCase()] ?? "outline";
+}
 
 function ProviderLogo({ model }: { model: PayModel }) {
   return (
@@ -61,9 +78,9 @@ function ModelCard({ model }: { model: PayModel }) {
 
       <div className="mt-4 flex flex-wrap gap-1.5">
         {model.chips.map((chip) => (
-          <Badge key={chip} variant="outline" className="border-primary/20 bg-primary/5 text-[11px] capitalize text-foreground/80">
+          <Pill key={chip} variant={getChipVariant(chip)} size="sm" className="gap-1.5 capitalize">
             {chip}
-          </Badge>
+          </Pill>
         ))}
       </div>
 
@@ -140,7 +157,7 @@ export default function PayAsYouGoModels() {
   }, []);
 
   return (
-    <section aria-labelledby="payg-heading" className="mt-14 rounded-2xl border border-border/60 bg-background/70 p-5 shadow-lg backdrop-blur md:mt-20 md:p-7">
+    <section aria-labelledby="payg-heading" className="mt-14 md:mt-20">
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">Or pay as you go</p>
