@@ -6,7 +6,6 @@ import { CheckCircle2Icon, ChevronDownIcon, ChevronUpIcon, Loader2Icon, XIcon } 
 import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
 import models from "@/data/payAsYouGoModels.json";
 import { Button } from "@/components/ui/buttonShadcn";
-import { Pill, type PillProps } from "@/components/ui/pill";
 import { cn } from "@/lib/utils";
 
 const BASE_API_URL = "https://llm7-api.chigwel137.workers.dev";
@@ -15,8 +14,8 @@ type PayModel = {
   id: string;
   name: string;
   provider: string;
-  lightLogo: string;
-  darkLogo: string;
+  lightLogo?: string;
+  darkLogo?: string;
   chips: string[];
   contextWindow: string;
   inputPrice: string;
@@ -24,35 +23,38 @@ type PayModel = {
 };
 
 type WaitlistState = "idle" | "submitting" | "success" | "error";
-type PillVariant = NonNullable<PillProps["variant"]>;
-
-const chipVariants: Record<string, PillVariant> = {
-  audio: "info",
-  coding: "secondary",
-  fast: "success",
-  json: "outline",
-  math: "warning",
-  open: "info",
-  reasoning: "warning",
-  tools: "success",
-  vision: "default",
-};
-
-function getChipVariant(chip: string): PillVariant {
-  return chipVariants[chip.toLowerCase()] ?? "outline";
-}
 
 function ProviderLogo({ model }: { model: PayModel }) {
+  const isOpenAi = model.provider.toLowerCase() === "openai";
+  const fallback = model.provider
+    .split(/\s+/)
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+
+  if (!model.lightLogo) {
+    return (
+      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-muted/60 text-sm font-semibold text-muted-foreground">
+        {fallback}
+      </div>
+    );
+  }
+
   return (
-    <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-border/60 bg-background/80 p-2">
+    <div className="relative flex h-11 w-11 shrink-0 items-center justify-center">
       <Image
         src={model.lightLogo}
         alt={`${model.provider} logo`}
         width={30}
         height={30}
-        className={cn("max-h-7 w-auto object-contain", model.darkLogo !== model.lightLogo && "dark:hidden")}
+        className={cn(
+          "max-h-7 w-auto object-contain",
+          model.darkLogo && model.darkLogo !== model.lightLogo && "dark:hidden",
+          isOpenAi && "dark:invert"
+        )}
       />
-      {model.darkLogo !== model.lightLogo ? (
+      {model.darkLogo && model.darkLogo !== model.lightLogo ? (
         <Image
           src={model.darkLogo}
           alt={`${model.provider} logo`}
@@ -76,19 +78,7 @@ function ModelCard({ model }: { model: PayModel }) {
         </div>
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-1.5">
-        {model.chips.map((chip) => (
-          <Pill key={chip} variant={getChipVariant(chip)} size="sm" className="gap-1.5 capitalize">
-            {chip}
-          </Pill>
-        ))}
-      </div>
-
-      <div className="mt-5 grid grid-cols-3 gap-2 text-sm">
-        <div className="rounded-lg border border-border/50 bg-background/60 p-2">
-          <div className="text-[11px] text-muted-foreground">Context</div>
-          <div className="mt-1 font-semibold">{model.contextWindow}</div>
-        </div>
+      <div className="mt-5 grid grid-cols-2 gap-2 text-sm">
         <div className="rounded-lg border border-border/50 bg-background/60 p-2">
           <div className="text-[11px] text-muted-foreground">Input</div>
           <div className="mt-1 font-semibold">{model.inputPrice}</div>
@@ -157,7 +147,7 @@ export default function PayAsYouGoModels() {
   }, []);
 
   return (
-    <section aria-labelledby="payg-heading" className="mt-14 md:mt-20">
+    <section aria-labelledby="payg-heading" className="mx-auto mt-14 w-full max-w-md md:mt-20 md:max-w-[61rem]">
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">Or pay as you go</p>

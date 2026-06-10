@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-8 -8 40 40" role="img" aria-labelledby="gemini-title gemini-desc" class="logo">
+  <title id="gemini-title">Gemini CLI dynamic logo</title>
+  <desc id="gemini-desc">Animated Gemini logo with star field extracted from Token Nexus Aether home screen.</desc>
+  <style>
+    .logo { overflow: visible; }
+    .mark-heartbeat {
+      transform-box: view-box;
+      transform-origin: 12px 12px;
+      animation: heartbeat 1.5s ease-in-out 1.55s infinite;
+    }
+    .outline-group { animation: gemini-hide .3s ease-out 1.8s forwards; }
+    .outline {
+      fill: none;
+      stroke-width: 1px;
+      vector-effect: non-scaling-stroke;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      animation: gemini-draw 1.8s cubic-bezier(.4, 0, .2, 1) forwards;
+    }
+    .star {
+      opacity: 0;
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: twinkle var(--dur, 4s) ease-in-out var(--delay, 0s) infinite;
+    }
+    @keyframes gemini-draw {
+      0% { stroke-dashoffset: 100; opacity: 0; }
+      5% { opacity: .5; }
+      15% { opacity: 1; }
+      100% { stroke-dashoffset: 0; opacity: 1; }
+    }
+    @keyframes gemini-hide { to { opacity: 0; } }
+    @keyframes heartbeat {
+      0%, 70%, 100% { transform: scale(1); }
+      14% { transform: scale(1.06); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.1); }
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; filter: brightness(1); }
+      50% { opacity: var(--opacity, .45); filter: brightness(1.25); }
+    }
+  </style>
+  <defs>
+    <path id="gemini-mark" d="M20.616 10.835a14.147 14.147 0 01-4.45-3.001 14.111 14.111 0 01-3.678-6.452.503.503 0 00-.975 0 14.134 14.134 0 01-3.679 6.452 14.155 14.155 0 01-4.45 3.001c-.65.28-1.318.505-2.002.678a.502.502 0 000 .975c.684.172 1.35.397 2.002.677a14.147 14.147 0 014.45 3.001 14.112 14.112 0 013.679 6.453.502.502 0 00.975 0c.172-.685.397-1.351.677-2.003a14.145 14.145 0 013.001-4.45 14.113 14.113 0 016.453-3.678.503.503 0 000-.975 13.245 13.245 0 01-2.003-.678z"></path>
+    <path id="star-shape" d="M12 1.5c.2 3.4 1.4 6.4 3.8 8.8 2.4 2.4 5.4 3.6 8.8 3.8-3.4.2-6.4 1.4-8.8 3.8-2.4 2.4-3.6 5.4-3.8 8.8-.2-3.4-1.4-6.4-3.8-8.8-2.4-2.4-5.4-3.6-8.8-3.8 3.4-.2 6.4-1.4 8.8-3.8 2.4-2.4 3.6-5.4 3.8-8.8z"></path>
+    <linearGradient id="gemini-fill-0" gradientUnits="userSpaceOnUse" x1="7" x2="11" y1="15.5" y2="12">
+      <stop stop-color="#08B962"></stop>
+      <stop offset="1" stop-color="#08B962" stop-opacity="0"></stop>
+    </linearGradient>
+    <linearGradient id="gemini-fill-1" gradientUnits="userSpaceOnUse" x1="8" x2="11.5" y1="5.5" y2="11">
+      <stop stop-color="#F94543"></stop>
+      <stop offset="1" stop-color="#F94543" stop-opacity="0"></stop>
+    </linearGradient>
+    <linearGradient id="gemini-fill-2" gradientUnits="userSpaceOnUse" x1="3.5" x2="17.5" y1="13.5" y2="12">
+      <stop stop-color="#FABC12"></stop>
+      <stop offset=".46" stop-color="#FABC12" stop-opacity="0"></stop>
+    </linearGradient>
+    <linearGradient id="gemini-stroke-v" gradientUnits="userSpaceOnUse" x1="12" x2="12" y1="1" y2="23">
+      <stop offset="0%" stop-color="#F94543"></stop>
+      <stop offset="50%" stop-color="#3186FF"></stop>
+      <stop offset="100%" stop-color="#08B962"></stop>
+    </linearGradient>
+    <linearGradient id="gemini-stroke-h" gradientUnits="userSpaceOnUse" x1="1" x2="23" y1="12" y2="12">
+      <stop offset="0%" stop-color="#FABC12"></stop>
+      <stop offset="50%" stop-color="#3186FF"></stop>
+      <stop offset="100%" stop-color="#3186FF"></stop>
+    </linearGradient>
+    <linearGradient id="star-base" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1A73E8"></stop>
+      <stop offset="50%" stop-color="#4285F4"></stop>
+      <stop offset="100%" stop-color="#669DF6"></stop>
+    </linearGradient>
+    <linearGradient id="star-red" x1="50%" y1="0%" x2="50%" y2="50%">
+      <stop offset="0%" stop-color="#EA4335"></stop>
+      <stop offset="100%" stop-color="#EA4335" stop-opacity="0"></stop>
+    </linearGradient>
+    <linearGradient id="star-yellow" x1="0%" y1="50%" x2="50%" y2="50%">
+      <stop offset="0%" stop-color="#FBBC04"></stop>
+      <stop offset="100%" stop-color="#FBBC04" stop-opacity="0"></stop>
+    </linearGradient>
+    <linearGradient id="star-green" x1="50%" y1="100%" x2="50%" y2="50%">
+      <stop offset="0%" stop-color="#34A853"></stop>
+      <stop offset="100%" stop-color="#34A853" stop-opacity="0"></stop>
+    </linearGradient>
+    <mask id="gemini-fill-mask">
+      <rect x="-8" y="-8" width="40" height="40" fill="white"></rect>
+      <circle cx="12" cy="12" r="15" fill="black">
+        <animate attributeName="r" values="15;0" begin=".9s" dur=".6s" fill="freeze"></animate>
+      </circle>
+    </mask>
+  </defs>
+
+  <g class="star" style="--delay:.15s; --dur:4.5s; --opacity:.42" transform="translate(-4 -3) scale(.12)">
+    <use href="#star-shape" fill="url(#star-base)"></use><use href="#star-shape" fill="url(#star-red)"></use><use href="#star-shape" fill="url(#star-yellow)"></use><use href="#star-shape" fill="url(#star-green)"></use>
+  </g>
+  <g class="star" style="--delay:1.4s; --dur:5.1s; --opacity:.5" transform="translate(8 -6) scale(.16)">
+    <use href="#star-shape" fill="url(#star-base)"></use><use href="#star-shape" fill="url(#star-red)"></use><use href="#star-shape" fill="url(#star-yellow)"></use><use href="#star-shape" fill="url(#star-green)"></use>
+  </g>
+  <g class="star" style="--delay:.8s; --dur:4.2s; --opacity:.38" transform="translate(25 7) scale(.13)">
+    <use href="#star-shape" fill="url(#star-base)"></use><use href="#star-shape" fill="url(#star-red)"></use><use href="#star-shape" fill="url(#star-yellow)"></use><use href="#star-shape" fill="url(#star-green)"></use>
+  </g>
+  <g class="star" style="--delay:2.1s; --dur:5.4s; --opacity:.35" transform="translate(-2 24) scale(.14)">
+    <use href="#star-shape" fill="url(#star-base)"></use><use href="#star-shape" fill="url(#star-red)"></use><use href="#star-shape" fill="url(#star-yellow)"></use><use href="#star-shape" fill="url(#star-green)"></use>
+  </g>
+  <g class="star" style="--delay:1s; --dur:4.8s; --opacity:.45" transform="translate(23 22) scale(.15)">
+    <use href="#star-shape" fill="url(#star-base)"></use><use href="#star-shape" fill="url(#star-red)"></use><use href="#star-shape" fill="url(#star-yellow)"></use><use href="#star-shape" fill="url(#star-green)"></use>
+  </g>
+
+  <g class="mark-heartbeat">
+    <g class="outline-group">
+      <use href="#gemini-mark" class="outline" stroke="#3186FF"></use>
+      <use href="#gemini-mark" class="outline" stroke="url(#gemini-fill-0)"></use>
+      <use href="#gemini-mark" class="outline" stroke="url(#gemini-fill-1)"></use>
+      <use href="#gemini-mark" class="outline" stroke="url(#gemini-fill-2)"></use>
+    </g>
+    <g mask="url(#gemini-fill-mask)">
+      <use href="#gemini-mark" fill="#3186FF"></use>
+      <use href="#gemini-mark" fill="url(#gemini-fill-0)"></use>
+      <use href="#gemini-mark" fill="url(#gemini-fill-1)"></use>
+      <use href="#gemini-mark" fill="url(#gemini-fill-2)"></use>
+    </g>
+  </g>
+</svg>
