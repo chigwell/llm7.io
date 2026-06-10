@@ -6,6 +6,7 @@ import { CheckCircle2Icon, ChevronDownIcon, ChevronUpIcon, Loader2Icon, XIcon } 
 import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
 import models from "@/data/payAsYouGoModels.json";
 import { Button } from "@/components/ui/buttonShadcn";
+import { ShinyButton } from "@/components/ui/shiny-button";
 import { cn } from "@/lib/utils";
 
 const BASE_API_URL = "https://llm7-api.chigwel137.workers.dev";
@@ -92,17 +93,34 @@ function ModelCard({ model }: { model: PayModel }) {
   );
 }
 
-async function submitWaitlistToken(token: string) {
-  const url = `${BASE_API_URL}/wait-list?token=${encodeURIComponent(token)}`;
+function decodeGoogleEmail(token: string) {
+  const payload = token.split(".")[1];
+  if (!payload) throw new Error("Invalid Google credential.");
 
-  try {
-    await fetch(url, {
-      method: "POST",
-      mode: "no-cors",
-      keepalive: true,
-    });
-  } catch {
-    // The endpoint is intentionally mocked for now. OAuth success should still complete the UI flow.
+  const base64 = payload.replace(/-/g, "+").replace(/_/g, "/");
+  const decoded = JSON.parse(window.atob(base64)) as { email?: string };
+  const email = decoded.email?.trim().toLowerCase();
+
+  if (!email) throw new Error("Google credential did not include an email.");
+  return email;
+}
+
+async function submitWaitlist(token: string, email: string) {
+  const response = await fetch(`${BASE_API_URL}/wait-list`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email,
+      google_token: token,
+    }),
+  });
+
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    const message = typeof data.error === "string" ? data.error : "Unable to join the waiting list.";
+    throw new Error(message);
   }
 }
 
@@ -135,8 +153,15 @@ export default function PayAsYouGoModels() {
 
     setWaitlistState("submitting");
     setErrorMessage("");
-    await submitWaitlistToken(token);
-    setWaitlistState("success");
+
+    try {
+      const email = decodeGoogleEmail(token);
+      await submitWaitlist(token, email);
+      setWaitlistState("success");
+    } catch (error) {
+      setWaitlistState("error");
+      setErrorMessage(error instanceof Error ? error.message : "Unable to join the waiting list.");
+    }
   }, []);
 
   const handleGoogleError = useCallback(() => {
@@ -156,9 +181,9 @@ export default function PayAsYouGoModels() {
             Join the waitlist for metered billing across premium model routes, with transparent per-token pricing.
           </p>
         </div>
-        <Button onClick={openWaitlist} className="w-full md:w-auto">
+        <ShinyButton onClick={openWaitlist} className="w-full md:w-auto">
           Join waiting list
-        </Button>
+        </ShinyButton>
       </div>
 
       <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -208,7 +233,7 @@ export default function PayAsYouGoModels() {
                   <CheckCircle2Icon className="h-5 w-5" />
                   Thanks, we will notify you!
                 </div>
-                <p className="mt-2 text-sm">Your Google sign-in was accepted and your waitlist request was recorded.</p>
+                <p className="mt-2 text-sm">You are on the list. We will notify you when pay-as-you-go access is ready.</p>
               </div>
             ) : (
               <>
@@ -216,7 +241,7 @@ export default function PayAsYouGoModels() {
                   Sign in with Google so we can attach your request to a verified account.
                 </p>
                 <div className="mt-5 flex flex-col gap-3">
-                  <div className="flex min-h-10 items-center gap-3">
+                  <div className="flex min-h-10 items-center justify-center gap-3">
                     <GoogleLogin onSuccess={handleCredential} onError={handleGoogleError} />
                     {waitlistState === "submitting" ? <Loader2Icon className="h-4 w-4 animate-spin text-primary" /> : null}
                   </div>
