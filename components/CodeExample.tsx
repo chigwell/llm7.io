@@ -4,6 +4,8 @@ import { useEffect, useMemo, useState } from 'react';
 import Image from "next/image";
 import { CheckIcon, CodeIcon, CopyIcon } from "lucide-react";
 import { motion } from "framer-motion";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/buttonShadcn";
 
@@ -12,6 +14,7 @@ const examples = [
     id: "python",
     label: "Python",
     icon: "/language-icons/python.svg",
+    language: "python",
     code: `import openai
 
 client = openai.OpenAI(
@@ -32,6 +35,7 @@ print(response.choices[0].message.content)`,
     id: "curl",
     label: "cURL",
     icon: "/language-icons/curl.svg",
+    language: "bash",
     code: `curl https://api.llm7.io/v1/chat/completions \\
   -H "Content-Type: application/json" \\
   -H "Authorization: Bearer YOUR_FREE_TOKEN" \\
@@ -49,6 +53,7 @@ print(response.choices[0].message.content)`,
     id: "js",
     label: "JS",
     icon: "/language-icons/javascript.svg",
+    language: "javascript",
     code: `const response = await fetch("https://api.llm7.io/v1/chat/completions", {
   method: "POST",
   headers: {
@@ -70,6 +75,7 @@ console.log(data.choices[0].message.content);`,
     id: "csharp",
     label: "C#",
     icon: "/language-icons/csharp.svg",
+    language: "csharp",
     code: `using System.Net.Http.Headers;
 using System.Text;
 
@@ -97,6 +103,7 @@ Console.WriteLine(await response.Content.ReadAsStringAsync());`,
     id: "java",
     label: "Java",
     icon: "/language-icons/java.svg",
+    language: "java",
     code: `HttpClient client = HttpClient.newHttpClient();
 
 String body = """
@@ -124,6 +131,7 @@ System.out.println(response.body());`,
     id: "go",
     label: "Go",
     icon: "/language-icons/go.svg",
+    language: "go",
     code: `package main
 
 import (
@@ -156,6 +164,7 @@ func main() {
     id: "ruby",
     label: "Ruby",
     icon: "/language-icons/ruby.svg",
+    language: "ruby",
     code: `require "net/http"
 require "json"
 
@@ -259,13 +268,34 @@ export default function ConsoleAnimation() {
           </div>
         </div>
         <div className="relative">
-          <pre style={{ minHeight: '320px' }}
-              className="w-full overflow-x-auto bg-gray-950 p-4 pb-14 font-mono text-xs text-gray-100 md:p-5 md:pb-14 md:text-sm">
-            <code>
+          <div className="min-h-[320px] overflow-x-auto bg-gray-950 pb-12">
+            <SyntaxHighlighter
+              language={selectedExample.language}
+              style={oneDark}
+              customStyle={{
+                margin: 0,
+                minHeight: "320px",
+                padding: "1rem",
+                paddingBottom: "3.5rem",
+                background: "transparent",
+                fontSize: "inherit",
+                lineHeight: 1.55,
+              }}
+              codeTagProps={{
+                style: {
+                  fontFamily: "JetBrains Mono, Consolas, Monaco, 'Courier New', monospace",
+                },
+              }}
+              PreTag={({ children, ...props }) => (
+                <pre {...props} className="font-mono text-xs md:text-sm">
+                  {children}
+                  {typedLength < selectedExample.code.length ? <span className="animate-pulse text-gray-100">█</span> : null}
+                </pre>
+              )}
+            >
               {selectedExample.code.slice(0, typedLength)}
-              {typedLength < selectedExample.code.length ? <span className="animate-pulse">█</span> : null}
-            </code>
-          </pre>
+            </SyntaxHighlighter>
+          </div>
           <Button
             type="button"
             size="icon"
