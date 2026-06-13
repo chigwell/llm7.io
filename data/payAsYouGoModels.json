@@ -11,15 +11,15 @@
     "outputPrice": "$15.00"
   },
   {
-    "id": "claude-fable-5",
-    "name": "Claude-Fable-5",
+    "id": "claude-opus-4.8",
+    "name": "Claude-Opus-4.8",
     "provider": "Anthropic",
     "lightLogo": "/claude.svg",
     "darkLogo": "/claude.svg",
     "chips": ["reasoning", "tools"],
     "contextWindow": "500k",
-    "inputPrice": "$5.00",
-    "outputPrice": "$25.00"
+    "inputPrice": "$2.50",
+    "outputPrice": "$12.50"
   },
   {
     "id": "gemini-3.1-pro",
