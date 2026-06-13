@@ -40,8 +40,8 @@
     "darkLogo": "/minimax.png",
     "chips": ["tools"],
     "contextWindow": "256k",
-    "inputPrice": "$0.10",
-    "outputPrice": "$0.40"
+    "inputPrice": "$0.05",
+    "outputPrice": "$0.20"
   },
   {
     "id": "kimi-k2.6",
