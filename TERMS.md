@@ -1,6 +1,6 @@
 # Terms of Service
 
-**Last updated: 8 June 2026**
+**Last updated: 14 June 2026**
 
 Thank you for using **LLM7.io** (the **“Service”**). By accessing or using the Service, you agree to these Terms of Service (the **“Terms”**). If you do not accept all of the Terms, do not use the Service.
 
@@ -132,7 +132,17 @@ You agree to **defend, indemnify, and hold harmless** us and our contributors fr
 
 ## 15\. Export controls and sanctions
 
-You must comply with applicable **export control** and **sanctions** laws and may not use the Service if you are barred under those laws.
+You must comply with all applicable **export control**, **trade control**, and **sanctions** laws and regulations, including those administered or enforced by the United States, the United Kingdom, the United Nations, the European Union, and any other authority with jurisdiction over you or your use of the Service.
+
+You may not access, use, purchase, receive, resell, make available, or otherwise benefit from the Service if you are:
+
+  - located in, ordinarily resident in, organised under the laws of, or acting on behalf of a country, region, government, entity, or person subject to applicable sanctions, embargoes, or export restrictions;
+  - included on, owned or controlled by, or acting on behalf of any person or entity included on a restricted-party list, including lists maintained by the U.S. Office of Foreign Assets Control, the U.S. Bureau of Industry and Security, the U.K. Office of Financial Sanctions Implementation, the U.K. Export Control Joint Unit, the United Nations, or the European Union; or
+  - otherwise prohibited from receiving or using the Service under applicable law.
+
+You must not use **VPNs**, **proxies**, **relays**, **resellers**, **API gateways**, **embedded integrations**, **mirrors**, or any other technical or commercial arrangement to bypass, obscure, or evade these restrictions, or to provide access to the Service for users, customers, beneficial owners, or end recipients who are subject to them.
+
+If you use the Service as part of another product, service, application, API, platform, or workflow, you are solely responsible for implementing and maintaining appropriate controls to prevent access by restricted countries, regions, persons, entities, and end users, and to ensure that your use and any downstream use complies with applicable sanctions, export-control, and trade-control laws. We may suspend, restrict, or terminate access immediately where we believe such laws or restrictions may be implicated.
 
 -----
 
