@@ -96,7 +96,7 @@ export default function PromoBanner() {
               asChild
               onClick={() => recordClick(2)}
             >
-              <a href="https://token.llm7.io/" target="_blank" rel="noreferrer">
+              <a href="https://dash.llm7.io/" target="_blank" rel="noreferrer">
                 Subscribe
               </a>
             </Button>

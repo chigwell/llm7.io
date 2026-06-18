@@ -111,7 +111,7 @@ export default function Disclaimer({
                   lawfully be limited or excluded.
                 </p>
                 <p className="text-justify">
-                  We collect anonymous usage data to improve the Service. If you use <code>token.llm7.io</code> to issue access
+                  We collect anonymous usage data to improve the Service. If you use <code>dash.llm7.io</code> to issue access
                   tokens for <code>llm7.io</code>, we will store your email address (and minimal related metadata) for the purpose
                   of issuing, managing, and securing those tokens, enforcing rate limits, and preventing abuse. We do not sell
                   personal data. Data are retained only as long as necessary to provide the Service and to meet legal obligations.

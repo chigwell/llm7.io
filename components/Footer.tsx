@@ -173,7 +173,7 @@ export default function Footer() {
                 </li>
                 <li>
                 <Link
-                    href="https://token.llm7.io"
+                    href="https://dash.llm7.io"
                     className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                     Dashboard

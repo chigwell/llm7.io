@@ -19,7 +19,7 @@ const examples = [
 
 client = openai.OpenAI(
     base_url="https://api.llm7.io/v1",
-    api_key="YOUR_FREE_TOKEN"  # Get it for free at https://token.llm7.io/
+    api_key="YOUR_FREE_TOKEN"  # Get it for free at https://dash.llm7.io/
 )
 
 response = client.chat.completions.create(
@@ -58,7 +58,7 @@ print(response.choices[0].message.content)`,
   method: "POST",
   headers: {
     "Content-Type": "application/json",
-    Authorization: "Bearer YOUR_FREE_TOKEN", // Get it for free at https://token.llm7.io/
+    Authorization: "Bearer YOUR_FREE_TOKEN", // Get it for free at https://dash.llm7.io/
   },
   body: JSON.stringify({
     model: "default",
@@ -81,7 +81,7 @@ using System.Text;
 
 using var client = new HttpClient();
 client.DefaultRequestHeaders.Authorization =
-    new AuthenticationHeaderValue("Bearer", "YOUR_FREE_TOKEN"); // Get it for free at https://token.llm7.io/
+    new AuthenticationHeaderValue("Bearer", "YOUR_FREE_TOKEN"); // Get it for free at https://dash.llm7.io/
 
 var json = """
 {
@@ -118,7 +118,7 @@ String body = """
 HttpRequest request = HttpRequest.newBuilder()
     .uri(URI.create("https://api.llm7.io/v1/chat/completions"))
     .header("Content-Type", "application/json")
-    .header("Authorization", "Bearer YOUR_FREE_TOKEN") // Get it for free at https://token.llm7.io/
+    .header("Authorization", "Bearer YOUR_FREE_TOKEN") // Get it for free at https://dash.llm7.io/
     .POST(HttpRequest.BodyPublishers.ofString(body))
     .build();
 
@@ -151,7 +151,7 @@ func main() {
 
   req, _ := http.NewRequest("POST", "https://api.llm7.io/v1/chat/completions", bytes.NewReader(body))
   req.Header.Set("Content-Type", "application/json")
-  req.Header.Set("Authorization", "Bearer YOUR_FREE_TOKEN") // Get it for free at https://token.llm7.io/
+  req.Header.Set("Authorization", "Bearer YOUR_FREE_TOKEN") // Get it for free at https://dash.llm7.io/
 
   res, _ := http.DefaultClient.Do(req)
   defer res.Body.Close()
@@ -171,7 +171,7 @@ require "json"
 uri = URI("https://api.llm7.io/v1/chat/completions")
 request = Net::HTTP::Post.new(uri)
 request["Content-Type"] = "application/json"
-request["Authorization"] = "Bearer YOUR_FREE_TOKEN" # Get it for free at https://token.llm7.io/
+request["Authorization"] = "Bearer YOUR_FREE_TOKEN" # Get it for free at https://dash.llm7.io/
 request.body = {
   model: "default",
   messages: [

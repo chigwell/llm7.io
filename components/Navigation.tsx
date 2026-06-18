@@ -63,7 +63,7 @@ export default function Navigation() {
     },
     {
       name: "Dashboard",
-      link: "https://token.llm7.io",
+      link: "https://dash.llm7.io",
     },
   ];
 

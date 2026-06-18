@@ -15,7 +15,7 @@ Thank you for using **LLM7.io** (the **“Service”**). By accessing or using t
 ## 2\. Description of the Service
 
   - LLM7.io provides access to large language models through a web UI and API.
-  - Access requires an **API token** issued via **token.llm7.io**. A **free tier** is offered and is supported by donors; a **paid plan** is available:
+  - Access requires an **API token** issued via **dash.llm7.io**. A **free tier** is offered and is supported by donors; a **paid plan** is available:
       - **Free token**: Up to **5,000,000 tokens/day** over a rolling 24-hour window.
       - **Pro** ($12/month): Up to **5,000,000,000 tokens/day** over a rolling 24-hour window, **25 text requests/s**, **1,500 text requests/min**, and **15,000 text requests/hour**. Includes JSON mode, function calling, and Pro models.
   - Daily token usage is counted as **input tokens plus output tokens** over a **rolling 24-hour window**.
@@ -26,7 +26,7 @@ Thank you for using **LLM7.io** (the **“Service”**). By accessing or using t
 
 ## 3\. Accounts, API tokens, and security
 
-  - If you use **`token.llm7.io`** to issue access tokens for **LLM7.io**, you must keep those tokens **secret** and **secure**. Tokens are personal and non-transferable.
+  - If you use **`dash.llm7.io`** to issue access tokens for **LLM7.io**, you must keep those tokens **secret** and **secure**. Tokens are personal and non-transferable.
   - We may **rate-limit**, **suspend**, or **revoke** tokens to protect the Service from abuse.
   - You are responsible for all activity performed using your tokens or account.
   - You agree to receive **transactional/service emails** required to operate your account (e.g., authentication, security, incident or material-change notices). **Optional product updates/announcements** are sent only with your **consent** or, where permitted by law, under **legitimate interests** with a clear **opt-out** (an unsubscribe link is included in every such email).
@@ -124,7 +124,7 @@ You agree to **defend, indemnify, and hold harmless** us and our contributors fr
 
 ## 14\. Paid subscriptions and billing
 
-  - Paid subscriptions are purchased via **token.llm7.io**. Subscriptions are currently **monthly**: **Pro** ($12/month) with the limits described in Section 2.
+  - Paid subscriptions are purchased via **dash.llm7.io**. Subscriptions are currently **monthly**: **Pro** ($12/month) with the limits described in Section 2.
   - We may update prices, subscription limits, or features. Changes apply on renewal or as otherwise notified.
   - Taxes may apply. Refunds (if any) follow the terms shown at purchase and any mandatory consumer protections in your jurisdiction.
 

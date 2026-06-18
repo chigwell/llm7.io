@@ -1215,7 +1215,7 @@ export default function MagicalChatInput() {
               <div className="rounded-xl border border-amber-500/50 bg-amber-500/10 text-amber-900 dark:text-amber-100 text-sm p-3 space-y-1">
                 <div className="font-semibold">Pro required</div>
                 <p>You are signed in but not on a Pro subscription. Pro models need Pro.</p>
-                <a className="text-primary underline text-xs" href="https://token.llm7.io/?subscription=show" target="_blank" rel="noreferrer">
+                <a className="text-primary underline text-xs" href="https://dash.llm7.io/?subscription=show" target="_blank" rel="noreferrer">
                   Upgrade to Pro
                 </a>
               </div>
@@ -1228,7 +1228,7 @@ export default function MagicalChatInput() {
               <div className="rounded-xl border border-amber-500/50 bg-amber-500/10 text-amber-900 dark:text-amber-100 text-sm p-3 space-y-1">
                 <div className="font-semibold">Pro only</div>
                 <p>Pro models require a Pro subscription. You appear to be on a different plan.</p>
-                <a className="text-primary underline text-xs" href="https://token.llm7.io/?subscription=show" target="_blank" rel="noreferrer">
+                <a className="text-primary underline text-xs" href="https://dash.llm7.io/?subscription=show" target="_blank" rel="noreferrer">
                   Upgrade to Pro
                 </a>
               </div>
@@ -1247,7 +1247,7 @@ export default function MagicalChatInput() {
               )}
               {userSub !== 3 && (
                 <Button asChild>
-                  <a href="https://token.llm7.io/" target="_blank" rel="noopener noreferrer">
+                  <a href="https://dash.llm7.io/" target="_blank" rel="noopener noreferrer">
                     Get Pro access
                   </a>
                 </Button>

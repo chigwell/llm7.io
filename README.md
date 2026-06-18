@@ -11,7 +11,7 @@ This repository contains the source code for the landing page of [LLM7.io](https
 LLM7.io provides:
 - **Free access** to powerful LLMs (GPT-4-like, DeepSeek, Mistral, etc.)
 - **Token access**: Use an API token to access the service
-- **Free tokens**: Get higher rate limits via [token.llm7.io](https://token.llm7.io)
+- **Free tokens**: Get higher rate limits via [dash.llm7.io](https://dash.llm7.io)
 - **OpenAI-compatible API** for seamless integration with existing tools
 
 The landing page highlights the core features, usage instructions, and goals of the service.
@@ -19,7 +19,7 @@ The landing page highlights the core features, usage instructions, and goals of 
 ## Features
 
 - **Token-required access**: Use a free API token to call the service
-- **Free tokens**: Get higher rate limits via [token.llm7.io](https://token.llm7.io)
+- **Free tokens**: Get higher rate limits via [dash.llm7.io](https://dash.llm7.io)
 - **Responsive design**: Clean layout showcasing LLM7.io's benefits
 - **Quick start guides**: Python, Node.js, and CLI examples
 - **Documentation links**: Jumpstart your LLM integration
@@ -53,7 +53,7 @@ The landing page highlights the core features, usage instructions, and goals of 
 import openai
 client = openai.OpenAI(
     base_url="https://api.llm7.io/v1",
-    api_key="YOUR_FREE_TOKEN"  # Get from https://token.llm7.io
+    api_key="YOUR_FREE_TOKEN"  # Get from https://dash.llm7.io
 )
 response = client.chat.completions.create(model="gpt-4", messages=[...])
 ```
