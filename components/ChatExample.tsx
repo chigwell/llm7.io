@@ -42,6 +42,11 @@ const GA_CLIENT_ID = "264062651955-8qamru5vjtu9kc1tk2trsgte5e10hm0m.apps.googleu
 const BASE_API_URL = "https://api-token.llm7.io";
 const ID_TOKEN_KEY = "id_token";
 
+function parseSubscriptionTier(value: unknown): number {
+  const tier = Number(value ?? 0);
+  return Number.isFinite(tier) ? tier : 0;
+}
+
 // TypingText component
 // Fix: Update the type definition to match Framer Motion's Variants type
 type CursorAnimationVariants = {
@@ -761,7 +766,7 @@ export default function MagicalChatInput() {
       if (!v.ok) throw new Error("Verification failed");
       const data = await v.json().catch(() => ({}));
       const email = data?.email || "";
-      const subVal = typeof data?.sub === "number" ? data.sub : 0;
+      const subVal = parseSubscriptionTier(data?.sub);
       setUserEmail(email);
       setUserSub(subVal);
       setIsEligiblePro(subVal === 3);
