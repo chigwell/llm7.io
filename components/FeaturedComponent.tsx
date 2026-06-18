@@ -13,7 +13,7 @@ import PayAsYouGoModels from "@/components/PayAsYouGoModels";
    Constants
    ------------------------- */
 const GA_CLIENT_ID = "264062651955-8qamru5vjtu9kc1tk2trsgte5e10hm0m.apps.googleusercontent.com";
-const BASE_API_URL = "https://llm7-api.chigwel137.workers.dev";  //"https://llm7-api.chigwel137.workers.dev";
+const BASE_API_URL = "https://api-token.llm7.io";
 const ID_TOKEN_KEY = "id_token";
 
 /* -------------------------

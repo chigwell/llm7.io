@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/buttonShadcn";
 import { ShinyButton } from "@/components/ui/shiny-button";
 import { cn } from "@/lib/utils";
 
-const BASE_API_URL = "https://llm7-api.chigwel137.workers.dev";
+const BASE_API_URL = "https://api-token.llm7.io";
 
 type PayModel = {
   id: string;
