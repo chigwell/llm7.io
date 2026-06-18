@@ -690,12 +690,6 @@ export default function MagicalChatInput() {
   }, [persistCookie]);
 
   const fetchApiToken = useCallback(async (idToken: string, sub: number) => {
-    const existing = getCookie("LLM7_API_TOKEN");
-    if (existing) {
-      setApiToken(existing);
-      return existing;
-    }
-
     if (sub === 3) {
       try {
         const ensureRes = await fetch(`${BASE_API_URL}/tokens/ensure`, {
@@ -710,8 +704,18 @@ export default function MagicalChatInput() {
           }
         }
       } catch (_err) {
-        // ignore and continue
+        // ignore and fail closed below
       }
+
+      clearCookie("LLM7_API_TOKEN");
+      setApiToken(null);
+      return null;
+    }
+
+    const existing = getCookie("LLM7_API_TOKEN");
+    if (existing) {
+      setApiToken(existing);
+      return existing;
     }
 
     try {
@@ -753,7 +757,7 @@ export default function MagicalChatInput() {
       // ignore token creation errors
     }
     return null;
-  }, [getCookie, persistApiToken]);
+  }, [clearCookie, getCookie, persistApiToken]);
 
   const verifyIdToken = useCallback(async (idToken: string) => {
     setAuthStatus("loading");
@@ -772,7 +776,8 @@ export default function MagicalChatInput() {
       setIsEligiblePro(subVal === 3);
       persistIdToken(idToken);
       if (subVal === 3) {
-        await fetchApiToken(idToken, subVal);
+        const token = await fetchApiToken(idToken, subVal);
+        if (!token) throw new Error("Unable to issue Pro API token");
         setAuthStatus("ready");
         return true;
       } else {
@@ -956,13 +961,21 @@ export default function MagicalChatInput() {
         };
         let token = apiToken ?? "";
 
-          if (token && token.includes("%")) {
-            token = decodeURIComponent(token);
+        if (model.toLowerCase() === "pro" && userSub === 3) {
+          const idToken = localStorage.getItem(ID_TOKEN_KEY) || getCookie(ID_TOKEN_KEY);
+          token = idToken ? await fetchApiToken(idToken, 3) ?? "" : "";
+          if (!token) {
+            throw new Error("Unable to issue Pro API token. Please sign in again.");
           }
+        }
 
-          if (token) {
-            headers.Authorization = `Bearer ${token}`;
-          }
+        if (token && token.includes("%")) {
+          token = decodeURIComponent(token);
+        }
+
+        if (token) {
+          headers.Authorization = `Bearer ${token}`;
+        }
 
         const response = await fetchWithTimeout(
           "https://api.llm7.io/v1/chat/completions",
