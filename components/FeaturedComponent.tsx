@@ -44,8 +44,12 @@ const accentClasses = {
    ------------------------- */
 async function verifyAndActivate(idToken: string, setMessage?: (m: string) => void) {
   if (setMessage) setMessage("Verifying token…");
-  // store token locally
-  localStorage.setItem(ID_TOKEN_KEY, idToken);
+  try {
+    sessionStorage.setItem(ID_TOKEN_KEY, idToken);
+    localStorage.removeItem(ID_TOKEN_KEY);
+  } catch (_err) {
+    // ignore blocked storage
+  }
 
   // 1) Verify on API
   const v = await fetch(`${BASE_API_URL}/verify`, {

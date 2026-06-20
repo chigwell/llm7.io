@@ -41,6 +41,12 @@ import { motion, TargetAndTransition } from "framer-motion";
 const GA_CLIENT_ID = "264062651955-8qamru5vjtu9kc1tk2trsgte5e10hm0m.apps.googleusercontent.com";
 const BASE_API_URL = "https://api-token.llm7.io";
 const ID_TOKEN_KEY = "id_token";
+const TOKEN_COOKIE_MAX_AGE_SECONDS = 60 * 60;
+
+function tokenCookieAttributes(maxAgeSeconds: number) {
+  const secure = typeof window !== "undefined" && window.location.protocol === "https:" ? "; Secure" : "";
+  return `path=/; max-age=${maxAgeSeconds}; SameSite=Strict${secure}`;
+}
 
 function parseSubscriptionTier(value: unknown): number {
   const tier = Number(value ?? 0);
@@ -655,21 +661,21 @@ export default function MagicalChatInput() {
     return "";
   }, []);
 
-  const persistCookie = useCallback((name: string, value: string, days = 30) => {
+  const persistCookie = useCallback((name: string, value: string) => {
     if (typeof document === "undefined") return;
-    const maxAge = days * 24 * 60 * 60;
-    document.cookie = `${name}=${encodeURIComponent(value)}; path=/; max-age=${maxAge}; SameSite=Lax`;
+    document.cookie = `${name}=${encodeURIComponent(value)}; ${tokenCookieAttributes(TOKEN_COOKIE_MAX_AGE_SECONDS)}`;
   }, []);
 
   const clearCookie = useCallback((name: string) => {
     if (typeof document === "undefined") return;
-    document.cookie = `${name}=; path=/; max-age=0; SameSite=Lax`;
+    document.cookie = `${name}=; ${tokenCookieAttributes(0)}`;
   }, []);
 
   const persistIdToken = useCallback((token: string) => {
     try {
-      localStorage.setItem(ID_TOKEN_KEY, token);
-      persistCookie(ID_TOKEN_KEY, token, 30);
+      sessionStorage.setItem(ID_TOKEN_KEY, token);
+      localStorage.removeItem(ID_TOKEN_KEY);
+      persistCookie(ID_TOKEN_KEY, token);
     } catch (_err) {
       // ignore
     }
@@ -677,6 +683,7 @@ export default function MagicalChatInput() {
 
   const clearIdToken = useCallback(() => {
     try {
+      sessionStorage.removeItem(ID_TOKEN_KEY);
       localStorage.removeItem(ID_TOKEN_KEY);
     } catch (_err) {
       // ignore
@@ -686,7 +693,7 @@ export default function MagicalChatInput() {
 
   const persistApiToken = useCallback((token: string) => {
     setApiToken(token);
-    persistCookie("LLM7_API_TOKEN", token, 30);
+    persistCookie("LLM7_API_TOKEN", token);
   }, [persistCookie]);
 
   const fetchApiToken = useCallback(async (idToken: string, sub: number) => {
@@ -799,7 +806,13 @@ export default function MagicalChatInput() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const storedId = (typeof localStorage !== "undefined" && localStorage.getItem(ID_TOKEN_KEY)) || getCookie(ID_TOKEN_KEY);
+    let storedId = getCookie(ID_TOKEN_KEY);
+    try {
+      localStorage.removeItem(ID_TOKEN_KEY);
+      storedId = sessionStorage.getItem(ID_TOKEN_KEY) || storedId;
+    } catch (_err) {
+      // ignore blocked storage and fall back to the cookie
+    }
     if (storedId) {
       verifyIdToken(storedId).catch(() => {});
     }
@@ -962,7 +975,12 @@ export default function MagicalChatInput() {
         let token = apiToken ?? "";
 
         if (model.toLowerCase() === "pro" && userSub === 3) {
-          const idToken = localStorage.getItem(ID_TOKEN_KEY) || getCookie(ID_TOKEN_KEY);
+          let idToken = getCookie(ID_TOKEN_KEY);
+          try {
+            idToken = sessionStorage.getItem(ID_TOKEN_KEY) || idToken;
+          } catch (_err) {
+            // ignore blocked storage and fall back to the cookie
+          }
           token = idToken ? await fetchApiToken(idToken, 3) ?? "" : "";
           if (!token) {
             throw new Error("Unable to issue Pro API token. Please sign in again.");

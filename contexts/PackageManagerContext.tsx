@@ -23,15 +23,23 @@ export function PackageManagerProvider({
 
   // Persist selection in localStorage
   useEffect(() => {
-    const saved = localStorage.getItem("selected-package-manager");
-    if (saved && ["npm", "yarn", "pnpm", "bun"].includes(saved)) {
-      setSelectedManager(saved as PackageManagerType);
+    try {
+      const saved = localStorage.getItem("selected-package-manager");
+      if (saved && ["npm", "yarn", "pnpm", "bun"].includes(saved)) {
+        setSelectedManager(saved as PackageManagerType);
+      }
+    } catch (_err) {
+      // Ignore blocked storage and keep the default manager.
     }
   }, []);
 
   const handleSetSelectedManager = (manager: PackageManagerType) => {
     setSelectedManager(manager);
-    localStorage.setItem("selected-package-manager", manager);
+    try {
+      localStorage.setItem("selected-package-manager", manager);
+    } catch (_err) {
+      // Ignore blocked storage; the in-memory selection still updates.
+    }
   };
 
   return (
