@@ -208,7 +208,7 @@ export default function FeaturedComponents() {
             label: "With free token",
             rows: [
               "Free token",
-              "5,000,000 tokens/day",
+              "1,000,000 tokens/day",
               "128k chars/req*",
               "100 r/h, 40 r/m, 2 r/s",
               <span key="token-link">
