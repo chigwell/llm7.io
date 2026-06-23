@@ -65,6 +65,10 @@ function providerDetails(id: string) {
     return { provider: "Anthropic", lightLogo: "/claude.svg", darkLogo: "/claude.svg" };
   }
 
+  if (modelId.startsWith("gemini-")) {
+    return { provider: "Google", lightLogo: "/gemini.svg", darkLogo: "/gemini.svg" };
+  }
+
   if (modelId.startsWith("codestral-") || modelId.startsWith("devstral-")) {
     return { provider: "Mistral AI", lightLogo: "/mistral-ai-logo.svg", darkLogo: "/mistral-ai-logo.svg" };
   }
