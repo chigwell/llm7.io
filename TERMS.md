@@ -78,6 +78,7 @@ Our privacy practices are described in **[PRIVACY.md](./PRIVACY.md)**, which is 
 
   - The Service may call or host **third-party models or infrastructure**. We are not responsible for third-party services’ availability, security, or content.
   - Your use of any third-party service may be governed by that party’s terms and privacy policy.
+  - All third-party names, logos, trademarks, service marks, model names, provider names, and media materials are the property of their respective owners, and their display does not imply endorsement, sponsorship, or affiliation unless expressly stated.
 
 -----
 

@@ -85,6 +85,9 @@ export default function Disclaimer({
                   Subscription features, limits, and pricing may change at any time.
                 </p>
                 <p className="text-justify">
+                  All third-party names, logos, trademarks, service marks, model names, provider names, and media materials are the property of their respective owners, and their display does not imply endorsement, sponsorship, or affiliation unless expressly stated.
+                </p>
+                <p className="text-justify">
                   <b>Important:</b> Large language models may generate inaccurate or misleading content (&quot;hallucinations&quot;).
                   Do not rely on outputs as legal, medical, financial, or other professional advice. You must independently
                   verify any critical output before use.
