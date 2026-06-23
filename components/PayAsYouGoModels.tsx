@@ -2,14 +2,11 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { CheckCircle2Icon, ChevronDownIcon, ChevronUpIcon, Loader2Icon, XIcon } from "lucide-react";
-import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
+import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import fallbackModels from "@/data/payAsYouGoModels.json";
 import { Button } from "@/components/ui/buttonShadcn";
-import { ShinyButton } from "@/components/ui/shiny-button";
 import { cn } from "@/lib/utils";
 
-const BASE_API_URL = "https://api-token.llm7.io";
 const MODELS_API_URL = "https://api.llm7.io/v1/models";
 
 type PayModel = {
@@ -57,17 +54,31 @@ type ApiModelsResponse = {
   data: ApiModel[];
 };
 
-type WaitlistState = "idle" | "submitting" | "success" | "error";
-
 function providerDetails(id: string) {
   const modelId = id.toLowerCase();
 
-  if (modelId.startsWith("gpt-5")) {
+  if (modelId.startsWith("gpt-")) {
     return { provider: "OpenAI", lightLogo: "/openai.svg", darkLogo: "/openai.svg" };
   }
 
   if (modelId.startsWith("claude-")) {
     return { provider: "Anthropic", lightLogo: "/claude.svg", darkLogo: "/claude.svg" };
+  }
+
+  if (modelId.startsWith("codestral-") || modelId.startsWith("devstral-")) {
+    return { provider: "Mistral AI", lightLogo: "/mistral-ai-logo.svg", darkLogo: "/mistral-ai-logo.svg" };
+  }
+
+  if (modelId.startsWith("deepseek-")) {
+    return { provider: "DeepSeek", lightLogo: "/deepseek-color.svg", darkLogo: "/deepseek-color.svg" };
+  }
+
+  if (modelId.startsWith("glm-")) {
+    return { provider: "Z.ai", lightLogo: "/z-ai-logo.svg", darkLogo: "/z-ai-logo.svg" };
+  }
+
+  if (modelId.startsWith("grok-")) {
+    return { provider: "xAI", lightLogo: "/grok-ai-icon-light.svg", darkLogo: "/grok-icon-dark.svg" };
   }
 
   if (modelId.startsWith("kimi-")) {
@@ -166,6 +177,56 @@ function normalizeFallbackModels(): PayModel[] {
   return [];
 }
 
+function modelProviderName(model: PayModel) {
+  return model.provider || "Other";
+}
+
+function providerSortRank(provider: string) {
+  const normalizedProvider = provider.toLowerCase();
+
+  if (normalizedProvider === "deepseek") return 1;
+  if (normalizedProvider === "qwen") return 2;
+
+  return 3;
+}
+
+function sortModelsByProvider(models: PayModel[]) {
+  return [...models].sort((a, b) => {
+    const aIsGpt55 = a.id.toLowerCase().startsWith("gpt-5.5");
+    const bIsGpt55 = b.id.toLowerCase().startsWith("gpt-5.5");
+
+    if (aIsGpt55 !== bIsGpt55) return aIsGpt55 ? -1 : 1;
+
+    const aProvider = modelProviderName(a);
+    const bProvider = modelProviderName(b);
+    const providerRankDiff = providerSortRank(aProvider) - providerSortRank(bProvider);
+
+    if (providerRankDiff !== 0) return providerRankDiff;
+
+    const providerNameDiff = aProvider.localeCompare(bProvider, undefined, { sensitivity: "base" });
+    if (providerNameDiff !== 0) return providerNameDiff;
+
+    return a.id.localeCompare(b.id, undefined, { sensitivity: "base" });
+  });
+}
+
+async function copyToClipboard(value: string) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(value);
+    return;
+  }
+
+  const textarea = document.createElement("textarea");
+  textarea.value = value;
+  textarea.style.position = "fixed";
+  textarea.style.left = "-9999px";
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+  document.execCommand("copy");
+  document.body.removeChild(textarea);
+}
+
 function ProviderLogo({ model }: { model: PayModel }) {
   const isOpenAi = model.provider.toLowerCase() === "openai";
 
@@ -200,20 +261,42 @@ function ProviderLogo({ model }: { model: PayModel }) {
 }
 
 function ModelCard({ model }: { model: PayModel }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyTitle = useCallback(async () => {
+    await copyToClipboard(model.name);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1200);
+  }, [model.name]);
+
   return (
     <article className="flex h-full flex-col rounded-xl border border-border/60 bg-card/55 p-4 shadow-sm backdrop-blur">
       <div className="flex items-start gap-3">
         <ProviderLogo model={model} />
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
-            <h4 className="min-w-0 truncate text-base font-semibold leading-6">{model.name}</h4>
+            <h4 className="min-w-0 truncate text-base font-semibold leading-6">
+              <button
+                type="button"
+                onClick={handleCopyTitle}
+                className="max-w-full truncate text-left underline-offset-4 transition-colors hover:text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                title={copied ? "Copied" : "Copy model name"}
+              >
+                {model.name}
+              </button>
+            </h4>
             {model.tier ? (
               <span className="shrink-0 rounded-full border border-border/50 bg-background/70 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.08em] text-muted-foreground">
                 {model.tier}
               </span>
             ) : null}
           </div>
-          {model.provider ? <p className="text-xs text-muted-foreground">{model.provider}</p> : null}
+          {model.provider ? (
+            <p className="text-xs text-muted-foreground">
+              {model.provider}
+              {copied ? <span className="ml-2 text-primary">Copied</span> : null}
+            </p>
+          ) : null}
         </div>
       </div>
 
@@ -259,44 +342,10 @@ function ModelCard({ model }: { model: PayModel }) {
   );
 }
 
-function decodeGoogleEmail(token: string) {
-  const payload = token.split(".")[1];
-  if (!payload) throw new Error("Invalid Google credential.");
-
-  const base64 = payload.replace(/-/g, "+").replace(/_/g, "/");
-  const decoded = JSON.parse(window.atob(base64)) as { email?: string };
-  const email = decoded.email?.trim().toLowerCase();
-
-  if (!email) throw new Error("Google credential did not include an email.");
-  return email;
-}
-
-async function submitWaitlist(token: string, email: string) {
-  const response = await fetch(`${BASE_API_URL}/wait-list`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email,
-      google_token: token,
-    }),
-  });
-
-  if (!response.ok) {
-    const data = await response.json().catch(() => ({}));
-    const message = typeof data.error === "string" ? data.error : "Unable to join the waiting list.";
-    throw new Error(message);
-  }
-}
-
 export default function PayAsYouGoModels() {
   const [showAll, setShowAll] = useState(false);
   const [models, setModels] = useState<PayModel[]>(() => normalizeFallbackModels());
   const [modelsState, setModelsState] = useState<"loading" | "ready" | "error">("loading");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [waitlistState, setWaitlistState] = useState<WaitlistState>("idle");
-  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     let cancelled = false;
@@ -334,67 +383,24 @@ export default function PayAsYouGoModels() {
   }, []);
 
   const visibleModels = useMemo(() => {
-    const sortedModels = [...models].sort((a, b) => {
-      const aHasImage = a.lightLogo ? 0 : 1;
-      const bHasImage = b.lightLogo ? 0 : 1;
-      return aHasImage - bHasImage;
-    });
+    const sortedModels = sortModelsByProvider(models);
 
     if (showAll) return sortedModels;
 
-    const proModels = sortedModels.filter((model) => model.tier?.toLowerCase() === "pro");
-    return (proModels.length >= 3 ? proModels : sortedModels).slice(0, 3);
+    return sortedModels.slice(0, 3);
   }, [models, showAll]);
 
   const hiddenCount = Math.max(models.length - visibleModels.length, 0);
 
-  const openWaitlist = useCallback(() => {
-    setErrorMessage("");
-    setWaitlistState("idle");
-    setIsModalOpen(true);
-  }, []);
-
-  const handleCredential = useCallback(async (response: CredentialResponse) => {
-    const token = response.credential;
-    if (!token) {
-      setWaitlistState("error");
-      setErrorMessage("No credential returned from Google.");
-      return;
-    }
-
-    setWaitlistState("submitting");
-    setErrorMessage("");
-
-    try {
-      const email = decodeGoogleEmail(token);
-      await submitWaitlist(token, email);
-      setWaitlistState("success");
-    } catch (error) {
-      setWaitlistState("error");
-      setErrorMessage(error instanceof Error ? error.message : "Unable to join the waiting list.");
-    }
-  }, []);
-
-  const handleGoogleError = useCallback(() => {
-    setWaitlistState("error");
-    setErrorMessage("Google sign-in failed. Please try again.");
-  }, []);
-
   return (
     <section aria-labelledby="payg-heading" className="mx-auto mt-[4.5rem] w-full max-w-md md:mt-24 md:max-w-[61rem]">
-      <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+      <div>
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">Or pay as you go</p>
           <h3 id="payg-heading" className="mt-2 text-2xl font-bold tracking-tight md:text-3xl">
             Scale frontier model access on your terms.
           </h3>
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-            Join the waitlist for metered billing across premium model routes, with live per-token pricing and capability details.
-          </p>
         </div>
-        <ShinyButton onClick={openWaitlist} className="w-full md:w-auto">
-          Join waiting list
-        </ShinyButton>
       </div>
 
       <div className="mt-4 text-xs text-muted-foreground">
@@ -432,52 +438,6 @@ export default function PayAsYouGoModels() {
         </div>
       ) : null}
 
-      {isModalOpen ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center px-4" onClick={() => setIsModalOpen(false)}>
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
-          <div
-            className="relative w-full max-w-md rounded-2xl border border-border/60 bg-background p-6 shadow-2xl"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary">Pay as you go</p>
-                <h4 className="mt-1 text-2xl font-semibold leading-tight">Join the waiting list</h4>
-              </div>
-              <Button variant="ghost" size="icon" onClick={() => setIsModalOpen(false)} aria-label="Close">
-                <XIcon className="h-5 w-5" />
-              </Button>
-            </div>
-
-            {waitlistState === "success" ? (
-              <div className="mt-6 rounded-xl border border-green-500/40 bg-green-500/10 p-4 text-green-900 dark:text-green-200">
-                <div className="flex items-center gap-2 font-semibold">
-                  <CheckCircle2Icon className="h-5 w-5" />
-                  Thanks, we will notify you!
-                </div>
-                <p className="mt-2 text-sm">You are on the list. We will notify you when pay-as-you-go access is ready.</p>
-              </div>
-            ) : (
-              <>
-                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                  Sign in with Google so we can attach your request to a verified account.
-                </p>
-                <div className="mt-5 flex flex-col gap-3">
-                  <div className="flex min-h-10 items-center justify-center gap-3">
-                    <GoogleLogin onSuccess={handleCredential} onError={handleGoogleError} />
-                    {waitlistState === "submitting" ? <Loader2Icon className="h-4 w-4 animate-spin text-primary" /> : null}
-                  </div>
-                  {waitlistState === "error" ? (
-                    <div className="rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
-                      {errorMessage}
-                    </div>
-                  ) : null}
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      ) : null}
     </section>
   );
 }
