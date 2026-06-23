@@ -1,6 +1,6 @@
 # Terms of Service
 
-**Last updated: 14 June 2026**
+**Last updated: 23 June 2026**
 
 Thank you for using **LLM7.io** (the **“Service”**). By accessing or using the Service, you agree to these Terms of Service (the **“Terms”**). If you do not accept all of the Terms, do not use the Service.
 
@@ -17,8 +17,8 @@ Thank you for using **LLM7.io** (the **“Service”**). By accessing or using t
   - LLM7.io provides access to large language models through a web UI and API.
   - Access requires an **API token** issued via **dash.llm7.io**. A **free tier** is offered and is supported by donors; a **paid plan** is available:
       - **Free token**: Up to **5,000,000 tokens/day** over a rolling 24-hour window.
-      - **Pro** ($12/month): Up to **5,000,000,000 tokens/day** over a rolling 24-hour window, **25 text requests/s**, **1,500 text requests/min**, and **15,000 text requests/hour**. Includes JSON mode, function calling, and Pro models.
-  - Daily token usage is counted as **input tokens plus output tokens** over a **rolling 24-hour window**.
+      - **Pro** ($12/month): Higher dynamically managed token limits than the free tier. Pro token availability is calculated across the monthly billing period, including usage relative to the percentage of that billing period that has elapsed, and remains subject to model availability, service capacity, fair-use calculations, and abuse-prevention controls. Also includes up to **25 text requests/s**, **1,500 text requests/min**, and **15,000 text requests/hour**, plus JSON mode, function calling, and Pro models.
+  - Where token limits apply, usage is counted as **input tokens plus output tokens** over a **rolling 24-hour window**.
   - **Features, limits, models, and pricing may change at any time** without notice.
   - The Service is intended for experimentation, development, and research. It is **not** for life-critical, safety-critical, or emergency use.
 
