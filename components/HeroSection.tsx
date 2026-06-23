@@ -45,6 +45,32 @@ type HeroStatus = {
   status: "active" | "warning" | "error" | "info";
 };
 
+type CompactStat = {
+  value: number;
+  suffix: string;
+};
+
+function formatCompactStat(value: number): CompactStat {
+  if (value >= 1000000) {
+    return {
+      value: Math.floor(value / 1000000),
+      suffix: "m+",
+    };
+  }
+
+  if (value >= 1000) {
+    return {
+      value: Math.floor(value / 1000),
+      suffix: "k+",
+    };
+  }
+
+  return {
+    value,
+    suffix: "+",
+  };
+}
+
 function formatStatusPercent(value: number): string {
   const digits = value >= 0.995 || value === 0 ? 0 : 1;
   return `${(value * 100).toFixed(digits)}%`;
@@ -134,7 +160,10 @@ export default function HeroSectionWithWaves() {
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [countVisitors, setCountVisitors] = useState(44);
-  const [requestCount, setRequestCount] = useState(211);
+  const [requestCount, setRequestCount] = useState<CompactStat>({
+    value: 211,
+    suffix: "m+",
+  });
 
   // Fetch dynamic stats on mount
   useEffect(() => {
@@ -153,14 +182,13 @@ export default function HeroSectionWithWaves() {
       try {
         const response = await fetch("https://api.llm7.io/stats/counts");
         const data = await response.json();
-        if (data && data.total_requests) {
-          // Convert to millions and round to nearest integer
-          const requestsInMillions = Math.round(data.total_requests / 1000000);
-          setRequestCount(requestsInMillions);
+        const totalRequests = Number(data?.total_requests);
+        if (Number.isFinite(totalRequests) && totalRequests > 0) {
+          setRequestCount(formatCompactStat(totalRequests));
         }
       } catch (error) {
         console.warn("Failed to fetch request stats:", error);
-        // Keep the default value of 156m+ if there's an error
+        // Keep the default value if there's an error
       }
     }
     fetchStats();
@@ -435,8 +463,8 @@ Prototype, build, and scale without switching providers.
               <div>
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-primary to-secondary bg-clip-text">
                   <CountUp
-                    to={requestCount}
-                    suffix="m+"
+                    to={requestCount.value}
+                    suffix={requestCount.suffix}
                     duration={2.5}
                     delay={0.5}
                     effect="elastic"
