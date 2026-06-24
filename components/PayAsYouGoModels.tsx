@@ -1,13 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
-import fallbackModels from "@/data/payAsYouGoModels.json";
 import { Button } from "@/components/ui/buttonShadcn";
+import { MODELS_API_URL, type ApiModel, useLlm7Models } from "@/hooks/use-llm7-models";
 import { cn } from "@/lib/utils";
-
-const MODELS_API_URL = "https://api.llm7.io/v1/models";
 
 type PayModel = {
   id: string;
@@ -22,36 +20,6 @@ type PayModel = {
   outputPrice: string;
   minimumRequestPrice?: string;
   usageBasedOnly?: boolean;
-};
-
-type ApiModel = {
-  id: string;
-  tier?: string;
-  pricing?: {
-    input?: number;
-    output?: number;
-    minimum_request_price_usd?: number;
-    currency?: string;
-    unit?: string;
-  };
-  modalities?: {
-    input?: string[];
-    output?: string[];
-  };
-  context_window?: {
-    tokens?: number | null;
-    chars?: number | null;
-  };
-  usage_based_only?: boolean;
-  stream?: boolean;
-  json_mode?: boolean;
-  reasoning?: boolean;
-  tools_calling?: boolean;
-};
-
-type ApiModelsResponse = {
-  object: "list";
-  data: ApiModel[];
 };
 
 function providerDetails(id: string) {
@@ -159,26 +127,6 @@ function transformApiModel(model: ApiModel): PayModel {
         : undefined,
     usageBasedOnly: model.usage_based_only,
   };
-}
-
-function isApiModelsResponse(value: unknown): value is ApiModelsResponse {
-  return (
-    typeof value === "object" &&
-    value !== null &&
-    Array.isArray((value as ApiModelsResponse).data)
-  );
-}
-
-function normalizeFallbackModels(): PayModel[] {
-  if (isApiModelsResponse(fallbackModels)) {
-    return fallbackModels.data.map(transformApiModel);
-  }
-
-  if (Array.isArray(fallbackModels)) {
-    return fallbackModels as PayModel[];
-  }
-
-  return [];
 }
 
 function modelProviderName(model: PayModel) {
@@ -348,43 +296,9 @@ function ModelCard({ model }: { model: PayModel }) {
 
 export default function PayAsYouGoModels() {
   const [showAll, setShowAll] = useState(false);
-  const [models, setModels] = useState<PayModel[]>(() => normalizeFallbackModels());
-  const [modelsState, setModelsState] = useState<"loading" | "ready" | "error">("loading");
+  const { models: apiModels, modelsState } = useLlm7Models();
 
-  useEffect(() => {
-    let cancelled = false;
-
-    async function fetchModels() {
-      try {
-        setModelsState("loading");
-        const response = await fetch(MODELS_API_URL);
-
-        if (!response.ok) {
-          throw new Error(`Unable to load models: ${response.status}`);
-        }
-
-        const data: unknown = await response.json();
-        if (!isApiModelsResponse(data)) {
-          throw new Error("Unexpected models response.");
-        }
-
-        if (!cancelled) {
-          setModels(data.data.map(transformApiModel));
-          setModelsState("ready");
-        }
-      } catch {
-        if (!cancelled) {
-          setModelsState("error");
-        }
-      }
-    }
-
-    fetchModels();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const models = useMemo(() => apiModels.map(transformApiModel), [apiModels]);
 
   const visibleModels = useMemo(() => {
     const sortedModels = sortModelsByProvider(models);

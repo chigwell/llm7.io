@@ -2,13 +2,12 @@
 
 import { Button } from "@/components/ui/buttonShadcn";
 import Link from "next/link";
-import { ArrowRight, Sparkles, CheckCircle, Layers, Zap, BotMessageSquare, Server } from "lucide-react";
+import { ArrowRight, Sparkles, Layers, Zap, BotMessageSquare } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { Pill } from "@/components/ui/pill";
 import { CountUp } from "@/components/vui/text/CountUp";
-import { getDynamicStats } from "@/lib/ComponentCounter";
-import { version as vuiVersion } from "@/lib/version";
 import { useTheme } from "next-themes";
+import { useLlm7Models } from "@/hooks/use-llm7-models";
 import { usePingMetrics, type PingSnapshot } from "@/hooks/use-ping-metrics";
 
 declare global {
@@ -164,6 +163,8 @@ export default function HeroSectionWithWaves() {
     value: 211,
     suffix: "m+",
   });
+  const { models, modelsState } = useLlm7Models();
+  const availableModelCount = modelsState === "ready" && models.length > 0 ? models.length : 10;
 
   // Fetch dynamic stats on mount
   useEffect(() => {
@@ -496,9 +497,8 @@ Prototype, build, and scale without switching providers.
               <div>
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
                   <CountUp
-                    to={16}
-                      suffix="k+"
-                      prefix="$"
+                    to={availableModelCount}
+                    suffix="+"
                     duration={3}
                     delay={1}
                     effect="bounce"
@@ -507,7 +507,7 @@ Prototype, build, and scale without switching providers.
                   />
                 </div>
                 <div className="text-xs md:text-sm text-muted-foreground">
-                  User savings
+                  Models available
                 </div>
               </div>
               <div className="w-px h-8 md:h-12 bg-gradient-to-b from-transparent via-border to-transparent"></div>
