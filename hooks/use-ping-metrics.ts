@@ -14,6 +14,11 @@ export type ModelMetrics = {
     input?: number;
     output?: number;
   };
+  health?: {
+    attempts?: number;
+    error_rate?: number;
+    routing_healthy?: boolean;
+  };
 };
 
 export type PingResponse = {
@@ -29,6 +34,7 @@ export type PingSnapshot = {
   totalRequests: number;
   totalTokens: number;
   successRate: number;
+  modelAvailability: Record<string, number>;
 };
 
 type PingState = {
@@ -52,8 +58,13 @@ function readFiniteNumber(value: unknown): number {
   return typeof value === "number" && Number.isFinite(value) ? value : 0;
 }
 
+function clampRatio(value: number): number {
+  return Math.min(1, Math.max(0, value));
+}
+
 function createPingSnapshot(payload: PingResponse): PingSnapshot {
   const modelMetrics = payload.model_metrics_last_60s ?? {};
+  const modelAvailability: Record<string, number> = {};
   const totals = Object.values(modelMetrics).reduce(
     (accumulator, metrics) => {
       const success200 = readFiniteNumber(metrics.success_200);
@@ -69,6 +80,16 @@ function createPingSnapshot(payload: PingResponse): PingSnapshot {
     },
     { success200: 0, errorsTotal: 0, totalTokens: 0 }
   );
+
+  Object.entries(modelMetrics).forEach(([modelName, metrics]) => {
+    const attempts = readFiniteNumber(metrics.health?.attempts);
+
+    if (modelName.trim().length > 0 && attempts > 0) {
+      modelAvailability[modelName.toLowerCase()] =
+        1 - clampRatio(readFiniteNumber(metrics.health?.error_rate));
+    }
+  });
+
   const totalRequests = totals.success200 + totals.errorsTotal;
 
   return {
@@ -79,6 +100,7 @@ function createPingSnapshot(payload: PingResponse): PingSnapshot {
     totalRequests,
     totalTokens: totals.totalTokens,
     successRate: totalRequests > 0 ? totals.success200 / totalRequests : 0,
+    modelAvailability,
   };
 }
 

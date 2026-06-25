@@ -5,6 +5,7 @@ import { useCallback, useMemo, useState } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { Button } from "@/components/ui/buttonShadcn";
 import { MODELS_API_URL, type ApiModel, useLlm7Models } from "@/hooks/use-llm7-models";
+import { usePingMetrics } from "@/hooks/use-ping-metrics";
 import { cn } from "@/lib/utils";
 
 type PayModel = {
@@ -179,6 +180,38 @@ async function copyToClipboard(value: string) {
   document.body.removeChild(textarea);
 }
 
+function formatAvailabilityPercent(value: number): string {
+  return `${(value * 100).toFixed(1)}%`;
+}
+
+function getAvailabilityTone(availability?: number) {
+  if (typeof availability !== "number") return "good";
+  if (availability > 0.95) return "good";
+  if (availability >= 0.7) return "warning";
+  return "bad";
+}
+
+function ModelAvailabilityDot({ availability }: { availability?: number }) {
+  const tone = getAvailabilityTone(availability);
+  const label =
+    typeof availability === "number"
+      ? `Availability ${formatAvailabilityPercent(availability)} in the latest 60-second window`
+      : "Availability currently healthy; no live model-specific attempts in the latest 60-second window";
+
+  return (
+    <span
+      aria-label={label}
+      title={label}
+      className={cn(
+        "inline-block h-2 w-2 shrink-0 rounded-full ring-2 ring-background",
+        tone === "good" && "bg-emerald-500",
+        tone === "warning" && "bg-amber-400",
+        tone === "bad" && "bg-rose-500"
+      )}
+    />
+  );
+}
+
 function ProviderLogo({ model }: { model: PayModel }) {
   const isOpenAi = model.provider.toLowerCase() === "openai";
 
@@ -212,7 +245,7 @@ function ProviderLogo({ model }: { model: PayModel }) {
   );
 }
 
-function ModelCard({ model }: { model: PayModel }) {
+function ModelCard({ model, availability }: { model: PayModel; availability?: number }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopyTitle = useCallback(async () => {
@@ -227,15 +260,16 @@ function ModelCard({ model }: { model: PayModel }) {
         <ProviderLogo model={model} />
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
-            <h4 className="min-w-0 truncate text-base font-semibold leading-6">
+            <h4 className="flex min-w-0 items-center gap-2 text-base font-semibold leading-6">
               <button
                 type="button"
                 onClick={handleCopyTitle}
-                className="max-w-full truncate text-left underline-offset-4 transition-colors hover:text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                className="min-w-0 max-w-full truncate text-left underline-offset-4 transition-colors hover:text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                 title={copied ? "Copied" : "Copy model name"}
               >
                 {model.name}
               </button>
+              <ModelAvailabilityDot availability={availability} />
             </h4>
             {model.tier ? (
               <span className="shrink-0 rounded-full border border-border/50 bg-background/70 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.08em] text-muted-foreground">
@@ -297,6 +331,7 @@ function ModelCard({ model }: { model: PayModel }) {
 export default function PayAsYouGoModels() {
   const [showAll, setShowAll] = useState(false);
   const { models: apiModels, modelsState } = useLlm7Models();
+  const { latest: latestPingSnapshot } = usePingMetrics();
 
   const models = useMemo(() => apiModels.map(transformApiModel), [apiModels]);
 
@@ -327,9 +362,11 @@ export default function PayAsYouGoModels() {
       </div>
 
       <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-        {visibleModels.map((model) => (
-          <ModelCard key={model.id} model={model} />
-        ))}
+        {visibleModels.map((model) => {
+          const availability = latestPingSnapshot?.modelAvailability[model.id.toLowerCase()];
+
+          return <ModelCard key={model.id} model={model} availability={availability} />;
+        })}
       </div>
 
       <p className="mt-4 text-xs text-muted-foreground">
