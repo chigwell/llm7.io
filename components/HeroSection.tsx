@@ -49,6 +49,22 @@ type CompactStat = {
   suffix: string;
 };
 
+function formatLiveTokenCount(value: number): string {
+  const formatter = new Intl.NumberFormat("en-US", {
+    maximumFractionDigits: value >= 10000000 ? 0 : 1,
+  });
+
+  if (value >= 1000000) {
+    return `${formatter.format(value / 1000000)}M`;
+  }
+
+  if (value >= 1000) {
+    return `${formatter.format(value / 1000)}K`;
+  }
+
+  return formatter.format(value);
+}
+
 function formatCompactStat(value: number): CompactStat {
   if (value >= 1000000) {
     return {
@@ -164,7 +180,9 @@ export default function HeroSectionWithWaves() {
     suffix: "m+",
   });
   const { models, modelsState } = useLlm7Models();
+  const { latest: latestPingSnapshot } = usePingMetrics();
   const availableModelCount = modelsState === "ready" && models.length > 0 ? models.length : 10;
+  const liveTokenCount = latestPingSnapshot?.totalTokens ?? 0;
 
   // Fetch dynamic stats on mount
   useEffect(() => {
@@ -460,9 +478,9 @@ Prototype, build, and scale without switching providers.
           </div>
 
           {/* Stats */}
-          <div className="flex justify-center items-center gap-4 sm:gap-6 md:gap-8 lg:gap-16 text-center px-4">
-              <div>
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-primary to-secondary bg-clip-text">
+          <div className="relative -top-2 md:-top-4 flex justify-center items-start gap-4 sm:gap-6 md:gap-8 lg:gap-16 text-center px-4">
+              <div className="w-16 sm:w-20 md:w-24 flex-shrink-0">
+                <div className="h-8 md:h-10 flex items-start justify-center text-xl sm:text-2xl md:text-3xl font-bold leading-none text-foreground mb-1 bg-gradient-to-r from-primary to-secondary bg-clip-text">
                   <CountUp
                     to={requestCount.value}
                     suffix={requestCount.suffix}
@@ -476,29 +494,20 @@ Prototype, build, and scale without switching providers.
                   API Calls
                 </div>
               </div>
-              <div className="w-px h-8 md:h-12 bg-gradient-to-b from-transparent via-border to-transparent"></div>
-                <div>
-                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
-                    <CountUp
-                      to={87}
-                      suffix="B+"
-                      duration={3}
-                      delay={1}
-                      effect="bounce"
-                      colorTransition
-                      hoverEffect
-                    />
+              <div className="w-px h-8 md:h-12 mt-0.5 bg-gradient-to-b from-transparent via-border to-transparent"></div>
+                <div className="w-20 sm:w-24 md:w-28 flex-shrink-0">
+                  <div className="h-8 md:h-10 flex items-start justify-center text-xl sm:text-2xl md:text-3xl font-bold leading-none text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
+                    <span aria-live="polite">{formatLiveTokenCount(liveTokenCount)}</span>
                   </div>
                   <div className="text-xs md:text-sm text-muted-foreground">
-                    Tokens processed
+                    Tokens/min
                   </div>
                 </div>
-              <div className="w-px h-8 md:h-12 bg-gradient-to-b from-transparent via-border to-transparent"></div>
-              <div>
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
+              <div className="w-px h-8 md:h-12 mt-0.5 bg-gradient-to-b from-transparent via-border to-transparent"></div>
+              <div className="w-16 sm:w-20 md:w-24 flex-shrink-0">
+                <div className="h-8 md:h-10 flex items-start justify-center text-xl sm:text-2xl md:text-3xl font-bold leading-none text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
                   <CountUp
                     to={availableModelCount}
-                    suffix="+"
                     duration={3}
                     delay={1}
                     effect="bounce"
@@ -507,12 +516,12 @@ Prototype, build, and scale without switching providers.
                   />
                 </div>
                 <div className="text-xs md:text-sm text-muted-foreground">
-                  Models available
+                  Models
                 </div>
               </div>
-              <div className="w-px h-8 md:h-12 bg-gradient-to-b from-transparent via-border to-transparent"></div>
-              <div>
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
+              <div className="w-px h-8 md:h-12 mt-0.5 bg-gradient-to-b from-transparent via-border to-transparent"></div>
+              <div className="w-16 sm:w-20 md:w-24 flex-shrink-0">
+                <div className="h-8 md:h-10 flex items-start justify-center text-xl sm:text-2xl md:text-3xl font-bold leading-none text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
                   <CountUp
                     to={countVisitors}
                     suffix="k+"
@@ -527,9 +536,9 @@ Prototype, build, and scale without switching providers.
                   Visitors (30d)
                 </div>
               </div>
-              <div className="w-px h-8 md:h-12 bg-gradient-to-b from-transparent via-border to-transparent"></div>
-              <div className="hidden lg:inline">
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 bg-gradient-to-r from-primary to-secondary bg-clip-text">
+              <div className="w-px h-8 md:h-12 mt-0.5 bg-gradient-to-b from-transparent via-border to-transparent"></div>
+              <div className="hidden lg:block w-24 flex-shrink-0">
+                <div className="h-8 md:h-10 flex items-start justify-center text-xl sm:text-2xl md:text-3xl font-bold leading-none text-foreground mb-1 bg-gradient-to-r from-primary to-secondary bg-clip-text">
                   <CountUp
                     to={999}
                     format="compact"

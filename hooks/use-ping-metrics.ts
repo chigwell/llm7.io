@@ -10,6 +10,10 @@ export type PingErrors = {
 export type ModelMetrics = {
   success_200?: number;
   errors?: PingErrors;
+  tokens?: {
+    input?: number;
+    output?: number;
+  };
 };
 
 export type PingResponse = {
@@ -23,6 +27,7 @@ export type PingSnapshot = {
   success200: number;
   errorsTotal: number;
   totalRequests: number;
+  totalTokens: number;
   successRate: number;
 };
 
@@ -53,13 +58,16 @@ function createPingSnapshot(payload: PingResponse): PingSnapshot {
     (accumulator, metrics) => {
       const success200 = readFiniteNumber(metrics.success_200);
       const errorsTotal = readFiniteNumber(metrics.errors?.total);
+      const inputTokens = readFiniteNumber(metrics.tokens?.input);
+      const outputTokens = readFiniteNumber(metrics.tokens?.output);
 
       return {
         success200: accumulator.success200 + success200,
         errorsTotal: accumulator.errorsTotal + errorsTotal,
+        totalTokens: accumulator.totalTokens + inputTokens + outputTokens,
       };
     },
-    { success200: 0, errorsTotal: 0 }
+    { success200: 0, errorsTotal: 0, totalTokens: 0 }
   );
   const totalRequests = totals.success200 + totals.errorsTotal;
 
@@ -69,6 +77,7 @@ function createPingSnapshot(payload: PingResponse): PingSnapshot {
     success200: totals.success200,
     errorsTotal: totals.errorsTotal,
     totalRequests,
+    totalTokens: totals.totalTokens,
     successRate: totalRequests > 0 ? totals.success200 / totalRequests : 0,
   };
 }
