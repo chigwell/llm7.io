@@ -49,20 +49,46 @@ type CompactStat = {
   suffix: string;
 };
 
-function formatLiveTokenCount(value: number): string {
-  const formatter = new Intl.NumberFormat("en-US", {
-    maximumFractionDigits: value >= 10000000 ? 0 : 1,
-  });
+type FormattedTokenCount = {
+  value: number;
+  suffix: string;
+  decimals: number;
+};
 
+const TOKEN_INTRO_COMPLETE_MS = 4_200;
+
+function getFormattedTokenCount(value: number): FormattedTokenCount {
   if (value >= 1000000) {
-    return `${formatter.format(value / 1000000)}M`;
+    return {
+      value: value / 1000000,
+      suffix: "M",
+      decimals: value >= 10000000 ? 0 : 1,
+    };
   }
 
   if (value >= 1000) {
-    return `${formatter.format(value / 1000)}K`;
+    return {
+      value: value / 1000,
+      suffix: "K",
+      decimals: 2,
+    };
   }
 
-  return formatter.format(value);
+  return {
+    value,
+    suffix: "",
+    decimals: 0,
+  };
+}
+
+function formatLiveTokenCount(value: number): string {
+  const tokenCount = getFormattedTokenCount(value);
+  const formatter = new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: tokenCount.decimals,
+  });
+
+  return `${formatter.format(tokenCount.value)}${tokenCount.suffix}`;
 }
 
 function formatCompactStat(value: number): CompactStat {
@@ -181,8 +207,45 @@ export default function HeroSectionWithWaves() {
   });
   const { models, modelsState } = useLlm7Models();
   const { latest: latestPingSnapshot } = usePingMetrics();
+  const [tokenIntroTarget, setTokenIntroTarget] = useState<number | null>(null);
+  const [tokenIntroComplete, setTokenIntroComplete] = useState(false);
+  const [displayTokenCount, setDisplayTokenCount] = useState(0);
+  const hasStartedTokenIntro = useRef(false);
+  const latestTokenCountRef = useRef(0);
+  const tokenIntroTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const availableModelCount = modelsState === "ready" && models.length > 0 ? models.length : 10;
   const liveTokenCount = latestPingSnapshot?.totalTokens ?? 0;
+  const introTokenCount = getFormattedTokenCount(tokenIntroTarget ?? 0);
+
+  useEffect(() => {
+    latestTokenCountRef.current = liveTokenCount;
+  }, [liveTokenCount]);
+
+  useEffect(() => {
+    if (!latestPingSnapshot || hasStartedTokenIntro.current) return;
+
+    hasStartedTokenIntro.current = true;
+    setTokenIntroTarget(latestPingSnapshot.totalTokens);
+
+    tokenIntroTimerRef.current = setTimeout(() => {
+      setDisplayTokenCount(latestTokenCountRef.current);
+      setTokenIntroComplete(true);
+    }, TOKEN_INTRO_COMPLETE_MS);
+  }, [latestPingSnapshot]);
+
+  useEffect(() => {
+    return () => {
+      if (tokenIntroTimerRef.current) {
+        clearTimeout(tokenIntroTimerRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!tokenIntroComplete || !latestPingSnapshot) return;
+
+    setDisplayTokenCount(latestPingSnapshot.totalTokens);
+  }, [latestPingSnapshot, tokenIntroComplete]);
 
   // Fetch dynamic stats on mount
   useEffect(() => {
@@ -497,7 +560,20 @@ Prototype, build, and scale without switching providers.
               <div className="w-px h-8 md:h-12 mt-0.5 bg-gradient-to-b from-transparent via-border to-transparent"></div>
                 <div className="w-20 sm:w-24 md:w-28 flex-shrink-0">
                   <div className="h-8 md:h-10 flex items-start justify-center text-xl sm:text-2xl md:text-3xl font-bold leading-none text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
-                    <span aria-live="polite">{formatLiveTokenCount(liveTokenCount)}</span>
+                    {tokenIntroComplete ? (
+                      <span aria-live="polite">{formatLiveTokenCount(displayTokenCount)}</span>
+                    ) : (
+                      <CountUp
+                        to={introTokenCount.value}
+                        suffix={introTokenCount.suffix}
+                        decimals={introTokenCount.decimals}
+                        duration={3}
+                        delay={1}
+                        effect="bounce"
+                        colorTransition
+                        hoverEffect
+                      />
+                    )}
                   </div>
                   <div className="text-xs md:text-sm text-muted-foreground">
                     Tokens/min
