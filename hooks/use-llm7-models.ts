@@ -28,6 +28,12 @@ export type ApiModel = {
   json_mode?: boolean;
   reasoning?: boolean;
   tools_calling?: boolean;
+  availability_last_hour_percent?: number;
+  availability?: {
+    old?: number;
+    mid?: number;
+    recent?: number;
+  };
 };
 
 export type ApiModelsResponse = {
@@ -40,6 +46,7 @@ type ModelsState = "loading" | "ready" | "error";
 let cachedModels: ApiModel[] | null = null;
 let cachedState: ModelsState = "loading";
 let modelsRequest: Promise<ApiModel[]> | null = null;
+const MODELS_REFRESH_INTERVAL_MS = 180_000;
 
 export function isApiModelsResponse(value: unknown): value is ApiModelsResponse {
   return (
@@ -57,11 +64,11 @@ export function getFallbackApiModels(): ApiModel[] {
   return [];
 }
 
-async function fetchApiModels(): Promise<ApiModel[]> {
-  if (cachedModels) return cachedModels;
+async function fetchApiModels({ refresh = false }: { refresh?: boolean } = {}): Promise<ApiModel[]> {
+  if (cachedModels && !refresh) return cachedModels;
 
   if (!modelsRequest) {
-    modelsRequest = fetch(MODELS_API_URL)
+    modelsRequest = fetch(MODELS_API_URL, { cache: "no-store" })
       .then(async (response) => {
         if (!response.ok) {
           throw new Error(`Unable to load models: ${response.status}`);
@@ -78,8 +85,10 @@ async function fetchApiModels(): Promise<ApiModel[]> {
       })
       .catch((error) => {
         cachedState = "error";
-        modelsRequest = null;
         throw error;
+      })
+      .finally(() => {
+        modelsRequest = null;
       });
   }
 
@@ -92,24 +101,31 @@ export function useLlm7Models() {
 
   useEffect(() => {
     let cancelled = false;
+    let interval: ReturnType<typeof setInterval> | null = null;
 
     setModelsState(cachedState);
 
-    fetchApiModels()
-      .then((data) => {
-        if (!cancelled) {
-          setModels(data);
-          setModelsState("ready");
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setModelsState("error");
-        }
-      });
+    const loadModels = (refresh = false) => {
+      fetchApiModels({ refresh })
+        .then((data) => {
+          if (!cancelled) {
+            setModels(data);
+            setModelsState("ready");
+          }
+        })
+        .catch(() => {
+          if (!cancelled) {
+            setModelsState("error");
+          }
+        });
+    };
+
+    loadModels();
+    interval = setInterval(() => loadModels(true), MODELS_REFRESH_INTERVAL_MS);
 
     return () => {
       cancelled = true;
+      if (interval) clearInterval(interval);
     };
   }, []);
 

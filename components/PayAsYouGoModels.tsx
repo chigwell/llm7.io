@@ -21,6 +21,12 @@ type PayModel = {
   outputPrice: string;
   minimumRequestPrice?: string;
   usageBasedOnly?: boolean;
+  availabilityLastHourPercent?: number;
+  availability?: {
+    old?: number;
+    mid?: number;
+    recent?: number;
+  };
 };
 
 function providerDetails(id: string) {
@@ -127,6 +133,11 @@ function transformApiModel(model: ApiModel): PayModel {
         ? formatUsd(model.pricing.minimum_request_price_usd)
         : undefined,
     usageBasedOnly: model.usage_based_only,
+    availabilityLastHourPercent:
+      typeof model.availability_last_hour_percent === "number" && Number.isFinite(model.availability_last_hour_percent)
+        ? model.availability_last_hour_percent
+        : undefined,
+    availability: model.availability,
   };
 }
 
@@ -212,6 +223,57 @@ function ModelAvailabilityDot({ availability }: { availability?: number }) {
   );
 }
 
+function getAvailabilityBarTone(percent: number) {
+  if (percent > 95) return "good";
+  if (percent >= 70) return "warning";
+  return "bad";
+}
+
+function formatAvailabilityPercentValue(value: number): string {
+  return `${Math.round(value)}%`;
+}
+
+function getFiniteAvailabilityPercent(value?: number, fallback?: number) {
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  if (typeof fallback === "number" && Number.isFinite(fallback)) return fallback;
+  return undefined;
+}
+
+function ModelAvailabilityBars({ model }: { model: PayModel }) {
+  if (typeof model.availabilityLastHourPercent !== "number") return null;
+
+  const fallback = model.availabilityLastHourPercent;
+  const segments = [
+    { key: "old", label: "Old", value: getFiniteAvailabilityPercent(model.availability?.old, fallback) },
+    { key: "mid", label: "Mid", value: getFiniteAvailabilityPercent(model.availability?.mid, fallback) },
+    { key: "recent", label: "Recent", value: getFiniteAvailabilityPercent(model.availability?.recent, fallback) },
+  ];
+  const label = `Last-hour availability ${formatAvailabilityPercentValue(model.availabilityLastHourPercent)}. ${segments
+    .map((segment) => `${segment.label}: ${formatAvailabilityPercentValue(segment.value ?? fallback)}`)
+    .join(", ")}`;
+
+  return (
+    <div aria-label={label} title={label} className="absolute bottom-4 right-4 flex h-4 items-end gap-0.5">
+      {segments.map((segment) => {
+        const value = segment.value ?? fallback;
+        const tone = getAvailabilityBarTone(value);
+
+        return (
+          <span
+            key={segment.key}
+            className={cn(
+              "block h-3 w-1 rounded-full",
+              tone === "good" && "bg-emerald-500",
+              tone === "warning" && "bg-amber-400",
+              tone === "bad" && "bg-rose-500"
+            )}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
 function ProviderLogo({ model }: { model: PayModel }) {
   const isOpenAi = model.provider.toLowerCase() === "openai";
 
@@ -255,7 +317,7 @@ function ModelCard({ model, availability }: { model: PayModel; availability?: nu
   }, [model.name]);
 
   return (
-    <article className="flex h-full flex-col rounded-xl border border-border/60 bg-card/55 p-4 shadow-sm backdrop-blur">
+    <article className="relative flex h-full flex-col rounded-xl border border-border/60 bg-card/55 p-4 shadow-sm backdrop-blur">
       <div className="flex items-start gap-3">
         <ProviderLogo model={model} />
         <div className="min-w-0 flex-1">
@@ -310,7 +372,7 @@ function ModelCard({ model, availability }: { model: PayModel; availability?: nu
         ) : null}
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-1.5">
+      <div className="mt-4 flex flex-wrap gap-1.5 pr-10">
         {model.chips.length > 0 ? (
           model.chips.map((chip) => (
             <span key={chip} className="rounded-full bg-primary/10 px-2 py-1 text-[11px] font-medium capitalize text-primary">
@@ -324,6 +386,7 @@ function ModelCard({ model, availability }: { model: PayModel; availability?: nu
           <span className="rounded-full bg-muted px-2 py-1 text-[11px] font-medium text-muted-foreground">Usage only</span>
         ) : null}
       </div>
+      <ModelAvailabilityBars model={model} />
     </article>
   );
 }
