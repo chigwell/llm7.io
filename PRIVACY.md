@@ -2,7 +2,7 @@
 
 **Last updated:** 2 July 2026
 
-This Privacy Policy explains how **LLM7.io** (“we”, “us”, “our”) collects and processes your personal data when you use our website and API, including `dash.llm7.io`. We operate from the United Kingdom and comply with the **UK GDPR** and, where applicable, the **EU GDPR**. Access to the API requires an **API token** issued via `dash.llm7.io`.
+This Privacy Policy explains how **LLM7.io** (“we”, “us”, “our”) collects and processes your personal data when you use our educational and research-oriented website and API, including `dash.llm7.io`. We operate from the United Kingdom and comply with the **UK GDPR** and, where applicable, the **EU GDPR**. Access to the API requires an **API token** issued via `dash.llm7.io`.
 
 ---
 
@@ -35,7 +35,7 @@ We do **not** intentionally collect special category data. We do **not** sell pe
 
 ## 3. Purposes and legal bases
 
-- **Provide and operate the service** (account, sign-in, token management, subscriptions, API access).  
+- **Provide and operate the educational and research-oriented service** (account, sign-in, token management, subscriptions, API access, experimentation with LLM workflows, and programmatic interaction with LLM functionality).
   *Legal basis:* **Contract** (Art. 6(1)(b)).
 
 - **Secure, monitor, and improve the service** (rate-limits, fraud/abuse prevention, reliability, debugging).  

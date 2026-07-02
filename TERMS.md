@@ -14,13 +14,14 @@ Thank you for using **LLM7.io** (the **“Service”**). By accessing or using t
 
 ## 2\. Description of the Service
 
-  - LLM7.io provides access to large language models through a web UI and API.
+  - LLM7.io is an educational and research-oriented service for experimenting with large language models, studying how they behave, and learning how to interact with them programmatically through a web UI and API.
+  - The Service is not offered as a managed production inference platform, a guaranteed model-hosting service, or a guaranteed direct-access service to any particular model, provider, endpoint, capacity, or output.
   - Access requires an **API token** issued via **dash.llm7.io**. A **free tier** is offered and is supported by donors; a **paid plan** is available:
       - **Free token**: Up to **5,000,000 tokens/day** over a rolling 24-hour window.
       - **Pro** ($12/month): Higher dynamically managed token limits than the free tier. Pro token availability is calculated across the monthly billing period, including usage relative to the percentage of that billing period that has elapsed, and remains subject to model availability, service capacity, fair-use calculations, and abuse-prevention controls. Also includes up to **25 text requests/s**, **1,500 text requests/min**, and **15,000 text requests/hour**, plus JSON mode, function calling, and Pro models.
   - Where token limits apply, usage is counted as **input tokens plus output tokens** over a **rolling 24-hour window**.
   - **Features, limits, models, and pricing may change at any time** without notice.
-  - The Service is intended for experimentation, development, and research. It is **not** for life-critical, safety-critical, or emergency use.
+  - The Service is intended for education, experimentation, development, and research. It is **not** for life-critical, safety-critical, emergency, production, or other uses where stable, uninterrupted, or guaranteed model access is required.
 
 -----
 
@@ -79,7 +80,7 @@ Our privacy practices are described in **[PRIVACY.md](./PRIVACY.md)**, which is 
 
 ## 8\. Third-party services and models
 
-  - The Service may call or host **third-party models or infrastructure**. We are not responsible for third-party services’ availability, security, or content.
+  - The Service may call, route to, experiment with, or host **third-party models or infrastructure** as part of its educational and research-oriented functionality. We are not responsible for third-party services’ availability, security, or content.
   - Your use of any third-party service may be governed by that party’s terms and privacy policy.
   - All third-party names, logos, trademarks, service marks, model names, provider names, and media materials are the property of their respective owners, and their display does not imply endorsement, sponsorship, or affiliation unless expressly stated.
 
@@ -88,7 +89,8 @@ Our privacy practices are described in **[PRIVACY.md](./PRIVACY.md)**, which is 
 ## 9\. Availability and changes
 
   - The Service is provided on a **best-efforts** basis. We do **not** guarantee **uptime**, **latency**, **throughput**, or availability of any particular **model** or **feature**.
-  - Access to specific models and response speed is **not guaranteed**. Paid subscriptions route to available models; if third-party or upstream models are unavailable, responses may be degraded or unavailable.
+  - Access to specific models, providers, endpoints, response speed, capacity, or output characteristics is **not guaranteed**. Paid subscriptions route to available models; if third-party or upstream models are unavailable, responses may be degraded or unavailable.
+  - Any API, routing, model-selection, or response-generation functionality is provided to support education, research, experimentation, and development, and should not be relied on as a guaranteed substitute for a direct commercial relationship with any model provider.
   - We may **modify, replace, or withdraw** models and features at any time. We continuously work to improve availability, but models may be temporarily or permanently unavailable.
 
 -----
