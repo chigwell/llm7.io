@@ -1,8 +1,8 @@
 # Privacy Policy
 
-**Last updated:** 4 February 2026
+**Last updated:** 2 July 2026
 
-This Privacy Policy explains how **LLM7.io** (“we”, “us”, “our”) collects and processes your personal data when you use our website and API, including `dash.llm7.io`. We operate from the United Kingdom and comply with the **UK GDPR** and, where applicable, the **EU GDPR**. Access to the API requires an **API token** issued via `token.llm7.io`.
+This Privacy Policy explains how **LLM7.io** (“we”, “us”, “our”) collects and processes your personal data when you use our website and API, including `dash.llm7.io`. We operate from the United Kingdom and comply with the **UK GDPR** and, where applicable, the **EU GDPR**. Access to the API requires an **API token** issued via `dash.llm7.io`.
 
 ---
 
@@ -24,6 +24,7 @@ This Privacy Policy explains how **LLM7.io** (“we”, “us”, “our”) col
 - Subscription plan selection/status (e.g., Free, Pro), renewal dates, and applied promotions (e.g., promo codes).
 - Usage counters/quotas and timestamps for rate-limiting, abuse prevention, reliability, and troubleshooting.
 - Basic performance/error metrics.
+- Fraud-prevention signals, such as account, token, usage, billing, payment-status, chargeback, device, network, and security-event metadata used to detect unauthorised payment activity, account farming, limit evasion, or abuse.
 
 **Network & security**
 - Our edge provider (**Cloudflare**) may process **IP addresses**, timestamps, and security/event logs to deliver and protect the service.
@@ -39,6 +40,9 @@ We do **not** intentionally collect special category data. We do **not** sell pe
 
 - **Secure, monitor, and improve the service** (rate-limits, fraud/abuse prevention, reliability, debugging).  
   *Legal basis:* **Legitimate interests** (Art. 6(1)(f)).
+
+- **Detect, prevent, investigate, and respond to fraud, unauthorised payment activity, account farming, limit evasion, chargebacks, abuse, and security incidents.**
+  *Legal basis:* **Legitimate interests** (Art. 6(1)(f)) and, where applicable, **Legal obligation** (Art. 6(1)(c)).
 
 - **Legal compliance** (e.g., responding to lawful requests).  
   *Legal basis:* **Legal obligation** (Art. 6(1)(c)).
@@ -67,7 +71,8 @@ Data may be transferred internationally. We rely on appropriate safeguards (e.g.
 
 We share personal data only with:
 - **Service providers/Processors** (primarily Cloudflare) strictly to operate the service; and
-- **Public authorities** if required by law.
+- **Payment processors, card networks, banks, financial institutions, fraud-prevention services, and other parties involved in payment processing or fraud prevention**, where necessary to process payments, investigate disputes, prevent abuse, or protect the service and affected parties; and
+- **Public authorities, courts, regulators, law enforcement, and other competent bodies** if required by law or where we reasonably believe disclosure is necessary and lawful to report, prevent, investigate, or respond to fraud, unauthorised payment activity, security incidents, or other unlawful activity.
 
 ---
 
@@ -105,7 +110,7 @@ We use only **strictly necessary** cookies/edge storage for authentication, secu
 
 ## 10. Automated decision-making
 
-We use automated **rate-limiting** and **abuse-prevention** that may temporarily restrict requests or tokens. These controls do **not** produce legal or similarly significant effects.
+We use automated **rate-limiting**, **fraud-prevention**, and **abuse-prevention** systems. These systems may temporarily or permanently restrict requests, tokens, accounts, payment profiles, or API access where they detect suspected fraud, unauthorised payment activity, account farming, limit evasion, abuse, or security risks. We may also review these decisions manually where appropriate.
 
 ---
 

@@ -1,6 +1,6 @@
 # Terms of Service
 
-**Last updated: 23 June 2026**
+**Last updated: 2 July 2026**
 
 Thank you for using **LLM7.io** (the **“Service”**). By accessing or using the Service, you agree to these Terms of Service (the **“Terms”**). If you do not accept all of the Terms, do not use the Service.
 
@@ -27,6 +27,7 @@ Thank you for using **LLM7.io** (the **“Service”**). By accessing or using t
 ## 3\. Accounts, API tokens, and security
 
   - If you use **`dash.llm7.io`** to issue access tokens for **LLM7.io**, you must keep those tokens **secret** and **secure**. Tokens are personal and non-transferable.
+  - Each account is for one user or organisation. You must not create, use, or coordinate multiple accounts, identities, API tokens, payment profiles, or similar arrangements to bypass or increase Service limits, including concurrent request limits, rate limits, token quotas, free-tier allowances, usage caps, billing requirements, abuse-prevention controls, or other technical or commercial restrictions.
   - We may **rate-limit**, **suspend**, or **revoke** tokens to protect the Service from abuse.
   - You are responsible for all activity performed using your tokens or account.
   - You agree to receive **transactional/service emails** required to operate your account (e.g., authentication, security, incident or material-change notices). **Optional product updates/announcements** are sent only with your **consent** or, where permitted by law, under **legitimate interests** with a clear **opt-out** (an unsubscribe link is included in every such email).
@@ -48,6 +49,8 @@ You agree **not** to:
   - Violate any applicable laws or third-party rights.
   - Use the Service to create or disseminate malware, exploit minors, incite violence, or otherwise cause harm.
   - Attempt to bypass security, rate limits, usage caps, or payment requirements.
+  - Use multiple accounts, tokens, payment profiles, or coordinated users to evade or increase any Service limit, quota, fair-use rule, billing requirement, or abuse-prevention control.
+  - Use payment details, cards, bank accounts, billing accounts, or other payment methods that you are not authorised to use, or otherwise engage in payment fraud, chargeback fraud, identity fraud, or billing abuse.
   - Misrepresent output as human-generated where disclosure is legally required.
   - Scrape or bulk-harvest in ways that degrade or disrupt the Service.
 
@@ -117,6 +120,8 @@ You agree to **defend, indemnify, and hold harmless** us and our contributors fr
   * We may **suspend, restrict, or terminate** access **at any time and at our sole discretion**, including (but not limited to) cases of:
       * **security risks**, **suspected fraud**, **abuse**, or **unreasonable or non-meaningful usage** as determined **automatically or manually** by our internal systems, partner systems, or administrators;
       * **operational**, **legal**, or **compliance** reasons.
+  * If we detect or reasonably suspect payment fraud, unauthorised use of payment details, account farming, limit evasion, or related abuse, we may automatically or manually disable the relevant accounts, API tokens, payment profiles, and related access to the Service and APIs, including associated or linked accounts.
+  * Where permitted or required by law, we may preserve relevant information and disclose or report suspected fraud, unauthorised payment activity, or other unlawful activity to law enforcement, courts, regulators, payment processors, card networks, banks, financial institutions, fraud-prevention services, and other competent authorities or affected parties.
   * Access may be limited or permanently withdrawn **without notice or compensation**.
   * Upon termination, your right to use the Service ceases immediately; sections that by their nature should survive (e.g., 6–12, 15) will continue to apply.
   * **Monitoring and Abuse:** We reserve the right to monitor usage patterns to detect **abuse** or **technical misuse** of the Service. This includes, but is not limited to, sending high-entropy, pseudo-random, or nonsensical inputs that appear intended to overload, disrupt, or degrade the Service performance without a legitimate purpose. If we determine, in our sole discretion, that you are engaging in such abusive behavior, we may **suspend or terminate** your access immediately. In the event of termination for **misuse** or **breach** of this section, you forfeit any prepaid fees, and **no refund** will be issued, subject to applicable law.
@@ -126,6 +131,7 @@ You agree to **defend, indemnify, and hold harmless** us and our contributors fr
 ## 14\. Paid subscriptions and billing
 
   - Paid subscriptions are purchased via **dash.llm7.io**. Subscriptions are currently **monthly**: **Pro** ($12/month) with the limits described in Section 2.
+  - You must provide accurate billing information and use only payment methods that you are legally authorised to use. You are responsible for ensuring that the payment details used for your account belong to you or are used with the payment method owner's valid authorisation.
   - We may update prices, subscription limits, or features. Changes apply on renewal or as otherwise notified.
   - Taxes may apply. Refunds (if any) follow the terms shown at purchase and any mandatory consumer protections in your jurisdiction.
 
