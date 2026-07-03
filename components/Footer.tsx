@@ -149,10 +149,10 @@ export default function Footer() {
             <ul className="space-y-2 md:space-y-3 text-sm">
               <li>
                 <Link
-                  href="#featured-heading-plans"
+                  href="#models"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Subscriptions
+                  Models
                 </Link>
               </li>
                 <li>

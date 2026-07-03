@@ -409,10 +409,10 @@ export default function PayAsYouGoModels() {
   const hiddenCount = Math.max(models.length - visibleModels.length, 0);
 
   return (
-    <section aria-labelledby="payg-heading" className="mx-auto mt-[4.5rem] w-full max-w-md md:mt-24 md:max-w-[61rem]">
+    <section id="models" aria-labelledby="payg-heading" className="mx-auto w-full max-w-md scroll-mt-24 md:max-w-[61rem]">
       <div>
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">Or pay as you go</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">Pay as you go</p>
           <h3 id="payg-heading" className="mt-2 text-2xl font-bold tracking-tight md:text-3xl">
             Scale frontier model access on your terms.
           </h3>

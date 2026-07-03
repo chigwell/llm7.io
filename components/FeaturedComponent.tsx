@@ -251,9 +251,10 @@ export default function FeaturedComponents() {
 
   return (
     <GoogleOAuthProvider clientId={GA_CLIENT_ID}>
-      <section id="plans" aria-labelledby="featured-heading-plans" className="relative py-20 md:py-28 overflow-hidden bg-gradient-to-b from-background via-background to-background/95">
+      <section id="plans" aria-labelledby="featured-heading-plans" className="relative overflow-hidden bg-gradient-to-b from-background via-background to-background/95 pt-10 pb-20 md:pt-14 md:pb-28">
         {/* ... header / other UI unchanged ... */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+          {/*}
           <div className="text-center mb-14 md:mb-20">
             <motion.h2 id="featured-heading-plans" initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }} className="mt-6 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
               <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">Choose the right subscription for your usage.</span>
@@ -270,6 +271,9 @@ export default function FeaturedComponents() {
               </motion.div>
             ))}
           </div>
+          */}
+
+          <PayAsYouGoModels />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8 justify-items-center lg:max-w-5xl lg:mx-auto mb-12">
             <div className="w-full max-w-md text-xs text-muted-foreground space-y-1">
@@ -281,10 +285,6 @@ export default function FeaturedComponents() {
                   support@llm7.io
                   </a>.</p>
             </div>
-          </div>
-
-          <div className="lg:max-w-5xl lg:mx-auto">
-            <PayAsYouGoModels />
           </div>
         </div>
       </section>
