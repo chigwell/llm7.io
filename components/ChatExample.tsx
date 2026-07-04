@@ -48,11 +48,6 @@ function tokenCookieAttributes(maxAgeSeconds: number) {
   return `path=/; max-age=${maxAgeSeconds}; SameSite=Strict${secure}`;
 }
 
-function parseSubscriptionTier(value: unknown): number {
-  const tier = Number(value ?? 0);
-  return Number.isFinite(tier) ? tier : 0;
-}
-
 // TypingText component
 // Fix: Update the type definition to match Framer Motion's Variants type
 type CursorAnimationVariants = {
@@ -631,11 +626,9 @@ export default function MagicalChatInput() {
   const [showProModal, setShowProModal] = useState(false);
   const [apiToken, setApiToken] = useState<string | null>(null);
   const [userEmail, setUserEmail] = useState<string>("");
-  const [userSub, setUserSub] = useState<number>(0);
   const [authStatus, setAuthStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
   const [authError, setAuthError] = useState<string | null>(null);
   const [showAuthButton, setShowAuthButton] = useState(false);
-  const [isEligiblePro, setIsEligiblePro] = useState(false);
 
   const recordClick = useCallback((source: number) => {
     const url = `http://api.llm7.io/record-click?source=${source}`;
@@ -696,29 +689,7 @@ export default function MagicalChatInput() {
     persistCookie("LLM7_API_TOKEN", token);
   }, [persistCookie]);
 
-  const fetchApiToken = useCallback(async (idToken: string, sub: number) => {
-    if (sub === 3) {
-      try {
-        const ensureRes = await fetch(`${BASE_API_URL}/tokens/ensure`, {
-          method: "GET",
-          headers: { Authorization: `Bearer ${idToken}` },
-        });
-        if (ensureRes.ok) {
-          const ensureData = await ensureRes.json().catch(() => ({}));
-          if (ensureData?.token) {
-            persistApiToken(ensureData.token as string);
-            return ensureData.token as string;
-          }
-        }
-      } catch (_err) {
-        // ignore and fail closed below
-      }
-
-      clearCookie("LLM7_API_TOKEN");
-      setApiToken(null);
-      return null;
-    }
-
+  const fetchApiToken = useCallback(async (idToken: string) => {
     const existing = getCookie("LLM7_API_TOKEN");
     if (existing) {
       setApiToken(existing);
@@ -764,7 +735,7 @@ export default function MagicalChatInput() {
       // ignore token creation errors
     }
     return null;
-  }, [clearCookie, getCookie, persistApiToken]);
+  }, [getCookie, persistApiToken]);
 
   const verifyIdToken = useCallback(async (idToken: string) => {
     setAuthStatus("loading");
@@ -777,32 +748,21 @@ export default function MagicalChatInput() {
       if (!v.ok) throw new Error("Verification failed");
       const data = await v.json().catch(() => ({}));
       const email = data?.email || "";
-      const subVal = parseSubscriptionTier(data?.sub);
       setUserEmail(email);
-      setUserSub(subVal);
-      setIsEligiblePro(subVal === 3);
       persistIdToken(idToken);
-      if (subVal === 3) {
-        const token = await fetchApiToken(idToken, subVal);
-        if (!token) throw new Error("Unable to issue Pro API token");
-        setAuthStatus("ready");
-        return true;
-      } else {
-        setApiToken(null);
-        clearCookie("LLM7_API_TOKEN");
-        setAuthStatus("ready");
-        return false;
-      }
+      const token = await fetchApiToken(idToken);
+      if (!token) throw new Error("Unable to issue an API token");
+      setAuthStatus("ready");
+      return true;
     } catch (err: unknown) {
       setAuthStatus("error");
-      const message = err instanceof Error ? err.message : "Unable to verify subscription";
+      const message = err instanceof Error ? err.message : "Unable to verify your account";
       setAuthError(message);
       clearIdToken();
       setApiToken(null);
-      setUserSub(0);
       return false;
     }
-  }, [fetchApiToken, persistIdToken, clearIdToken, clearCookie]);
+  }, [fetchApiToken, persistIdToken, clearIdToken]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -921,11 +881,11 @@ export default function MagicalChatInput() {
   const handleModelChange = useCallback((value: string) => {
     setModel(value);
     if (value.toLowerCase() === "pro") {
-      if (userSub === 3 && apiToken) return;
+      if (apiToken) return;
       setShowProModal(true);
       recordClick(4);
     }
-  }, [recordClick, userSub, apiToken]);
+  }, [recordClick, apiToken]);
 
   const handleCredential = useCallback(
     async (response: CredentialResponse) => {
@@ -940,7 +900,7 @@ export default function MagicalChatInput() {
         setShowProModal(false);
         setShowAuthButton(false);
       } else {
-        setAuthError("Pro models require a Pro subscription.");
+        setAuthError("Please sign in with an LLM7 account that has an active subscription or available balance.");
       }
     },
     [verifyIdToken]
@@ -952,11 +912,11 @@ export default function MagicalChatInput() {
   }, []);
 
   useEffect(() => {
-    if (showProModal && userSub === 3 && apiToken) {
+    if (showProModal && apiToken) {
       const t = setTimeout(() => setShowProModal(false), 3000);
       return () => clearTimeout(t);
     }
-  }, [showProModal, userSub, apiToken]);
+  }, [showProModal, apiToken]);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
       e.preventDefault();
@@ -974,16 +934,16 @@ export default function MagicalChatInput() {
         };
         let token = apiToken ?? "";
 
-        if (model.toLowerCase() === "pro" && userSub === 3) {
+        if (model.toLowerCase() === "pro" && !token) {
           let idToken = getCookie(ID_TOKEN_KEY);
           try {
             idToken = sessionStorage.getItem(ID_TOKEN_KEY) || idToken;
           } catch (_err) {
             // ignore blocked storage and fall back to the cookie
           }
-          token = idToken ? await fetchApiToken(idToken, 3) ?? "" : "";
+          token = idToken ? await fetchApiToken(idToken) ?? "" : "";
           if (!token) {
-            throw new Error("Unable to issue Pro API token. Please sign in again.");
+            throw new Error("Please sign in with an LLM7 account that has an active subscription or available balance, or top up your balance.");
           }
         }
 
@@ -1237,42 +1197,39 @@ export default function MagicalChatInput() {
           >
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="text-sm uppercase tracking-[0.12em] text-muted-foreground">Pro only</p>
-                <h4 className="text-2xl font-semibold leading-tight mt-1">Pro models need a Pro subscription</h4>
+                <p className="text-sm uppercase tracking-[0.12em] text-muted-foreground">Account required</p>
+                <h4 className="text-2xl font-semibold leading-tight mt-1">Use Pro models with your LLM7 account</h4>
               </div>
               <Button variant="ghost" size="icon" onClick={() => setShowProModal(false)} aria-label="Close">
                 <XIcon className="h-5 w-5" />
               </Button>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Pro routes the most capable models and is available only to Pro subscribers.
+              Do you already have an LLM7 account with an active subscription or available balance? Please sign in to continue, or top up your balance in the dashboard.
             </p>
-            {authStatus === "ready" && userSub !== 3 && (
+            {authStatus === "ready" && !apiToken && (
               <div className="rounded-xl border border-amber-500/50 bg-amber-500/10 text-amber-900 dark:text-amber-100 text-sm p-3 space-y-1">
-                <div className="font-semibold">Pro required</div>
-                <p>You are signed in but not on a Pro subscription. Pro models need Pro.</p>
-                <a className="text-primary underline text-xs" href="https://dash.llm7.io/?subscription=show" target="_blank" rel="noreferrer">
-                  Upgrade to Pro
+                <div className="font-semibold">Balance required</div>
+                <p>You are signed in, but we could not find an API token for this account. Please top up your balance or check your dashboard.</p>
+                <a className="text-primary underline text-xs" href="https://dash.llm7.io/" target="_blank" rel="noreferrer">
+                  Open dashboard
                 </a>
               </div>
             )}
-            {userSub === 3 && apiToken ? (
-              <div className="rounded-xl border border-green-500/40 bg-green-500/10 text-green-900 dark:text-green-200 text-sm p-3">
-                Pro access confirmed{userEmail ? ` for ${userEmail}` : ""}. You can close this dialog and continue with Pro models.
+            {authStatus === "error" && authError && (
+              <div className="rounded-xl border border-destructive/40 bg-destructive/10 text-destructive text-sm p-3">
+                {authError}
               </div>
-            ) : apiToken ? (
-              <div className="rounded-xl border border-amber-500/50 bg-amber-500/10 text-amber-900 dark:text-amber-100 text-sm p-3 space-y-1">
-                <div className="font-semibold">Pro only</div>
-                <p>Pro models require a Pro subscription. You appear to be on a different plan.</p>
-                <a className="text-primary underline text-xs" href="https://dash.llm7.io/?subscription=show" target="_blank" rel="noreferrer">
-                  Upgrade to Pro
-                </a>
+            )}
+            {apiToken ? (
+              <div className="rounded-xl border border-green-500/40 bg-green-500/10 text-green-900 dark:text-green-200 text-sm p-3">
+                Account confirmed{userEmail ? ` for ${userEmail}` : ""}. You can close this dialog and continue with Pro models.
               </div>
             ) : null}
             <div className="flex flex-col sm:flex-row gap-2 justify-end">
               {!apiToken && !showAuthButton && (
                 <Button variant="outline" onClick={() => setShowAuthButton(true)}>
-                  I already have a Pro subscription
+                  I already have an account
                 </Button>
               )}
               {showAuthButton && !apiToken && (
@@ -1281,10 +1238,10 @@ export default function MagicalChatInput() {
                   {authStatus === "loading" && <Loader2Icon className="h-4 w-4 animate-spin text-primary" />}
                 </div>
               )}
-              {userSub !== 3 && (
+              {!apiToken && (
                 <Button asChild>
                   <a href="https://dash.llm7.io/" target="_blank" rel="noopener noreferrer">
-                    Get Pro access
+                    Top up balance
                   </a>
                 </Button>
               )}
