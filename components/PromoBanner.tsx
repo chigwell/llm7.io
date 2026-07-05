@@ -49,7 +49,7 @@ export default function PromoBanner() {
                 <span className="promo-shimmer-text">Limited Stripe top-up bonus</span>
               </div>
               <p className="text-sm font-semibold leading-6 text-foreground sm:text-base">
-                Until June 7, 2026 at 23:59 London time, Stripe balance top-ups from $30 are doubled
+                Until July 7, 2026 at 23:59 London time, Stripe balance top-ups from $30 are doubled
                 on llm7.io.
               </p>
               <p className="text-sm leading-6 text-muted-foreground">
