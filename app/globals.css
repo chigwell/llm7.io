@@ -16,6 +16,34 @@ html {
   }
 }
 
+@keyframes promo-shimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+    opacity: 0.86;
+    text-shadow: 0 0 10px color-mix(in oklch, #f9a8d4 38%, transparent);
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 1;
+    text-shadow: 0 0 14px color-mix(in oklch, #93c5fd 42%, transparent);
+  }
+}
+
+.promo-shimmer-text {
+  background: linear-gradient(90deg, #be185d, #b45309, #047857, #1d4ed8, #7e22ce, #be185d);
+  background-size: 260% 260%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: promo-shimmer 2.8s ease-in-out infinite;
+}
+
+.dark .promo-shimmer-text {
+  background-image: linear-gradient(90deg, #f9a8d4, #fde68a, #a7f3d0, #93c5fd, #c4b5fd, #f9a8d4);
+}
+
 .animate-logo-marquee {
   animation: logo-marquee 36s linear infinite;
 }
