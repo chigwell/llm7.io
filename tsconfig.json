@@ -25,6 +25,15 @@
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "@components/*": [
+        "./LLM7.io/src/components/*"
+      ],
+      "@constants/*": [
+        "./LLM7.io/src/constants/*"
+      ],
+      "@utils/*": [
+        "./LLM7.io/src/utils/*"
       ]
     }
   },

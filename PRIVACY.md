@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Last updated:** 2 July 2026
+**Last updated:** 10 July 2026
 
 This Privacy Policy explains how **LLM7.io** (“we”, “us”, “our”) collects and processes your personal data when you use our educational and research-oriented website and API, including `dash.llm7.io`. We operate from the United Kingdom and comply with the **UK GDPR** and, where applicable, the **EU GDPR**. Access to the API requires an **API token** issued via `dash.llm7.io`.
 
@@ -29,6 +29,9 @@ This Privacy Policy explains how **LLM7.io** (“we”, “us”, “our”) col
 **Network & security**
 - Our edge provider (**Cloudflare**) may process **IP addresses**, timestamps, and security/event logs to deliver and protect the service.
 
+**Referral Programme**
+- If you opt in after opening a referral link, we store the referral code in browser local storage and a first-party `.llm7.io` cookie for **30 days**. If you create a new account during that period, we record the relationship between the referrer and the new account, the registration time, successful referred top-ups, and promotional credits awarded.
+
 We do **not** intentionally collect special category data. We do **not** sell personal data.
 
 ---
@@ -43,6 +46,9 @@ We do **not** intentionally collect special category data. We do **not** sell pe
 
 - **Detect, prevent, investigate, and respond to fraud, unauthorised payment activity, account farming, limit evasion, chargebacks, abuse, and security incidents.**
   *Legal basis:* **Legitimate interests** (Art. 6(1)(f)) and, where applicable, **Legal obligation** (Art. 6(1)(c)).
+
+- **Operate the Referral Programme** (store your chosen referral attribution, associate a new account with a referrer, calculate promotional credits, and prevent referral fraud).
+  *Legal basis:* **Consent** for browser storage and **legitimate interests** for the server-side programme record and fraud prevention. You can refuse the attribution prompt or clear the browser storage before registration; a recorded referral relationship cannot be reassigned to another referrer.
 
 - **Legal compliance** (e.g., responding to lawful requests).  
   *Legal basis:* **Legal obligation** (Art. 6(1)(c)).
@@ -104,7 +110,9 @@ You may lodge a complaint with your local authority. In the UK: **ICO** — <htt
 
 ## 9. Cookies and similar technologies
 
-We use only **strictly necessary** cookies/edge storage for authentication, security, and core operation. Google OAuth and Cloudflare may set cookies required for sign-in and security. We do **not** use third-party advertising cookies.
+We use strictly necessary cookies/edge storage for authentication, security, and core operation. Google OAuth and Cloudflare may set cookies required for sign-in and security. We do **not** use third-party advertising cookies.
+
+Where you open a referral link, we ask for your consent before storing the referral code in local storage and a first-party `.llm7.io` cookie for 30 days. Refusing consent does not affect ordinary access to the Service, but we cannot apply the referral attribution. You can withdraw consent by clearing the relevant browser storage; this does not remove an attribution already recorded at account creation. 
 
 ---
 

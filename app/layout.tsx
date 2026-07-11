@@ -8,6 +8,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import GoogleProvider from "@/components/GoogleProvider";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { Suspense } from "react";
+import ReferralAttributionConsent from "@/components/ReferralAttributionConsent";
 
 
 const geistSans = Geist({
@@ -130,6 +131,7 @@ export default function RootLayout({
         <GoogleProvider>
           <ThemeProvider>
             <PackageManagerProvider>
+              <ReferralAttributionConsent />
               {children}
             </PackageManagerProvider>
           </ThemeProvider>

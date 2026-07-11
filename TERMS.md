@@ -1,6 +1,6 @@
 # Terms of Service
 
-**Last updated: 2 July 2026**
+**Last updated: 10 July 2026**
 
 Thank you for using **LLM7.io** (the **“Service”**). By accessing or using the Service, you agree to these Terms of Service (the **“Terms”**). If you do not accept all of the Terms, do not use the Service.
 
@@ -136,6 +136,15 @@ You agree to **defend, indemnify, and hold harmless** us and our contributors fr
   - You must provide accurate billing information and use only payment methods that you are legally authorised to use. You are responsible for ensuring that the payment details used for your account belong to you or are used with the payment method owner's valid authorisation.
   - We may update prices, subscription limits, or features. Changes apply on renewal or as otherwise notified.
   - Taxes may apply. Refunds (if any) follow the terms shown at purchase and any mandatory consumer protections in your jurisdiction.
+
+-----
+
+## 14A\. Referral Programme
+
+  - The **Referral Programme** may allow an existing account holder to share a unique referral link with a person who has not previously registered for the Service. A referral is recorded only when the new account is created using a valid saved referral link. We may reject, reverse, freeze, or not award a referral at our discretion where we reasonably suspect fraud, self-referral, account farming, payment abuse, chargebacks, or a breach of these Terms.
+  - Subject to these Terms, a qualifying referred user may receive promotional API credit equal to **20% of their first successful balance top-up**. The referring user may receive promotional API credit equal to **10% of each successful balance top-up** made by that referred user.
+  - Referral credits are promotional credits for use with the LLM7.io API only. They have no cash value; are not money, deposits, stored value, or transferable property; and cannot be withdrawn, transferred, exchanged, sold, redeemed for cash, or refunded. This does not restrict any non-waivable statutory rights relating to the original payment used to purchase a top-up.
+  - The Referral Programme is currently intended to be reviewed on **30 August 2026**. We may modify, suspend, terminate, limit, withhold, or withdraw the Programme or any promotional credit at any time without prior notice, subject to applicable law.
 
 -----
 
