@@ -1,6 +1,6 @@
 # Terms of Service
 
-**Last updated: 10 July 2026**
+**Last updated: 14 July 2026**
 
 Thank you for using **LLM7.io** (the **“Service”**). By accessing or using the Service, you agree to these Terms of Service (the **“Terms”**). If you do not accept all of the Terms, do not use the Service.
 
@@ -136,6 +136,8 @@ You agree to **defend, indemnify, and hold harmless** us and our contributors fr
   - You must provide accurate billing information and use only payment methods that you are legally authorised to use. You are responsible for ensuring that the payment details used for your account belong to you or are used with the payment method owner's valid authorisation.
   - We may update prices, subscription limits, or features. Changes apply on renewal or as otherwise notified.
   - Taxes may apply. Refunds (if any) follow the terms shown at purchase and any mandatory consumer protections in your jurisdiction.
+  - If your account has no activity for **six consecutive months**, we may apply an inactive-account balance reduction to help cover continued storage and maintenance of archived account-related records, including usage statistics, account technical metadata, and other data associated with operating, securing, and maintaining the account. For this purpose, **activity** means either a successful authentication to your account or an API request authenticated with your account credentials.
+  - After the six-month inactivity period, the remaining account balance may be reduced by **10% per day**, calculated against the remaining balance at the time of each reduction. The reduction will stop if activity resumes. If the remaining balance reaches **US$0.10 or less**, we may reduce the remaining balance to **US$0.00**. This reduction will not create a negative balance and applies only to the account balance, subject to any non-waivable rights you may have under applicable law.
 
 -----
 
