@@ -17,8 +17,9 @@ type PayModel = {
   tier?: string;
   chips: Array<"tools" | "vision" | "json" | "stream" | "reasoning">;
   contextWindow: string;
-  inputPrice: string;
-  outputPrice: string;
+  inputPrice?: string;
+  outputPrice?: string;
+  imagePrice?: string;
   minimumRequestPrice?: string;
   usageBasedOnly?: boolean;
   availabilityLastHourPercent?: number;
@@ -34,6 +35,10 @@ function providerDetails(id: string) {
 
   if (modelId.startsWith("gpt-")) {
     return { provider: "OpenAI", lightLogo: "/openai.svg", darkLogo: "/openai.svg" };
+  }
+
+  if (modelId.startsWith("flux-")) {
+    return { provider: "Flux", lightLogo: "/flux-lettermark-full-color.svg", darkLogo: "/flux-lettermark-full-color.svg" };
   }
 
   if (modelId.startsWith("claude-")) {
@@ -116,8 +121,10 @@ function modelChips(model: ApiModel): PayModel["chips"] {
 function transformApiModel(model: ApiModel): PayModel {
   const provider = providerDetails(model.id);
   const unit = model.pricing?.unit ?? "1M tokens";
+  const isImagePriced = model.pricing_mode === "image" || unit.toLowerCase() === "image";
   const inputPrice = formatUsd(model.pricing?.input);
   const outputPrice = formatUsd(model.pricing?.output);
+  const imagePrice = formatUsd(model.pricing?.price);
 
   return {
     id: model.id,
@@ -126,8 +133,9 @@ function transformApiModel(model: ApiModel): PayModel {
     tier: model.tier,
     chips: modelChips(model),
     contextWindow: formatContextWindow(model),
-    inputPrice: `${inputPrice} / ${unit}`,
-    outputPrice: `${outputPrice} / ${unit}`,
+    inputPrice: isImagePriced ? undefined : `${inputPrice} / ${unit}`,
+    outputPrice: isImagePriced ? undefined : `${outputPrice} / ${unit}`,
+    imagePrice: isImagePriced ? `${imagePrice} / image` : undefined,
     minimumRequestPrice:
       typeof model.pricing?.minimum_request_price_usd === "number"
         ? formatUsd(model.pricing.minimum_request_price_usd)
@@ -309,6 +317,8 @@ function ProviderLogo({ model }: { model: PayModel }) {
 
 function ModelCard({ model, availability }: { model: PayModel; availability?: number }) {
   const [copied, setCopied] = useState(false);
+  const hasContextWindow = model.contextWindow !== "Not listed";
+  const hasSecondaryDetails = hasContextWindow || Boolean(model.minimumRequestPrice);
 
   const handleCopyTitle = useCallback(async () => {
     await copyToClipboard(model.name);
@@ -348,29 +358,42 @@ function ModelCard({ model, availability }: { model: PayModel; availability?: nu
         </div>
       </div>
 
-      <div className="mt-5 grid grid-cols-2 gap-2 text-sm">
-        <div className="rounded-lg border border-border/50 bg-background/60 p-2">
-          <div className="text-[11px] text-muted-foreground">Input</div>
-          <div className="mt-1 text-xs font-semibold">{model.inputPrice}</div>
-        </div>
-        <div className="rounded-lg border border-border/50 bg-background/60 p-2">
-          <div className="text-[11px] text-muted-foreground">Output</div>
-          <div className="mt-1 text-xs font-semibold">{model.outputPrice}</div>
-        </div>
+      <div className={cn("mt-5 grid gap-2 text-sm", model.imagePrice ? "grid-cols-1" : "grid-cols-2")}>
+        {model.imagePrice ? (
+          <div className="rounded-lg border border-border/50 bg-background/60 p-2">
+            <div className="text-[11px] text-muted-foreground">Image</div>
+            <div className="mt-1 text-xs font-semibold">{model.imagePrice}</div>
+          </div>
+        ) : (
+          <>
+            <div className="rounded-lg border border-border/50 bg-background/60 p-2">
+              <div className="text-[11px] text-muted-foreground">Input</div>
+              <div className="mt-1 text-xs font-semibold">{model.inputPrice}</div>
+            </div>
+            <div className="rounded-lg border border-border/50 bg-background/60 p-2">
+              <div className="text-[11px] text-muted-foreground">Output</div>
+              <div className="mt-1 text-xs font-semibold">{model.outputPrice}</div>
+            </div>
+          </>
+        )}
       </div>
 
-      <div className={cn("mt-3 grid gap-2 text-sm", model.minimumRequestPrice ? "grid-cols-2" : "grid-cols-1")}>
-        <div className="rounded-lg border border-border/50 bg-background/60 p-2">
-          <div className="text-[11px] text-muted-foreground">Context</div>
-          <div className="mt-1 text-xs font-semibold">{model.contextWindow}</div>
+      {hasSecondaryDetails ? (
+        <div className={cn("mt-3 grid gap-2 text-sm", hasContextWindow && model.minimumRequestPrice ? "grid-cols-2" : "grid-cols-1")}>
+          {hasContextWindow ? (
+            <div className="rounded-lg border border-border/50 bg-background/60 p-2">
+              <div className="text-[11px] text-muted-foreground">Context</div>
+              <div className="mt-1 text-xs font-semibold">{model.contextWindow}</div>
+            </div>
+          ) : null}
+          {model.minimumRequestPrice ? (
+            <div className="rounded-lg border border-border/50 bg-background/60 p-2">
+              <div className="text-[11px] text-muted-foreground">Min request</div>
+              <div className="mt-1 text-xs font-semibold">{model.minimumRequestPrice}</div>
+            </div>
+          ) : null}
         </div>
-        {model.minimumRequestPrice ? (
-          <div className="rounded-lg border border-border/50 bg-background/60 p-2">
-            <div className="text-[11px] text-muted-foreground">Min request</div>
-            <div className="mt-1 text-xs font-semibold">{model.minimumRequestPrice}</div>
-          </div>
-        ) : null}
-      </div>
+      ) : null}
 
       <div className="mt-4 flex flex-wrap gap-1.5 pr-10">
         {model.chips.length > 0 ? (

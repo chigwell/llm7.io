@@ -11,10 +11,12 @@ export type ApiModel = {
   pricing?: {
     input?: number;
     output?: number;
+    price?: number;
     minimum_request_price_usd?: number;
     currency?: string;
     unit?: string;
   };
+  pricing_mode?: "token" | "image" | string;
   modalities?: {
     input?: string[];
     output?: string[];
