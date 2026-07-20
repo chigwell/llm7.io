@@ -1,6 +1,6 @@
 # Terms of Service
 
-**Last updated: 14 July 2026**
+**Last updated: 20 July 2026**
 
 Thank you for using **LLM7.io** (the **“Service”**). By accessing or using the Service, you agree to these Terms of Service (the **“Terms”**). If you do not accept all of the Terms, do not use the Service.
 
@@ -51,7 +51,9 @@ You agree **not** to:
   - Use the Service to create or disseminate malware, exploit minors, incite violence, or otherwise cause harm.
   - Attempt to bypass security, rate limits, usage caps, or payment requirements.
   - Use multiple accounts, tokens, payment profiles, or coordinated users to evade or increase any Service limit, quota, fair-use rule, billing requirement, or abuse-prevention control.
-  - Use payment details, cards, bank accounts, billing accounts, or other payment methods that you are not authorised to use, or otherwise engage in payment fraud, chargeback fraud, identity fraud, or billing abuse.
+  - Use payment details, cards, bank accounts, direct debit details, billing accounts, payment links, or other payment methods that do not belong to you or to the organisation you validly represent, unless we have expressly approved that arrangement in writing.
+  - Allow another person to pay for your account, or pay for another person's account, in a way that hides or misrepresents the true payer, account holder, beneficial user, billing relationship, or source of funds.
+  - Engage in or assist payment fraud, chargeback fraud, identity fraud, stolen-card use, unauthorised direct debit use, false billing information, payment-link misuse, money-laundering activity, or other billing abuse.
   - Misrepresent output as human-generated where disclosure is legally required.
   - Scrape or bulk-harvest in ways that degrade or disrupt the Service.
 
@@ -122,7 +124,8 @@ You agree to **defend, indemnify, and hold harmless** us and our contributors fr
   * We may **suspend, restrict, or terminate** access **at any time and at our sole discretion**, including (but not limited to) cases of:
       * **security risks**, **suspected fraud**, **abuse**, or **unreasonable or non-meaningful usage** as determined **automatically or manually** by our internal systems, partner systems, or administrators;
       * **operational**, **legal**, or **compliance** reasons.
-  * If we detect or reasonably suspect payment fraud, unauthorised use of payment details, account farming, limit evasion, or related abuse, we may automatically or manually disable the relevant accounts, API tokens, payment profiles, and related access to the Service and APIs, including associated or linked accounts.
+  * If we detect or reasonably suspect payment fraud, unauthorised use of a payment method, third-party payment misuse, account farming, limit evasion, or related abuse, we may automatically or manually restrict, suspend, or permanently disable the relevant accounts, API tokens, API keys, payment profiles, subscriptions, balances, and related access to the Service and APIs, including associated or linked accounts.
+  * Where we restrict, suspend, or terminate access because of detected or reasonably suspected fraud, unauthorised payment activity, sanctions evasion, or serious abuse, our decision may be final and we are not required to provide reinstatement, compensation, technical details about our detection systems, or an internal appeal process, except where applicable law requires otherwise.
   * Where permitted or required by law, we may preserve relevant information and disclose or report suspected fraud, unauthorised payment activity, or other unlawful activity to law enforcement, courts, regulators, payment processors, card networks, banks, financial institutions, fraud-prevention services, and other competent authorities or affected parties.
   * Access may be limited or permanently withdrawn **without notice or compensation**.
   * Upon termination, your right to use the Service ceases immediately; sections that by their nature should survive (e.g., 6–12, 15) will continue to apply.
@@ -133,7 +136,9 @@ You agree to **defend, indemnify, and hold harmless** us and our contributors fr
 ## 14\. Paid subscriptions and billing
 
   - Paid subscriptions are purchased via **dash.llm7.io**. Subscriptions are currently **monthly**: **Pro** ($12/month) with the limits described in Section 2.
-  - You must provide accurate billing information and use only payment methods that you are legally authorised to use. You are responsible for ensuring that the payment details used for your account belong to you or are used with the payment method owner's valid authorisation.
+  - You must provide accurate billing information and use only payment methods that belong to you or to the organisation you validly represent. This includes cards, bank accounts, direct debit details, billing accounts, Stripe or other processor-hosted payment links, and any other payment instrument or payment arrangement used to purchase or top up the Service.
+  - You must not use another person's or organisation's payment method, bank card, payment link, billing profile, Stripe account, direct debit details, bank account, or source of funds to pay for your account, unless we have expressly approved that arrangement in writing before payment is made. General permission from the payment method owner may not be sufficient if the arrangement misrepresents the true account holder, payer, beneficial user, billing relationship, or source of funds.
+  - We may decline, delay, review, reverse, refund, suspend, or cancel a payment, subscription, top-up, referral credit, promotional credit, or account access where payment information is incomplete, inconsistent, disputed, charged back, high-risk, unauthorised, or reasonably suspected to involve third-party payment misuse, fraud, sanctions evasion, account farming, limit evasion, or other abuse.
   - We may update prices, subscription limits, or features. Changes apply on renewal or as otherwise notified.
   - Taxes may apply. Refunds (if any) follow the terms shown at purchase and any mandatory consumer protections in your jurisdiction.
   - If your account has no activity for **six consecutive months**, we may apply an inactive-account balance reduction to help cover continued storage and maintenance of archived account-related records, including usage statistics, account technical metadata, and other data associated with operating, securing, and maintaining the account. For this purpose, **activity** means either a successful authentication to your account or an API request authenticated with your account credentials.
