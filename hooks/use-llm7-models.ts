@@ -7,6 +7,7 @@ export const MODELS_API_URL = "https://api.llm7.io/v1/models";
 
 export type ApiModel = {
   id: string;
+  model_type?: string;
   tier?: string;
   pricing?: {
     input?: number;
@@ -16,10 +17,19 @@ export type ApiModel = {
     currency?: string;
     unit?: string;
   };
-  pricing_mode?: "token" | "image" | string;
+  pricing_mode?: "token" | "image" | "second" | string;
   modalities?: {
     input?: string[];
     output?: string[];
+  };
+  capabilities?: {
+    video_generation?: boolean;
+    video_async?: boolean;
+    max_reference_images?: number;
+    max_reference_image_bytes?: number;
+    supported_seconds?: number[];
+    supported_sizes?: string[];
+    [key: string]: unknown;
   };
   context_window?: {
     tokens?: number | null;

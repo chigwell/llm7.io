@@ -15,11 +15,12 @@ type PayModel = {
   lightLogo?: string;
   darkLogo?: string;
   tier?: string;
-  chips: Array<"tools" | "vision" | "json" | "stream" | "reasoning">;
+  chips: Array<"tools" | "vision" | "video" | "json" | "stream" | "reasoning">;
   contextWindow: string;
-  inputPrice?: string;
-  outputPrice?: string;
-  imagePrice?: string;
+  priceItems: Array<{
+    label: string;
+    value: string;
+  }>;
   minimumRequestPrice?: string;
   usageBasedOnly?: boolean;
   availabilityLastHourPercent?: number;
@@ -83,10 +84,9 @@ function providerDetails(id: string) {
 function formatUsd(value?: number) {
   if (typeof value !== "number" || !Number.isFinite(value)) return "n/a";
 
-  const digits = value < 0.01 ? 4 : 2;
   return `$${value.toLocaleString("en-US", {
-    minimumFractionDigits: digits,
-    maximumFractionDigits: digits,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 4,
   })}`;
 }
 
@@ -109,22 +109,94 @@ function formatContextWindow(model: ApiModel) {
 }
 
 function modelChips(model: ApiModel): PayModel["chips"] {
+  const outputModalities = model.modalities?.output ?? [];
+  const isVideoModel =
+    model.model_type?.toLowerCase() === "video" ||
+    outputModalities.includes("video") ||
+    model.capabilities?.video_generation === true;
+
   return [
     model.tools_calling ? "tools" : null,
     model.modalities?.input?.includes("image") ? "vision" : null,
+    isVideoModel ? "video" : null,
     model.json_mode ? "json" : null,
     model.stream ? "stream" : null,
     model.reasoning ? "reasoning" : null,
   ].filter(Boolean) as PayModel["chips"];
 }
 
+function getSinglePriceUnit(model: ApiModel) {
+  const unit = model.pricing?.unit?.trim();
+  if (unit) return unit;
+
+  const pricingMode = model.pricing_mode?.toLowerCase();
+  if (pricingMode === "second") return "second";
+  if (pricingMode === "image") return "image";
+
+  return "unit";
+}
+
+function formatUnit(unit: string) {
+  const normalizedUnit = unit.toLowerCase();
+  if (normalizedUnit === "seconds") return "second";
+  return unit;
+}
+
+function getSinglePriceLabel(model: ApiModel, unit: string) {
+  const normalizedUnit = unit.toLowerCase();
+  const outputModalities = model.modalities?.output ?? [];
+
+  if (normalizedUnit === "image" || model.pricing_mode?.toLowerCase() === "image") {
+    return "Image";
+  }
+
+  if (
+    normalizedUnit === "second" ||
+    normalizedUnit === "seconds" ||
+    model.pricing_mode?.toLowerCase() === "second" ||
+    model.model_type?.toLowerCase() === "video" ||
+    outputModalities.includes("video") ||
+    model.capabilities?.video_generation === true
+  ) {
+    return "Video";
+  }
+
+  return "Price";
+}
+
+function pricingItems(model: ApiModel): PayModel["priceItems"] {
+  const pricingMode = model.pricing_mode?.toLowerCase();
+  const unit = model.pricing?.unit?.trim() || "1M tokens";
+  const normalizedUnit = unit.toLowerCase();
+  const hasSinglePrice = typeof model.pricing?.price === "number";
+  const hasTokenPair = typeof model.pricing?.input === "number" || typeof model.pricing?.output === "number";
+  const isSinglePrice =
+    pricingMode === "image" ||
+    pricingMode === "second" ||
+    normalizedUnit === "image" ||
+    normalizedUnit === "second" ||
+    normalizedUnit === "seconds" ||
+    (hasSinglePrice && !hasTokenPair);
+
+  if (isSinglePrice) {
+    const singleUnit = getSinglePriceUnit(model);
+
+    return [
+      {
+        label: getSinglePriceLabel(model, singleUnit),
+        value: `${formatUsd(model.pricing?.price)} / ${formatUnit(singleUnit)}`,
+      },
+    ];
+  }
+
+  return [
+    { label: "Input", value: `${formatUsd(model.pricing?.input)} / ${unit}` },
+    { label: "Output", value: `${formatUsd(model.pricing?.output)} / ${unit}` },
+  ];
+}
+
 function transformApiModel(model: ApiModel): PayModel {
   const provider = providerDetails(model.id);
-  const unit = model.pricing?.unit ?? "1M tokens";
-  const isImagePriced = model.pricing_mode === "image" || unit.toLowerCase() === "image";
-  const inputPrice = formatUsd(model.pricing?.input);
-  const outputPrice = formatUsd(model.pricing?.output);
-  const imagePrice = formatUsd(model.pricing?.price);
 
   return {
     id: model.id,
@@ -133,9 +205,7 @@ function transformApiModel(model: ApiModel): PayModel {
     tier: model.tier,
     chips: modelChips(model),
     contextWindow: formatContextWindow(model),
-    inputPrice: isImagePriced ? undefined : `${inputPrice} / ${unit}`,
-    outputPrice: isImagePriced ? undefined : `${outputPrice} / ${unit}`,
-    imagePrice: isImagePriced ? `${imagePrice} / image` : undefined,
+    priceItems: pricingItems(model),
     minimumRequestPrice:
       typeof model.pricing?.minimum_request_price_usd === "number"
         ? formatUsd(model.pricing.minimum_request_price_usd)
@@ -358,24 +428,13 @@ function ModelCard({ model, availability }: { model: PayModel; availability?: nu
         </div>
       </div>
 
-      <div className={cn("mt-5 grid gap-2 text-sm", model.imagePrice ? "grid-cols-1" : "grid-cols-2")}>
-        {model.imagePrice ? (
-          <div className="rounded-lg border border-border/50 bg-background/60 p-2">
-            <div className="text-[11px] text-muted-foreground">Image</div>
-            <div className="mt-1 text-xs font-semibold">{model.imagePrice}</div>
+      <div className={cn("mt-5 grid gap-2 text-sm", model.priceItems.length === 1 ? "grid-cols-1" : "grid-cols-2")}>
+        {model.priceItems.map((priceItem) => (
+          <div key={priceItem.label} className="rounded-lg border border-border/50 bg-background/60 p-2">
+            <div className="text-[11px] text-muted-foreground">{priceItem.label}</div>
+            <div className="mt-1 text-xs font-semibold">{priceItem.value}</div>
           </div>
-        ) : (
-          <>
-            <div className="rounded-lg border border-border/50 bg-background/60 p-2">
-              <div className="text-[11px] text-muted-foreground">Input</div>
-              <div className="mt-1 text-xs font-semibold">{model.inputPrice}</div>
-            </div>
-            <div className="rounded-lg border border-border/50 bg-background/60 p-2">
-              <div className="text-[11px] text-muted-foreground">Output</div>
-              <div className="mt-1 text-xs font-semibold">{model.outputPrice}</div>
-            </div>
-          </>
-        )}
+        ))}
       </div>
 
       {hasSecondaryDetails ? (
@@ -456,7 +515,7 @@ export default function PayAsYouGoModels() {
       </div>
 
       <p className="mt-4 text-xs text-muted-foreground">
-        Prices are shown per 1M tokens unless a model lists a different unit. Minimum request price is shown when provided by the model endpoint.{" "}
+        Prices use each model&apos;s listed unit. Minimum request price is shown when provided by the model endpoint.{" "}
         <a href={MODELS_API_URL} target="_blank" rel="noreferrer" className="text-primary underline underline-offset-4">
           See all models in JSON format via API
         </a>
