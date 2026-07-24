@@ -1,6 +1,6 @@
 # Terms of Service
 
-**Last updated: 20 July 2026**
+**Last updated: 24 July 2026**
 
 Thank you for using **LLM7.io** (the **“Service”**). By accessing or using the Service, you agree to these Terms of Service (the **“Terms”**). If you do not accept all of the Terms, do not use the Service.
 
@@ -20,6 +20,7 @@ Thank you for using **LLM7.io** (the **“Service”**). By accessing or using t
       - **Free token**: Up to **5,000,000 tokens/day** over a rolling 24-hour window.
       - **Pro** ($12/month): Higher dynamically managed token limits than the free tier. Pro token availability is calculated across the monthly billing period, including usage relative to the percentage of that billing period that has elapsed, and remains subject to model availability, service capacity, fair-use calculations, and abuse-prevention controls. Also includes up to **25 text requests/s**, **1,500 text requests/min**, and **15,000 text requests/hour**, plus JSON mode, function calling, and Pro models.
   - Where token limits apply, usage is counted as **input tokens plus output tokens** over a **rolling 24-hour window**.
+  - To improve Service performance, reliability, and abuse-prevention, we may temporarily cache responses for up to **five (5) minutes**. During that period, if the same authenticated user, account, or API token submits an identical request, the Service may return the previously generated response exactly as originally provided, without reprocessing, regenerating, updating, or otherwise modifying it. Cached responses are treated as normal Service responses and may be counted and billed in the same way as non-cached responses, including for applicable request, token, quota, rate-limit, subscription, or usage-balance calculations.
   - **Features, limits, models, and pricing may change at any time** without notice.
   - The Service is intended for education, experimentation, development, and research. It is **not** for life-critical, safety-critical, emergency, production, or other uses where stable, uninterrupted, or guaranteed model access is required.
 
