@@ -210,7 +210,7 @@ export default function FeaturedComponents() {
               "Free token",
               "1,000,000 tokens/day",
               "128k chars/req*",
-              "100 r/h, 40 r/m, 2 r/s",
+              "250 r/h, 60 r/m, 2 r/s",
               <span key="token-link">
                 Get your token at{" "}
                 <a href="https://dash.llm7.io/" className="text-primary underline underline-offset-4" target="_blank" rel="noreferrer">
@@ -229,7 +229,7 @@ export default function FeaturedComponents() {
         period: "m",
         image: "/pro.png",
         features: [
-          "Higher dynamic token limits**",
+          "Dynamic token allowance**",
           "Up to 25 text req/s",
           "Up to 1,500 text req/min",
           "Up to 15,000 text req/hour",
@@ -279,7 +279,8 @@ export default function FeaturedComponents() {
             <div className="w-full max-w-md text-xs text-muted-foreground space-y-1">
               <p>* Limits depend on the model and may be lower.</p>
               <p>** Pro token availability is calculated dynamically across the billing month, including usage relative to the percentage of the billing period elapsed.</p>
-              <p>Daily token usage is input tokens plus output tokens over a rolling 24-hour window.</p>
+              <p>Anonymous access is limited to 500,000 tokens/day with 60 r/h, 10 r/m, and 1 r/s. Free token access is limited to 1,000,000 tokens/day with 250 r/h, 60 r/m, and 2 r/s.</p>
+              <p>Daily token usage is input tokens plus output tokens over a rolling 24-hour window. Usage-billed paid requests are not limited by a daily token quota, but remain subject to balance, rate limits, and availability.</p>
               <p>If you need more capacity, please contact us via {" "}
                <a href="mailto:support@llm7.io?subject=Subscription Inquiry&body=Hey, I would like to discuss subscription options." className="text-primary underline underline-offset-4">
                   support@llm7.io
