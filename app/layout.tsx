@@ -1,14 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import ThemeProvider from "@/providers/ThemeProvider";
-import { PackageManagerProvider } from "@/contexts/PackageManagerContext";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import GoogleProvider from "@/components/GoogleProvider";
-import GoogleAnalytics from "@/components/GoogleAnalytics";
-import { Suspense } from "react";
-import ReferralAttributionConsent from "@/components/ReferralAttributionConsent";
 
 
 const geistSans = Geist({
@@ -117,6 +109,14 @@ export const viewport = {
   ],
 };
 
+const siteJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "Organization", name: "LLM7", url: "https://llm7.io" },
+    { "@type": "WebSite", name: "LLM7", url: "https://llm7.io" },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -125,19 +125,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Suspense fallback={null}>
-          <GoogleAnalytics />
-        </Suspense>
-        <GoogleProvider>
-          <ThemeProvider>
-            <PackageManagerProvider>
-              <ReferralAttributionConsent />
-              {children}
-            </PackageManagerProvider>
-          </ThemeProvider>
-        </GoogleProvider>
-        <Analytics />
-        <SpeedInsights />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }} />
+        {children}
         </body>
     </html>
   );

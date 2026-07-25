@@ -42,3 +42,13 @@ next-env.d.ts
 
 # auto-generated source map
 /lib/componentSourceCode.ts
+
+.idea/
+LLM7.io/
+data/generated/public-model-data.json
+data/generated/model-route-map.json
+public/generated/og/
+public/sitemap.xml
+public/sitemap-static.xml
+public/sitemap-models.xml
+public/sitemap-comparisons-*.xml

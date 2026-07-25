@@ -7,15 +7,17 @@
   "license": "GNU AFFERO GENERAL PUBLIC LICENSE",
   "scripts": {
     "dev": "next dev --turbopack",
-    "prebuild": "node scripts/GenerateSourceMap.js",
+    "prebuild": "node scripts/GenerateSourceMap.js && node scripts/sync-public-model-data.mjs && node scripts/generate-model-seo-assets.mjs",
     "build": "npx next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "node scripts/sync-public-model-data.mjs && next lint",
     "release": "./scripts/release.sh",
     "release:patch": "./scripts/release.sh $(node -p \"require('./package.json').version.replace(/\\d+$/, m => +m + 1)\")",
     "release:minor": "./scripts/release.sh $(node -p \"const v = require('./package.json').version.split('.'); v[1] = +v[1] + 1; v[2] = 0; v.join('.')\")",
     "release:major": "./scripts/release.sh $(node -p \"const v = require('./package.json').version.split('.'); v[0] = +v[0] + 1; v[1] = 0; v[2] = 0; v.join('.')\")\"",
-    "version": "echo $(node -p \"require('./package.json').version\")"
+    "version": "echo $(node -p \"require('./package.json').version\")",
+    "test": "node --test tests/*.test.mjs",
+    "validate:seo": "node scripts/validate-seo-output.mjs"
   },
   "dependencies": {
     "@amcharts/amcharts5": "^5.14.4",
@@ -53,6 +55,7 @@
     "clsx": "^2.1.1",
     "d3-array": "^3.2.4",
     "d3-time-format": "^4.1.0",
+    "decimal.js-light": "^2.5.1",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.23.12",
     "gsap": "^3.13.0",
@@ -69,7 +72,8 @@
     "react-switch": "^7.1.0",
     "react-syntax-highlighter": "^15.6.3",
     "tailwind-merge": "^3.3.1",
-    "three": "^0.179.1"
+    "three": "^0.179.1",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1.13.16",

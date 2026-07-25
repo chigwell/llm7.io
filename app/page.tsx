@@ -8,12 +8,13 @@ import ModelShowcase from "@/components/ModelShowcase";
 import ChatExample from "@/components/ChatExample";
 import Disclaimer from "@/components/Disclaimer";
 import ConsoleAnimation from "@/components/CodeExample";
+import MarketingProviders from "@/components/MarketingProviders";
 //import UsageSummaryChartCard from "@/components/Stats";
 // import ImageGenerationInput from "@/components/ImageExample";
 
 export default function Home() {
   return (
-    <>
+    <MarketingProviders>
       <Navigation />
       <HeroSection />
       <EcosystemLogoCarousel />
@@ -25,6 +26,6 @@ export default function Home() {
       <ActiveRequestsChart />
       <Disclaimer/>
       <Footer />
-    </>
+    </MarketingProviders>
   );
 }

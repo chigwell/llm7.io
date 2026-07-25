@@ -155,6 +155,22 @@ export default function Footer() {
                   Models
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/models/"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Model catalogue
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/compare/"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Compare models
+                </Link>
+              </li>
                 <li>
                 <Link
                     href="#example"

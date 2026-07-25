@@ -8,6 +8,12 @@ This repository contains the source code for the landing page of [LLM7.io](https
 
 ## Overview
 
+### Public model catalogue refresh
+
+Model, comparison, sitemap, and Open Graph assets are generated during `npm run build` from the public API snapshot. Configure the repository secret `CLOUDFLARE_PAGES_DEPLOY_HOOK_URL` with the existing Cloudflare Pages deploy hook to allow the hourly **Refresh public model pages** workflow to start a fresh atomic build. Forks safely skip the refresh when that secret is unavailable. Commit-based deployment remains unchanged.
+
+Run `npm run test` for data-pipeline utility checks and `npm run validate:seo` after a production build to inspect the exported `out/` pages.
+
 LLM7.io provides:
 - **Free access** to powerful LLMs (GPT-4-like, DeepSeek, Mistral, etc.)
 - **Token access**: Use an API token to access the service

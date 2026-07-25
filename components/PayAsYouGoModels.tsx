@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useMemo, useState } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { Button } from "@/components/ui/buttonShadcn";
@@ -537,6 +538,12 @@ export default function PayAsYouGoModels() {
           </Button>
         </div>
       ) : null}
+
+      {showAll ? <div className="mt-4 flex justify-center">
+        <Button asChild variant="outline">
+          <Link href="/models/">Browse the full model catalogue</Link>
+        </Button>
+      </div> : null}
 
     </section>
   );

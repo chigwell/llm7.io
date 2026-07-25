@@ -1,4 +1,5 @@
+import ThemeProvider from "@/providers/ThemeProvider";
+
 export default function Layout({ children }: { children: React.ReactNode }) {
-    return <>{children}</>;
-  }
-  
+    return <ThemeProvider>{children}</ThemeProvider>;
+}
