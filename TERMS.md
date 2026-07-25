@@ -1,6 +1,6 @@
 # Terms of Service
 
-**Last updated: 24 July 2026**
+**Last updated: 25 July 2026**
 
 Thank you for using **LLM7.io** (the **“Service”**). By accessing or using the Service, you agree to these Terms of Service (the **“Terms”**). If you do not accept all of the Terms, do not use the Service.
 
@@ -29,11 +29,22 @@ Thank you for using **LLM7.io** (the **“Service”**). By accessing or using t
 
 ## 3\. Accounts, API tokens, and security
 
-  - If you use **`dash.llm7.io`** to issue access tokens for **LLM7.io**, you must keep those tokens **secret** and **secure**. Tokens are personal and non-transferable.
+  - If you use **`dash.llm7.io`** to issue access tokens for **LLM7.io**, you must keep those tokens **secret** and **secure**. Tokens are issued to the account holder and are non-transferable, except where we have expressly approved a resale, redistribution, embedded integration, or other downstream-access arrangement in writing.
   - Each account is for one user or organisation. You must not create, use, or coordinate multiple accounts, identities, API tokens, payment profiles, or similar arrangements to bypass or increase Service limits, including concurrent request limits, rate limits, token quotas, free-tier allowances, usage caps, billing requirements, abuse-prevention controls, or other technical or commercial restrictions.
   - We may **rate-limit**, **suspend**, or **revoke** tokens to protect the Service from abuse.
   - You are responsible for all activity performed using your tokens or account.
   - You agree to receive **transactional/service emails** required to operate your account (e.g., authentication, security, incident or material-change notices). **Optional product updates/announcements** are sent only with your **consent** or, where permitted by law, under **legitimate interests** with a clear **opt-out** (an unsubscribe link is included in every such email).
+
+-----
+
+## 3A\. Resale, redistribution, and downstream access
+
+  - You must not resell, redistribute, sublicense, broker, white-label, share, pool, proxy, gateway, embed, or otherwise make the Service available to third parties as part of another product, service, application, API, platform, workflow, or commercial arrangement unless we have given prior written approval.
+  - To request approval, contact **[support@llm7.io](mailto:support@llm7.io)** and identify the account and API token proposed for the arrangement, the intended service level or tier, the expected request and token volumes, the access model for downstream users or customers, the technical integration or resale structure, billing and support responsibilities, and any compliance or abuse-prevention controls relevant to the proposed use.
+  - Approved resale or downstream-access accounts may require a separate written agreement, additional account verification, separate pricing, usage reporting, customer-support commitments, compliance obligations, or other conditions. Approval is specific to the account, token, service level, and arrangement we approve, and may not be transferred or expanded without further written approval.
+  - Standard accounts and API tokens are limited by user or organisation. Until we approve a resale or downstream-access arrangement and configure any applicable account-specific limits, you must not use standard user limits to serve multiple unrelated third parties, avoid rate limits, aggregate demand, or otherwise bypass the Service's quota, fair-use, billing, or abuse-prevention systems.
+  - Where we approve a resale or downstream-access arrangement, we may manually adjust rate limits, quotas, usage controls, or other technical limits for the approved account at our discretion. Any such adjustment is not a guarantee of capacity, uptime, model availability, latency, throughput, or continued access.
+  - You remain responsible for all use of the Service through your approved arrangement, including downstream user activity, compliance with these Terms, applicable laws, sanctions and export-control restrictions, billing obligations, and responding to abuse, security, or support issues.
 
 -----
 
@@ -53,6 +64,7 @@ You agree **not** to:
   - Use the Service to create or disseminate malware, exploit minors, incite violence, or otherwise cause harm.
   - Attempt to bypass security, rate limits, usage caps, or payment requirements.
   - Use multiple accounts, tokens, payment profiles, or coordinated users to evade or increase any Service limit, quota, fair-use rule, billing requirement, or abuse-prevention control.
+  - Resell, redistribute, sublicense, broker, white-label, share, pool, proxy, gateway, embed, or otherwise provide third-party or downstream access to the Service without the prior written approval required by Section 3A.
   - Use payment details, cards, bank accounts, direct debit details, billing accounts, payment links, or other payment methods that do not belong to you or to the organisation you validly represent, unless we have expressly approved that arrangement in writing.
   - Allow another person to pay for your account, or pay for another person's account, in a way that hides or misrepresents the true payer, account holder, beneficial user, billing relationship, or source of funds.
   - Engage in or assist payment fraud, chargeback fraud, identity fraud, stolen-card use, unauthorised direct debit use, false billing information, payment-link misuse, money-laundering activity, or other billing abuse.
