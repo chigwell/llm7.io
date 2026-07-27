@@ -50,8 +50,18 @@ function assertNoDeniedFields(value, path = "public") {
   }
 }
 
+function stripInternalRouteFields(value) {
+  if (Array.isArray(value)) return value.map(stripInternalRouteFields);
+  if (!value || typeof value !== "object") return value;
+
+  return Object.fromEntries(Object.entries(value).flatMap(([key, entry]) => {
+    if (key === "atlascloud_routes") return [];
+    return [[key, stripInternalRouteFields(entry)]];
+  }));
+}
+
 function validate(schema, value, label) {
-  const parsed = schema.parse(value);
+  const parsed = stripInternalRouteFields(schema.parse(value));
   assertNoDeniedFields(parsed, label);
   return parsed;
 }
