@@ -1,0 +1,30 @@
+name: Refresh public model pages
+
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: refresh-model-pages
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Cloudflare Pages build
+        env:
+          CLOUDFLARE_PAGES_DEPLOY_HOOK_URL: ${{ secrets.CLOUDFLARE_PAGES_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$CLOUDFLARE_PAGES_DEPLOY_HOOK_URL" ]; then
+            echo "Deploy hook is unavailable; skipping scheduled refresh."
+            exit 0
+          fi
+          curl \
+            --fail \
+            --show-error \
+            --silent \
+            --retry 3 \
+            --request POST \
+            "$CLOUDFLARE_PAGES_DEPLOY_HOOK_URL"
