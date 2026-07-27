@@ -11,6 +11,7 @@ export function logoDetailsForModelId(modelId: string): ModelLogoAsset | null {
   if (id.startsWith("gpt-")) return { provider: "OpenAI", lightLogo: "/openai.svg", invert: true };
   if (id.startsWith("firefly-") || id.includes("firefly")) return { provider: "Firefly", lightLogo: "/firefly-preview.png" };
   if (id.startsWith("seedance-") || id.includes("seedance")) return { provider: "Seedance", lightLogo: "/seedance-preview.png" };
+  if (id.startsWith("kling-") || id.includes("kling")) return { provider: "Kling", lightLogo: "/kling.png" };
   if (id.startsWith("flux-")) return { provider: "Flux", lightLogo: "/flux-lettermark-full-color.svg" };
   if (id.startsWith("claude-")) return { provider: "Anthropic", lightLogo: "/claude.svg" };
   if (id.startsWith("gemini-")) return { provider: "Google", lightLogo: "/gemini.svg" };
