@@ -7,6 +7,7 @@ import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { Button } from "@/components/ui/buttonShadcn";
 import { MODELS_API_URL, type ApiModel, useLlm7Models } from "@/hooks/use-llm7-models";
 import { usePingMetrics } from "@/hooks/use-ping-metrics";
+import { logoDetailsForModelId } from "@/lib/models/logos";
 import { cn } from "@/lib/utils";
 
 type PayModel = {
@@ -31,56 +32,6 @@ type PayModel = {
     recent?: number;
   };
 };
-
-function providerDetails(id: string) {
-  const modelId = id.toLowerCase();
-
-  if (modelId.startsWith("gpt-")) {
-    return { provider: "OpenAI", lightLogo: "/openai.svg", darkLogo: "/openai.svg" };
-  }
-
-  if (modelId.startsWith("flux-")) {
-    return { provider: "Flux", lightLogo: "/flux-lettermark-full-color.svg", darkLogo: "/flux-lettermark-full-color.svg" };
-  }
-
-  if (modelId.startsWith("claude-")) {
-    return { provider: "Anthropic", lightLogo: "/claude.svg", darkLogo: "/claude.svg" };
-  }
-
-  if (modelId.startsWith("gemini-")) {
-    return { provider: "Google", lightLogo: "/gemini.svg", darkLogo: "/gemini.svg" };
-  }
-
-  if (modelId.startsWith("codestral-") || modelId.startsWith("devstral-")) {
-    return { provider: "Mistral AI", lightLogo: "/mistral-ai-logo.svg", darkLogo: "/mistral-ai-logo.svg" };
-  }
-
-  if (modelId.startsWith("deepseek-")) {
-    return { provider: "DeepSeek", lightLogo: "/deepseek-color.svg", darkLogo: "/deepseek-color.svg" };
-  }
-
-  if (modelId.startsWith("glm-")) {
-    return { provider: "Z.ai", lightLogo: "/z-ai-logo.svg", darkLogo: "/z-ai-logo.svg" };
-  }
-
-  if (modelId.startsWith("grok-")) {
-    return { provider: "xAI", lightLogo: "/grok-ai-icon-light.svg", darkLogo: "/grok-icon-dark.svg" };
-  }
-
-  if (modelId.startsWith("kimi-")) {
-    return { provider: "Moonshot AI", lightLogo: "/k-only-light.svg", darkLogo: "/k-only-dark.svg" };
-  }
-
-  if (modelId.startsWith("minimax-")) {
-    return { provider: "MiniMax", lightLogo: "/minimax.png", darkLogo: "/minimax.png" };
-  }
-
-  if (modelId.startsWith("qwen3")) {
-    return { provider: "Qwen", lightLogo: "/qwen.svg", darkLogo: "/qwen.svg" };
-  }
-
-  return { provider: "" };
-}
 
 function formatUsd(value?: number) {
   if (typeof value !== "number" || !Number.isFinite(value)) return "n/a";
@@ -197,7 +148,7 @@ function pricingItems(model: ApiModel): PayModel["priceItems"] {
 }
 
 function transformApiModel(model: ApiModel): PayModel {
-  const provider = providerDetails(model.id);
+  const provider = logoDetailsForModelId(model.id) ?? { provider: "" };
 
   return {
     id: model.id,

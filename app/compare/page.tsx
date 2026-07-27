@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ComparisonSelector from "@/components/models/ComparisonSelector.client";
+import ModelLogo from "@/components/models/ModelLogo";
 import { JsonLd, SeoFooter, SeoNavigation } from "@/components/models/SeoChrome";
 import { createComparisonPairs } from "@/lib/models/comparisons";
 import { comparisonPath } from "@/lib/models/routes";
@@ -19,7 +20,8 @@ export const metadata: Metadata = {
 export default function CompareIndexPage() {
   const pairs = Object.values(createComparisonPairs(publicModels));
   const grouped = (["chat", "image", "video"] as const).map((type) => [type, pairs.filter((pair) => publicModels.find((model) => model.slug === pair.leftSlug)?.model_type === type).slice(0, 8)] as const);
-  const name = (slug: string) => publicModels.find((model) => model.slug === slug)?.model_id ?? slug;
+  const modelBySlug = (slug: string) => publicModels.find((model) => model.slug === slug);
+  const name = (slug: string) => modelBySlug(slug)?.model_id ?? slug;
 
   return (
     <>
@@ -36,7 +38,12 @@ export default function CompareIndexPage() {
 
         <section className="mt-10" aria-labelledby="popular-comparisons">
           <div className="mb-6"><h2 id="popular-comparisons" className="text-2xl font-semibold">Start with a popular comparison</h2><p className="mt-1 text-sm text-muted-foreground">Choose a pair to jump straight into the details.</p></div>
-          <div className="grid gap-5 lg:grid-cols-3">{grouped.map(([type, typePairs]) => <section key={type} className="rounded-2xl border border-border/60 bg-card/55 p-5 shadow-sm backdrop-blur"><h3 className="text-lg font-semibold capitalize">{type} models</h3>{typePairs.length ? <div className="mt-4 space-y-2">{typePairs.map((pair) => <Link key={pair.leftSlug + "-" + pair.rightSlug} className="block rounded-xl border border-border/60 bg-background/45 px-3 py-3 text-sm font-medium transition-colors hover:border-primary hover:bg-primary/5" href={comparisonPath(pair.leftSlug, pair.rightSlug)}>{name(pair.leftSlug)}<span className="px-1 text-muted-foreground">vs</span>{name(pair.rightSlug)}</Link>)}</div> : <p className="mt-3 text-sm text-muted-foreground">No matching pair is available yet.</p>}</section>)}</div>
+          <div className="grid gap-5 lg:grid-cols-3">{grouped.map(([type, typePairs]) => <section key={type} className="rounded-2xl border border-border/60 bg-card/55 p-5 shadow-sm backdrop-blur"><h3 className="text-lg font-semibold capitalize">{type} models</h3>{typePairs.length ? <div className="mt-4 space-y-2">{typePairs.map((pair) => {
+            const left = modelBySlug(pair.leftSlug);
+            const right = modelBySlug(pair.rightSlug);
+
+            return <Link key={pair.leftSlug + "-" + pair.rightSlug} className="flex items-center gap-2 rounded-xl border border-border/60 bg-background/45 px-3 py-3 text-sm font-medium transition-colors hover:border-primary hover:bg-primary/5" href={comparisonPath(pair.leftSlug, pair.rightSlug)}>{left ? <ModelLogo model={left} size="sm" className="h-7 w-7 rounded-lg" /> : null}<span className="min-w-0 flex-1 truncate">{name(pair.leftSlug)}<span className="px-1 text-muted-foreground">vs</span>{name(pair.rightSlug)}</span>{right ? <ModelLogo model={right} size="sm" className="h-7 w-7 rounded-lg" /> : null}</Link>;
+          })}</div> : <p className="mt-3 text-sm text-muted-foreground">No matching pair is available yet.</p>}</section>)}</div>
         </section>
       </main>
       <SeoFooter />
