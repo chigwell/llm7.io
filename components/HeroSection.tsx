@@ -57,6 +57,15 @@ type FormattedTokenCount = {
 
 const TOKEN_INTRO_COMPLETE_MS = 4_200;
 
+function supportsWebGL() {
+  try {
+    const canvas = document.createElement("canvas");
+    return Boolean(canvas.getContext("webgl") || canvas.getContext("experimental-webgl"));
+  } catch {
+    return false;
+  }
+}
+
 function getFormattedTokenCount(value: number): FormattedTokenCount {
   if (value >= 1000000) {
     return {
@@ -305,6 +314,12 @@ export default function HeroSectionWithWaves() {
         mounted
       ) {
         setVantaLoading(true);
+        if (!supportsWebGL()) {
+          setVantaLoaded(false);
+          setVantaLoading(false);
+          return;
+        }
+
         try {
           // Load Three.js
           if (!window.THREE) {
