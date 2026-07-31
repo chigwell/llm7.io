@@ -27,7 +27,6 @@ import {
   Award,
 } from "lucide-react";
 import Image from "next/image";
-import SB from "@/public/SB.jpeg";
 
 export default function StoryBehind() {
   const [isVisible, setIsVisible] = useState(false);
@@ -541,9 +540,6 @@ export default function StoryBehind() {
               </blockquote>
 
               <div className="flex items-center gap-4 pt-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
-                  <Image src={SB} alt="Srijan Baniyal" width={48} height={48} className="rounded-full" />
-                </div>
                 <div>
                   <div className="font-semibold">Srijan Baniyal</div>
                   <div className="text-sm text-muted-foreground">
