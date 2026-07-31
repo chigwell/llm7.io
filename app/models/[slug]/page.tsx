@@ -83,7 +83,7 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
           <aside className="lg:sticky lg:top-28 lg:self-start"><ModelDetailsCard model={model} title="Capabilities & details" /></aside>
           <div className="space-y-8">
             <section className="rounded-2xl border border-border/60 bg-card/55 p-5 shadow-sm backdrop-blur md:p-6">
-              <div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">Current price</p><h2 className="mt-2 text-2xl font-semibold">Simple, pay-as-you-go pricing</h2></div><span className="rounded-full border border-border/70 bg-background/60 px-3 py-1 text-xs font-medium">{model.pricing.unit}</span></div>
+              <div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">Current LLM7 pricing</p><h2 className="mt-2 text-2xl font-semibold">Simple, pay-as-you-go pricing</h2></div><span className="rounded-full border border-border/70 bg-background/60 px-3 py-1 text-xs font-medium">{model.pricing.unit}</span></div>
               <p className="mt-4 text-lg font-medium">{formatPrice(model)}</p>
               {model.pricing.minimum_request_usd ? <p className="mt-2 text-sm text-muted-foreground">Minimum charge per request: {formatUsd(model.pricing.minimum_request_usd)}.</p> : null}
             </section>
