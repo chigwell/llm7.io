@@ -1,6 +1,5 @@
 import type { z } from "zod";
 import type {
-  HistoryResponseSchema,
   MetricsResponseSchema,
   ModelDetailSchema,
   ModelListResponseSchema,
@@ -10,14 +9,12 @@ import type {
 
 export type PublicModel = z.infer<typeof ModelDetailSchema>;
 export type PublicModelListResponse = z.infer<typeof ModelListResponseSchema>;
-export type PublicModelHistory = z.infer<typeof HistoryResponseSchema>;
 export type PublicModelMetrics = z.infer<typeof MetricsResponseSchema>;
 export type PublicStatisticsSummary = z.infer<typeof StatisticsSummarySchema>;
 export type PublicCatalogVersion = z.infer<typeof VersionResponseSchema>;
 
 export type PublicModelSnapshot = {
   model: PublicModel;
-  history: PublicModelHistory;
   metrics: PublicModelMetrics;
 };
 

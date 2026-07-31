@@ -1,5 +1,5 @@
 import rawSnapshot from "@/data/generated/public-model-data.json";
-import { assertNoProviderFields, assertUniqueModels, HistoryResponseSchema, MetricsResponseSchema, ModelDetailSchema, ModelListResponseSchema, StatisticsSummarySchema, VersionResponseSchema } from "./schema";
+import { assertNoProviderFields, assertUniqueModels, MetricsResponseSchema, ModelDetailSchema, ModelListResponseSchema, StatisticsSummarySchema, VersionResponseSchema } from "./schema";
 import type { PublicModelDataSnapshot } from "./api-types";
 
 function validateSnapshot(value: unknown): PublicModelDataSnapshot {
@@ -11,12 +11,10 @@ function validateSnapshot(value: unknown): PublicModelDataSnapshot {
   const expectedModels = snapshot.list_pages[0]?.pagination.total_items ?? 0;
   if (listedModels.length !== expectedModels) throw new Error(`Snapshot model pagination mismatch: expected ${expectedModels}, got ${listedModels.length}`);
   if (snapshot.models.length !== expectedModels) throw new Error(`Snapshot detail count mismatch: expected ${expectedModels}, got ${snapshot.models.length}`);
-  snapshot.models.forEach(({ model, history, metrics }) => {
+  snapshot.models.forEach(({ model, metrics }) => {
     ModelDetailSchema.parse(model);
-    HistoryResponseSchema.parse(history);
     MetricsResponseSchema.parse(metrics);
-    if (history.data.length !== history.pagination.total_items) throw new Error(`Snapshot history pagination mismatch for ${model.slug}`);
-    assertNoProviderFields({ model, history, metrics });
+    assertNoProviderFields({ model, metrics });
   });
   assertUniqueModels(snapshot.models.map(({ model }) => model));
   assertNoProviderFields(value);

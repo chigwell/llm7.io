@@ -36,7 +36,6 @@ const modelCore = z.object({
 }).passthrough();
 const listResponse = z.object({ data: z.array(modelCore.extend({ statistics, first_seen_at: timestamp, updated_at: timestamp })), pagination, catalog_version: z.string().min(1), catalog_updated_at: timestamp, metrics_snapshot_at: timestamp.nullable() });
 const detailResponse = modelCore.extend({ first_seen_at: timestamp, updated_at: timestamp, statistics: z.record(statistics).optional(), data_available_from: timestamp.nullable().optional(), latest_metrics_bucket: timestamp.nullable().optional(), related_models: z.array(modelCore).optional() });
-const historyResponse = z.object({ data: z.array(z.object({ effective_from: timestamp, effective_to: timestamp.nullable(), snapshot: modelCore, changed_fields: z.array(z.string()) })), pagination });
 const metricPoint = statistics.omit({ window: true, first_bucket: true, last_bucket: true }).extend({ bucket_start: timestamp });
 const metricsResponse = z.object({ range: z.string(), interval: z.string(), points: z.array(metricPoint), sample_size: nonNegative, data_available_from: timestamp.nullable(), latest_complete_bucket: timestamp.nullable(), generated_at: timestamp });
 const summaryResponse = z.object({ range: z.string(), models: z.object({ total: nonNegative, active: nonNegative, retired: nonNegative, chat: nonNegative, image: nonNegative, video: nonNegative, models_with_requests: nonNegative }), requests: z.object({ total: nonNegative, successful: nonNegative, client_errors_4xx: nonNegative, server_errors_5xx: nonNegative, timeouts: nonNegative, rate_limited_429: nonNegative, cancelled: nonNegative, success_rate: rate }), usage: z.object({ input_tokens: nonNegative, output_tokens: nonNegative, images_generated: nonNegative, videos_generated: nonNegative, video_seconds_generated: decimal }), jobs: z.object({ started: nonNegative, succeeded: nonNegative, failed: nonNegative, cancelled: nonNegative, success_rate: rate }), latency: z.object({ observations: nonNegative, average_ms: nullableNonNegative, p50_ms: nullableNonNegative, p95_ms: nullableNonNegative }), data_available_from: timestamp.nullable(), latest_complete_bucket: timestamp.nullable(), generated_at: timestamp });
@@ -130,24 +129,6 @@ async function mapLimit(values, limit, worker) {
   return result;
 }
 
-async function getAllHistory(slug, prior, etags) {
-  const previousPages = prior?.history_pages?.[slug] ?? {};
-  const firstUrl = `${API_BASE}/models/${encodeURIComponent(slug)}/history?page=1&page_size=100`;
-  const first = await requestJson(firstUrl, previousPages[1], etags);
-  const firstPage = validate(historyResponse, first.value, `history.${slug}.1`);
-  const pages = { 1: firstPage };
-  const indices = Array.from({ length: Math.max(firstPage.pagination.total_pages - 1, 0) }, (_, index) => index + 2);
-  await mapLimit(indices, CONCURRENCY, async (page) => {
-    const url = `${API_BASE}/models/${encodeURIComponent(slug)}/history?page=${page}&page_size=100`;
-    const result = await requestJson(url, previousPages[page], etags);
-    pages[page] = validate(historyResponse, result.value, `history.${slug}.${page}`);
-  });
-  const ordered = Object.values(pages).sort((a, b) => a.pagination.page - b.pagination.page);
-  const records = ordered.flatMap((page) => page.data);
-  if (records.length !== firstPage.pagination.total_items) throw new Error(`History pagination total mismatch for ${slug}`);
-  return { history: { data: records, pagination: { ...firstPage.pagination, page: 1, page_size: 100, total_pages: 1 } }, pages };
-}
-
 async function main() {
   const previous = await loadPrevious();
   previousEtags = previous?.metadata?.etags ?? {};
@@ -175,14 +156,13 @@ async function main() {
     const model = validate(detailResponse, detailResult.value, `model.${listedModel.slug}`);
     const canonicalSlug = new URL(detailResult.canonicalUrl).pathname.split("/").filter(Boolean).at(-1) || model.slug;
     if (canonicalSlug !== model.slug) throw new Error(`Canonical detail URL and slug disagree for ${listedModel.slug}`);
-    const { history, pages: historyPages } = await getAllHistory(model.slug, previous, etags);
     const metricsUrl = `${API_BASE}/models/${encodeURIComponent(model.slug)}/metrics?range=30d&interval=1d`;
     const metrics = validate(metricsResponse, (await requestJson(metricsUrl, previousEntry?.metrics, etags)).value, `metrics.${model.slug}`);
-    return { model, history, metrics, historyPages };
+    return { model, metrics };
   });
   const summaryUrl = `${API_BASE}/statistics/summary?range=30d`;
   const summary = validate(summaryResponse, (await requestJson(summaryUrl, previous?.summary, etags)).value, "summary");
-  const models = records.map(({ model, history, metrics }) => ({ model, history, metrics })).sort((a, b) => a.model.slug.localeCompare(b.model.slug));
+  const models = records.map(({ model, metrics }) => ({ model, metrics })).sort((a, b) => a.model.slug.localeCompare(b.model.slug));
   const canonicalIds = new Set(); const canonicalSlugs = new Set();
   for (const { model } of models) {
     if (canonicalIds.has(model.model_id)) throw new Error(`Duplicate canonical model_id ${model.model_id}`);
@@ -192,7 +172,9 @@ async function main() {
   const active = models.filter((entry) => entry.model.status === "active");
   const countByType = (type) => active.filter((entry) => entry.model.model_type === type).length;
   const pairCount = (n) => (n * (n - 1)) / 2;
-  const snapshot = { metadata: { generated_at: new Date().toISOString(), api_base: API_BASE, catalog_version: version.catalog_version, catalog_updated_at: version.catalog_updated_at, latest_metrics_bucket: version.latest_metrics_bucket, etags }, version, list_pages: pages.sort((a, b) => a.pagination.page - b.pagination.page), models, history_pages: Object.fromEntries(records.map(({ model, historyPages }) => [model.slug, historyPages])), summary };
+  // Full model-history responses are intentionally excluded: the public pages do not
+  // render them, and embedding the complete history makes the static export too large.
+  const snapshot = { metadata: { generated_at: new Date().toISOString(), api_base: API_BASE, catalog_version: version.catalog_version, catalog_updated_at: version.catalog_updated_at, latest_metrics_bucket: version.latest_metrics_bucket, etags }, version, list_pages: pages.sort((a, b) => a.pagination.page - b.pagination.page), models, summary };
   await mkdir(dirname(SNAPSHOT_PATH), { recursive: true });
   const temporary = `${SNAPSHOT_PATH}.${process.pid}.tmp`;
   await writeFile(temporary, `${JSON.stringify(snapshot, null, 2)}\n`);
