@@ -41,7 +41,7 @@ async function ogImage(title, eyebrow, price, fact, filename) {
       React.createElement("div", { style: { display: "flex", fontSize: 28, color: "#ddd6fe" } }, price),
       React.createElement("div", { style: { display: "flex", fontSize: 23, color: "#cbd5e1" } }, fact),
     ),
-    React.createElement("div", { style: { display: "flex", fontSize: 22, color: "#94a3b8" } }, "Pricing and observed LLM7 API statistics"),
+    React.createElement("div", { style: { display: "flex", fontSize: 22, color: "#94a3b8" } }, "Pricing and latest aggregated LLM7 statistics"),
   );
   const response = new ImageResponse(element, { width: 1200, height: 630 });
   await writeFile(filename, Buffer.from(await response.arrayBuffer()));
@@ -67,7 +67,7 @@ async function main() {
   }
   await mkdir(resolve(PUBLIC, "generated/og/models"), { recursive: true });
   await Promise.all(models.map((model) => ogImage(model.display_name, `${model.model_type} model`, priceSummary(model), capabilities(model), resolve(PUBLIC, `generated/og/models/${model.slug}.png`))));
-  await ogImage("Model comparison", "LLM7 API", "Current pricing and observed statistics", "Compare models of the same published type", resolve(PUBLIC, "generated/og/model-comparison.png"));
+  await ogImage("Model comparison", "LLM7 API", "Current pricing and latest statistics", "Compare models of the same published type", resolve(PUBLIC, "generated/og/model-comparison.png"));
 
   const modelUrls = models.map((model) => ({ path: modelPath(model.slug), lastmod: latest(model.updated_at, model.latest_metrics_bucket, snapshot.metadata.latest_metrics_bucket) }));
   const comparisonUrls = pairs.map(({ leftSlug, rightSlug }) => {

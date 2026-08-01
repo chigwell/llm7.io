@@ -36,8 +36,12 @@ export function truncateDescription(value: string, maximum = 158): string {
 
 export function statisticsSummary(model: PublicModel): string {
   const stats = model.statistics?.["30d"];
-  if (!stats || stats.requests_total === 0) return "No observed requests in this period.";
-  return `${stats.requests_total} LLM7 requests; observed LLM7 request success rate ${formatRate(stats.success_rate)} from ${stats.requests_total} requests; ${stats.latency_observations} API latency observations.`;
+  if (!stats) return "Latest aggregated LLM7 statistics are not available for this period.";
+  const parts = [
+    stats.requests_total > 0 && stats.success_rate !== null ? `recent LLM7 stability ${formatRate(stats.success_rate)}` : null,
+    stats.latency_observations > 0 && stats.latency_p95_ms !== null ? `p95 API response time ${stats.latency_p95_ms} ms` : null,
+  ].filter(Boolean);
+  return parts.length ? `Latest aggregated LLM7 statistics: ${parts.join("; ")}.` : "Latest aggregated LLM7 statistics are not available for this period.";
 }
 
 export function comparisonFacts(left: PublicModel, right: PublicModel): string[] {
@@ -51,8 +55,8 @@ export function comparisonFacts(left: PublicModel, right: PublicModel): string[]
   if (leftStats && rightStats) {
     if (leftStats.requests_total >= 20 && rightStats.requests_total >= 20 && leftStats.success_rate !== null && rightStats.success_rate !== null) {
       const difference = Math.abs(leftStats.success_rate - rightStats.success_rate);
-      facts.push(difference >= 0.01 ? `${leftStats.success_rate > rightStats.success_rate ? left.model_id : right.model_id} recorded a higher observed LLM7 request success rate during this period.` : "The observed request success rates are too close to distinguish meaningfully.");
-    } else facts.push("There is not enough observed LLM7 traffic for a reliable statistical comparison.");
+      facts.push(difference >= 0.01 ? `${leftStats.success_rate > rightStats.success_rate ? left.model_id : right.model_id} recorded higher recent LLM7 stability during this period.` : "The recent stability rates are too close to distinguish meaningfully.");
+    } else facts.push("There is not enough recent LLM7 data for a reliable statistical comparison.");
     if (leftStats.latency_observations >= 20 && rightStats.latency_observations >= 20 && leftStats.latency_p95_ms !== null && rightStats.latency_p95_ms !== null) {
       const lower = leftStats.latency_p95_ms < rightStats.latency_p95_ms ? left : right;
       const relative = Math.abs(leftStats.latency_p95_ms - rightStats.latency_p95_ms) / Math.max(leftStats.latency_p95_ms, rightStats.latency_p95_ms);

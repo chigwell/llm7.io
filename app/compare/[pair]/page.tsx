@@ -8,7 +8,7 @@ import ModelLogo from "@/components/models/ModelLogo";
 import { JsonLd, SeoFooter, SeoNavigation } from "@/components/models/SeoChrome";
 import { comparisonFacts } from "@/lib/models/content";
 import { createComparisonPairs } from "@/lib/models/comparisons";
-import { formatBoolean, formatContext, formatMs, formatNumber, formatRate, formatUsd, pricesDirectlyComparable } from "@/lib/models/format";
+import { formatBoolean, formatContext, formatMs, formatRate, formatUsd, pricesDirectlyComparable } from "@/lib/models/format";
 import { comparisonPath, modelPath } from "@/lib/models/routes";
 import { comparisonMetadata } from "@/lib/models/seo";
 import { getModelSnapshot, publicModels } from "@/lib/models/snapshot";
@@ -38,6 +38,13 @@ function specificationDifferences(left: Model, right: Model): Difference[] {
   const add = (label: string, leftValue: string, rightValue: string, better: Difference["better"] = null) => {
     if (leftValue !== rightValue && leftValue !== "Not specified" && rightValue !== "Not specified") rows.push({ label, left: leftValue, right: rightValue, better });
   };
+  const addOptions = (label: string, leftValues: string[], rightValues: string[]) => {
+    const leftValue = leftValues.join(", ") || "Not specified";
+    const rightValue = rightValues.join(", ") || "Not specified";
+    if (leftValue === rightValue) return;
+    const better = leftValues.length === rightValues.length ? null : leftValues.length > rightValues.length ? "left" : "right";
+    rows.push({ label, left: leftValue, right: rightValue, better });
+  };
   const addSupport = (label: string, leftSupported: boolean, rightSupported: boolean) => add(label, formatBoolean(leftSupported), formatBoolean(rightSupported), leftSupported === rightSupported ? null : leftSupported ? "left" : "right");
 
   if (left.context_window.tokens !== null && right.context_window.tokens !== null) add("Context window", formatContext(left.context_window.tokens), formatContext(right.context_window.tokens), left.context_window.tokens === right.context_window.tokens ? null : left.context_window.tokens > right.context_window.tokens ? "left" : "right");
@@ -48,8 +55,8 @@ function specificationDifferences(left: Model, right: Model): Difference[] {
   addSupport("Streaming", Boolean(left.stream || left.capabilities.stream), Boolean(right.stream || right.capabilities.stream));
   addSupport("JSON mode", Boolean(left.json_mode || left.capabilities.json_mode), Boolean(right.json_mode || right.capabilities.json_mode));
   addSupport("Reasoning", Boolean(left.reasoning || left.capabilities.reasoning), Boolean(right.reasoning || right.capabilities.reasoning));
-  add("Supported sizes", left.capabilities.supported_sizes?.join(", ") || "Not specified", right.capabilities.supported_sizes?.join(", ") || "Not specified");
-  add("Video duration", left.capabilities.supported_seconds?.map((value) => value + "s").join(", ") || "Not specified", right.capabilities.supported_seconds?.map((value) => value + "s").join(", ") || "Not specified");
+  addOptions("Supported sizes", left.capabilities.supported_sizes ?? [], right.capabilities.supported_sizes ?? []);
+  addOptions("Video duration", left.capabilities.supported_seconds?.map((value) => value + "s") ?? [], right.capabilities.supported_seconds?.map((value) => value + "s") ?? []);
   return rows;
 }
 
@@ -61,18 +68,17 @@ function PricingCard({ model }: { model: Model }) {
 function StatisticsComparison({ left, right }: { left: Model; right: Model }) {
   const leftStats = left.statistics?.["30d"];
   const rightStats = right.statistics?.["30d"];
-  if (!leftStats?.requests_total || !rightStats?.requests_total) return null;
+  if (!leftStats || !rightStats) return null;
 
   const rows = [
-    { label: "Requests handled", left: formatNumber(leftStats.requests_total), right: formatNumber(rightStats.requests_total) },
-    leftStats.success_rate !== null && rightStats.success_rate !== null ? { label: "Observed success rate", left: formatRate(leftStats.success_rate), right: formatRate(rightStats.success_rate) } : null,
-    leftStats.latency_avg_ms !== null && rightStats.latency_avg_ms !== null ? { label: "Average API latency", left: formatMs(leftStats.latency_avg_ms), right: formatMs(rightStats.latency_avg_ms) } : null,
-    leftStats.latency_p95_ms !== null && rightStats.latency_p95_ms !== null ? { label: "P95 API latency", left: formatMs(leftStats.latency_p95_ms), right: formatMs(rightStats.latency_p95_ms) } : null,
+    leftStats.requests_total > 0 && rightStats.requests_total > 0 && leftStats.success_rate !== null && rightStats.success_rate !== null ? { label: "Recent stability", left: formatRate(leftStats.success_rate), right: formatRate(rightStats.success_rate) } : null,
+    leftStats.latency_observations > 0 && rightStats.latency_observations > 0 && leftStats.latency_avg_ms !== null && rightStats.latency_avg_ms !== null ? { label: "Average response time", left: formatMs(leftStats.latency_avg_ms), right: formatMs(rightStats.latency_avg_ms) } : null,
+    leftStats.latency_observations > 0 && rightStats.latency_observations > 0 && leftStats.latency_p95_ms !== null && rightStats.latency_p95_ms !== null ? { label: "P95 API latency", left: formatMs(leftStats.latency_p95_ms), right: formatMs(rightStats.latency_p95_ms) } : null,
   ].filter((row): row is { label: string; left: string; right: string } => Boolean(row));
 
   if (!rows.length) return null;
 
-  return <section><div className="mb-5"><h2 className="text-2xl font-semibold">Observed usage comparison</h2><p className="mt-1 text-sm text-muted-foreground">A 30-day LLM7 snapshot, not a global model benchmark.</p></div><div className="grid gap-3 sm:grid-cols-2">{rows.map((row) => <article key={row.label} className="rounded-2xl border border-border/60 bg-card/55 p-4 shadow-sm backdrop-blur"><p className="text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">{row.label}</p><div className="mt-3 grid grid-cols-2 gap-3 text-sm"><div><p className="text-xs text-muted-foreground">{left.model_id}</p><p className="mt-1 font-semibold">{row.left}</p></div><div><p className="text-xs text-muted-foreground">{right.model_id}</p><p className="mt-1 font-semibold">{row.right}</p></div></div></article>)}</div></section>;
+  return <section><div className="mb-5"><h2 className="text-2xl font-semibold">Latest LLM7 statistics</h2><p className="mt-1 text-sm text-muted-foreground">Recent aggregated percentages and response-time metrics from LLM7, not a global model benchmark or traffic disclosure.</p></div><div className="grid gap-3 sm:grid-cols-2">{rows.map((row) => <article key={row.label} className="rounded-2xl border border-border/60 bg-card/55 p-4 shadow-sm backdrop-blur"><p className="text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">{row.label}</p><div className="mt-3 grid grid-cols-2 gap-3 text-sm"><div><p className="text-xs text-muted-foreground">{left.model_id}</p><p className="mt-1 font-semibold">{row.left}</p></div><div><p className="text-xs text-muted-foreground">{right.model_id}</p><p className="mt-1 font-semibold">{row.right}</p></div></div></article>)}</div></section>;
 }
 
 export default async function ComparisonPage({ params }: { params: Promise<{ pair: string }> }) {
@@ -100,7 +106,7 @@ export default async function ComparisonPage({ params }: { params: Promise<{ pai
         <header className="rounded-3xl border border-border/60 bg-gradient-to-br from-card/80 via-card/55 to-primary/5 p-6 shadow-sm backdrop-blur md:p-8">
           <p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary">{left.model_type} comparison</p>
           <div className="mt-3 flex flex-wrap items-center gap-3"><ModelLogo model={left} size="lg" /><h1 className="text-3xl font-bold tracking-tight md:text-5xl">{left.model_id}<span className="px-3 text-muted-foreground">vs</span>{right.model_id}</h1><ModelLogo model={right} size="lg" /></div>
-          <p className="mt-4 max-w-3xl text-muted-foreground">Compare the things that matter before you build: current price, capabilities, and observed LLM7 usage.</p>
+          <p className="mt-4 max-w-3xl text-muted-foreground">Compare the things that matter before you build: current price, capabilities, and latest aggregated LLM7 statistics.</p>
         </header>
 
         <div className="mt-8 grid gap-7 lg:grid-cols-[20rem_minmax(0,1fr)]">

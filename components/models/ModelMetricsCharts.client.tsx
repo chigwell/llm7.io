@@ -7,25 +7,15 @@ type Point = Record<string, string | number | null> & { bucket_start: string };
 export type Metric = { key: string; title: string; unit: string; shortTitle: string };
 
 const common: Metric[] = [
-  { key: "requests_total", title: "Request volume", shortTitle: "Requests", unit: "requests" },
   { key: "success_rate", title: "Request success rate", shortTitle: "Success rate", unit: "%" },
   { key: "latency_avg_ms", title: "Average API latency", shortTitle: "Average latency", unit: "ms" },
   { key: "latency_p95_ms", title: "P95 API latency", shortTitle: "P95 latency", unit: "ms" },
 ];
 
 const typeMetrics: Record<string, Metric[]> = {
-  chat: [
-    { key: "input_tokens", title: "Input token usage", shortTitle: "Input tokens", unit: "tokens" },
-    { key: "output_tokens", title: "Output token usage", shortTitle: "Output tokens", unit: "tokens" },
-    { key: "ttft_avg_ms", title: "Time to first token", shortTitle: "TTFT", unit: "ms" },
-  ],
-  image: [{ key: "images_generated", title: "Images generated", shortTitle: "Images", unit: "images" }],
-  video: [
-    { key: "videos_generated", title: "Videos generated", shortTitle: "Videos", unit: "videos" },
-    { key: "video_seconds_generated", title: "Generated video seconds", shortTitle: "Video seconds", unit: "seconds" },
-    { key: "jobs_started", title: "Video jobs started", shortTitle: "Jobs", unit: "jobs" },
-    { key: "job_success_rate", title: "Video job success rate", shortTitle: "Job success", unit: "%" },
-  ],
+  chat: [{ key: "ttft_avg_ms", title: "Time to first token", shortTitle: "TTFT", unit: "ms" }],
+  image: [],
+  video: [{ key: "job_success_rate", title: "Video job success rate", shortTitle: "Job success", unit: "%" }],
 };
 
 export function metricsForType(modelType: "chat" | "image" | "video") {
@@ -72,7 +62,7 @@ function MetricChart({ points, metric }: { points: Point[]; metric: Metric }) {
   return (
     <article className="rounded-2xl border border-border/60 bg-card/55 p-4 shadow-sm backdrop-blur">
       <div className="flex items-end justify-between gap-3">
-        <div><h3 className="font-semibold">{metric.title}</h3><p className="mt-1 text-xs text-muted-foreground">Daily observed LLM7 activity</p></div>
+        <div><h3 className="font-semibold">{metric.title}</h3><p className="mt-1 text-xs text-muted-foreground">Latest aggregated LLM7 statistic</p></div>
         <p className="text-right text-sm font-semibold">{formatMetric(metric, latest)}<span className="block text-[11px] font-normal text-muted-foreground">latest</span></p>
       </div>
       <svg viewBox={"0 0 " + width + " " + height} role="img" aria-label={metric.title + " trend"} className="mt-4 w-full overflow-visible">
@@ -93,9 +83,8 @@ export default function ModelMetricsCharts({ modelType, points }: { modelType: "
 
   return (
     <section aria-labelledby="metrics-charts-heading">
-      <div className="mb-5"><h2 id="metrics-charts-heading" className="text-2xl font-semibold">Usage trends</h2><p className="mt-1 text-sm text-muted-foreground">Only metrics with enough observed history are shown.</p></div>
+      <div className="mb-5"><h2 id="metrics-charts-heading" className="text-2xl font-semibold">Latest statistic trends</h2><p className="mt-1 text-sm text-muted-foreground">Only aggregated percentages and timing metrics with enough observed history are shown.</p></div>
       <div className="grid gap-4 lg:grid-cols-2">{chartable.map((metric) => <MetricChart key={metric.key} points={points} metric={metric} />)}</div>
     </section>
   );
 }
-

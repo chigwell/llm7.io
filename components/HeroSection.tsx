@@ -44,11 +44,6 @@ type HeroStatus = {
   status: "active" | "warning" | "error" | "info";
 };
 
-type CompactStat = {
-  value: number;
-  suffix: string;
-};
-
 type FormattedTokenCount = {
   value: number;
   suffix: string;
@@ -98,27 +93,6 @@ function formatLiveTokenCount(value: number): string {
   });
 
   return `${formatter.format(tokenCount.value)}${tokenCount.suffix}`;
-}
-
-function formatCompactStat(value: number): CompactStat {
-  if (value >= 1000000) {
-    return {
-      value: Math.floor(value / 1000000),
-      suffix: "m+",
-    };
-  }
-
-  if (value >= 1000) {
-    return {
-      value: Math.floor(value / 1000),
-      suffix: "k+",
-    };
-  }
-
-  return {
-    value,
-    suffix: "+",
-  };
 }
 
 function formatStatusPercent(value: number): string {
@@ -210,10 +184,6 @@ export default function HeroSectionWithWaves() {
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [countVisitors, setCountVisitors] = useState(44);
-  const [requestCount, setRequestCount] = useState<CompactStat>({
-    value: 211,
-    suffix: "m+",
-  });
   const { models, modelsState } = useLlm7Models();
   const { latest: latestPingSnapshot } = usePingMetrics();
   const [tokenIntroTarget, setTokenIntroTarget] = useState<number | null>(null);
@@ -270,20 +240,9 @@ export default function HeroSectionWithWaves() {
         console.warn("Failed to fetch visitor stats:", error);
       }
 
-      try {
-        const response = await fetch("https://api.llm7.io/stats/counts");
-        const data = await response.json();
-        const totalRequests = Number(data?.total_requests);
-        if (Number.isFinite(totalRequests) && totalRequests > 0) {
-          setRequestCount(formatCompactStat(totalRequests));
-        }
-      } catch (error) {
-        console.warn("Failed to fetch request stats:", error);
-        // Keep the default value if there's an error
-      }
     }
     fetchStats();
-  }, [setCountVisitors, setRequestCount]);
+  }, [setCountVisitors]);
 
   // Get the current theme, defaulting to system theme if not explicitly set
   const currentTheme = theme === "system" ? systemTheme : theme;
@@ -557,22 +516,6 @@ Prototype, build, and scale without switching providers.
 
           {/* Stats */}
           <div className="relative -top-2 md:-top-4 flex justify-center items-start gap-4 sm:gap-6 md:gap-8 lg:gap-16 text-center px-4">
-              <div className="w-16 sm:w-20 md:w-24 flex-shrink-0">
-                <div className="h-8 md:h-10 flex items-start justify-center text-xl sm:text-2xl md:text-3xl font-bold leading-none text-foreground mb-1 bg-gradient-to-r from-primary to-secondary bg-clip-text">
-                  <CountUp
-                    to={requestCount.value}
-                    suffix={requestCount.suffix}
-                    duration={2.5}
-                    delay={0.5}
-                    effect="elastic"
-                    hoverEffect
-                  />
-                </div>
-                <div className="text-xs md:text-sm text-muted-foreground">
-                  API Calls
-                </div>
-              </div>
-              <div className="w-px h-8 md:h-12 mt-0.5 bg-gradient-to-b from-transparent via-border to-transparent"></div>
                 <div className="w-20 sm:w-24 md:w-28 flex-shrink-0">
                   <div className="h-8 md:h-10 flex items-start justify-center text-xl sm:text-2xl md:text-3xl font-bold leading-none text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
                     {tokenIntroComplete ? (

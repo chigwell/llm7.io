@@ -3,7 +3,6 @@ import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import Navigation from "@/components/Navigation";
 import EcosystemLogoCarousel from "@/components/EcosystemLogoCarousel";
-import ActiveRequestsChart from '@/components/ActiveRequestsChart';
 import ModelShowcase from "@/components/ModelShowcase";
 import ChatExample from "@/components/ChatExample";
 import Disclaimer from "@/components/Disclaimer";
@@ -23,7 +22,6 @@ export default function Home() {
       {/* <ImageGenerationInput /> */}
       <FeaturedComponent />
       <ModelShowcase />
-      <ActiveRequestsChart />
       <Disclaimer/>
       <Footer />
     </MarketingProviders>

@@ -11,7 +11,7 @@ import { JsonLd, SeoFooter, SeoNavigation } from "@/components/models/SeoChrome"
 import { codeExamplesForModel } from "@/lib/models/code-examples";
 import { modelDescription } from "@/lib/models/content";
 import { createComparisonPairs } from "@/lib/models/comparisons";
-import { formatMs, formatNumber, formatPrice, formatRate, formatUsd } from "@/lib/models/format";
+import { formatMs, formatPrice, formatRate, formatUsd } from "@/lib/models/format";
 import { comparisonPath, modelPath } from "@/lib/models/routes";
 import { modelMetadata } from "@/lib/models/seo";
 import { getModelSnapshot, publicModels } from "@/lib/models/snapshot";
@@ -33,12 +33,11 @@ type Model = (typeof publicModels)[number];
 
 function Statistics({ model }: { model: Model }) {
   const stats = model.statistics?.["30d"];
-  if (!stats || !stats.requests_total) return null;
+  if (!stats) return null;
 
   const cards = [
-    { label: "Requests", value: formatNumber(stats.requests_total), detail: "observed on LLM7" },
-    stats.success_rate !== null ? { label: "Success rate", value: formatRate(stats.success_rate), detail: "observed requests" } : null,
-    stats.latency_avg_ms !== null && stats.latency_observations ? { label: "Average latency", value: formatMs(stats.latency_avg_ms), detail: "API response time" } : null,
+    stats.requests_total > 0 && stats.success_rate !== null ? { label: "Recent stability", value: formatRate(stats.success_rate), detail: "latest aggregated LLM7 statistic" } : null,
+    stats.latency_avg_ms !== null && stats.latency_observations ? { label: "Average response time", value: formatMs(stats.latency_avg_ms), detail: "latest observed API timing" } : null,
     stats.latency_p95_ms !== null && stats.latency_observations ? { label: "P95 latency", value: formatMs(stats.latency_p95_ms), detail: "slower observed requests" } : null,
   ].filter((card): card is { label: string; value: string; detail: string } => Boolean(card));
 
@@ -46,7 +45,7 @@ function Statistics({ model }: { model: Model }) {
 
   return (
     <section>
-      <div className="mb-5"><h2 className="text-2xl font-semibold">Observed usage</h2><p className="mt-1 text-sm text-muted-foreground">A 30-day snapshot of requests handled by LLM7, not a global benchmark.</p></div>
+      <div className="mb-5"><h2 className="text-2xl font-semibold">Latest LLM7 statistics</h2><p className="mt-1 text-sm text-muted-foreground">Recent aggregated percentages and response-time metrics from LLM7, not a global benchmark or traffic disclosure.</p></div>
       <div className="grid gap-3 sm:grid-cols-2">{cards.map((card) => <article key={card.label} className="rounded-2xl border border-border/60 bg-card/55 p-4 shadow-sm backdrop-blur"><p className="text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">{card.label}</p><p className="mt-2 text-2xl font-semibold">{card.value}</p><p className="mt-1 text-xs text-muted-foreground">{card.detail}</p></article>)}</div>
     </section>
   );
@@ -58,7 +57,7 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
   if (!entry) notFound();
 
   const { model, metrics } = entry;
-  const sameType = publicModels.filter((item) => item.status === "active" && item.model_type === model.model_type && item.slug !== model.slug).sort((left, right) => (right.statistics?.["30d"]?.requests_total ?? 0) - (left.statistics?.["30d"]?.requests_total ?? 0)).slice(0, 6);
+  const sameType = publicModels.filter((item) => item.status === "active" && item.model_type === model.model_type && item.slug !== model.slug).sort((left, right) => left.model_id.localeCompare(right.model_id)).slice(0, 6);
   const pairs = createComparisonPairs(publicModels);
   const relatedComparisons = Object.entries(pairs).filter(([, pair]) => pair.leftSlug === model.slug || pair.rightSlug === model.slug).slice(0, 6);
   const examples = codeExamplesForModel(model);
