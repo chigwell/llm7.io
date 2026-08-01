@@ -39,7 +39,7 @@ async function getGitHubStars(): Promise<number> {
   } catch (error) {
     // If anything fails, log it and return 0
     console.error("Error fetching GitHub stars:", error);
-    return 178;
+    return 190;
   }
 }
 
