@@ -19,7 +19,7 @@ export function logoDetailsForModelId(modelId: string): ModelLogoAsset | null {
   if (id.startsWith("meta-")) return { provider: "Meta", lightLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Meta_Platforms_Inc._logo_%28cropped%29.svg/960px-Meta_Platforms_Inc._logo_%28cropped%29.svg.png?_=20230731184236" };
   if (id.startsWith("seed-")) return { provider: "ByteDance", lightLogo: "/bytedance-icon.png" };
   if (id.startsWith("l3-8b")) return { provider: "Hugging Face", lightLogo: "https://cdn-avatars.huggingface.co/v1/production/uploads/64be6a5376a6e2efccc638c1/gvRRLHsicTCxpURJeQDv3.jpeg" };
-  if (id.startsWith("xiaomimimo")) return { provider: "Xiaomi", lightLogo: "https://chathub.gg/_next/image?url=https%3A%2F%2Fapp.chathub.gg%2Flogos%2Fxiaomi.png&w=256&q=90" };
+  if (id.startsWith("xiaomimimo")) return { provider: "Xiaomi", lightLogo: "/logos/xiaomi.png" };
   if (id.startsWith("deepseek-")) return { provider: "DeepSeek", lightLogo: "/deepseek-color.svg" };
   if (id.startsWith("glm-")) return { provider: "Z.ai", lightLogo: "/z-ai-logo.svg" };
   if (id.startsWith("grok-")) return { provider: "xAI", lightLogo: "/grok-ai-icon-light.svg", darkLogo: "/grok-icon-dark.svg" };
