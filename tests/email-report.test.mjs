@@ -3,9 +3,29 @@ import test from "node:test";
 
 import {
   EMAIL_REPORT_API_URL,
+  isConfirmedReportDrag,
   readEmailReportToken,
   submitEmailReport,
 } from "../lib/email-report.js";
+
+test("report drag requires distance, duration, and several pointer moves", () => {
+  assert.equal(
+    isConfirmedReportDrag({ progress: 100, durationMs: 500, moveCount: 8 }),
+    true,
+  );
+  assert.equal(
+    isConfirmedReportDrag({ progress: 100, durationMs: 100, moveCount: 8 }),
+    false,
+  );
+  assert.equal(
+    isConfirmedReportDrag({ progress: 80, durationMs: 500, moveCount: 8 }),
+    false,
+  );
+  assert.equal(
+    isConfirmedReportDrag({ progress: 100, durationMs: 500, moveCount: 1 }),
+    false,
+  );
+});
 
 test("report token is read without making a request", () => {
   assert.equal(readEmailReportToken("?token=v1.opaque%2Btoken"), "v1.opaque+token");

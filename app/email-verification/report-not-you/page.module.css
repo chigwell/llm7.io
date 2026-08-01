@@ -51,7 +51,6 @@
   line-height: 1.65;
 }
 
-.reportButton,
 .homeButton {
   display: inline-flex;
   align-items: center;
@@ -70,22 +69,73 @@
   transition: transform 150ms ease, background 150ms ease;
 }
 
-.reportButton:hover:not(:disabled),
 .homeButton:hover {
   transform: translateY(-1px);
   background: #b91c1c;
 }
 
-.reportButton:focus-visible,
+.reportSlider:focus-visible,
 .homeButton:focus-visible,
 .cancelLink:focus-visible {
   outline: 3px solid rgb(37 99 235 / 40%);
   outline-offset: 3px;
 }
 
-.reportButton:disabled {
+.reportSlider {
+  position: relative;
+  height: 58px;
+  margin-top: 30px;
+  overflow: hidden;
+  color: #7f1d1d;
+  cursor: grab;
+  user-select: none;
+  border: 1px solid #fecaca;
+  border-radius: 16px;
+  background: #fef2f2;
+  touch-action: none;
+}
+
+.reportSlider:active {
+  cursor: grabbing;
+}
+
+.reportSliderSubmitting {
   cursor: wait;
-  opacity: 0.65;
+  opacity: 0.7;
+}
+
+.sliderLabel {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding-left: 54px;
+  font-size: 15px;
+  font-weight: 750;
+  pointer-events: none;
+}
+
+.sliderThumb {
+  position: absolute;
+  top: 3px;
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  color: white;
+  font-size: 24px;
+  font-weight: 800;
+  border-radius: 13px;
+  background: #dc2626;
+  box-shadow: 0 4px 12px rgb(127 29 29 / 24%);
+  transition: left 100ms linear;
+  pointer-events: none;
+}
+
+.keyboardHint {
+  margin: 9px 0 0;
+  color: #64748b;
+  font-size: 12px;
 }
 
 .homeButton {
