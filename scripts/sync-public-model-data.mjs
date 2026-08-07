@@ -19,7 +19,21 @@ const nonNegative = z.number().finite().nonnegative();
 const nullableNonNegative = nonNegative.nullable();
 const rate = z.number().finite().min(0).max(1).nullable();
 const pagination = z.object({ page: z.number().int().positive(), page_size: z.number().int().positive(), total_items: z.number().int().nonnegative(), total_pages: z.number().int().positive() });
-const pricing = z.object({ mode: z.enum(["token", "image", "second"]), currency: z.string().min(1), unit: z.string().min(1), minimum_request_usd: decimal.nullable().optional(), input: decimal.optional(), output: decimal.optional(), price: decimal.optional() }).superRefine((value, ctx) => {
+const cachePricing = z.object({ cached_input: decimal.optional(), cached_output: decimal.optional(), cache_read: decimal.optional(), cache_write: decimal.optional() });
+const pricing = z.object({
+  mode: z.enum(["token", "image", "second"]),
+  currency: z.string().min(1),
+  unit: z.string().min(1),
+  minimum_request_usd: decimal.nullable().optional(),
+  input: decimal.optional(),
+  output: decimal.optional(),
+  price: decimal.optional(),
+  cached_input: decimal.optional(),
+  cached_output: decimal.optional(),
+  cache_read: decimal.optional(),
+  cache_write: decimal.optional(),
+  public_price_usd_per_million: cachePricing.optional(),
+}).superRefine((value, ctx) => {
   if (value.mode === "token" && (!value.input || !value.output)) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "token prices require input and output" });
   if (value.mode !== "token" && !value.price) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "unit price required" });
 });

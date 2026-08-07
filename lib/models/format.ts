@@ -1,6 +1,36 @@
 import Decimal from "decimal.js-light";
 import type { PublicModel } from "./api-types";
 
+export const CACHE_PRICE_KEYS = ["cached_input", "cached_output", "cache_read", "cache_write"] as const;
+
+export type CachePriceKey = (typeof CACHE_PRICE_KEYS)[number];
+type CachePriceValue = string | number | null | undefined;
+type CachePriceContainer = Partial<Record<CachePriceKey, CachePriceValue>> & {
+  public_price_usd_per_million?: Partial<Record<CachePriceKey, CachePriceValue>> | null;
+};
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function normalizeCachePriceValue(value: unknown): string | null {
+  if (typeof value === "number" && Number.isFinite(value) && value >= 0) return String(value);
+  if (typeof value === "string" && /^(?:0|[1-9]\d*)(?:\.\d+)?$/.test(value)) return value;
+  return null;
+}
+
+export function cachePriceEntries(pricing: CachePriceContainer | null | undefined): Array<{ key: CachePriceKey; label: CachePriceKey; value: string }> {
+  if (!pricing) return [];
+
+  const publicPrice = pricing.public_price_usd_per_million;
+  const source = isRecord(publicPrice) ? publicPrice : pricing;
+
+  return CACHE_PRICE_KEYS.flatMap((key) => {
+    const value = normalizeCachePriceValue(source[key]);
+    return value === null ? [] : [{ key, label: key, value }];
+  });
+}
+
 export function formatDate(value: string | null | undefined): string {
   if (!value) return "Not available";
   return new Intl.DateTimeFormat("en-GB", { dateStyle: "medium", timeStyle: "short", timeZone: "UTC" }).format(new Date(value)) + " UTC";
@@ -31,6 +61,13 @@ export function formatPrice(model: PublicModel): string {
   const { pricing } = model;
   if (pricing.mode === "token") return `${formatUsd(pricing.input)} input and ${formatUsd(pricing.output)} output per ${pricing.unit}`;
   return `${formatUsd(pricing.price)} per ${pricing.unit}`;
+}
+
+export function formatCachePrice(model: PublicModel): string | null {
+  const entries = cachePriceEntries(model.pricing);
+  if (!entries.length) return null;
+
+  return `${entries.map((entry) => `${entry.label} ${formatUsd(entry.value)}`).join(" · ")} per ${model.pricing.unit}`;
 }
 
 export function formatContext(value: number | null | undefined, label = "tokens"): string {

@@ -8,7 +8,7 @@ import ModelLogo from "@/components/models/ModelLogo";
 import { JsonLd, SeoFooter, SeoNavigation } from "@/components/models/SeoChrome";
 import { comparisonFacts } from "@/lib/models/content";
 import { createComparisonPairs } from "@/lib/models/comparisons";
-import { formatBoolean, formatContext, formatMs, formatRate, formatUsd, pricesDirectlyComparable } from "@/lib/models/format";
+import { formatBoolean, formatCachePrice, formatContext, formatMs, formatRate, formatUsd, pricesDirectlyComparable } from "@/lib/models/format";
 import { comparisonPath, modelPath } from "@/lib/models/routes";
 import { comparisonMetadata } from "@/lib/models/seo";
 import { getModelSnapshot, publicModels } from "@/lib/models/snapshot";
@@ -62,7 +62,8 @@ function specificationDifferences(left: Model, right: Model): Difference[] {
 
 function PricingCard({ model }: { model: Model }) {
   const primary = model.pricing.mode === "token" ? "Input " + formatUsd(model.pricing.input) + " · Output " + formatUsd(model.pricing.output) + " / " + model.pricing.unit : formatUsd(model.pricing.price) + " / " + model.pricing.unit;
-  return <article className="rounded-2xl border border-border/60 bg-background/45 p-4"><p className="text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">{model.model_id}</p><p className="mt-2 text-lg font-semibold">{primary}</p>{model.pricing.minimum_request_usd ? <p className="mt-1 text-xs text-muted-foreground">Minimum request: {formatUsd(model.pricing.minimum_request_usd)}</p> : null}</article>;
+  const cachePrice = formatCachePrice(model);
+  return <article className="rounded-2xl border border-border/60 bg-background/45 p-4"><p className="text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">{model.model_id}</p><p className="mt-2 text-lg font-semibold">{primary}</p>{cachePrice ? <p className="mt-1 text-xs text-muted-foreground">Cache: {cachePrice}</p> : null}{model.pricing.minimum_request_usd ? <p className="mt-1 text-xs text-muted-foreground">Minimum request: {formatUsd(model.pricing.minimum_request_usd)}</p> : null}</article>;
 }
 
 function StatisticsComparison({ left, right }: { left: Model; right: Model }) {

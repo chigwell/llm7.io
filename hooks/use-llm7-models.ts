@@ -13,6 +13,16 @@ export type ApiModel = {
     input?: number;
     output?: number;
     price?: number;
+    cached_input?: number;
+    cached_output?: number;
+    cache_read?: number;
+    cache_write?: number;
+    public_price_usd_per_million?: {
+      cached_input?: number;
+      cached_output?: number;
+      cache_read?: number;
+      cache_write?: number;
+    };
     minimum_request_price_usd?: number;
     currency?: string;
     unit?: string;

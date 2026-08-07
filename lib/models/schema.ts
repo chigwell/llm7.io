@@ -18,6 +18,12 @@ const NullableBoolean = z.boolean().nullable().optional();
 const NonNegativeNumber = z.number().finite().nonnegative();
 const NullableNonNegativeNumber = NonNegativeNumber.nullable();
 const Rate = z.number().finite().min(0).max(1).nullable();
+const CachePricingSchema = z.object({
+  cached_input: DecimalString.optional(),
+  cached_output: DecimalString.optional(),
+  cache_read: DecimalString.optional(),
+  cache_write: DecimalString.optional(),
+});
 
 export const PaginationSchema = z.object({
   page: z.number().int().positive(),
@@ -34,6 +40,11 @@ export const PricingSchema = z.object({
   input: DecimalString.optional(),
   output: DecimalString.optional(),
   price: DecimalString.optional(),
+  cached_input: DecimalString.optional(),
+  cached_output: DecimalString.optional(),
+  cache_read: DecimalString.optional(),
+  cache_write: DecimalString.optional(),
+  public_price_usd_per_million: CachePricingSchema.optional(),
 }).superRefine((pricing, context) => {
   if (pricing.mode === "token" && (!pricing.input || !pricing.output)) {
     context.addIssue({ code: z.ZodIssueCode.custom, message: "Token pricing requires input and output prices" });

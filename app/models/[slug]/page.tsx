@@ -11,7 +11,7 @@ import { JsonLd, SeoFooter, SeoNavigation } from "@/components/models/SeoChrome"
 import { codeExamplesForModel } from "@/lib/models/code-examples";
 import { modelDescription } from "@/lib/models/content";
 import { createComparisonPairs } from "@/lib/models/comparisons";
-import { formatMs, formatPrice, formatRate, formatUsd } from "@/lib/models/format";
+import { formatCachePrice, formatMs, formatPrice, formatRate, formatUsd } from "@/lib/models/format";
 import { comparisonPath, modelPath } from "@/lib/models/routes";
 import { modelMetadata } from "@/lib/models/seo";
 import { getModelSnapshot, publicModels } from "@/lib/models/snapshot";
@@ -61,6 +61,7 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
   const pairs = createComparisonPairs(publicModels);
   const relatedComparisons = Object.entries(pairs).filter(([, pair]) => pair.leftSlug === model.slug || pair.rightSlug === model.slug).slice(0, 6);
   const examples = codeExamplesForModel(model);
+  const cachePrice = formatCachePrice(model);
 
   return (
     <>
@@ -84,6 +85,7 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
             <section className="rounded-2xl border border-border/60 bg-card/55 p-5 shadow-sm backdrop-blur md:p-6">
               <div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">Current LLM7 pricing</p><h2 className="mt-2 text-2xl font-semibold">Simple, pay-as-you-go pricing</h2></div><span className="rounded-full border border-border/70 bg-background/60 px-3 py-1 text-xs font-medium">{model.pricing.unit}</span></div>
               <p className="mt-4 text-lg font-medium">{formatPrice(model)}</p>
+              {cachePrice ? <p className="mt-2 text-sm text-muted-foreground">Cache pricing: {cachePrice}.</p> : null}
               {model.pricing.minimum_request_usd ? <p className="mt-2 text-sm text-muted-foreground">Minimum charge per request: {formatUsd(model.pricing.minimum_request_usd)}.</p> : null}
             </section>
 

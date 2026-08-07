@@ -7,6 +7,7 @@ import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { Button } from "@/components/ui/buttonShadcn";
 import { MODELS_API_URL, type ApiModel, useLlm7Models } from "@/hooks/use-llm7-models";
 import { usePingMetrics } from "@/hooks/use-ping-metrics";
+import { cachePriceEntries } from "@/lib/models/format";
 import { logoDetailsForModelId } from "@/lib/models/logos";
 import { cn } from "@/lib/utils";
 
@@ -130,6 +131,11 @@ function pricingItems(model: ApiModel): PayModel["priceItems"] {
     normalizedUnit === "seconds" ||
     (hasSinglePrice && !hasTokenPair);
 
+  const cacheItems = cachePriceEntries(model.pricing).map((entry) => ({
+    label: entry.label,
+    value: `${formatUsd(Number(entry.value))} / ${unit}`,
+  }));
+
   if (isSinglePrice) {
     const singleUnit = getSinglePriceUnit(model);
 
@@ -138,12 +144,14 @@ function pricingItems(model: ApiModel): PayModel["priceItems"] {
         label: getSinglePriceLabel(model, singleUnit),
         value: `${formatUsd(model.pricing?.price)} / ${formatUnit(singleUnit)}`,
       },
+      ...cacheItems,
     ];
   }
 
   return [
     { label: "Input", value: `${formatUsd(model.pricing?.input)} / ${unit}` },
     { label: "Output", value: `${formatUsd(model.pricing?.output)} / ${unit}` },
+    ...cacheItems,
   ];
 }
 
@@ -467,7 +475,7 @@ export default function PayAsYouGoModels() {
       </div>
 
       <p className="mt-4 text-xs text-muted-foreground">
-        Prices use each model&apos;s listed unit. Minimum request price is shown when provided by the model endpoint.{" "}
+        Prices use each model&apos;s listed unit. Cache pricing appears when the model endpoint returns public cache price keys. Minimum request price is shown when provided by the model endpoint.{" "}
         <a href={MODELS_API_URL} target="_blank" rel="noreferrer" className="text-primary underline underline-offset-4">
           See all models in JSON format via API
         </a>
