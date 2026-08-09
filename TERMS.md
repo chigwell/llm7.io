@@ -1,6 +1,6 @@
 # Terms of Service
 
-**Last updated: 25 July 2026**
+**Last updated: 9 August 2026**
 
 Thank you for using **LLM7.io** (the **“Service”**). By accessing or using the Service, you agree to these Terms of Service (the **“Terms”**). If you do not accept all of the Terms, do not use the Service.
 
@@ -98,6 +98,7 @@ Our privacy practices are described in **[PRIVACY.md](./PRIVACY.md)**, which is 
 
   - The Service may call, route to, experiment with, or host **third-party models or infrastructure** as part of its educational and research-oriented functionality. We are not responsible for third-party services’ availability, security, or content.
   - Your use of any third-party service may be governed by that party’s terms and privacy policy.
+  - If an upstream provider, platform, model operator, infrastructure provider, or other third-party service detects or reasonably suspects abuse, policy violations, prohibited content, technical misuse, fraud, or other non-compliant activity in connection with your request, message, account, API token, or downstream use, the relevant request or message may be rejected, blocked, filtered, rate-limited, or otherwise not processed. If that provider imposes penalty fees, abuse fees, safety-review charges, excess-use charges, compliance charges, or other related costs on us in connection with your activity, we may deduct or apply those amounts against your LLM7.io account balance, promotional credits, subscription allowance, usage allowance, or other account allowance, or otherwise charge them to your account where permitted by law.
   - All third-party names, logos, trademarks, service marks, model names, provider names, and media materials are the property of their respective owners, and their display does not imply endorsement, sponsorship, or affiliation unless expressly stated.
 
 -----
