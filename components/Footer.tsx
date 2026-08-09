@@ -171,6 +171,14 @@ export default function Footer() {
                   Compare models
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/token-calculator/"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Token calculator
+                </Link>
+              </li>
                 <li>
                 <Link
                     href="#example"

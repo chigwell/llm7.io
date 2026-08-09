@@ -74,7 +74,7 @@ async function main() {
     const left = bySlug.get(leftSlug); const right = bySlug.get(rightSlug);
     return { path: pairPath(leftSlug, rightSlug), lastmod: latest(left.updated_at, left.latest_metrics_bucket, right.updated_at, right.latest_metrics_bucket, snapshot.metadata.latest_metrics_bucket) };
   });
-  const staticUrls = [{ path: "/", lastmod: snapshot.metadata.generated_at }, { path: "/models/", lastmod: snapshot.metadata.catalog_updated_at }, { path: "/compare/", lastmod: snapshot.metadata.catalog_updated_at }, { path: "/showcase/", lastmod: snapshot.metadata.generated_at }, { path: "/Themes/", lastmod: snapshot.metadata.generated_at }];
+  const staticUrls = [{ path: "/", lastmod: snapshot.metadata.generated_at }, { path: "/models/", lastmod: snapshot.metadata.catalog_updated_at }, { path: "/compare/", lastmod: snapshot.metadata.catalog_updated_at }, { path: "/token-calculator/", lastmod: snapshot.metadata.catalog_updated_at }, { path: "/showcase/", lastmod: snapshot.metadata.generated_at }, { path: "/Themes/", lastmod: snapshot.metadata.generated_at }];
   await writeFile(resolve(PUBLIC, "sitemap-static.xml"), sitemap(staticUrls));
   await writeFile(resolve(PUBLIC, "sitemap-models.xml"), sitemap(modelUrls));
   const names = ["sitemap-static.xml", "sitemap-models.xml"];
