@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/buttonShadcn";
 import { Input } from "@/components/ui/input";
 import { modelPath } from "@/lib/models/routes";
 
+export type CachedInputPriceKey = "cached_input" | "cache_read";
+
 export type TokenBudgetModel = {
   modelId: string;
   slug: string;
@@ -20,19 +22,32 @@ export type TokenBudgetModel = {
   contextTokens?: number | null;
   inputPrice: number;
   outputPrice: number;
+  cachedInputPrice?: number | null;
+  cachePriceKey?: CachedInputPriceKey | null;
+  minimumCacheTokens?: number | null;
   unit: string;
   tokensPerUnit: number;
 };
 
 type CalculatedModel = TokenBudgetModel & {
   inputTokenShare: number;
+  cachedInputTokenShare: number;
+  uncachedInputTokens: number;
+  cachedInputTokens: number;
   inputTokens: number;
   outputTokens: number;
   totalTokens: number;
+  uncachedInputCost: number;
+  cachedInputCost: number;
   inputCost: number;
   outputCost: number;
   blendedPricePerMillion: number;
 };
+
+const INPUT_SHARE_MIN = 0.68;
+const INPUT_SHARE_SPAN = 0.18;
+const CACHED_INPUT_SHARE_MIN = 0.15;
+const CACHED_INPUT_SHARE_SPAN = 0.55;
 
 const compactFormatter = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 1,
@@ -93,6 +108,14 @@ function modelInitial(modelId: string): string {
   return modelId.replace(/^[^a-z0-9]+/i, "").slice(0, 1).toUpperCase() || "M";
 }
 
+function hasCachedInputPrice(model: TokenBudgetModel): model is TokenBudgetModel & { cachedInputPrice: number } {
+  return typeof model.cachedInputPrice === "number" && Number.isFinite(model.cachedInputPrice) && model.cachedInputPrice >= 0;
+}
+
+function cachePriceLabel(key: CachedInputPriceKey | null | undefined): string {
+  return key === "cache_read" ? "Cache read" : "Cached input";
+}
+
 function ModelMark({ model }: { model: TokenBudgetModel }) {
   if (!model.lightLogo) {
     return (
@@ -112,23 +135,46 @@ function ModelMark({ model }: { model: TokenBudgetModel }) {
 
 function calculateModel(model: TokenBudgetModel, amount: number, seed: number): CalculatedModel {
   const jitter = stableRatio(`${model.modelId}:${seed}`);
-  const inputTokenShare = 0.68 + jitter * 0.18;
-  const outputTokenShare = 1 - inputTokenShare;
-  const blendedUnitPrice = inputTokenShare * model.inputPrice + outputTokenShare * model.outputPrice;
-  const totalTokens = blendedUnitPrice > 0 ? (amount * model.tokensPerUnit) / blendedUnitPrice : 0;
-  const inputTokens = totalTokens * inputTokenShare;
-  const outputTokens = totalTokens * outputTokenShare;
+  const inputTokenShare = INPUT_SHARE_MIN + jitter * INPUT_SHARE_SPAN;
+  const cachedInputTokenShare = hasCachedInputPrice(model) ? CACHED_INPUT_SHARE_MIN + stableRatio(`${model.modelId}:cache:${seed}`) * CACHED_INPUT_SHARE_SPAN : 0;
 
-  return {
-    ...model,
-    inputTokenShare,
-    inputTokens,
-    outputTokens,
-    totalTokens,
-    inputCost: (inputTokens / model.tokensPerUnit) * model.inputPrice,
-    outputCost: (outputTokens / model.tokensPerUnit) * model.outputPrice,
-    blendedPricePerMillion: (blendedUnitPrice / model.tokensPerUnit) * 1_000_000,
+  const calculateWithCacheShare = (cacheShare: number) => {
+    const outputTokenShare = 1 - inputTokenShare;
+    const uncachedInputShare = inputTokenShare * (1 - cacheShare);
+    const cachedInputShare = inputTokenShare * cacheShare;
+    const cachedInputUnitPrice = hasCachedInputPrice(model) ? model.cachedInputPrice : model.inputPrice;
+    const blendedUnitPrice = uncachedInputShare * model.inputPrice + cachedInputShare * cachedInputUnitPrice + outputTokenShare * model.outputPrice;
+    const totalTokens = blendedUnitPrice > 0 ? (amount * model.tokensPerUnit) / blendedUnitPrice : 0;
+    const inputTokens = totalTokens * inputTokenShare;
+    const cachedInputTokens = inputTokens * cacheShare;
+    const uncachedInputTokens = inputTokens - cachedInputTokens;
+    const outputTokens = totalTokens * outputTokenShare;
+    const uncachedInputCost = (uncachedInputTokens / model.tokensPerUnit) * model.inputPrice;
+    const cachedInputCost = (cachedInputTokens / model.tokensPerUnit) * cachedInputUnitPrice;
+
+    return {
+      ...model,
+      inputTokenShare,
+      cachedInputTokenShare: cacheShare,
+      uncachedInputTokens,
+      cachedInputTokens,
+      inputTokens,
+      outputTokens,
+      totalTokens,
+      uncachedInputCost,
+      cachedInputCost,
+      inputCost: uncachedInputCost + cachedInputCost,
+      outputCost: (outputTokens / model.tokensPerUnit) * model.outputPrice,
+      blendedPricePerMillion: (blendedUnitPrice / model.tokensPerUnit) * 1_000_000,
+    };
   };
+
+  const calculation = calculateWithCacheShare(cachedInputTokenShare);
+  if (model.minimumCacheTokens && calculation.cachedInputTokens > 0 && calculation.cachedInputTokens < model.minimumCacheTokens) {
+    return calculateWithCacheShare(0);
+  }
+
+  return calculation;
 }
 
 export default function TokenBudgetCalculator({ models }: { models: TokenBudgetModel[] }) {
@@ -154,6 +200,7 @@ export default function TokenBudgetCalculator({ models }: { models: TokenBudgetM
 
   const bestValue = calculated[0];
   const medianValue = calculated[Math.floor(calculated.length / 2)];
+  const cachePricedCount = models.filter(hasCachedInputPrice).length;
 
   return (
     <section aria-labelledby="token-budget-calculator" className="mt-8">
@@ -216,8 +263,13 @@ export default function TokenBudgetCalculator({ models }: { models: TokenBudgetM
 
           <Button type="button" variant="outline" className="mt-5 w-full" onClick={() => setSeed((current) => current + 1)}>
             <Shuffle className="h-4 w-4" />
-            Shuffle input/output mix
+            Shuffle token/cache mix
           </Button>
+          <p className="mt-3 text-xs text-muted-foreground">
+            {cachePricedCount
+              ? `${cachePricedCount} models expose cached-input pricing; their rows include cached-token estimates.`
+              : "Cached-token estimates appear when a model exposes cached input or cache read pricing."}
+          </p>
         </div>
 
         <div className="rounded-2xl border border-border/60 bg-gradient-to-br from-card/80 via-card/55 to-primary/5 p-5 shadow-sm backdrop-blur md:p-6">
@@ -226,7 +278,7 @@ export default function TokenBudgetCalculator({ models }: { models: TokenBudgetM
             {bestValue ? formatTokens(bestValue.totalTokens) : "0"} tokens on the best-priced model
           </h3>
           <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
-            The budget is applied to each model independently. Each row uses a stable input/output token mix between 68/32 and 86/14, then applies that model&apos;s current input and output rates.
+            The budget is applied to each model independently. Each row uses a stable input/output token mix between 68/32 and 86/14. Models with cached-input pricing also get a cached-token share between 15% and 70% of input tokens.
           </p>
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
             {calculated.slice(0, 4).map((model) => (
@@ -234,7 +286,10 @@ export default function TokenBudgetCalculator({ models }: { models: TokenBudgetM
                 <ModelMark model={model} />
                 <span className="min-w-0">
                   <span className="block truncate text-sm font-medium">{model.modelId}</span>
-                  <span className="text-xs text-muted-foreground">{formatTokens(model.totalTokens)} tokens</span>
+                  <span className="text-xs text-muted-foreground">
+                    {formatTokens(model.totalTokens)} tokens
+                    {hasCachedInputPrice(model) ? ` · ${Math.round(model.cachedInputTokenShare * 100)}% cached input` : ""}
+                  </span>
                 </span>
               </Link>
             ))}
@@ -255,12 +310,13 @@ export default function TokenBudgetCalculator({ models }: { models: TokenBudgetM
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[920px] text-left text-sm">
+          <table className="w-full min-w-[1080px] text-left text-sm">
             <thead className="border-b border-border/60 text-xs uppercase tracking-[0.12em] text-muted-foreground">
               <tr>
                 <th className="px-4 py-3 font-medium">Model</th>
                 <th className="px-4 py-3 font-medium">Total tokens</th>
-                <th className="px-4 py-3 font-medium">Input</th>
+                <th className="px-4 py-3 font-medium">Uncached input</th>
+                <th className="px-4 py-3 font-medium">Cached input</th>
                 <th className="px-4 py-3 font-medium">Output</th>
                 <th className="px-4 py-3 font-medium">Mix</th>
                 <th className="px-4 py-3 font-medium">Blended price</th>
@@ -281,15 +337,29 @@ export default function TokenBudgetCalculator({ models }: { models: TokenBudgetM
                   </td>
                   <td className="px-4 py-4 text-lg font-semibold">{formatTokens(model.totalTokens)}</td>
                   <td className="px-4 py-4">
-                    <span className="block font-medium">{formatFullTokens(model.inputTokens)}</span>
-                    <span className="text-xs text-muted-foreground">{formatPrice(model.inputCost)}</span>
+                    <span className="block font-medium">{formatFullTokens(model.uncachedInputTokens)}</span>
+                    <span className="text-xs text-muted-foreground">{formatPrice(model.uncachedInputCost)}</span>
+                  </td>
+                  <td className="px-4 py-4">
+                    {hasCachedInputPrice(model) ? (
+                      <>
+                        <span className="block font-medium">{formatFullTokens(model.cachedInputTokens)}</span>
+                        <span className="text-xs text-muted-foreground">
+                          {formatPrice(model.cachedInputCost)} · {cachePriceLabel(model.cachePriceKey)}
+                          {model.minimumCacheTokens ? ` · min ${formatTokens(model.minimumCacheTokens)}` : ""}
+                        </span>
+                      </>
+                    ) : (
+                      <span className="text-xs text-muted-foreground">No cache price</span>
+                    )}
                   </td>
                   <td className="px-4 py-4">
                     <span className="block font-medium">{formatFullTokens(model.outputTokens)}</span>
                     <span className="text-xs text-muted-foreground">{formatPrice(model.outputCost)}</span>
                   </td>
                   <td className="px-4 py-4 text-muted-foreground">
-                    {Math.round(model.inputTokenShare * 100)} / {Math.round((1 - model.inputTokenShare) * 100)}
+                    <span className="block">{Math.round(model.inputTokenShare * 100)} / {Math.round((1 - model.inputTokenShare) * 100)}</span>
+                    {hasCachedInputPrice(model) ? <span className="block text-xs">cache {Math.round(model.cachedInputTokenShare * 100)}% of input</span> : null}
                   </td>
                   <td className="px-4 py-4 text-muted-foreground">{formatPrice(model.blendedPricePerMillion)} / 1M</td>
                   <td className="px-4 py-4 text-muted-foreground">{model.contextTokens ? formatTokens(model.contextTokens) : "Not listed"}</td>
