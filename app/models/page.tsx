@@ -4,6 +4,7 @@ import ModelCatalogueControls from "@/components/models/ModelCatalogueControls.c
 import CopyModelId from "@/components/models/CopyModelId.client";
 import { capabilityLabels } from "@/components/models/ModelDetailsCard";
 import ModelLogo from "@/components/models/ModelLogo";
+import ModelUsagePieChart, { type ModelUsageDatum } from "@/components/models/ModelUsagePieChart.client";
 import { JsonLd, SeoFooter, SeoNavigation } from "@/components/models/SeoChrome";
 import { formatCachePrice, formatContext, formatMs, formatPrice, formatRate } from "@/lib/models/format";
 import { publicModels } from "@/lib/models/snapshot";
@@ -50,6 +51,11 @@ export default function ModelsPage() {
   const retired = publicModels.filter((model) => model.status === "retired");
   const counts = (["chat", "image", "video"] as const).map((type) => [type, active.filter((model) => model.model_type === type).length] as const);
   const tiers = [...new Set(publicModels.map((model) => model.tier).filter((tier): tier is string => Boolean(tier)))].sort();
+  const usageShare: ModelUsageDatum[] = publicModels.map((model) => ({
+    modelId: model.model_id,
+    requests: model.statistics?.all?.requests_total ?? 0,
+    slug: model.slug,
+  }));
 
   return (
     <>
@@ -71,6 +77,7 @@ export default function ModelsPage() {
         </section>
 
         {retired.length ? <section className="mt-12" aria-labelledby="retired-models"><h2 id="retired-models" className="text-2xl font-semibold">Retired models</h2><p className="mt-1 text-sm text-muted-foreground">Listed for reference only; they are no longer available through LLM7.</p><div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">{retired.map((model) => <ModelCard key={model.slug} model={model} />)}</div></section> : null}
+        <ModelUsagePieChart data={usageShare} />
       </main>
       <SeoFooter />
     </>
