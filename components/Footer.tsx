@@ -280,6 +280,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  href="https://github.com/chigwell/llm7.io/blob/main/RESPONSIBLE_DISCLOSURE.md"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Responsible Disclosure
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="https://github.com/chigwell/llm7.io/blob/main/LICENSE"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
