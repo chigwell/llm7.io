@@ -24,6 +24,18 @@ const CachePricingSchema = z.object({
   cache_read: DecimalString.optional(),
   cache_write: DecimalString.optional(),
 });
+const VideoPriceTierSchema = z.object({
+  resolution: z.string().optional(),
+  size: z.string().optional(),
+  quality: z.string().optional(),
+  sound: z.boolean().optional(),
+  public_price_usd_per_second: DecimalString.optional(),
+}).passthrough();
+const VideoRoutePriceSchema = z.object({
+  request_type: z.string().optional(),
+  public_price_usd_per_second: DecimalString.optional(),
+  price_tiers_usd_per_second: z.array(VideoPriceTierSchema).optional(),
+});
 
 export const PaginationSchema = z.object({
   page: z.number().int().positive(),
@@ -45,6 +57,7 @@ export const PricingSchema = z.object({
   cache_read: DecimalString.optional(),
   cache_write: DecimalString.optional(),
   public_price_usd_per_million: CachePricingSchema.optional(),
+  route_prices_usd_per_second: z.array(VideoRoutePriceSchema).optional(),
 }).superRefine((pricing, context) => {
   if (pricing.mode === "token" && (!pricing.input || !pricing.output)) {
     context.addIssue({ code: z.ZodIssueCode.custom, message: "Token pricing requires input and output prices" });

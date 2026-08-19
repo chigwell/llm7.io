@@ -5,10 +5,12 @@ import Link from "next/link";
 import { useCallback, useMemo, useState } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { Button } from "@/components/ui/buttonShadcn";
+import VideoPricingBreakdown from "@/components/models/VideoPricingBreakdown";
 import { MODELS_API_URL, type ApiModel, useLlm7Models } from "@/hooks/use-llm7-models";
 import { usePingMetrics } from "@/hooks/use-ping-metrics";
 import { cachePriceEntries } from "@/lib/models/format";
 import { logoDetailsForModelId } from "@/lib/models/logos";
+import { startingVideoPrice, videoPriceOptions, type VideoPricing } from "@/lib/models/video-pricing";
 import { cn } from "@/lib/utils";
 
 type PayModel = {
@@ -25,6 +27,7 @@ type PayModel = {
     value: string;
   }>;
   minimumRequestPrice?: string;
+  videoPricing?: VideoPricing;
   usageBasedOnly?: boolean;
   availabilityLastHourPercent?: number;
   availability?: {
@@ -76,6 +79,14 @@ function modelChips(model: ApiModel): PayModel["chips"] {
     model.stream ? "stream" : null,
     model.reasoning ? "reasoning" : null,
   ].filter(Boolean) as PayModel["chips"];
+}
+
+function isVideoModel(model: ApiModel) {
+  return (
+    model.model_type?.toLowerCase() === "video" ||
+    model.modalities?.output?.includes("video") ||
+    model.capabilities?.video_generation === true
+  );
 }
 
 function getSinglePriceUnit(model: ApiModel) {
@@ -136,6 +147,11 @@ function pricingItems(model: ApiModel): PayModel["priceItems"] {
     value: `${formatUsd(Number(entry.value))} / ${unit}`,
   }));
 
+  const startingPrice = isVideoModel(model) ? startingVideoPrice(model.pricing) : null;
+  if (startingPrice) {
+    return [{ label: "Video", value: `From ${formatUsd(Number(startingPrice))} / second` }];
+  }
+
   if (isSinglePrice) {
     const singleUnit = getSinglePriceUnit(model);
 
@@ -157,6 +173,7 @@ function pricingItems(model: ApiModel): PayModel["priceItems"] {
 
 function transformApiModel(model: ApiModel): PayModel {
   const provider = logoDetailsForModelId(model.id) ?? { provider: "" };
+  const hasVideoPricing = isVideoModel(model) && videoPriceOptions(model.pricing).length > 0;
 
   return {
     id: model.id,
@@ -166,6 +183,7 @@ function transformApiModel(model: ApiModel): PayModel {
     chips: modelChips(model),
     contextWindow: formatContextWindow(model),
     priceItems: pricingItems(model),
+    videoPricing: hasVideoPricing ? model.pricing : undefined,
     minimumRequestPrice:
       typeof model.pricing?.minimum_request_price_usd === "number"
         ? formatUsd(model.pricing.minimum_request_price_usd)
@@ -397,6 +415,8 @@ function ModelCard({ model, availability }: { model: PayModel; availability?: nu
         ))}
       </div>
 
+      {model.videoPricing ? <VideoPricingBreakdown pricing={model.videoPricing} compact /> : null}
+
       {hasSecondaryDetails ? (
         <div className={cn("mt-3 grid gap-2 text-sm", hasContextWindow && model.minimumRequestPrice ? "grid-cols-2" : "grid-cols-1")}>
           {hasContextWindow ? (
@@ -475,7 +495,7 @@ export default function PayAsYouGoModels() {
       </div>
 
       <p className="mt-4 text-xs text-muted-foreground">
-        Prices use each model&apos;s listed unit. Cache pricing appears when the model endpoint returns public cache price keys. Minimum request price is shown when provided by the model endpoint.{" "}
+        Prices use each model&apos;s listed unit. Video prices start at the lowest listed rate, with configuration-specific rates shown on each card. Cache pricing appears when the model endpoint returns public cache price keys. Minimum request price is shown when provided by the model endpoint.{" "}
         <a href={MODELS_API_URL} target="_blank" rel="noreferrer" className="text-primary underline underline-offset-4">
           See all models in JSON format via API
         </a>

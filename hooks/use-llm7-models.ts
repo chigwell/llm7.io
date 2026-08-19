@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import fallbackModels from "@/data/payAsYouGoModels.json";
+import type { VideoRoutePrice } from "@/lib/models/video-pricing";
 
 export const MODELS_API_URL = "https://api.llm7.io/v1/models";
 
@@ -24,6 +25,7 @@ export type ApiModel = {
       cache_write?: number;
     };
     minimum_request_price_usd?: number;
+    route_prices_usd_per_second?: VideoRoutePrice[];
     currency?: string;
     unit?: string;
   };

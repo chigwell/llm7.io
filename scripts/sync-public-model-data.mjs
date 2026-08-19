@@ -20,6 +20,12 @@ const nullableNonNegative = nonNegative.nullable();
 const rate = z.number().finite().min(0).max(1).nullable();
 const pagination = z.object({ page: z.number().int().positive(), page_size: z.number().int().positive(), total_items: z.number().int().nonnegative(), total_pages: z.number().int().positive() });
 const cachePricing = z.object({ cached_input: decimal.optional(), cached_output: decimal.optional(), cache_read: decimal.optional(), cache_write: decimal.optional() });
+const videoPriceTier = z.object({
+  resolution: z.string().optional(), size: z.string().optional(), quality: z.string().optional(), sound: z.boolean().optional(), public_price_usd_per_second: decimal.optional(),
+}).passthrough();
+const videoRoutePrice = z.object({
+  request_type: z.string().optional(), public_price_usd_per_second: decimal.optional(), price_tiers_usd_per_second: z.array(videoPriceTier).optional(),
+});
 const pricing = z.object({
   mode: z.enum(["token", "image", "second"]),
   currency: z.string().min(1),
@@ -33,6 +39,7 @@ const pricing = z.object({
   cache_read: decimal.optional(),
   cache_write: decimal.optional(),
   public_price_usd_per_million: cachePricing.optional(),
+  route_prices_usd_per_second: z.array(videoRoutePrice).optional(),
 }).superRefine((value, ctx) => {
   if (value.mode === "token" && (!value.input || !value.output)) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "token prices require input and output" });
   if (value.mode !== "token" && !value.price) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "unit price required" });
@@ -54,6 +61,12 @@ const metricPoint = statistics.omit({ window: true, first_bucket: true, last_buc
 const metricsResponse = z.object({ range: z.string(), interval: z.string(), points: z.array(metricPoint), sample_size: nonNegative, data_available_from: timestamp.nullable(), latest_complete_bucket: timestamp.nullable(), generated_at: timestamp });
 const summaryResponse = z.object({ range: z.string(), models: z.object({ total: nonNegative, active: nonNegative, retired: nonNegative, chat: nonNegative, image: nonNegative, video: nonNegative, models_with_requests: nonNegative }), requests: z.object({ total: nonNegative, successful: nonNegative, client_errors_4xx: nonNegative, server_errors_5xx: nonNegative, timeouts: nonNegative, rate_limited_429: nonNegative, cancelled: nonNegative, success_rate: rate }), usage: z.object({ input_tokens: nonNegative, output_tokens: nonNegative, images_generated: nonNegative, videos_generated: nonNegative, video_seconds_generated: decimal }), jobs: z.object({ started: nonNegative, succeeded: nonNegative, failed: nonNegative, cancelled: nonNegative, success_rate: rate }), latency: z.object({ observations: nonNegative, average_ms: nullableNonNegative, p50_ms: nullableNonNegative, p95_ms: nullableNonNegative }), data_available_from: timestamp.nullable(), latest_complete_bucket: timestamp.nullable(), generated_at: timestamp });
 const versionResponse = z.object({ schema_version: z.number().int().positive(), catalog_version: z.string().min(1), catalog_updated_at: timestamp, latest_metrics_bucket: timestamp.nullable() });
+const liveVideoPricingResponse = z.object({
+  data: z.array(z.object({
+    id: z.string().min(1),
+    pricing: z.object({ route_prices_usd_per_second: z.array(videoRoutePrice).optional() }),
+  })),
+});
 
 function assertNoDeniedFields(value, path = "public") {
   if (Array.isArray(value)) return value.forEach((entry, index) => assertNoDeniedFields(entry, `${path}[${index}]`));
@@ -147,15 +160,32 @@ async function main() {
   const previous = await loadPrevious();
   previousEtags = previous?.metadata?.etags ?? {};
   const etags = {};
+  const livePricingUrl = "https://api.llm7.io/v1/models";
+  // This endpoint is also used by the live pricing cards and exposes the complete
+  // public video rate matrix, which the catalogue endpoint currently summarizes.
+  delete previousEtags[livePricingUrl];
+  const livePricingResult = await requestJson(livePricingUrl, undefined, etags);
+  const liveVideoPricing = liveVideoPricingResponse.parse(livePricingResult.value);
+  const videoPricingById = new Map(liveVideoPricing.data.flatMap((model) => {
+    const routes = stripInternalRouteFields(model.pricing.route_prices_usd_per_second);
+    assertNoDeniedFields(routes, `live-pricing.${model.id}`);
+    return routes?.length ? [[model.id, routes]] : [];
+  }));
+  const withVideoPricing = (model) => {
+    const routes = model.model_type === "video" ? videoPricingById.get(model.model_id) : undefined;
+    return routes ? { ...model, pricing: { ...model.pricing, route_prices_usd_per_second: routes } } : model;
+  };
   const versionUrl = `${API_BASE}/models/version`;
   const version = validate(versionResponse, (await requestJson(versionUrl, previous?.version, etags)).value, "version");
   const firstListUrl = `${API_BASE}/models?status=all&page_size=100&metrics_window=30d&page=1`;
-  const firstList = validate(listResponse, (await requestJson(firstListUrl, previous?.list_pages?.[0], etags)).value, "models.1");
+  const parsedFirstList = validate(listResponse, (await requestJson(firstListUrl, previous?.list_pages?.[0], etags)).value, "models.1");
+  const firstList = { ...parsedFirstList, data: parsedFirstList.data.map(withVideoPricing) };
   const pages = [firstList];
   const pageNumbers = Array.from({ length: Math.max(firstList.pagination.total_pages - 1, 0) }, (_, index) => index + 2);
   const remaining = await mapLimit(pageNumbers, CONCURRENCY, async (page) => {
     const url = `${API_BASE}/models?status=all&page_size=100&metrics_window=30d&page=${page}`;
-    return validate(listResponse, (await requestJson(url, previous?.list_pages?.[page - 1], etags)).value, `models.${page}`);
+    const parsed = validate(listResponse, (await requestJson(url, previous?.list_pages?.[page - 1], etags)).value, `models.${page}`);
+    return { ...parsed, data: parsed.data.map(withVideoPricing) };
   });
   pages.push(...remaining);
   const listed = pages.flatMap((page) => page.data);
@@ -167,7 +197,7 @@ async function main() {
     const previousEntry = previous?.models?.find((entry) => entry.model.slug === listedModel.slug);
     const detailUrl = `${API_BASE}/models/${encodeURIComponent(listedModel.slug)}`;
     const detailResult = await requestJson(detailUrl, previousEntry?.model, etags);
-    const model = validate(detailResponse, detailResult.value, `model.${listedModel.slug}`);
+    const model = withVideoPricing(validate(detailResponse, detailResult.value, `model.${listedModel.slug}`));
     const canonicalSlug = new URL(detailResult.canonicalUrl).pathname.split("/").filter(Boolean).at(-1) || model.slug;
     if (canonicalSlug !== model.slug) throw new Error(`Canonical detail URL and slug disagree for ${listedModel.slug}`);
     const metricsUrl = `${API_BASE}/models/${encodeURIComponent(model.slug)}/metrics?range=30d&interval=1d`;

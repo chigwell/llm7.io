@@ -13,6 +13,7 @@ type Props = {
   minimum?: string | null;
   effectiveDate?: string;
   durations?: number[];
+  variablePricing?: boolean;
 };
 
 const wholeCount = (value: string) => /^\d+$/.test(value) && new Decimal(value || "0").lte("1000000000");
@@ -92,7 +93,7 @@ export default function ModelCalculator(props: Props) {
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <h2 id="calculator-heading" className="flex items-center gap-2 text-2xl font-semibold"><Sparkles className="h-5 w-5 text-primary" />Cost calculator</h2>
-          <p className="mt-1 text-sm text-muted-foreground">Adjust the volume to see an instant estimate at the current public price.</p>
+          <p className="mt-1 text-sm text-muted-foreground">{props.variablePricing ? "Estimate at the starting rate; resolution, input type, quality, and audio options may change the actual total." : "Adjust the volume to see an instant estimate at the current public price."}</p>
         </div>
         <span className="rounded-full border border-border/70 bg-background/65 px-3 py-1 text-xs font-medium">{props.unit}</span>
       </div>

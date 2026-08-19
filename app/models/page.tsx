@@ -5,6 +5,7 @@ import CopyModelId from "@/components/models/CopyModelId.client";
 import { capabilityLabels } from "@/components/models/ModelDetailsCard";
 import ModelLogo from "@/components/models/ModelLogo";
 import ModelUsagePieChart, { type ModelUsageDatum } from "@/components/models/ModelUsagePieChart.client";
+import VideoPricingBreakdown from "@/components/models/VideoPricingBreakdown";
 import { JsonLd, SeoFooter, SeoNavigation } from "@/components/models/SeoChrome";
 import { formatCachePrice, formatContext, formatMs, formatPrice, formatRate } from "@/lib/models/format";
 import { publicModels } from "@/lib/models/snapshot";
@@ -38,6 +39,7 @@ function ModelCard({ model }: { model: (typeof publicModels)[number] }) {
       </div>
       <div className="mt-4 flex items-center gap-2"><code className="min-w-0 truncate rounded-lg bg-background/60 px-2 py-1 text-xs">{model.model_id}</code><CopyModelId modelId={model.model_id} /></div>
       <p className="mt-4 text-sm font-medium">{formatPrice(model)}</p>
+      {model.model_type === "video" ? <VideoPricingBreakdown pricing={model.pricing} compact /> : null}
       {cachePrice ? <p className="mt-1 text-xs text-muted-foreground">Cache: {cachePrice}</p> : null}
       {model.context_window.tokens ? <p className="mt-2 text-sm text-muted-foreground">{formatContext(model.context_window.tokens)} context</p> : null}
       {capabilities.length ? <div className="mt-4 flex flex-wrap gap-1.5">{capabilities.map((capability) => <span key={capability} className="rounded-full border border-border/70 bg-background/60 px-2.5 py-1 text-xs">{capability}</span>)}</div> : null}
