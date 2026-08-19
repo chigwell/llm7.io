@@ -1,6 +1,6 @@
 import Decimal from "decimal.js-light";
 import type { PublicModel } from "./api-types";
-import { isProviderQuoteModel, startingVideoPrice } from "./video-pricing";
+import { isProviderQuoteModel, providerQuotePriceLabel, startingVideoPrice } from "./video-pricing";
 
 export const CACHE_PRICE_KEYS = ["cached_input", "cached_output", "cache_read", "cache_write"] as const;
 
@@ -60,7 +60,7 @@ export function formatUsd(value: string | null | undefined): string {
 
 export function formatPrice(model: PublicModel): string {
   const { pricing } = model;
-  if (isProviderQuoteModel(model)) return "Dynamic per-request quote";
+  if (isProviderQuoteModel(model)) return providerQuotePriceLabel(model.model_id);
   if (pricing.mode === "token") return `${formatUsd(pricing.input)} input and ${formatUsd(pricing.output)} output per ${pricing.unit}`;
   const startingPrice = pricing.mode === "second" ? startingVideoPrice(pricing) : null;
   if (startingPrice) return `From ${formatUsd(startingPrice)} per ${pricing.unit}`;

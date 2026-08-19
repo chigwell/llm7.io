@@ -10,7 +10,7 @@ import { MODELS_API_URL, type ApiModel, useLlm7Models } from "@/hooks/use-llm7-m
 import { usePingMetrics } from "@/hooks/use-ping-metrics";
 import { cachePriceEntries } from "@/lib/models/format";
 import { logoDetailsForModelId } from "@/lib/models/logos";
-import { isProviderQuoteModel, startingVideoPrice, videoPriceOptions, type VideoPricing } from "@/lib/models/video-pricing";
+import { isProviderQuoteModel, providerQuotePriceLabel, providerQuoteTypical, startingVideoPrice, videoPriceOptions, type VideoPricing } from "@/lib/models/video-pricing";
 import { cn } from "@/lib/utils";
 
 type PayModel = {
@@ -29,6 +29,7 @@ type PayModel = {
   minimumRequestPrice?: string;
   videoPricing?: VideoPricing;
   providerQuote?: boolean;
+  providerQuoteHasTypical?: boolean;
   usageBasedOnly?: boolean;
   availabilityLastHourPercent?: number;
   availability?: {
@@ -149,7 +150,7 @@ function pricingItems(model: ApiModel): PayModel["priceItems"] {
   }));
 
   if (isProviderQuoteModel(model)) {
-    return [{ label: "Video", value: "Dynamic per-request quote" }];
+    return [{ label: "Dynamic pricing", value: providerQuotePriceLabel(model.id) }];
   }
 
   const startingPrice = isVideoModel(model) ? startingVideoPrice(model.pricing) : null;
@@ -190,6 +191,7 @@ function transformApiModel(model: ApiModel): PayModel {
     contextWindow: formatContextWindow(model),
     priceItems: pricingItems(model),
     providerQuote,
+    providerQuoteHasTypical: Boolean(providerQuoteTypical(model.id)),
     videoPricing: hasVideoPricing ? model.pricing : undefined,
     minimumRequestPrice:
       typeof model.pricing?.minimum_request_price_usd === "number"
@@ -423,7 +425,7 @@ function ModelCard({ model, availability }: { model: PayModel; availability?: nu
       </div>
 
       {model.videoPricing ? <VideoPricingBreakdown pricing={model.videoPricing} compact /> : null}
-      {model.providerQuote ? <p className="mt-2 text-xs text-muted-foreground">Billed at actual provider cost with no LLM7 markup.</p> : null}
+      {model.providerQuote ? <p className="mt-2 text-xs text-muted-foreground">{model.providerQuoteHasTypical ? "Recent reference for a 720p image-to-video request. " : ""}Billed at actual provider cost with no LLM7 markup; the final charge varies with request parameters and provider usage.</p> : null}
 
       {hasSecondaryDetails ? (
         <div className={cn("mt-3 grid gap-2 text-sm", hasContextWindow && model.minimumRequestPrice ? "grid-cols-2" : "grid-cols-1")}>

@@ -1,6 +1,6 @@
 import type { PublicModel } from "./api-types";
 import { formatBoolean, formatContext, formatPrice, formatRate } from "./format";
-import { isProviderQuoteModel } from "./video-pricing";
+import { isProviderQuoteModel, providerQuotePriceLabel, providerQuoteTypical } from "./video-pricing";
 
 export function capabilitySummary(model: PublicModel): string {
   const capabilities: string[] = [];
@@ -26,7 +26,11 @@ export function modelDescription(model: PublicModel): string {
   }
   const durations = model.capabilities.supported_seconds?.length ? ` Supported durations are ${model.capabilities.supported_seconds.join(", ")} seconds.` : "";
   const sizes = model.capabilities.supported_sizes?.length ? ` Published sizes include ${model.capabilities.supported_sizes.join(", ")}.` : "";
-  if (isProviderQuoteModel(model)) return `${model.model_id} is a video-generation model available through the LLM7 API.${durations}${sizes} Pricing uses a dynamic per-request quote billed at actual provider cost with no LLM7 markup.`;
+  if (isProviderQuoteModel(model)) {
+    const typical = providerQuoteTypical(model.model_id);
+    const reference = typical ? ` A recent ${typical.seconds}s ${typical.resolution} ${typical.requestType} reference is ${providerQuotePriceLabel(model.model_id)}.` : "";
+    return `${model.model_id} is a video-generation model available through the LLM7 API.${durations}${sizes}${reference} Pricing is dynamic and billed at actual provider cost with no LLM7 markup.`;
+  }
   return `${model.model_id} is a video-generation model available through the LLM7 API.${durations}${sizes} It currently costs ${formatPrice(model)}.`;
 }
 

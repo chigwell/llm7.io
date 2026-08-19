@@ -38,6 +38,48 @@ export function isProviderQuotePricing(pricing: VideoPricing | null | undefined)
   return pricing?.billing_strategy === "provider_quote";
 }
 
+export type ProviderQuoteTypical = {
+  priceUsd: string;
+  seconds: number;
+  resolution: string;
+  requestType: "image-to-video";
+};
+
+const PROVIDER_QUOTE_TYPICALS: Record<string, ProviderQuoteTypical> = {
+  "seedance-2.0-mini": {
+    priceUsd: "0.85",
+    seconds: 10,
+    resolution: "720p",
+    requestType: "image-to-video",
+  },
+  "seedance-2.0-fast": {
+    priceUsd: "1.55",
+    seconds: 10,
+    resolution: "720p",
+    requestType: "image-to-video",
+  },
+};
+
+export function providerQuoteTypical(modelId: string | null | undefined): ProviderQuoteTypical | null {
+  const normalized = String(modelId ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/[._/]+/g, "-");
+  const isObservedRoute = !normalized.includes("-to-video") || normalized.includes("image-to-video");
+
+  if (!isObservedRoute) return null;
+  if (normalized.includes("seedance-2-0-mini")) return PROVIDER_QUOTE_TYPICALS["seedance-2.0-mini"];
+  if (normalized.includes("seedance-2-0-fast")) return PROVIDER_QUOTE_TYPICALS["seedance-2.0-fast"];
+  return null;
+}
+
+export function providerQuotePriceLabel(modelId: string | null | undefined): string {
+  const typical = providerQuoteTypical(modelId);
+  return typical
+    ? `Typically from $${typical.priceUsd} for ${typical.seconds}s (${typical.resolution})`
+    : "Dynamic per-request quote";
+}
+
 export type VideoPriceOption = {
   label: string;
   price: string;

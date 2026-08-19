@@ -19,7 +19,16 @@ const pairPath = (left, right) => `/compare/${pairKey(left, right)}/`;
 
 function priceSummary(model) {
   const pricing = model.pricing;
-  if (pricing.billing_strategy === "provider_quote" || model.capabilities?.atlascloud_video === true) return "Dynamic per-request quote · no LLM7 markup";
+  if (pricing.billing_strategy === "provider_quote" || model.capabilities?.atlascloud_video === true) {
+    const normalizedId = model.model_id.toLowerCase().replace(/[._/]+/g, "-");
+    const observedRoute = !normalizedId.includes("-to-video") || normalizedId.includes("image-to-video");
+    const typicalPrice = observedRoute && normalizedId.includes("seedance-2-0-mini")
+      ? "$0.85"
+      : observedRoute && normalizedId.includes("seedance-2-0-fast")
+        ? "$1.55"
+        : null;
+    return typicalPrice ? `Typically from ${typicalPrice} for 10s (720p) · dynamic pricing` : "Dynamic per-request quote · no LLM7 markup";
+  }
   return pricing.mode === "token" ? `$${pricing.input} input · $${pricing.output} output / ${pricing.unit}` : `$${pricing.price} / ${pricing.unit}`;
 }
 

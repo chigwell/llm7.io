@@ -94,7 +94,7 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
               {model.pricing.minimum_request_usd ? <p className="mt-2 text-sm text-muted-foreground">Minimum charge per request: {formatUsd(model.pricing.minimum_request_usd)}.</p> : null}
             </section>
 
-            {providerQuote ? <ProviderQuotePricing /> : <ModelCalculator mode={model.pricing.mode} unit={model.pricing.unit} inputPrice={model.pricing.input} outputPrice={model.pricing.output} price={model.pricing.price} minimum={model.pricing.minimum_request_usd} durations={model.capabilities.supported_seconds} variablePricing={Boolean(model.pricing.route_prices_usd_per_second?.length)} />}
+            {providerQuote ? <ProviderQuotePricing modelId={model.model_id} /> : <ModelCalculator mode={model.pricing.mode} unit={model.pricing.unit} inputPrice={model.pricing.input} outputPrice={model.pricing.output} price={model.pricing.price} minimum={model.pricing.minimum_request_usd} durations={model.capabilities.supported_seconds} variablePricing={Boolean(model.pricing.route_prices_usd_per_second?.length)} />}
 
             <Statistics model={model} />
             <ModelMetricsCharts modelType={model.model_type} points={metrics.points} />
