@@ -19,6 +19,7 @@ const pairPath = (left, right) => `/compare/${pairKey(left, right)}/`;
 
 function priceSummary(model) {
   const pricing = model.pricing;
+  if (pricing.billing_strategy === "provider_quote" || model.capabilities?.atlascloud_video === true) return "Dynamic per-request quote · no LLM7 markup";
   return pricing.mode === "token" ? `$${pricing.input} input · $${pricing.output} output / ${pricing.unit}` : `$${pricing.price} / ${pricing.unit}`;
 }
 

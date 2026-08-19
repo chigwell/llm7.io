@@ -1,4 +1,4 @@
-import { videoPriceOptions, type VideoPricing } from "@/lib/models/video-pricing";
+import { isProviderQuotePricing, videoPriceOptions, type VideoPricing } from "@/lib/models/video-pricing";
 import { cn } from "@/lib/utils";
 
 function formatUsdPerSecond(value: string): string {
@@ -17,6 +17,7 @@ export default function VideoPricingBreakdown({
   compact?: boolean;
   className?: string;
 }) {
+  if (isProviderQuotePricing(pricing)) return null;
   const options = videoPriceOptions(pricing);
   if (!options.length) return null;
 

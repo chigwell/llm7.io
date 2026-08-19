@@ -14,6 +14,8 @@ export type ApiModel = {
     input?: number;
     output?: number;
     price?: number;
+    billing_strategy?: "provider_quote";
+    static_price_role?: "catalog_fallback";
     cached_input?: number;
     cached_output?: number;
     cache_read?: number;
@@ -35,6 +37,7 @@ export type ApiModel = {
     output?: string[];
   };
   capabilities?: {
+    atlascloud_video?: boolean;
     video_generation?: boolean;
     video_async?: boolean;
     max_reference_images?: number;

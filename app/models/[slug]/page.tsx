@@ -7,6 +7,7 @@ import ModelCodeExamples from "@/components/models/ModelCodeExamples.client";
 import ModelDetailsCard from "@/components/models/ModelDetailsCard";
 import ModelLogo from "@/components/models/ModelLogo";
 import ModelMetricsCharts from "@/components/models/ModelMetricsCharts.client";
+import ProviderQuotePricing from "@/components/models/ProviderQuotePricing";
 import VideoPricingBreakdown from "@/components/models/VideoPricingBreakdown";
 import { JsonLd, SeoFooter, SeoNavigation } from "@/components/models/SeoChrome";
 import { codeExamplesForModel } from "@/lib/models/code-examples";
@@ -17,6 +18,7 @@ import { comparisonPath, modelPath } from "@/lib/models/routes";
 import { modelMetadata } from "@/lib/models/seo";
 import { getModelSnapshot, publicModels } from "@/lib/models/snapshot";
 import { modelStructuredData } from "@/lib/models/structured-data";
+import { isProviderQuoteModel } from "@/lib/models/video-pricing";
 
 export const dynamicParams = false;
 
@@ -63,6 +65,7 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
   const relatedComparisons = Object.entries(pairs).filter(([, pair]) => pair.leftSlug === model.slug || pair.rightSlug === model.slug).slice(0, 6);
   const examples = codeExamplesForModel(model);
   const cachePrice = formatCachePrice(model);
+  const providerQuote = isProviderQuoteModel(model);
 
   return (
     <>
@@ -86,12 +89,12 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
             <section className="rounded-2xl border border-border/60 bg-card/55 p-5 shadow-sm backdrop-blur md:p-6">
               <div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">Current LLM7 pricing</p><h2 className="mt-2 text-2xl font-semibold">Simple, pay-as-you-go pricing</h2></div><span className="rounded-full border border-border/70 bg-background/60 px-3 py-1 text-xs font-medium">{model.pricing.unit}</span></div>
               <p className="mt-4 text-lg font-medium">{formatPrice(model)}</p>
-              {model.model_type === "video" ? <VideoPricingBreakdown pricing={model.pricing} /> : null}
+              {model.model_type === "video" && !providerQuote ? <VideoPricingBreakdown pricing={model.pricing} /> : null}
               {cachePrice ? <p className="mt-2 text-sm text-muted-foreground">Cache pricing: {cachePrice}.</p> : null}
               {model.pricing.minimum_request_usd ? <p className="mt-2 text-sm text-muted-foreground">Minimum charge per request: {formatUsd(model.pricing.minimum_request_usd)}.</p> : null}
             </section>
 
-            <ModelCalculator mode={model.pricing.mode} unit={model.pricing.unit} inputPrice={model.pricing.input} outputPrice={model.pricing.output} price={model.pricing.price} minimum={model.pricing.minimum_request_usd} durations={model.capabilities.supported_seconds} variablePricing={Boolean(model.pricing.route_prices_usd_per_second?.length)} />
+            {providerQuote ? <ProviderQuotePricing /> : <ModelCalculator mode={model.pricing.mode} unit={model.pricing.unit} inputPrice={model.pricing.input} outputPrice={model.pricing.output} price={model.pricing.price} minimum={model.pricing.minimum_request_usd} durations={model.capabilities.supported_seconds} variablePricing={Boolean(model.pricing.route_prices_usd_per_second?.length)} />}
 
             <Statistics model={model} />
             <ModelMetricsCharts modelType={model.model_type} points={metrics.points} />

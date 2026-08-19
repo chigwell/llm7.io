@@ -10,7 +10,7 @@ import { MODELS_API_URL, type ApiModel, useLlm7Models } from "@/hooks/use-llm7-m
 import { usePingMetrics } from "@/hooks/use-ping-metrics";
 import { cachePriceEntries } from "@/lib/models/format";
 import { logoDetailsForModelId } from "@/lib/models/logos";
-import { startingVideoPrice, videoPriceOptions, type VideoPricing } from "@/lib/models/video-pricing";
+import { isProviderQuoteModel, startingVideoPrice, videoPriceOptions, type VideoPricing } from "@/lib/models/video-pricing";
 import { cn } from "@/lib/utils";
 
 type PayModel = {
@@ -28,6 +28,7 @@ type PayModel = {
   }>;
   minimumRequestPrice?: string;
   videoPricing?: VideoPricing;
+  providerQuote?: boolean;
   usageBasedOnly?: boolean;
   availabilityLastHourPercent?: number;
   availability?: {
@@ -147,6 +148,10 @@ function pricingItems(model: ApiModel): PayModel["priceItems"] {
     value: `${formatUsd(Number(entry.value))} / ${unit}`,
   }));
 
+  if (isProviderQuoteModel(model)) {
+    return [{ label: "Video", value: "Dynamic per-request quote" }];
+  }
+
   const startingPrice = isVideoModel(model) ? startingVideoPrice(model.pricing) : null;
   if (startingPrice) {
     return [{ label: "Video", value: `From ${formatUsd(Number(startingPrice))} / second` }];
@@ -173,7 +178,8 @@ function pricingItems(model: ApiModel): PayModel["priceItems"] {
 
 function transformApiModel(model: ApiModel): PayModel {
   const provider = logoDetailsForModelId(model.id) ?? { provider: "" };
-  const hasVideoPricing = isVideoModel(model) && videoPriceOptions(model.pricing).length > 0;
+  const providerQuote = isProviderQuoteModel(model);
+  const hasVideoPricing = !providerQuote && isVideoModel(model) && videoPriceOptions(model.pricing).length > 0;
 
   return {
     id: model.id,
@@ -183,6 +189,7 @@ function transformApiModel(model: ApiModel): PayModel {
     chips: modelChips(model),
     contextWindow: formatContextWindow(model),
     priceItems: pricingItems(model),
+    providerQuote,
     videoPricing: hasVideoPricing ? model.pricing : undefined,
     minimumRequestPrice:
       typeof model.pricing?.minimum_request_price_usd === "number"
@@ -416,6 +423,7 @@ function ModelCard({ model, availability }: { model: PayModel; availability?: nu
       </div>
 
       {model.videoPricing ? <VideoPricingBreakdown pricing={model.videoPricing} compact /> : null}
+      {model.providerQuote ? <p className="mt-2 text-xs text-muted-foreground">Billed at actual provider cost with no LLM7 markup.</p> : null}
 
       {hasSecondaryDetails ? (
         <div className={cn("mt-3 grid gap-2 text-sm", hasContextWindow && model.minimumRequestPrice ? "grid-cols-2" : "grid-cols-1")}>

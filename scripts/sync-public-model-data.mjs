@@ -21,10 +21,10 @@ const rate = z.number().finite().min(0).max(1).nullable();
 const pagination = z.object({ page: z.number().int().positive(), page_size: z.number().int().positive(), total_items: z.number().int().nonnegative(), total_pages: z.number().int().positive() });
 const cachePricing = z.object({ cached_input: decimal.optional(), cached_output: decimal.optional(), cache_read: decimal.optional(), cache_write: decimal.optional() });
 const videoPriceTier = z.object({
-  resolution: z.string().optional(), size: z.string().optional(), quality: z.string().optional(), sound: z.boolean().optional(), public_price_usd_per_second: decimal.optional(),
+  resolution: z.string().optional(), size: z.string().optional(), quality: z.string().optional(), sound: z.boolean().optional(), billing_strategy: z.literal("provider_quote").optional(), static_price_role: z.literal("catalog_fallback").optional(), public_price_usd_per_second: decimal.optional(),
 }).passthrough();
 const videoRoutePrice = z.object({
-  request_type: z.string().optional(), public_price_usd_per_second: decimal.optional(), price_tiers_usd_per_second: z.array(videoPriceTier).optional(),
+  request_type: z.string().optional(), billing_strategy: z.literal("provider_quote").optional(), static_price_role: z.literal("catalog_fallback").optional(), public_price_usd_per_second: decimal.optional(), price_tiers_usd_per_second: z.array(videoPriceTier).optional(),
 });
 const pricing = z.object({
   mode: z.enum(["token", "image", "second"]),
@@ -34,6 +34,8 @@ const pricing = z.object({
   input: decimal.optional(),
   output: decimal.optional(),
   price: decimal.optional(),
+  billing_strategy: z.literal("provider_quote").optional(),
+  static_price_role: z.literal("catalog_fallback").optional(),
   cached_input: decimal.optional(),
   cached_output: decimal.optional(),
   cache_read: decimal.optional(),

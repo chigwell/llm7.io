@@ -29,10 +29,14 @@ const VideoPriceTierSchema = z.object({
   size: z.string().optional(),
   quality: z.string().optional(),
   sound: z.boolean().optional(),
+  billing_strategy: z.literal("provider_quote").optional(),
+  static_price_role: z.literal("catalog_fallback").optional(),
   public_price_usd_per_second: DecimalString.optional(),
 }).passthrough();
 const VideoRoutePriceSchema = z.object({
   request_type: z.string().optional(),
+  billing_strategy: z.literal("provider_quote").optional(),
+  static_price_role: z.literal("catalog_fallback").optional(),
   public_price_usd_per_second: DecimalString.optional(),
   price_tiers_usd_per_second: z.array(VideoPriceTierSchema).optional(),
 });
@@ -52,6 +56,8 @@ export const PricingSchema = z.object({
   input: DecimalString.optional(),
   output: DecimalString.optional(),
   price: DecimalString.optional(),
+  billing_strategy: z.literal("provider_quote").optional(),
+  static_price_role: z.literal("catalog_fallback").optional(),
   cached_input: DecimalString.optional(),
   cached_output: DecimalString.optional(),
   cache_read: DecimalString.optional(),
@@ -129,6 +135,7 @@ export const ModelCoreSchema = z.object({
     image_edits: NullableBoolean,
     video_generation: NullableBoolean,
     video_async: NullableBoolean,
+    atlascloud_video: NullableBoolean,
     max_reference_images: NonNegativeNumber.nullable().optional(),
     max_reference_image_bytes: NonNegativeNumber.nullable().optional(),
     supported_sizes: z.array(z.string()).optional(),

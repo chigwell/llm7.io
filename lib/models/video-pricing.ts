@@ -5,19 +5,38 @@ export type VideoPriceTier = {
   size?: string;
   quality?: string;
   sound?: boolean;
+  billing_strategy?: "provider_quote";
+  static_price_role?: "catalog_fallback";
   public_price_usd_per_second?: VideoPriceValue;
   [key: string]: unknown;
 };
 
 export type VideoRoutePrice = {
   request_type?: string;
+  billing_strategy?: "provider_quote";
+  static_price_role?: "catalog_fallback";
   public_price_usd_per_second?: VideoPriceValue;
   price_tiers_usd_per_second?: VideoPriceTier[];
 };
 
 export type VideoPricing = {
+  billing_strategy?: "provider_quote";
+  static_price_role?: "catalog_fallback";
   route_prices_usd_per_second?: VideoRoutePrice[];
 };
+
+export type ProviderQuoteModel = {
+  pricing?: VideoPricing | null;
+  capabilities?: { atlascloud_video?: boolean | null } | null;
+};
+
+export function isProviderQuoteModel(model: ProviderQuoteModel | null | undefined): boolean {
+  return model?.pricing?.billing_strategy === "provider_quote" || model?.capabilities?.atlascloud_video === true;
+}
+
+export function isProviderQuotePricing(pricing: VideoPricing | null | undefined): boolean {
+  return pricing?.billing_strategy === "provider_quote";
+}
 
 export type VideoPriceOption = {
   label: string;
