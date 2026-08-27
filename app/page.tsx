@@ -6,6 +6,7 @@ import EcosystemLogoCarousel from "@/components/EcosystemLogoCarousel";
 import ModelShowcase from "@/components/ModelShowcase";
 import ChatExample from "@/components/ChatExample";
 import Disclaimer from "@/components/Disclaimer";
+import LiveUsageFlowSection from "@/components/LiveUsageFlowSection";
 import ConsoleAnimation from "@/components/CodeExample";
 import MarketingProviders from "@/components/MarketingProviders";
 //import UsageSummaryChartCard from "@/components/Stats";
@@ -22,6 +23,7 @@ export default function Home() {
       {/* <ImageGenerationInput /> */}
       <FeaturedComponent />
       <ModelShowcase />
+      <LiveUsageFlowSection />
       <Disclaimer/>
       <Footer />
     </MarketingProviders>

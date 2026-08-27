@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 
 export type PingErrors = {
   total?: number;
+  "4xx"?: number;
+  "5xx"?: number;
   timeouts?: number;
 };
 
@@ -19,10 +21,18 @@ export type ModelMetrics = {
     error_rate?: number;
     routing_healthy?: boolean;
   };
+  status_429?: number;
+  response_time?: {
+    average_seconds?: number;
+    samples?: number;
+  };
 };
 
 export type PingResponse = {
+  message?: string;
   active_requests_last_60s?: number;
+  unique_clients_last_60s?: number;
+  unique_clients_last_60s_breakdown?: Record<string, number>;
   model_metrics_last_60s?: Record<string, ModelMetrics>;
 };
 
@@ -38,6 +48,7 @@ export type PingSnapshot = {
 };
 
 type PingState = {
+  payload: PingResponse | null;
   latest: PingSnapshot | null;
   error: string | null;
 };
@@ -46,6 +57,7 @@ const PING_ENDPOINT = "https://api.llm7.io/ping";
 const POLL_INTERVAL_MS = 1_000;
 
 let latestState: PingState = {
+  payload: null,
   latest: null,
   error: null,
 };
@@ -116,12 +128,16 @@ async function pollPing() {
       throw new Error(`Ping endpoint returned HTTP ${response.status}`);
     }
 
+    const payload = (await response.json()) as PingResponse;
+
     emit({
-      latest: createPingSnapshot(await response.json()),
+      payload,
+      latest: createPingSnapshot(payload),
       error: null,
     });
   } catch (error) {
     emit({
+      payload: latestState.payload,
       latest: latestState.latest,
       error: error instanceof Error ? error.message : "Unable to fetch ping metrics",
     });

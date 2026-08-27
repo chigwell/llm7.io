@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "@xyflow/react/dist/style.css";
+import "../components/live-usage-flow/live-usage-flow.css";
 
 
 const geistSans = Geist({

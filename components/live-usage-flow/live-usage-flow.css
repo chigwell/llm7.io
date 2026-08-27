@@ -1,0 +1,630 @@
+.llm7-live-flow {
+  color-scheme: light;
+  --bg: #f7f9fe;
+  --grid: rgba(71, 85, 105, 0.07);
+  --text: #1e293b;
+  --strong: #0f172a;
+  --muted: #52647b;
+  --subtle: #72839a;
+  --node: rgba(255, 255, 255, 0.78);
+  --node-strong: rgba(255, 255, 255, 0.94);
+  --node-hover: rgba(255, 255, 255, 0.98);
+  --line: rgba(15, 23, 42, 0.14);
+  --line-strong: rgba(15, 23, 42, 0.2);
+  --shadow: 0 22px 70px rgba(37, 52, 79, 0.18);
+  --tooltip-bg: rgba(255, 255, 255, 0.96);
+  --tooltip-border: rgba(15, 23, 42, 0.14);
+  --cyan: #22d3ee;
+  --blue: #60a5fa;
+  --violet: #a78bfa;
+  --green: #34d399;
+  --amber: #fbbf24;
+  --red: #fb7185;
+  isolation: isolate;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 12% 30%, rgba(14, 165, 233, 0.17), transparent 25%),
+    radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.09), transparent 28%),
+    radial-gradient(circle at 86% 18%, rgba(16, 185, 129, 0.1), transparent 24%),
+    var(--bg);
+}
+
+.dark .llm7-live-flow {
+  color-scheme: dark;
+  --bg: #040712;
+  --grid: rgba(148, 163, 184, 0.055);
+  --text: #e5edf8;
+  --strong: #f8fafc;
+  --muted: #8ea0b7;
+  --subtle: #64748b;
+  --node: rgba(9, 14, 28, 0.86);
+  --node-strong: rgba(10, 16, 32, 0.96);
+  --node-hover: rgba(13, 21, 40, 0.98);
+  --line: rgba(148, 163, 184, 0.2);
+  --line-strong: rgba(226, 232, 240, 0.24);
+  --shadow: 0 22px 70px rgba(0, 0, 0, 0.42);
+  --tooltip-bg: rgba(3, 7, 18, 0.94);
+  --tooltip-border: rgba(148, 163, 184, 0.25);
+  background:
+    radial-gradient(circle at 12% 30%, rgba(34, 211, 238, 0.18), transparent 25%),
+    radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.13), transparent 28%),
+    radial-gradient(circle at 86% 18%, rgba(52, 211, 153, 0.12), transparent 24%),
+    var(--bg);
+}
+
+.llm7-live-flow.flow-shell {
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+  overflow: visible;
+  cursor: grab;
+  touch-action: pan-x pan-y;
+}
+
+.llm7-live-flow.flow-shell.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.llm7-live-flow.flow-shell::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  content: "";
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(circle at center, black 0%, black 54%, transparent 84%);
+}
+
+.llm7-live-flow .edge-layer,
+.llm7-live-flow .particle-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.llm7-live-flow .edge-layer {
+  display: none;
+  z-index: 1;
+}
+
+.llm7-live-flow .particle-layer {
+  z-index: 2;
+  mix-blend-mode: normal;
+}
+
+.llm7-live-flow .particle-layer {
+  mix-blend-mode: normal;
+}
+
+.llm7-live-flow .flow-react {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: auto;
+  touch-action: pan-x pan-y;
+}
+
+.llm7-live-flow .react-flow {
+  overflow: visible !important;
+  background: transparent;
+  pointer-events: auto;
+  touch-action: pan-x pan-y !important;
+}
+
+.llm7-live-flow .react-flow__renderer,
+.llm7-live-flow .react-flow__zoompane,
+.llm7-live-flow .react-flow__viewport,
+.llm7-live-flow .react-flow__nodes,
+.llm7-live-flow .react-flow__node {
+  overflow: visible !important;
+  touch-action: pan-x pan-y !important;
+}
+
+.llm7-live-flow .react-flow__pane,
+.llm7-live-flow .react-flow__selectionpane {
+  pointer-events: none;
+  cursor: default;
+}
+
+.llm7-live-flow .react-flow__node {
+  pointer-events: auto !important;
+  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.llm7-live-flow .react-flow__node:has(.flow-node:hover),
+.llm7-live-flow .react-flow__node:has(.flow-node[data-open="true"]) {
+  z-index: 1000 !important;
+}
+
+.llm7-live-flow .react-flow__attribution {
+  display: none;
+}
+
+.llm7-live-flow .flow-node {
+  position: relative;
+  overflow: visible;
+  color: var(--text);
+  cursor: default;
+  user-select: none;
+  pointer-events: auto;
+  touch-action: manipulation;
+}
+
+.llm7-live-flow .client-node {
+  width: 166px;
+  height: 94px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, var(--node-strong), var(--node)),
+    radial-gradient(circle at 28% 20%, rgba(52, 211, 153, 0.28), transparent 46%);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.llm7-live-flow .client-stack {
+  position: relative;
+  width: 128px;
+  height: 78px;
+}
+
+.llm7-live-flow .client-avatar {
+  position: absolute;
+  top: 4px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 2px solid color-mix(in srgb, var(--bg) 75%, transparent);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.65), transparent 24%),
+    linear-gradient(135deg, rgba(34, 211, 238, 0.95), rgba(52, 211, 153, 0.9));
+  box-shadow: 0 8px 24px rgba(34, 211, 238, 0.18);
+}
+
+.llm7-live-flow .client-avatar svg {
+  width: 18px;
+  height: 18px;
+  fill: rgba(3, 7, 18, 0.74);
+}
+
+.llm7-live-flow .client-badge {
+  position: absolute;
+  left: 50%;
+  top: 48px;
+  z-index: 80;
+  min-width: 58px;
+  height: 30px;
+  padding: 0 12px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(34, 211, 238, 0.45);
+  border-radius: 999px;
+  color: var(--strong);
+  background: color-mix(in srgb, var(--node-hover) 92%, transparent);
+  box-shadow:
+    0 0 0 1px rgba(34, 211, 238, 0.08) inset,
+    0 10px 28px rgba(0, 0, 0, 0.26);
+  font-size: 12px;
+  font-weight: 950;
+  font-variant-numeric: tabular-nums;
+  transform: translateX(-50%);
+  backdrop-filter: blur(12px);
+}
+
+.llm7-live-flow .router-node {
+  width: 132px;
+  height: 132px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(34, 211, 238, 0.3), transparent 44%),
+    linear-gradient(180deg, var(--node-strong), var(--node));
+  box-shadow:
+    0 0 0 1px rgba(34, 211, 238, 0.08) inset,
+    0 24px 80px rgba(34, 211, 238, 0.16),
+    var(--shadow);
+  backdrop-filter: blur(20px);
+}
+
+.llm7-live-flow .router-core {
+  width: 76px;
+  height: 76px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(226, 232, 240, 0.22);
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.11), transparent),
+    radial-gradient(circle at 50% 50%, rgba(34, 211, 238, 0.24), transparent 66%);
+}
+
+.llm7-live-flow .router-core img {
+  max-width: 58px;
+  max-height: 44px;
+  object-fit: contain;
+}
+
+.llm7-live-flow .router-fallback {
+  color: var(--strong);
+  font-size: 28px;
+  font-weight: 950;
+  letter-spacing: 0;
+}
+
+.llm7-live-flow .router-pulse {
+  position: absolute;
+  right: 17px;
+  top: 17px;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--green);
+  box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.52);
+  animation: pulse 1.8s infinite;
+}
+
+.llm7-live-flow .router-pulse.loading {
+  background: var(--amber);
+  box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.52);
+}
+
+.llm7-live-flow .router-pulse.error {
+  background: var(--red);
+  box-shadow: 0 0 0 0 rgba(251, 113, 133, 0.52);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 currentColor;
+    opacity: 0.95;
+  }
+  72% {
+    box-shadow: 0 0 0 14px transparent;
+    opacity: 0.75;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+    opacity: 0.95;
+  }
+}
+
+.llm7-live-flow .model-node {
+  width: var(--flow-model-width, 258px);
+  height: 64px;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  gap: 11px;
+  align-items: center;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, var(--node-strong), var(--node)),
+    radial-gradient(circle at 16% 12%, rgba(167, 139, 250, 0.18), transparent 48%);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.llm7-live-flow.flow-shell.is-compact {
+  cursor: default;
+  touch-action: pan-x pan-y;
+}
+
+.llm7-live-flow.flow-shell.is-compact::before {
+  background-size: 34px 34px;
+  mask-image: linear-gradient(to bottom, black 0%, black 88%, transparent 100%);
+}
+
+.llm7-live-flow.is-compact .react-flow,
+.llm7-live-flow.is-compact .react-flow__renderer,
+.llm7-live-flow.is-compact .react-flow__zoompane,
+.llm7-live-flow.is-compact .react-flow__viewport,
+.llm7-live-flow.is-compact .react-flow__nodes,
+.llm7-live-flow.is-compact .react-flow__node {
+  touch-action: pan-x pan-y !important;
+}
+
+.llm7-live-flow.is-compact .model-node {
+  height: 60px;
+  grid-template-columns: 38px minmax(0, 1fr) auto;
+  gap: 9px;
+  padding: 9px 10px;
+  border-radius: 16px;
+}
+
+.llm7-live-flow.is-compact .model-logo-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+}
+
+.llm7-live-flow.is-compact .model-logo-box img {
+  width: 24px;
+  height: 24px;
+}
+
+.llm7-live-flow.is-compact .model-logo-box.image-logo img {
+  width: 30px;
+  height: 30px;
+}
+
+.llm7-live-flow.is-compact .model-name {
+  font-size: 12px;
+}
+
+.llm7-live-flow.is-compact .model-meta {
+  gap: 5px;
+  font-size: 9px;
+}
+
+.llm7-live-flow.is-compact .token-pill {
+  min-width: 42px;
+  padding: 5px 7px;
+  font-size: 10px;
+}
+
+.llm7-live-flow.is-compact .global-tooltip {
+  width: min(300px, calc(100vw - 40px));
+}
+
+.llm7-live-flow .model-node:hover,
+.llm7-live-flow .client-node:hover,
+.llm7-live-flow .router-node:hover,
+.llm7-live-flow .flow-node[data-open="true"] .model-node,
+.llm7-live-flow .flow-node[data-open="true"] .client-node,
+.llm7-live-flow .flow-node[data-open="true"] .router-node {
+  border-color: var(--line-strong);
+  background:
+    linear-gradient(180deg, var(--node-hover), var(--node)),
+    radial-gradient(circle at 16% 12%, rgba(34, 211, 238, 0.16), transparent 48%);
+}
+
+.llm7-live-flow .model-logo-box {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
+  overflow: hidden;
+}
+
+.llm7-live-flow .model-logo-box img {
+  width: 27px;
+  height: 27px;
+  object-fit: contain;
+}
+
+.llm7-live-flow .model-logo-box.image-logo img {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+}
+
+.llm7-live-flow .model-initials {
+  color: var(--strong);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.llm7-live-flow .model-main {
+  min-width: 0;
+}
+
+.llm7-live-flow .model-name {
+  overflow: hidden;
+  color: var(--strong);
+  font-size: 13px;
+  font-weight: 820;
+  letter-spacing: 0;
+  line-height: 1.15;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.llm7-live-flow .model-meta {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.llm7-live-flow .health-dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: var(--green);
+  box-shadow: 0 0 12px rgba(52, 211, 153, 0.75);
+}
+
+.llm7-live-flow .health-dot.warn {
+  background: var(--amber);
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.75);
+}
+
+.llm7-live-flow .health-dot.bad {
+  background: var(--red);
+  box-shadow: 0 0 12px rgba(251, 113, 133, 0.75);
+}
+
+.llm7-live-flow .token-pill {
+  min-width: 48px;
+  padding: 6px 8px;
+  border: 1px solid color-mix(in srgb, var(--line) 85%, transparent);
+  border-radius: 999px;
+  color: var(--strong);
+  background: color-mix(in srgb, var(--bg) 66%, transparent);
+  text-align: center;
+  font-size: 11px;
+  font-weight: 850;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.llm7-live-flow .tooltip {
+  position: absolute;
+  z-index: 2000;
+  min-width: 226px;
+  max-width: 310px;
+  padding: 12px;
+  border: 1px solid var(--tooltip-border);
+  border-radius: 16px;
+  color: var(--text);
+  background: var(--tooltip-bg);
+  box-shadow: var(--shadow);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(6px) scale(0.985);
+  transition:
+    opacity 140ms ease,
+    transform 140ms ease;
+  backdrop-filter: blur(18px);
+}
+
+.llm7-live-flow .flow-node:hover .tooltip,
+.llm7-live-flow .flow-node[data-open="true"] .tooltip {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.llm7-live-flow .tooltip.bottom {
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translate(-50%, 6px) scale(0.985);
+}
+
+.llm7-live-flow .flow-node:hover .tooltip.bottom,
+.llm7-live-flow .flow-node[data-open="true"] .tooltip.bottom {
+  transform: translate(-50%, 0) scale(1);
+}
+
+.llm7-live-flow .tooltip.left {
+  top: 50%;
+  right: calc(100% + 12px);
+  transform: translateY(calc(-50% + 6px)) scale(0.985);
+}
+
+.llm7-live-flow .flow-node:hover .tooltip.left,
+.llm7-live-flow .flow-node[data-open="true"] .tooltip.left {
+  transform: translateY(-50%) scale(1);
+}
+
+.llm7-live-flow .tooltip.right {
+  top: 50%;
+  left: calc(100% + 12px);
+  transform: translateY(calc(-50% + 6px)) scale(0.985);
+}
+
+.llm7-live-flow .flow-node:hover .tooltip.right,
+.llm7-live-flow .flow-node[data-open="true"] .tooltip.right {
+  transform: translateY(-50%) scale(1);
+}
+
+.llm7-live-flow .tooltip-title {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 9px;
+  color: var(--strong);
+  font-size: 12px;
+  font-weight: 880;
+  letter-spacing: 0;
+}
+
+.llm7-live-flow .tooltip-window {
+  color: var(--subtle);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.llm7-live-flow .tooltip-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.llm7-live-flow .tooltip-stat {
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg) 58%, transparent);
+}
+
+.llm7-live-flow .tooltip-label {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.llm7-live-flow .tooltip-value {
+  overflow: hidden;
+  margin-top: 5px;
+  color: var(--strong);
+  font-size: 12px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.llm7-live-flow .global-tooltip {
+  position: absolute;
+  z-index: 10000;
+  width: min(320px, calc(100vw - 24px));
+  padding: 12px;
+  border: 1px solid var(--tooltip-border);
+  border-radius: 16px;
+  color: var(--text);
+  background: var(--tooltip-bg);
+  box-shadow: var(--shadow);
+  pointer-events: none;
+  transform: translate3d(0, 0, 0);
+  animation: tooltipIn 120ms ease-out;
+  backdrop-filter: blur(18px);
+}
+
+.llm7-live-flow .global-tooltip.sticky {
+  border-color: color-mix(in srgb, var(--cyan) 48%, var(--tooltip-border));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--cyan) 12%, transparent) inset,
+    var(--shadow);
+}
+
+@keyframes tooltipIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
