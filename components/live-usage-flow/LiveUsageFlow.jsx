@@ -4,24 +4,22 @@ import React, {
   memo,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
-import { ReactFlow } from "@xyflow/react";
 import { useTheme as useNextTheme } from "next-themes";
 import { usePingMetrics } from "@/hooks/use-ping-metrics";
 import {
   DEMO_PAYLOAD,
   clamp,
-  clientLabel,
   compactNumber,
   extractSnapshot,
   formatPercent,
   formatSeconds,
   fullNumber,
   lerp,
-  numberOrZero,
   stableId,
   statusForModel,
   visibleModelsForViewport,
@@ -31,28 +29,29 @@ import {
   hexToRgb,
   pathBetween,
   pathToArray,
-  routeD,
 } from "./flowGeometry.js";
 
 const h = React.createElement;
 
 const FLOW_WINDOW_SECONDS = 60;
-const MODEL_ROW_HEIGHT = 74;
-const MODEL_TOP = 26;
-const MODEL_WIDTH = 258;
-const MODEL_HEIGHT = 64;
-const CLIENT_WIDTH = 166;
-const CLIENT_HEIGHT = 94;
-const ROUTER_SIZE = 132;
-const RIGHT_PADDING = 34;
-const LEFT_PADDING = 38;
-const PARTICLE_RENDER_BUDGET = 1_600_000;
-const TARGET_FRAME_MS = 1000 / 30;
+const REFERENCE_WIDTH = 1920;
+const REFERENCE_HEIGHT = 1080;
+const MODEL_WIDTH = 240;
+const MODEL_HEIGHT = 160;
+const ROUTER_SIZE = 280;
+// Match the reference's visual population on capable desktops. Above these limits
+// token volume is sampled proportionally, so relative traffic remains truthful
+// without allowing an unusually busy minute to allocate millions of GPU points.
+const PARTICLE_RENDER_BUDGET = 130_000;
+const TABLET_PARTICLE_RENDER_BUDGET = 55_000;
+const MOBILE_PARTICLE_RENDER_BUDGET = 18_000;
+const LOW_POWER_PARTICLE_FLOOR = 10_000;
+const TARGET_FRAME_MS = 1000 / 45;
 const MIN_STAGE_WIDTH = 300;
 const MIN_STAGE_HEIGHT = 520;
-const MOBILE_STAGE_BREAKPOINT = 720;
-const MOBILE_MODEL_TOP_GAP = 52;
-const CLIENT_STREAM_HOLD_MS = 900;
+const COMPACT_STAGE_BREAKPOINT = 640;
+const MOBILE_VIEWPORT_BREAKPOINT = 768;
+const MOBILE_MODEL_TOP_GAP = 68;
 const MODEL_STREAM_HOLD_MS = 300;
 
 const DEFAULT_STAGE_SIZE = {
@@ -61,24 +60,90 @@ const DEFAULT_STAGE_SIZE = {
   viewportHeight: 760,
 };
 
-const SITE_FLOW_GRADIENT = {
-  light: ["#be185d", "#b45309", "#047857", "#1d4ed8", "#7e22ce"],
-  dark: ["#f9a8d4", "#fde68a", "#a7f3d0", "#93c5fd", "#c4b5fd"],
-};
+const MODEL_FLOW_PALETTES = [
+  { accent: "#517fb5", light: ["#517fb5", "#2b9a80"], dark: ["#80b7ef", "#63d7b5"] },
+  { accent: "#7763bd", light: ["#7763bd", "#d17a35"], dark: ["#b8a5ff", "#f7ad67"] },
+  { accent: "#a653a5", light: ["#a653a5", "#278f9d"], dark: ["#e39ae0", "#63d1dc"] },
+  { accent: "#c24973", light: ["#5c7fd1", "#c24973"], dark: ["#8eadff", "#ff8fb4"] },
+  { accent: "#b36a36", light: ["#b36a36", "#738f32"], dark: ["#f1a46b", "#b2d76a"] },
+  { accent: "#16869a", light: ["#16869a", "#9b62b4"], dark: ["#55d1e2", "#d397eb"] },
+  { accent: "#667896", light: ["#667896", "#d05d55"], dark: ["#aabbd4", "#ff9288"] },
+  { accent: "#486aa8", light: ["#486aa8", "#b18b22"], dark: ["#8eadf0", "#e1c45f"] },
+  { accent: "#218779", light: ["#218779", "#c44f63"], dark: ["#62ceb9", "#fb8799"] },
+  { accent: "#6854a3", light: ["#6854a3", "#a16f42"], dark: ["#aa96e2", "#daa475"] },
+  { accent: "#43834d", light: ["#43834d", "#b65391"], dark: ["#7bc786", "#ea91c8"] },
+  { accent: "#34538f", light: ["#34538f", "#cf693d"], dark: ["#7698db", "#fa9e72"] },
+  { accent: "#81558f", light: ["#81558f", "#7f812e"], dark: ["#c394d0", "#bfc163"] },
+];
+
+function modelPaletteMap(models, theme) {
+  const paletteMap = new Map();
+  const usedPaletteIndexes = new Set();
+  const modelIds = [...new Set(models.map((model) => stableId(model.name || model.displayName)))].sort();
+
+  for (const modelId of modelIds) {
+    let hash = 2166136261;
+    for (let index = 0; index < modelId.length; index += 1) {
+      hash ^= modelId.charCodeAt(index);
+      hash = Math.imul(hash, 16777619);
+    }
+    let paletteIndex = (hash >>> 0) % MODEL_FLOW_PALETTES.length;
+    while (usedPaletteIndexes.has(paletteIndex) && usedPaletteIndexes.size < MODEL_FLOW_PALETTES.length) {
+      paletteIndex = (paletteIndex + 1) % MODEL_FLOW_PALETTES.length;
+    }
+    usedPaletteIndexes.add(paletteIndex);
+    const palette = MODEL_FLOW_PALETTES[paletteIndex];
+    const [prompt, completion] = theme === "dark" ? palette.dark : palette.light;
+    paletteMap.set(modelId, { accent: theme === "dark" ? prompt : palette.accent, prompt, completion });
+  }
+
+  return paletteMap;
+}
+
+function gaussianLane() {
+  let u = 0;
+  let v = 0;
+  while (u === 0) u = Math.random();
+  while (v === 0) v = Math.random();
+  const gaussian = Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+  return 0.5 + gaussian * 0.18;
+}
+
+function particleBudgetForDevice() {
+  const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 1024;
+  const baseBudget = viewportWidth < MOBILE_VIEWPORT_BREAKPOINT
+    ? MOBILE_PARTICLE_RENDER_BUDGET
+    : viewportWidth < 1200
+      ? TABLET_PARTICLE_RENDER_BUDGET
+      : PARTICLE_RENDER_BUDGET;
+  const hardwareConcurrency = navigator.hardwareConcurrency || 8;
+  const deviceMemory = navigator.deviceMemory || 8;
+  const deviceScale = hardwareConcurrency <= 4 || deviceMemory <= 4 ? 0.65 : 1;
+  return Math.max(LOW_POWER_PARTICLE_FLOOR, Math.round(baseBudget * deviceScale));
+}
+
+function modelSlot(index, compact) {
+  if (compact) return { column: 0, row: index };
+  // Match the reference: the four busiest models occupy the left column with
+  // its two busiest cards nearest the hub, while the second column is staggered.
+  const leftRows = [1, 2, 0, 3];
+  if (index < 4) return { column: 0, row: leftRows[index] };
+  return { column: 1, row: index - 4 };
+}
 
 function useStageSize() {
-  const ref = useRef(null);
+  const [node, setNode] = useState(null);
+  const ref = useCallback((nextNode) => setNode(nextNode), []);
   const lastSizeRef = useRef(DEFAULT_STAGE_SIZE);
   const frameRef = useRef(null);
   const [size, setSize] = useState(lastSizeRef.current);
 
-  useEffect(() => {
-    const node = ref.current;
+  useLayoutEffect(() => {
     if (!node) return undefined;
 
     const readSize = () => {
       const rect = node.getBoundingClientRect();
-      const rawWidth = rect.width > 1 ? rect.width : window.innerWidth || lastSizeRef.current.width;
+      const rawWidth = node.clientWidth > 1 ? node.clientWidth : rect.width > 1 ? rect.width : window.innerWidth || lastSizeRef.current.width;
       const rawHeight = rect.height > 1 ? rect.height : lastSizeRef.current.height;
       const width = Math.max(MIN_STAGE_WIDTH, Math.round(rawWidth || lastSizeRef.current.width));
       const height = Math.max(MIN_STAGE_HEIGHT, Math.round(rawHeight || lastSizeRef.current.height));
@@ -121,9 +186,9 @@ function useStageSize() {
       window.removeEventListener("orientationchange", schedule);
       window.visualViewport?.removeEventListener("resize", schedule);
     };
-  }, []);
+  }, [node]);
 
-  return [ref, size];
+  return [ref, size, node];
 }
 
 function usePageDragScroll(onPress) {
@@ -238,60 +303,55 @@ function initialsForModel(name) {
   return cleaned.slice(0, 2).toUpperCase() || "AI";
 }
 
-function siteGradientForStream(index, theme) {
-  const colors = SITE_FLOW_GRADIENT[theme === "dark" ? "dark" : "light"];
-  const from = colors[index % colors.length];
-  const to = colors[(index + 1) % colors.length];
-  const mid = colors[(index + 2) % colors.length];
-  return { from, mid, to };
-}
-
 function createGraph(snapshot, size, theme, status) {
   const width = Math.max(1, size.width || DEFAULT_STAGE_SIZE.width);
   const measuredHeight = Math.max(1, size.height || DEFAULT_STAGE_SIZE.height);
-  const compact = width < MOBILE_STAGE_BREAKPOINT;
+  const compact = width < COMPACT_STAGE_BREAKPOINT;
   const viewportHeight = Math.max(
     MIN_STAGE_HEIGHT,
     size.viewportHeight || measuredHeight,
   );
-  const models = visibleModelsForViewport(snapshot, measuredHeight, compact);
-  const modelWidth = compact ? Math.min(MODEL_WIDTH, Math.max(224, width - 28)) : MODEL_WIDTH;
-  const modelTop = compact ? CLIENT_HEIGHT + ROUTER_SIZE + MOBILE_MODEL_TOP_GAP + 84 : MODEL_TOP;
-  const modelBottom = modelTop + Math.max(1, models.length) * MODEL_ROW_HEIGHT + 24;
-  const height = Math.max(measuredHeight, viewportHeight, modelBottom);
+  const models = visibleModelsForViewport(snapshot, measuredHeight, compact)
+    .filter((model) => model.tokens > 0)
+    .sort((a, b) => b.tokens - a.tokens);
+  const referenceScale = compact ? 1 : clamp(width / REFERENCE_WIDTH, 2 / 3, 1);
+  const modelWidth = compact ? Math.min(240, Math.max(224, width - 28)) : MODEL_WIDTH * referenceScale;
+  const modelHeight = compact ? 112 : MODEL_HEIGHT * referenceScale;
+  const routerSize = compact ? Math.min(280, width - 28) : ROUTER_SIZE * referenceScale;
+  const modelPitch = compact ? 132 : 250 * referenceScale;
+  const compactModelTop = 174 + routerSize + MOBILE_MODEL_TOP_GAP;
+  const modelPositions = models.map((_, index) => {
+    const { column, row } = modelSlot(index, compact);
+    if (compact) {
+      return {
+        x: clamp(width / 2 - modelWidth / 2, 12, Math.max(12, width - modelWidth - 12)),
+        y: compactModelTop + row * modelPitch,
+      };
+    }
+
+    const rightPadding = 30 * referenceScale;
+    const columnGap = 120 * referenceScale;
+    const cardsStartX = width - rightPadding - modelWidth * 2 - columnGap;
+    const columnTop = column === 0 ? 30 * referenceScale : 155 * referenceScale;
+    return {
+      x: cardsStartX + column * (modelWidth + columnGap),
+      y: columnTop + row * modelPitch,
+    };
+  });
+  const modelBottom = modelPositions.length
+    ? Math.max(...modelPositions.map((position) => position.y + modelHeight)) + 24
+    : 0;
+  const referenceStageHeight = compact ? modelBottom : width * (REFERENCE_HEIGHT / REFERENCE_WIDTH);
+  const height = Math.max(compact ? measuredHeight : 640, referenceStageHeight, modelBottom);
   const centerX = width / 2;
-  const centerY = compact ? 0 : viewportHeight / 2;
   const routerX = compact
-    ? clamp(centerX - ROUTER_SIZE / 2, 12, Math.max(12, width - ROUTER_SIZE - 12))
-    : centerX - ROUTER_SIZE / 2;
-  const routerY = compact ? CLIENT_HEIGHT + 76 : centerY - ROUTER_SIZE / 2;
-  const preferredModelX = width - modelWidth - RIGHT_PADDING;
-  const minModelX = routerX + ROUTER_SIZE + 36;
-  const maxModelX = width - modelWidth - 12;
-  const modelX = compact
-    ? clamp(centerX - modelWidth / 2, 12, Math.max(12, width - modelWidth - 12))
-    : minModelX <= maxModelX
-      ? clamp(preferredModelX, minModelX, maxModelX)
-      : Math.max(12, maxModelX);
-  const preferredClientX = LEFT_PADDING;
-  const maxClientX = routerX - CLIENT_WIDTH - 36;
-  const clientX = compact
-    ? clamp(centerX - CLIENT_WIDTH / 2, 12, Math.max(12, width - CLIENT_WIDTH - 12))
-    : maxClientX >= 12
-      ? clamp(preferredClientX, 12, maxClientX)
-      : 12;
-  const clientY = compact ? 28 : centerY - CLIENT_HEIGHT / 2;
-  const maxTokens = Math.max(1, snapshot.totals.tokens, ...models.map((model) => model.tokens));
+    ? clamp(centerX - routerSize / 2, 12, Math.max(12, width - routerSize - 12))
+    : 90 * referenceScale;
+  const routerY = compact ? 174 : 400 * referenceScale;
+  const maxTokens = Math.max(1, snapshot.totals.inputTokens, snapshot.totals.outputTokens, ...models.map((model) => model.tokens));
+  const modelPalettes = modelPaletteMap(models, theme);
 
   const nodes = [
-    {
-      id: "clients",
-      type: "clients",
-      position: { x: clientX, y: clientY },
-      data: { snapshot, theme },
-      draggable: false,
-      selectable: false,
-    },
     {
       id: "router",
       type: "router",
@@ -300,54 +360,43 @@ function createGraph(snapshot, size, theme, status) {
       draggable: false,
       selectable: false,
     },
-    ...models.map((model, index) => ({
-      id: `model-${stableId(model.name || model.displayName || index)}`,
-      type: "model",
-      position: { x: modelX, y: modelTop + index * MODEL_ROW_HEIGHT },
-      data: { model, theme },
-      draggable: false,
-      selectable: false,
-    })),
-  ];
-
-  const clientPoint = compact
-    ? { x: clientX + CLIENT_WIDTH / 2, y: clientY + CLIENT_HEIGHT }
-    : { x: clientX + CLIENT_WIDTH, y: centerY };
-  const routerIn = compact
-    ? { x: routerX + ROUTER_SIZE / 2, y: routerY }
-    : { x: routerX, y: centerY };
-  const routerOut = compact
-    ? { x: routerX + ROUTER_SIZE / 2, y: routerY + ROUTER_SIZE }
-    : { x: routerX + ROUTER_SIZE, y: centerY };
-  const streams = [
-    {
-      id: "clients-router",
-      tokens: snapshot.totals.tokens,
-      attempts: snapshot.totals.attempts,
-      errorRate: snapshot.totals.errorRate,
-      path: pathBetween(clientPoint, routerIn, compact ? 0.16 : 0.36),
-      gradient: siteGradientForStream(0, theme),
-      maxTokens,
-    },
     ...models.map((model, index) => {
-      const modelPoint = compact
-        ? { x: modelX + modelWidth / 2, y: modelTop + index * MODEL_ROW_HEIGHT }
-        : { x: modelX, y: modelTop + index * MODEL_ROW_HEIGHT + MODEL_HEIGHT / 2 };
+      const modelId = stableId(model.name || model.displayName || index);
+      const palette = modelPalettes.get(modelId);
       return {
-        id: `router-${stableId(model.name || model.displayName || index)}`,
-        tokens: model.tokens,
-        attempts: model.attempts,
-        errorRate: model.errorRate,
-        path: pathBetween(
-          routerOut,
-          modelPoint,
-          compact ? 0.16 : 0.28 + Math.min(0.14, Math.abs(modelPoint.y - centerY) / 1200),
-        ),
-        gradient: siteGradientForStream(index + 1, theme),
-        maxTokens,
+        id: `model-${modelId}`,
+        type: "model",
+        position: modelPositions[index],
+        data: { model, theme, tint: palette.accent, flowColors: palette },
+        draggable: false,
+        selectable: false,
       };
     }),
   ];
+
+  const streams = models.flatMap((model, index) => {
+    const { x: cardX, y: cardY } = modelPositions[index];
+    const modelId = stableId(model.name || model.displayName || index);
+    const palette = modelPalettes.get(modelId);
+    const promptRouterPort = compact
+      ? { x: routerX + routerSize * 0.66, y: routerY + routerSize }
+      : { x: routerX + routerSize, y: routerY + routerSize * 0.74 };
+    const promptCardPort = compact
+      ? { x: cardX + modelWidth * 0.66, y: cardY }
+      : { x: cardX, y: cardY + modelHeight * 0.72 };
+    const completionRouterPort = compact
+      ? { x: routerX + routerSize * 0.34, y: routerY + routerSize }
+      : { x: routerX + routerSize, y: routerY + routerSize * 0.36 };
+    const completionCardPort = compact
+      ? { x: cardX + modelWidth * 0.34, y: cardY }
+      : { x: cardX, y: cardY + modelHeight * 0.3 };
+    const promptCurve = compact ? 0.16 : 0.28 + Math.min(0.16, Math.abs(promptCardPort.y - promptRouterPort.y) / 1200);
+    const completionCurve = compact ? 0.16 : 0.28 + Math.min(0.16, Math.abs(completionCardPort.y - completionRouterPort.y) / 1200);
+    return [
+      { id: `prompt-${modelId}`, modelId, tokens: model.inputTokens, attempts: model.attempts, errorRate: model.errorRate, path: pathBetween(promptRouterPort, promptCardPort, promptCurve), color: palette.prompt, maxTokens },
+      { id: `completion-${modelId}`, modelId, tokens: model.outputTokens, attempts: model.attempts, errorRate: model.errorRate, path: pathBetween(completionCardPort, completionRouterPort, completionCurve), color: palette.completion, maxTokens },
+    ];
+  });
 
   const requestedParticles = streams.reduce((sum, stream) => sum + Math.max(0, Math.round(stream.tokens)), 0);
   const renderedParticles = requestedParticles <= PARTICLE_RENDER_BUDGET
@@ -363,6 +412,8 @@ function createGraph(snapshot, size, theme, status) {
     stageHeight: height,
     compact,
     modelWidth,
+    modelHeight,
+    routerSize,
   };
 }
 
@@ -447,76 +498,16 @@ function tooltipEventProps(data, tooltip) {
   };
 }
 
-function UserIcon() {
-  return h(
-    "svg",
-    { viewBox: "0 0 24 24", "aria-hidden": "true" },
-    h("path", {
-      d: "M12 12.2c2.42 0 4.38-1.96 4.38-4.38S14.42 3.44 12 3.44 7.62 5.4 7.62 7.82 9.58 12.2 12 12.2Zm0 2.05c-3.68 0-6.86 1.98-8.52 4.92-.42.74.1 1.66.95 1.66h15.14c.85 0 1.37-.92.95-1.66-1.66-2.94-4.84-4.92-8.52-4.92Z",
-    }),
-  );
-}
-
-const ClientsNode = memo(function ClientsNode({ data }) {
-  const snapshot = data.snapshot;
-  const uniqueClients = Math.max(0, Math.round(snapshot.uniqueClients));
-  const iconCount = clamp(uniqueClients || 3, 3, 8);
-  const breakdown = Object.entries(snapshot.clientBreakdown || {})
-    .filter(([, value]) => numberOrZero(value) > 0)
-    .map(([key, value]) => `${clientLabel(key)} ${fullNumber(value)}`)
-    .join(" · ") || "—";
-  const tooltip = {
-    key: "clients",
-    title: "Users / clients",
-    stats: [
-      { label: "unique", value: fullNumber(snapshot.uniqueClients) },
-      { label: "active req", value: fullNumber(snapshot.activeRequests) },
-      { label: "tokens", value: fullNumber(snapshot.totals.tokens) },
-      { label: "breakdown", value: breakdown },
-    ],
-  };
-
-  return h(
-    "div",
-    { className: "flow-node", ...tooltipEventProps(data, tooltip) },
-    h(
-      "div",
-      { className: "client-node" },
-      h(
-        "div",
-        { className: "client-stack", "aria-label": `${uniqueClients} unique clients` },
-        Array.from({ length: iconCount }).map((_, index) =>
-          h(
-            "div",
-            {
-              key: index,
-              className: "client-avatar",
-              style: {
-                left: `${index * 10}px`,
-                zIndex: iconCount - index,
-                opacity: 0.98 - index * 0.035,
-              },
-            },
-            h(UserIcon),
-          ),
-        ),
-        h("div", { className: "client-badge" }, compactNumber(uniqueClients)),
-      ),
-    ),
-  );
-});
-
 const RouterNode = memo(function RouterNode({ data }) {
   const snapshot = data.snapshot;
   const status = data.status;
-  const [logoFailed, setLogoFailed] = useState(false);
   const statusClass = status.state === "loading" ? "loading" : status.state === "error" || status.state === "stale" ? "error" : "";
   const tooltip = {
     key: "router",
     title: "api.llm7.io router",
     stats: [
-      { label: "tokens", value: fullNumber(snapshot.totals.tokens) },
-      { label: "requests", value: fullNumber(snapshot.totals.attempts) },
+      { label: "prompt tokens", value: fullNumber(snapshot.totals.inputTokens) },
+      { label: "completion tokens", value: fullNumber(snapshot.totals.outputTokens) },
       { label: "success", value: `${compactNumber(snapshot.totals.success)} · ${formatPercent(snapshot.totals.successRate)}` },
       { label: "errors", value: `${compactNumber(snapshot.totals.errors)} · ${formatPercent(snapshot.totals.errorRate)}` },
       { label: "timeouts", value: fullNumber(snapshot.totals.timeouts) },
@@ -529,19 +520,14 @@ const RouterNode = memo(function RouterNode({ data }) {
     { className: "flow-node", ...tooltipEventProps(data, tooltip) },
     h(
       "div",
-      { className: "router-node" },
+      { className: "router-node flow-hub" },
       h("span", { className: `router-pulse ${statusClass}` }),
-      h(
-        "div",
-        { className: "router-core" },
-        !logoFailed
-          ? h("img", {
-              alt: "LLM7",
-              src: getLogoPath(data.theme === "dark" ? "LLM7_white_transparent.png" : "llm7.png"),
-              onError: () => setLogoFailed(true),
-            })
-          : h("div", { className: "router-fallback" }, "7"),
-      ),
+      h("div", { className: "router-core" }, "LLM7"),
+      h("div", { className: "hub-direction completion" }, "COMPLETION ← MODELS"),
+      h("div", { className: "hub-rate" }, `${compactNumber(snapshot.totals.outputTokens / FLOW_WINDOW_SECONDS)}/s`),
+      h("div", { className: "hub-direction prompt" }, "PROMPT → MODELS"),
+      h("div", { className: "hub-rate" }, `${compactNumber(snapshot.totals.inputTokens / FLOW_WINDOW_SECONDS)}/s`),
+      h("div", { className: "hub-peak" }, `${compactNumber(snapshot.activeRequests)} active requests`),
     ),
   );
 });
@@ -554,6 +540,7 @@ const ModelNode = memo(function ModelNode({ data }) {
   const imageLogo = logo && /\.(png|jpe?g|webp)$/iu.test(logo);
   const tooltip = {
     key: `model-${stableId(model.name || model.displayName)}`,
+    modelId: stableId(model.name),
     title: model.isAggregate ? `${model.childrenCount} models` : model.displayName,
     stats: [
       { label: "tokens", value: fullNumber(model.tokens) },
@@ -572,92 +559,58 @@ const ModelNode = memo(function ModelNode({ data }) {
     { className: "flow-node", ...tooltipEventProps(data, tooltip) },
     h(
       "div",
-      { className: "model-node" },
+      {
+        className: "model-node flow-model-card",
+        style: {
+          "--model-tint": data.tint,
+          "--prompt-flow-color": data.flowColors.prompt,
+          "--completion-flow-color": data.flowColors.completion,
+        },
+      },
       h(
         "div",
         { className: `model-logo-box ${imageLogo ? "image-logo" : ""}` },
         logo && !logoFailed
-          ? h("img", {
-              alt: "",
-              src: logo,
-              loading: "lazy",
-              onError: () => setLogoFailed(true),
-            })
+          ? h("img", { alt: "", src: logo, loading: "lazy", onError: () => setLogoFailed(true) })
           : h("div", { className: "model-initials" }, initialsForModel(model.name)),
       ),
+      h("div", { className: "model-latency" }, formatSeconds(model.avgSeconds)),
+      h("div", { className: "model-main" }, h("div", { className: "model-name" }, model.displayName)),
       h(
         "div",
-        { className: "model-main" },
-        h("div", { className: "model-name" }, model.displayName),
-        h(
-          "div",
-          { className: "model-meta" },
-          h("span", { className: `health-dot ${status === "ok" ? "" : status}` }),
-          h("span", null, formatPercent(model.successRate)),
-          h("span", null, "·"),
-          h("span", null, `${compactNumber(model.attempts)} req`),
-        ),
+        { className: "model-footer" },
+        h("div", null, h("div", { className: "token-pill" }, compactNumber(model.tokens)), h("div", { className: "model-token-label" }, "TOK / MIN")),
+        h("div", { className: "model-meta" }, h("span", { className: `health-dot ${status === "ok" ? "" : status}` }), h("span", null, `${compactNumber(model.attempts)} req`), h("span", null, formatPercent(model.successRate))),
       ),
-      h("div", { className: "token-pill" }, compactNumber(model.tokens)),
     ),
   );
 });
 
 const nodeTypes = {
-  clients: ClientsNode,
   router: RouterNode,
   model: ModelNode,
 };
 
-function EdgeCanvas({ streams, size, theme }) {
-  const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const dpr = Math.min(2, window.devicePixelRatio || 1);
-    canvas.width = Math.max(1, Math.floor(size.width * dpr));
-    canvas.height = Math.max(1, Math.floor(size.height * dpr));
-    canvas.style.width = `${size.width}px`;
-    canvas.style.height = `${size.height}px`;
-
-    const context = canvas.getContext("2d");
-    if (!context) return;
-
-    context.setTransform(dpr, 0, 0, dpr, 0, 0);
-    context.clearRect(0, 0, size.width, size.height);
-
-    for (const stream of streams) {
-      const style = flowStyle(stream.tokens, stream.maxTokens);
-      const color = stream.gradient?.mid || stream.gradient?.from || stream.color || "#1d4ed8";
-      const gradient = context.createLinearGradient(stream.path.p0.x, stream.path.p0.y, stream.path.p3.x, stream.path.p3.y);
-      gradient.addColorStop(0, stream.gradient?.from || (theme === "dark" ? "#f9a8d4" : "#be185d"));
-      gradient.addColorStop(0.46, color);
-      gradient.addColorStop(1, stream.gradient?.to || (theme === "dark" ? "#93c5fd" : "#1d4ed8"));
-
-      context.save();
-      context.globalAlpha = style.opacity;
-      context.lineCap = "round";
-      context.lineWidth = style.width;
-      context.strokeStyle = gradient;
-      context.shadowColor = color;
-      context.shadowBlur = stream.tokens > 0 ? 18 * style.norm : 0;
-      const path = new Path2D(routeD(stream.path));
-      context.stroke(path);
-      context.restore();
-
-      context.save();
-      context.globalAlpha = theme === "dark" ? 0.1 : 0.13;
-      context.lineCap = "round";
-      context.lineWidth = Math.max(1, style.width + 12);
-      context.strokeStyle = color;
-      context.stroke(path);
-      context.restore();
-    }
-  }, [streams, size.height, size.width, theme]);
-
-  return h("canvas", { ref: canvasRef, className: "edge-layer", "aria-hidden": "true" });
+function FlowNodeLayer({ nodes }) {
+  return h(
+    "div",
+    { className: "flow-react", "aria-label": "Live model traffic" },
+    nodes.map((node) => {
+      const NodeComponent = nodeTypes[node.type];
+      if (!NodeComponent) return null;
+      return h(
+        "div",
+        {
+          key: node.id,
+          className: "flow-node-shell",
+          style: {
+            transform: `translate3d(${node.position.x}px, ${node.position.y}px, 0)`,
+          },
+        },
+        h(NodeComponent, { data: node.data }),
+      );
+    }),
+  );
 }
 
 class ParticleEngine {
@@ -678,6 +631,8 @@ class ParticleEngine {
     this.running = false;
     this.lastFrame = 0;
     this.lastRender = 0;
+    this.performanceScale = 1;
+    this.smoothedRenderMs = 0;
     this.program = null;
     this.locations = null;
     this.raf = null;
@@ -756,7 +711,9 @@ class ParticleEngine {
         vec2 p = cubic(t);
         vec2 n = tangent(t);
         vec2 normal = vec2(-n.y, n.x);
-        float lane = (a_lane - 0.5) * u_flowWidth;
+        float taper = sin(3.14159265 * t);
+        float edgeFade = smoothstep(0.0, 0.09, t) * smoothstep(0.0, 0.09, 1.0 - t);
+        float lane = (a_lane - 0.5) * u_flowWidth * taper;
         p += normal * lane;
 
         vec2 clip = vec2(
@@ -766,7 +723,7 @@ class ParticleEngine {
         gl_Position = vec4(clip, 0.0, 1.0);
         gl_PointSize = max(1.0, a_size * u_dpr);
 
-        v_alpha = 1.0;
+        v_alpha = edgeFade;
         v_t = t;
       }
     `;
@@ -842,7 +799,7 @@ class ParticleEngine {
     const nextHeight = Math.max(1, Math.round(height || window.innerHeight || this.height));
     this.width = nextWidth;
     this.height = nextHeight;
-    this.dpr = Math.min(2, window.devicePixelRatio || 1);
+    this.dpr = 1;
     const pixelWidth = Math.max(1, Math.floor(this.width * this.dpr));
     const pixelHeight = Math.max(1, Math.floor(this.height * this.dpr));
     if (this.canvas.width !== pixelWidth) this.canvas.width = pixelWidth;
@@ -852,18 +809,18 @@ class ParticleEngine {
     this.gl?.viewport(0, 0, this.canvas.width, this.canvas.height);
   }
 
-  setStreams(nextStreams, graph) {
+  setStreams(nextStreams, graph, focusedModelId = null, particleBudget = PARTICLE_RENDER_BUDGET) {
     const gl = this.gl;
     if (!gl || !this.program || this.contextLost) return;
     const now = performance.now();
     const requested = Math.max(0, graph?.requestedParticles || 0);
-    const ratio = requested > PARTICLE_RENDER_BUDGET ? PARTICLE_RENDER_BUDGET / requested : 1;
+    const ratio = requested > particleBudget ? particleBudget / requested : 1;
     const seen = new Set();
 
     for (const spec of nextStreams) {
       seen.add(spec.id);
       const style = flowStyle(spec.tokens, spec.maxTokens);
-      const rawTargetCount = spec.tokens <= 0 ? 0 : Math.max(1, Math.round(spec.tokens * ratio));
+      const rawTargetCount = spec.tokens <= 0 ? 0 : Math.max(18, Math.round(spec.tokens * ratio));
       let stream = this.streams.get(spec.id);
 
       if (!stream) {
@@ -876,11 +833,10 @@ class ParticleEngine {
         stream.lastPositiveAt = now;
         stream.lastPositiveCount = rawTargetCount;
       } else {
-        const holdMs = spec.id === "clients-router" ? CLIENT_STREAM_HOLD_MS : MODEL_STREAM_HOLD_MS;
+        const holdMs = MODEL_STREAM_HOLD_MS;
         if (stream.lastPositiveAt && now - stream.lastPositiveAt < holdMs) {
           const holdRatio = 1 - (now - stream.lastPositiveAt) / holdMs;
-          const holdMultiplier = spec.id === "clients-router" ? 0.62 : 0.25;
-          targetCount = Math.max(1, Math.floor(stream.lastPositiveCount * holdRatio * holdMultiplier));
+          targetCount = Math.max(1, Math.floor(stream.lastPositiveCount * holdRatio * 0.25));
         }
       }
 
@@ -891,7 +847,10 @@ class ParticleEngine {
       stream.targetPath = pathToArray(spec.path);
       stream.targetColorStart = hexToRgb(spec.gradient?.from || spec.color);
       stream.targetColorEnd = hexToRgb(spec.gradient?.to || spec.color);
-      stream.targetAlpha = targetCount > 0 ? (spec.errorRate >= 0.1 ? 0.9 : 0.78) : 0;
+      const isFocused = !focusedModelId || spec.modelId === focusedModelId;
+      stream.targetAlpha = targetCount > 0
+        ? (spec.errorRate >= 0.1 ? 0.9 : 0.78) * (isFocused ? 1 : 0.045)
+        : 0;
       stream.targetBaseSpeed = rawTargetCount > 0 ? 1 / style.seconds : Math.max(stream.targetBaseSpeed, 1.2);
       stream.targetFlowWidth = style.flowWidth;
       stream.targetSize = style.size;
@@ -955,7 +914,7 @@ class ParticleEngine {
     for (let index = previousCapacity; index < grownCapacity; index += 1) {
       const offset = index * 4;
       nextData[offset] = previousCapacity === 0 ? Math.random() : Math.random() * 0.08;
-      nextData[offset + 1] = Math.random();
+      nextData[offset + 1] = gaussianLane();
       nextData[offset + 2] = 0.75 + Math.random() * 0.65;
       nextData[offset + 3] = clamp(stream.targetSize * (0.72 + Math.random() * 0.7), 0.75, 2.5);
     }
@@ -973,6 +932,11 @@ class ParticleEngine {
     this.lastRender = 0;
     const tick = (now) => {
       if (!this.running) return;
+      if (document.hidden) {
+        this.lastFrame = now;
+        this.raf = requestAnimationFrame(tick);
+        return;
+      }
       const dt = Math.min(0.1, (now - this.lastFrame) / 1000);
       this.lastFrame = now;
       if (now - this.lastRender >= TARGET_FRAME_MS) {
@@ -1004,6 +968,7 @@ class ParticleEngine {
   render(time, dt) {
     const gl = this.gl;
     if (!gl || !this.program || !this.locations || this.contextLost) return;
+    const renderStartedAt = performance.now();
 
     gl.viewport(0, 0, this.canvas.width, this.canvas.height);
     gl.clearColor(0, 0, 0, 0);
@@ -1036,7 +1001,10 @@ class ParticleEngine {
         stream.colorEnd[index] = lerp(stream.colorEnd[index], stream.targetColorEnd[index], pathSmooth);
       }
 
-      const drawCount = Math.min(stream.capacity, Math.max(0, Math.floor(stream.currentCount)));
+      const drawCount = Math.min(
+        stream.capacity,
+        Math.max(0, Math.floor(stream.currentCount * this.performanceScale)),
+      );
       if (drawCount <= 0 || (stream.retiring && stream.alpha < 0.025)) {
         if (stream.targetCount === 0 && (stream.currentCount < 0.5 || stream.alpha < 0.025)) {
           gl.deleteBuffer(stream.buffer);
@@ -1078,53 +1046,70 @@ class ParticleEngine {
       );
       gl.drawArrays(gl.POINTS, 0, drawCount);
     }
+
+    const renderMs = performance.now() - renderStartedAt;
+    this.smoothedRenderMs = this.smoothedRenderMs
+      ? this.smoothedRenderMs * 0.9 + renderMs * 0.1
+      : renderMs;
+    if (this.smoothedRenderMs > 13) {
+      this.performanceScale = Math.max(0.35, this.performanceScale - 0.035);
+    } else if (this.smoothedRenderMs < 7) {
+      this.performanceScale = Math.min(1, this.performanceScale + 0.008);
+    }
   }
 }
 
-function ParticleLayer({ streams, graph, size }) {
+function ParticleLayer({ streams, graph, size, focusedModelId }) {
   const canvasRef = useRef(null);
   const engineRef = useRef(null);
-  const latestRef = useRef({ streams, graph, size });
+  const latestRef = useRef({ streams, graph, size, focusedModelId });
 
   useEffect(() => {
-    latestRef.current = { streams, graph, size };
-  }, [graph, size, streams]);
+    latestRef.current = { streams, graph, size, focusedModelId };
+  }, [focusedModelId, graph, size, streams]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return undefined;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let visibilityObserver = null;
 
     const createEngine = () => {
       const current = latestRef.current;
       const engine = new ParticleEngine(canvas);
       engineRef.current = engine;
       engine.resize(Math.max(current.size.width, MIN_STAGE_WIDTH), Math.max(current.size.height, MIN_STAGE_HEIGHT));
-      engine.setStreams(current.streams, current.graph);
-      engine.start();
+      const particleBudget = particleBudgetForDevice();
+      engine.setStreams(current.streams, current.graph, current.focusedModelId, particleBudget);
+      if (reducedMotion) {
+        engine.render(performance.now() / 1000, 1 / 60);
+        return;
+      }
+
+      if (typeof IntersectionObserver === "undefined") {
+        engine.start();
+        return;
+      }
+
+      visibilityObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (entry?.isIntersecting) engine.start();
+          else engine.stop();
+        },
+        { rootMargin: "160px 0px", threshold: 0 },
+      );
+      visibilityObserver.observe(canvas);
     };
 
     const disposeEngine = () => {
+      visibilityObserver?.disconnect();
+      visibilityObserver = null;
       engineRef.current?.dispose();
       engineRef.current = null;
     };
-
-    const handleContextLost = (event) => {
-      event.preventDefault();
-      disposeEngine();
-    };
-
-    const handleContextRestored = () => {
-      disposeEngine();
-      createEngine();
-    };
-
-    canvas.addEventListener("webglcontextlost", handleContextLost, false);
-    canvas.addEventListener("webglcontextrestored", handleContextRestored, false);
     createEngine();
 
     return () => {
-      canvas.removeEventListener("webglcontextlost", handleContextLost, false);
-      canvas.removeEventListener("webglcontextrestored", handleContextRestored, false);
       disposeEngine();
     };
   }, []);
@@ -1133,8 +1118,9 @@ function ParticleLayer({ streams, graph, size }) {
     const engine = engineRef.current;
     if (!engine) return;
     engine.resize(Math.max(size.width, MIN_STAGE_WIDTH), Math.max(size.height, MIN_STAGE_HEIGHT));
-    engine.setStreams(streams, graph);
-  }, [graph, size.height, size.width, streams]);
+    const particleBudget = particleBudgetForDevice();
+    engine.setStreams(streams, graph, focusedModelId, particleBudget);
+  }, [focusedModelId, graph, size.height, size.width, streams]);
 
   return h("canvas", { ref: canvasRef, className: "particle-layer", "aria-hidden": "true" });
 }
@@ -1142,7 +1128,7 @@ function ParticleLayer({ streams, graph, size }) {
 function App() {
   const { resolvedTheme, theme: selectedTheme } = useNextTheme();
   const theme = resolvedTheme === "dark" || selectedTheme === "dark" ? "dark" : "light";
-  const [stageRef, size] = useStageSize();
+  const [stageRef, size, stageNode] = useStageSize();
   const { payload: livePayload, latest, error } = usePingMetrics();
   const [useDemo, setUseDemo] = useState(false);
   const payload = useDemo ? DEMO_PAYLOAD : livePayload;
@@ -1172,6 +1158,15 @@ function App() {
   }, []);
 
   const [tooltip, setTooltip] = useState(null);
+  const [focusedModelId, setFocusedModelId] = useState(null);
+  const tooltipHideTimerRef = useRef(null);
+
+  useEffect(() => () => {
+    if (tooltipHideTimerRef.current !== null) {
+      window.clearTimeout(tooltipHideTimerRef.current);
+    }
+  }, []);
+
   const clearLooseTooltip = useCallback(() => {
     setTooltip((current) => (current?.sticky ? null : current));
   }, []);
@@ -1179,29 +1174,53 @@ function App() {
 
   const makeTooltipState = useCallback(
     (event, content, sticky = false) => {
-      const rect = stageRef.current?.getBoundingClientRect();
+      const rect = stageNode?.getBoundingClientRect();
       const x = rect ? event.clientX - rect.left : event.clientX;
       const y = rect ? event.clientY - rect.top : event.clientY;
       return { ...content, x, y, sticky };
     },
-    [stageRef],
+    [stageNode],
   );
 
   const tooltipApi = useMemo(
     () => ({
       show: (event, content) => {
-        setTooltip((current) => (current?.sticky ? current : makeTooltipState(event, content, false)));
+        if (tooltipHideTimerRef.current !== null) {
+          window.clearTimeout(tooltipHideTimerRef.current);
+          tooltipHideTimerRef.current = null;
+        }
+        setFocusedModelId(content.modelId ?? null);
+        setTooltip((current) => {
+          if (current?.sticky || current?.key === content.key) return current;
+          return makeTooltipState(event, content, false);
+        });
       },
       move: (event, content) => {
-        setTooltip((current) => (current?.sticky ? current : makeTooltipState(event, content, false)));
+        setTooltip((current) => {
+          if (current?.sticky || current?.key === content.key) return current;
+          return makeTooltipState(event, content, false);
+        });
       },
       hide: () => {
-        setTooltip((current) => (current?.sticky ? current : null));
+        if (tooltipHideTimerRef.current !== null) {
+          window.clearTimeout(tooltipHideTimerRef.current);
+        }
+        tooltipHideTimerRef.current = window.setTimeout(() => {
+          setTooltip((current) => (current?.sticky ? current : null));
+          setFocusedModelId(null);
+          tooltipHideTimerRef.current = null;
+        }, 180);
       },
       toggle: (event, content) => {
-        setTooltip((current) =>
-          current?.sticky && current.key === content.key ? null : makeTooltipState(event, content, true),
-        );
+        if (tooltipHideTimerRef.current !== null) {
+          window.clearTimeout(tooltipHideTimerRef.current);
+          tooltipHideTimerRef.current = null;
+        }
+        setTooltip((current) => {
+          const willClose = current?.sticky && current.key === content.key;
+          setFocusedModelId(willClose ? null : (content.modelId ?? null));
+          return willClose ? null : makeTooltipState(event, content, true);
+        });
       },
     }),
     [makeTooltipState],
@@ -1222,35 +1241,22 @@ function App() {
       style: {
         height: `${graph.stageHeight}px`,
         "--flow-model-width": `${graph.modelWidth}px`,
+        "--flow-model-height": `${graph.modelHeight}px`,
+        "--flow-router-size": `${graph.routerSize}px`,
       },
       ...dragScrollHandlers,
     },
-    h(ParticleLayer, { streams: graph.streams, graph, size: { width: size.width, height: graph.stageHeight } }),
+    h(ParticleLayer, { streams: graph.streams, graph, size: { width: size.width, height: graph.stageHeight }, focusedModelId }),
     h(
       "div",
-      { className: "flow-react" },
-      h(ReactFlow, {
-        nodes: nodesWithTooltip,
-        edges: [],
-        nodeTypes,
-        defaultViewport: { x: 0, y: 0, zoom: 1 },
-        viewport: { x: 0, y: 0, zoom: 1 },
-        onlyRenderVisibleElements: false,
-        minZoom: 1,
-        maxZoom: 1,
-        panOnDrag: false,
-        panOnScroll: false,
-        preventScrolling: false,
-        zoomOnScroll: false,
-        zoomOnPinch: false,
-        zoomOnDoubleClick: false,
-        nodesDraggable: false,
-        nodesConnectable: false,
-        elementsSelectable: false,
-        proOptions: { hideAttribution: true },
-        style: { width: "100%", height: "100%" },
-      }),
+      { className: "flow-overview", "aria-live": "polite" },
+      h("div", { className: "flow-overview-label" }, "LLM7 · TOKEN ROUTING"),
+      h("div", { className: "flow-overview-rate" }, compactNumber(snapshot.totals.tokens / FLOW_WINDOW_SECONDS)),
+      h("span", { className: "flow-overview-unit" }, "tok/s"),
+      h("div", { className: "flow-overview-subtitle" }, `${compactNumber(snapshot.totals.tokens)} tok/min · rolling 60s`),
+      h("div", { className: `flow-live-status ${status.state}` }, status.state === "live" ? "LIVE" : status.state.toUpperCase()),
     ),
+    h(FlowNodeLayer, { nodes: nodesWithTooltip }),
     h(GlobalTooltip, { tooltip, size: { width: size.width, height: graph.stageHeight } }),
   );
 }

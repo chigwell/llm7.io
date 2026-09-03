@@ -1,8 +1,8 @@
 import { clamp, numberOrZero } from "./modelData.js";
 
 export function pathBetween(source, target, curvature = 0.34) {
-  const dx = Math.max(60, target.x - source.x);
-  const bend = dx * curvature;
+  const dx = target.x - source.x;
+  const bend = Math.sign(dx || 1) * Math.max(60, Math.abs(dx)) * curvature;
   return {
     p0: { x: source.x, y: source.y },
     p1: { x: source.x + bend, y: source.y },
@@ -50,7 +50,7 @@ export function flowStyle(tokens, maxTokens) {
       width: 1.2,
       flowWidth: 12,
       seconds: 8,
-      size: 1.2,
+      size: 1.35,
       opacity: 0.12,
     };
   }
@@ -66,7 +66,7 @@ export function flowStyle(tokens, maxTokens) {
     width: 2 + norm * 12,
     flowWidth: 14 + norm * 58,
     seconds: clamp(7.4 - norm * 5.8, 1.35, 7.2),
-    size: clamp(2.25 - norm * 1.05, 0.95, 2.1),
+    size: clamp(2.55 - norm * 1.05, 1.25, 2.35),
     opacity: clamp(0.3 + norm * 0.56, 0.3, 0.86),
   };
 }
