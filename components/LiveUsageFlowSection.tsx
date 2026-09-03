@@ -39,7 +39,16 @@ export default function LiveUsageFlowSection() {
           </div>
         </div>
         <p className="text-xs text-muted-foreground sm:text-sm">
-          Prompt and completion tokens are shown separately. The display updates every second from the public API.
+          Prompt and completion tokens are shown separately. The display updates every second from the public API.{" "}
+          <a
+            href="https://status.llm7.io/"
+            target="_blank"
+            rel="noreferrer"
+            className="font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary"
+          >
+            View detailed real-time statistics
+          </a>
+          .
         </p>
       </div>
     </section>
