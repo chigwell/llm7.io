@@ -61,19 +61,19 @@ const DEFAULT_STAGE_SIZE = {
 };
 
 const MODEL_FLOW_PALETTES = [
-  { accent: "#517fb5", light: ["#517fb5", "#2b9a80"], dark: ["#80b7ef", "#63d7b5"] },
-  { accent: "#7763bd", light: ["#7763bd", "#d17a35"], dark: ["#b8a5ff", "#f7ad67"] },
-  { accent: "#a653a5", light: ["#a653a5", "#278f9d"], dark: ["#e39ae0", "#63d1dc"] },
-  { accent: "#c24973", light: ["#5c7fd1", "#c24973"], dark: ["#8eadff", "#ff8fb4"] },
-  { accent: "#b36a36", light: ["#b36a36", "#738f32"], dark: ["#f1a46b", "#b2d76a"] },
-  { accent: "#16869a", light: ["#16869a", "#9b62b4"], dark: ["#55d1e2", "#d397eb"] },
-  { accent: "#667896", light: ["#667896", "#d05d55"], dark: ["#aabbd4", "#ff9288"] },
-  { accent: "#486aa8", light: ["#486aa8", "#b18b22"], dark: ["#8eadf0", "#e1c45f"] },
-  { accent: "#218779", light: ["#218779", "#c44f63"], dark: ["#62ceb9", "#fb8799"] },
-  { accent: "#6854a3", light: ["#6854a3", "#a16f42"], dark: ["#aa96e2", "#daa475"] },
-  { accent: "#43834d", light: ["#43834d", "#b65391"], dark: ["#7bc786", "#ea91c8"] },
-  { accent: "#34538f", light: ["#34538f", "#cf693d"], dark: ["#7698db", "#fa9e72"] },
-  { accent: "#81558f", light: ["#81558f", "#7f812e"], dark: ["#c394d0", "#bfc163"] },
+  { accent: "#2f639d", light: ["#235f9f", "#00735f"], dark: ["#9bd0ff", "#7ff5d4"] },
+  { accent: "#6046a7", light: ["#5c3aa7", "#a9540c"], dark: ["#cdbfff", "#ffc27c"] },
+  { accent: "#943b92", light: ["#8f2f8f", "#007484"], dark: ["#f4a9ef", "#86edf6"] },
+  { accent: "#b13060", light: ["#315fc3", "#af2757"], dark: ["#a9c3ff", "#ffa8c7"] },
+  { accent: "#96541d", light: ["#8c4c12", "#617700"], dark: ["#ffc084", "#cff07a"] },
+  { accent: "#00778a", light: ["#00778a", "#833ca1"], dark: ["#78ecfb", "#edb0ff"] },
+  { accent: "#4d6386", light: ["#465f85", "#b23c34"], dark: ["#c4d8f5", "#ffaaa1"] },
+  { accent: "#315d9d", light: ["#27599b", "#8f6c00"], dark: ["#a8c7ff", "#f5da72"] },
+  { accent: "#007663", light: ["#007663", "#ae344b"], dark: ["#82ecd4", "#ff9daf"] },
+  { accent: "#523a95", light: ["#523a95", "#855021"], dark: ["#c1afff", "#f3bf8f"] },
+  { accent: "#286d32", light: ["#286d32", "#9f347b"], dark: ["#96e7a0", "#fface0"] },
+  { accent: "#214a86", light: ["#214a86", "#a94717"], dark: ["#9bbcff", "#ffb08b"] },
+  { accent: "#6d3f7f", light: ["#6d3f7f", "#686d00"], dark: ["#dda9ed", "#dbdf74"] },
 ];
 
 function modelPaletteMap(models, theme) {
