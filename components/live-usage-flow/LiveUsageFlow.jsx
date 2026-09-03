@@ -62,17 +62,17 @@ const DEFAULT_STAGE_SIZE = {
 
 const MODEL_FLOW_PALETTES = [
   { accent: "#2f639d", light: ["#235f9f", "#00735f"], dark: ["#9bd0ff", "#7ff5d4"] },
-  { accent: "#6046a7", light: ["#5c3aa7", "#a9540c"], dark: ["#cdbfff", "#ffc27c"] },
+  { accent: "#6046a7", light: ["#5c3aa7", "#0074b8"], dark: ["#cdbfff", "#8cddff"] },
   { accent: "#943b92", light: ["#8f2f8f", "#007484"], dark: ["#f4a9ef", "#86edf6"] },
   { accent: "#b13060", light: ["#315fc3", "#af2757"], dark: ["#a9c3ff", "#ffa8c7"] },
-  { accent: "#96541d", light: ["#8c4c12", "#617700"], dark: ["#ffc084", "#cff07a"] },
+  { accent: "#4f7c1b", light: ["#2f7a28", "#007fa3"], dark: ["#a6ee8a", "#91e9ff"] },
   { accent: "#00778a", light: ["#00778a", "#833ca1"], dark: ["#78ecfb", "#edb0ff"] },
   { accent: "#4d6386", light: ["#465f85", "#b23c34"], dark: ["#c4d8f5", "#ffaaa1"] },
   { accent: "#315d9d", light: ["#27599b", "#8f6c00"], dark: ["#a8c7ff", "#f5da72"] },
   { accent: "#007663", light: ["#007663", "#ae344b"], dark: ["#82ecd4", "#ff9daf"] },
-  { accent: "#523a95", light: ["#523a95", "#855021"], dark: ["#c1afff", "#f3bf8f"] },
+  { accent: "#523a95", light: ["#523a95", "#0070aa"], dark: ["#c1afff", "#93d9ff"] },
   { accent: "#286d32", light: ["#286d32", "#9f347b"], dark: ["#96e7a0", "#fface0"] },
-  { accent: "#214a86", light: ["#214a86", "#a94717"], dark: ["#9bbcff", "#ffb08b"] },
+  { accent: "#214a86", light: ["#214a86", "#b12f6d"], dark: ["#9bbcff", "#ffa6d0"] },
   { accent: "#6d3f7f", light: ["#6d3f7f", "#686d00"], dark: ["#dda9ed", "#dbdf74"] },
 ];
 
