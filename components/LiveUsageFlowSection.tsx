@@ -1,5 +1,6 @@
 "use client";
 
+// Token flow animation component, 2026 by Timur Gabdullin: http://t.me/gabdullintimur
 import dynamic from "next/dynamic";
 
 const LiveUsageFlow = dynamic(
