@@ -1,5 +1,6 @@
+import { replaceDirectory } from "./static-files.mjs";
 // scripts/build-static-gh-pages.mjs
-import { existsSync, rmSync, cpSync } from "fs";
+import { existsSync } from "fs";
 import { resolve } from "path";
 import { execSync } from "child_process";
 
@@ -19,8 +20,7 @@ try {
   execSync("npx next build", { stdio: "inherit" });
 
   console.log("➡️  Copying .next/output/static → docs/ for GitHub Pages...");
-  rmSync(docsDir, { recursive: true, force: true });
-  cpSync(staticDir, docsDir, { recursive: true });
+  replaceDirectory(staticDir, docsDir);
 
   console.log("✅ docs/ ready for GitHub Pages!");
 } catch (err) {

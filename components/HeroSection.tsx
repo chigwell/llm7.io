@@ -2,13 +2,14 @@
 
 import { Button } from "@/components/ui/buttonShadcn";
 import Link from "next/link";
-import { ArrowRight, Sparkles, Layers, Zap, BotMessageSquare } from "lucide-react";
+import { ArrowRight, Layers, Zap, BotMessageSquare } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
-import { Pill } from "@/components/ui/pill";
+import { HeroStatusPill } from "./HeroStatusPill";
+import { getFormattedTokenCount, formatLiveTokenCount } from "@/lib/hero-metrics";
 import { CountUp } from "@/components/vui/text/CountUp";
 import { useTheme } from "next-themes";
 import { useLlm7Models } from "@/hooks/use-llm7-models";
-import { usePingMetrics, type PingSnapshot } from "@/hooks/use-ping-metrics";
+import { usePingMetrics } from "@/hooks/use-ping-metrics";
 
 declare global {
   interface Window {
@@ -37,19 +38,6 @@ declare global {
   }
 }
 
-type HeroStatus = {
-  label: string;
-  detail: string;
-  percent: string | null;
-  status: "active" | "warning" | "error" | "info";
-};
-
-type FormattedTokenCount = {
-  value: number;
-  suffix: string;
-  decimals: number;
-};
-
 const TOKEN_INTRO_COMPLETE_MS = 4_200;
 
 function supportsWebGL() {
@@ -59,120 +47,6 @@ function supportsWebGL() {
   } catch {
     return false;
   }
-}
-
-function getFormattedTokenCount(value: number): FormattedTokenCount {
-  if (value >= 1000000) {
-    return {
-      value: value / 1000000,
-      suffix: "M",
-      decimals: value >= 10000000 ? 0 : 1,
-    };
-  }
-
-  if (value >= 1000) {
-    return {
-      value: value / 1000,
-      suffix: "K",
-      decimals: 2,
-    };
-  }
-
-  return {
-    value,
-    suffix: "",
-    decimals: 0,
-  };
-}
-
-function formatLiveTokenCount(value: number): string {
-  const tokenCount = getFormattedTokenCount(value);
-  const formatter = new Intl.NumberFormat("en-US", {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: tokenCount.decimals,
-  });
-
-  return `${formatter.format(tokenCount.value)}${tokenCount.suffix}`;
-}
-
-function formatStatusPercent(value: number): string {
-  const digits = value >= 0.995 || value === 0 ? 0 : 1;
-  return `${(value * 100).toFixed(digits)}%`;
-}
-
-function createStatusFromSnapshot(snapshot: PingSnapshot | null, error: string | null): HeroStatus {
-  if (error && !snapshot) {
-    return {
-      label: "LLM7.io: status delayed",
-      detail: "Live model status is temporarily unavailable.",
-      percent: null,
-      status: "warning",
-    };
-  }
-
-  if (!snapshot) {
-    return {
-      label: "LLM7.io: checking model status",
-      detail: "Collecting live availability from the status endpoint.",
-      percent: null,
-      status: "info",
-    };
-  }
-
-  if (snapshot.totalRequests === 0) {
-    return {
-      label: "LLM7.io: models quiet",
-      detail: "No model traffic in the latest 60-second window.",
-      percent: null,
-      status: "info",
-    };
-  }
-
-  const successRate = snapshot.successRate;
-  const percent = formatStatusPercent(successRate);
-
-  if (successRate >= 0.75) {
-    return {
-      label: "LLM7.io: models operational",
-      detail: `${percent} success rate in the latest 60-second window.`,
-      percent,
-      status: "active",
-    };
-  }
-
-  if (successRate >= 0.5) {
-    return {
-      label: "LLM7.io: partial degradation",
-      detail: `${percent} success rate. Some model responses may fail or slow down.`,
-      percent,
-      status: "warning",
-    };
-  }
-
-  return {
-    label: "LLM7.io: degraded",
-    detail: `${percent} success rate. Elevated errors detected.`,
-    percent,
-    status: "error",
-  };
-}
-
-function HeroStatusPill() {
-  const { latest, error } = usePingMetrics();
-  const status = createStatusFromSnapshot(latest, error);
-
-  return (
-    <Pill
-      icon={<Sparkles className="w-3 h-3 md:w-4 md:h-4" />}
-      status={status.status}
-      variant="outline"
-      className="mb-6 md:mb-8 bg-background/70 backdrop-blur-sm text-xs md:text-sm text-muted-foreground"
-      title={status.detail}
-      aria-label={`${status.label}. ${status.detail}`}
-    >
-      {status.label}
-    </Pill>
-  );
 }
 
 export default function HeroSectionWithWaves() {

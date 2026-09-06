@@ -1,6 +1,7 @@
 import { z } from "zod";
+import { DECIMAL_STRING, DENIED_PUBLIC_KEYS, NonNegativeNumber, NullableNonNegativeNumber, Rate, PaginationSchema } from "./schema-primitives.js";
+export { DECIMAL_STRING, PaginationSchema } from "./schema-primitives.js";
 
-export const DECIMAL_STRING = /^(?:0|[1-9]\d*)(?:\.\d+)?$/;
 const TIMESTAMP_SKEW_MS = 10 * 60 * 1000;
 
 export function isNonNegativeDecimal(value: unknown): value is string {
@@ -15,9 +16,6 @@ export function isSafeTimestamp(value: string): boolean {
 const DecimalString = z.string().refine(isNonNegativeDecimal, "Expected a non-negative decimal string");
 const Timestamp = z.string().refine(isSafeTimestamp, "Expected a valid timestamp that is not materially in the future");
 const NullableBoolean = z.boolean().nullable().optional();
-const NonNegativeNumber = z.number().finite().nonnegative();
-const NullableNonNegativeNumber = NonNegativeNumber.nullable();
-const Rate = z.number().finite().min(0).max(1).nullable();
 const CachePricingSchema = z.object({
   cached_input: DecimalString.optional(),
   cached_output: DecimalString.optional(),
@@ -41,12 +39,6 @@ const VideoRoutePriceSchema = z.object({
   price_tiers_usd_per_second: z.array(VideoPriceTierSchema).optional(),
 });
 
-export const PaginationSchema = z.object({
-  page: z.number().int().positive(),
-  page_size: z.number().int().positive(),
-  total_items: z.number().int().nonnegative(),
-  total_pages: z.number().int().positive(),
-});
 
 export const PricingSchema = z.object({
   mode: z.enum(["token", "image", "second"]),
@@ -205,7 +197,6 @@ export const StatisticsSummarySchema = z.object({
 
 export const VersionResponseSchema = z.object({ schema_version: z.number().int().positive(), catalog_version: z.string().min(1), catalog_updated_at: Timestamp, latest_metrics_bucket: Timestamp.nullable() });
 
-const DENIED_PUBLIC_KEYS = /(?:^|_)(?:provider|owned_by|supplier|vendor|upstream_model|deployment|backend|hostname|region|internal_cost|margin)(?:$|_)/i;
 
 export function assertNoProviderFields(value: unknown, path = "public"): void {
   if (Array.isArray(value)) {

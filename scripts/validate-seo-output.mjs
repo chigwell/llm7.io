@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-import { readFile, readdir, stat } from "node:fs/promises";
+import { readFile, stat } from "node:fs/promises";
 import { resolve } from "node:path";
 
 const ROOT = resolve(new URL("..", import.meta.url).pathname);
 const OUT = resolve(ROOT, "out");
-const PUBLIC = resolve(ROOT, "public");
+
 const snapshot = JSON.parse(await readFile(resolve(ROOT, "data/generated/public-model-data.json"), "utf8"));
 const routeMap = JSON.parse(await readFile(resolve(ROOT, "data/generated/model-route-map.json"), "utf8"));
 const errors = [];
@@ -35,10 +35,10 @@ for (const [key, pair] of comparisons) {
 const expectedCount = (["chat", "image", "video"]).reduce((sum, type) => { const n = models.filter((model) => model.status === "active" && model.model_type === type).length; return sum + n * (n - 1) / 2; }, 0);
 assert(comparisons.length === expectedCount, `Generated pair count ${comparisons.length} does not equal ${expectedCount}`);
 assert(new Set(canonicals).size === canonicals.length, "Duplicate canonical URLs found");
-const index = await readFile(resolve(PUBLIC, "sitemap.xml"), "utf8");
+const index = await readFile(resolve(OUT, "sitemap.xml"), "utf8");
 const children = [...index.matchAll(/<loc>https:\/\/llm7\.io\/([^<]+)<\/loc>/g)].map((match) => match[1]);
 const sitemapUrls = new Set();
-for (const child of children) { const xml = await readFile(resolve(PUBLIC, child), "utf8"); const urls = [...xml.matchAll(/<loc>(https:\/\/llm7\.io\/[^<]+)<\/loc>/g)].map((match) => match[1]); assert(urls.length <= 45_000, `${child} exceeds 45,000 URLs`); urls.forEach((url) => sitemapUrls.add(url)); }
+for (const child of children) { const xml = await readFile(resolve(OUT, child), "utf8"); const urls = [...xml.matchAll(/<loc>(https:\/\/llm7\.io\/[^<]+)<\/loc>/g)].map((match) => match[1]); assert(urls.length <= 45_000, `${child} exceeds 45,000 URLs`); urls.forEach((url) => sitemapUrls.add(url)); }
 for (const model of models) assert(sitemapUrls.has(`https://llm7.io/models/${model.slug}/`), `Model route missing from sitemap: ${model.slug}`);
 for (const [key] of comparisons) assert(sitemapUrls.has(`https://llm7.io/compare/${key}/`), `Comparison route missing from sitemap: ${key}`);
 for (const url of sitemapUrls) { const file = pathFor(new URL(url).pathname); try { await stat(file); } catch { errors.push(`Sitemap URL has no generated file: ${url}`); } }

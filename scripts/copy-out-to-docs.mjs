@@ -1,4 +1,5 @@
-import { rmSync, cpSync, existsSync } from "fs";
+import { replaceDirectory } from "./static-files.mjs";
+import { existsSync } from "fs";
 import { resolve } from "path";
 
 const out = resolve(process.cwd(), "out");
@@ -9,6 +10,5 @@ if (!existsSync(out)) {
   process.exit(1);
 }
 
-rmSync(docs, { recursive: true, force: true });
-cpSync(out, docs, { recursive: true });
+replaceDirectory(out, docs);
 console.log("✅ Copied out/ → docs/");

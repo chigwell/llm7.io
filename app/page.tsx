@@ -9,8 +9,6 @@ import Disclaimer from "@/components/Disclaimer";
 import LiveUsageFlowSection from "@/components/LiveUsageFlowSection";
 import ConsoleAnimation from "@/components/CodeExample";
 import MarketingProviders from "@/components/MarketingProviders";
-//import UsageSummaryChartCard from "@/components/Stats";
-// import ImageGenerationInput from "@/components/ImageExample";
 
 export default function Home() {
   return (
@@ -20,7 +18,6 @@ export default function Home() {
       <EcosystemLogoCarousel />
       <ConsoleAnimation />
       <ChatExample />
-      {/* <ImageGenerationInput /> */}
       <FeaturedComponent />
       <ModelShowcase />
       <LiveUsageFlowSection />

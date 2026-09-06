@@ -64,6 +64,12 @@ client = openai.OpenAI(
 response = client.chat.completions.create(model="gpt-4", messages=[...])
 ```
 
+## Refactor verification
+
+See [the refactor review record](documentation/refactor-plan.md) and [behavior contracts](documentation/behavior-contracts.md) for preserved interfaces, checks, and separate migration tasks.
+
+`npm test` exercises production model, synchronization, chat, and metrics helpers. `node scripts/build-fixture.mjs` verifies an export from frozen synthetic model data, restoring existing generated inputs and build artifacts afterward. Run that check with other builds and development servers stopped.
+
 ## Contributing
 We welcome contributions! Please:
 - Report bugs via GitHub issues

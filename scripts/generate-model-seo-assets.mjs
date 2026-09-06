@@ -2,6 +2,8 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import React from "react";
+import { modelPath, comparisonKey as pairKey, comparisonPath as pairPath } from "../lib/models/route-values.js";
+import { createComparisonPairs } from "../lib/models/comparison-values.js";
 import { ImageResponse } from "@vercel/og";
 
 const ROOT = resolve(new URL("..", import.meta.url).pathname);
@@ -13,9 +15,6 @@ const LIMIT = 45_000;
 const xml = (value) => value.replace(/[<>&'\"]/g, (character) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", "'": "&apos;", '\"': "&quot;" })[character]);
 const iso = (value) => value && !Number.isNaN(Date.parse(value)) ? new Date(value).toISOString() : new Date().toISOString();
 const latest = (...values) => new Date(Math.max(...values.filter(Boolean).map((value) => Date.parse(value)))).toISOString();
-const modelPath = (slug) => `/models/${slug}/`;
-const pairKey = (left, right) => `${left}--vs--${right}`;
-const pairPath = (left, right) => `/compare/${pairKey(left, right)}/`;
 
 function priceSummary(model) {
   const pricing = model.pricing;
@@ -68,13 +67,8 @@ function sitemapIndex(paths) {
 async function main() {
   const snapshot = JSON.parse(await readFile(SNAPSHOT, "utf8"));
   const models = snapshot.models.map((entry) => entry.model).sort((a, b) => a.slug.localeCompare(b.slug));
-  const active = models.filter((model) => model.status === "active");
   const bySlug = new Map(models.map((model) => [model.slug, model]));
-  const pairs = [];
-  for (const type of ["chat", "image", "video"]) {
-    const group = active.filter((model) => model.model_type === type).sort((a, b) => a.slug.localeCompare(b.slug));
-    for (let left = 0; left < group.length; left += 1) for (let right = left + 1; right < group.length; right += 1) pairs.push({ leftSlug: group[left].slug, rightSlug: group[right].slug });
-  }
+  const pairs = Object.values(createComparisonPairs(models));
   await mkdir(resolve(PUBLIC, "generated/og/models"), { recursive: true });
   await Promise.all(models.map((model) => ogImage(model.display_name, `${model.model_type} model`, priceSummary(model), capabilities(model), resolve(PUBLIC, `generated/og/models/${model.slug}.png`))));
   await ogImage("Model comparison", "LLM7 API", "Current pricing and latest statistics", "Compare models of the same published type", resolve(PUBLIC, "generated/og/model-comparison.png"));
