@@ -20,6 +20,8 @@ import { getModelSnapshot, publicModels } from "@/lib/models/snapshot";
 import { modelStructuredData } from "@/lib/models/structured-data";
 import { isProviderQuoteModel } from "@/lib/models/video-pricing";
 
+import { discoveryPages } from "@/lib/discovery/snapshot";
+
 export const dynamicParams = false;
 
 export function generateStaticParams() {
@@ -82,6 +84,8 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
           </div>
           <div className="mt-6 flex flex-wrap items-center gap-3"><code className="rounded-lg border border-border/70 bg-background/60 px-3 py-2 text-sm">{model.model_id}</code><CopyModelId modelId={model.model_id} />{model.status === "active" ? <a className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90" href="https://dash.llm7.io">Get an API key</a> : null}</div>
         </header>
+
+        <div className="mt-6 flex flex-wrap gap-3">{discoveryPages.filter(p => !p.children && (p.family === "alternatives" ? p.original?.slug === model.slug : p.models.some(m => m.slug === model.slug))).map(p => <Link key={p.path} href={p.path} className="rounded-xl border px-3 py-2 text-sm hover:border-primary">{p.title}</Link>)}</div>
 
         <div className="mt-8 grid gap-7 lg:grid-cols-[18rem_minmax(0,1fr)]">
           <aside className="lg:sticky lg:top-28 lg:self-start"><ModelDetailsCard model={model} title="Capabilities & details" /></aside>

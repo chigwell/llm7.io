@@ -36,7 +36,10 @@ export default function ModelNavigation() {
           <NavbarLogo />
           <div className="flex items-center gap-2">
             <ThemeToggle />
-            <MobileNavToggle isOpen={open} onClick={() => setOpen((value) => !value)} />
+            <MobileNavToggle
+              isOpen={open}
+              onClick={() => setOpen((value) => !value)}
+            />
           </div>
         </MobileNavHeader>
         <MobileNavMenu isOpen={open} onClose={() => setOpen(false)}>
@@ -46,7 +49,9 @@ export default function ModelNavigation() {
               href={item.link}
               onClick={() => setOpen(false)}
               target={item.link.startsWith("http") ? "_blank" : undefined}
-              rel={item.link.startsWith("http") ? "noopener noreferrer" : undefined}
+              rel={
+                item.link.startsWith("http") ? "noopener noreferrer" : undefined
+              }
               className="flex min-h-12 w-full items-center rounded-lg px-3 py-3 text-base font-medium text-foreground/80 transition-colors hover:bg-accent hover:text-foreground"
             >
               {item.name}

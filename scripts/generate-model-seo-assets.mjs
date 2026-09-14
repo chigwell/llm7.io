@@ -1,7 +1,10 @@
 #!/usr/bin/env node
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile, readdir, rm } from "node:fs/promises";
 import { resolve } from "node:path";
 import React from "react";
+import { createHash } from "node:crypto";
+import { definePages } from "../lib/discovery/pages.js";
+import { pageState } from "../lib/discovery/fingerprints.js";
 import { modelPath, comparisonKey as pairKey, comparisonPath as pairPath } from "../lib/models/route-values.js";
 import { createComparisonPairs } from "../lib/models/comparison-values.js";
 import { ImageResponse } from "@vercel/og";
@@ -87,6 +90,24 @@ async function main() {
     await writeFile(resolve(PUBLIC, name), sitemap(comparisonUrls.slice(index, index + LIMIT)));
     names.push(name);
   }
+  const pages = definePages(snapshot);
+  const stateFile = resolve(ROOT, "data/generated/discovery-page-state.json");
+  let previous = {};
+  try { previous = JSON.parse(await readFile(stateFile, "utf8")); } catch (error) { if (error.code !== "ENOENT") throw error; }
+  const templates = await Promise.all(["lib/discovery/pages.js", "components/discovery/DiscoveryPage.tsx", "components/discovery/Explorer.client.tsx", "lib/models/code-examples.ts", "lib/models/format.ts", "lib/models/token-unit.js"].map(path => readFile(resolve(ROOT, path), "utf8")));
+  const digest = createHash("sha256").update(templates.join("\n")).digest("hex");
+  const state = pageState(pages, previous, new Date().toISOString(), digest);
+  await mkdir(resolve(PUBLIC, "generated/og/discovery"), { recursive: true });
+  for (const [family, title] of [["features", "Model capabilities"], ["integrations", "LLM7 integrations"], ["calculators", "Scenario costs"], ["alternatives", "Model alternatives"]]) {
+    const name = `sitemap-${family}.xml`;
+    await writeFile(resolve(PUBLIC, name), sitemap(pages.filter(p => p.family === family && p.indexable).map(p => ({path:p.path,lastmod:state[p.path].lastmod}))));
+    names.push(name);
+    await ogImage(title, "LLM7 model guides", "Public model catalog", "Capabilities, configuration, and pricing", resolve(PUBLIC, `generated/og/discovery/${family}.png`));
+  }
+  for (const name of await readdir(PUBLIC)) {
+    if (/^sitemap.*\.xml$/.test(name) && name !== "sitemap.xml" && !names.includes(name)) await rm(resolve(PUBLIC, name));
+  }
+  await writeFile(stateFile, `${JSON.stringify(state, null, 2)}\n`);
   await writeFile(resolve(PUBLIC, "sitemap.xml"), sitemapIndex(names));
   await writeFile(resolve(PUBLIC, "robots.txt"), "User-agent: *\nAllow: /\n\nSitemap: https://llm7.io/sitemap.xml\n");
   await mkdir(resolve(ROOT, "data/generated"), { recursive: true });

@@ -52,3 +52,9 @@ public/sitemap.xml
 public/sitemap-static.xml
 public/sitemap-models.xml
 public/sitemap-comparisons-*.xml
+
+# Generated discovery sitemaps (route dates are retained in data/generated)
+public/sitemap-features.xml
+public/sitemap-integrations.xml
+public/sitemap-calculators.xml
+public/sitemap-alternatives.xml

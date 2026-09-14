@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { readFile, stat } from "node:fs/promises";
 import { resolve } from "node:path";
+import { definePages } from "../lib/discovery/pages.js";
 
 const ROOT = resolve(new URL("..", import.meta.url).pathname);
 const OUT = resolve(ROOT, "out");
@@ -34,12 +35,27 @@ for (const [key, pair] of comparisons) {
 }
 const expectedCount = (["chat", "image", "video"]).reduce((sum, type) => { const n = models.filter((model) => model.status === "active" && model.model_type === type).length; return sum + n * (n - 1) / 2; }, 0);
 assert(comparisons.length === expectedCount, `Generated pair count ${comparisons.length} does not equal ${expectedCount}`);
+const discovery = definePages(snapshot);
+for (const page of discovery) {
+  const source = await html(page.path); pageChecks(source, page.path);
+  assert(source.includes('application/ld+json'), `${page.path} lacks JSON-LD`);
+  assert(source.includes('property="og:image"'), `${page.path} lacks OG image`);
+  assert(/name="robots" content="[^"]*noindex/.test(source) === !page.indexable, `${page.path} indexing mismatch`);
+  for (const model of page.models) if (!page.children) assert(source.includes(model.model_id.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')), `${page.path} lacks model ${model.model_id}`);
+  if (!page.children && page.family !== 'alternatives' && page.indexable) assert(source.includes('<table'), `${page.path} lacks static model table`);
+  for (const match of source.matchAll(/href="(\/[^"?#]*)"/g)) {
+    if (!match[1].endsWith('/') || match[1].startsWith('/_next/')) continue;
+    try { await stat(pathFor(match[1])); } catch { errors.push(`${page.path} links to missing page ${match[1]}`); }
+  }
+}
 assert(new Set(canonicals).size === canonicals.length, "Duplicate canonical URLs found");
 const index = await readFile(resolve(OUT, "sitemap.xml"), "utf8");
 const children = [...index.matchAll(/<loc>https:\/\/llm7\.io\/([^<]+)<\/loc>/g)].map((match) => match[1]);
 const sitemapUrls = new Set();
 for (const child of children) { const xml = await readFile(resolve(OUT, child), "utf8"); const urls = [...xml.matchAll(/<loc>(https:\/\/llm7\.io\/[^<]+)<\/loc>/g)].map((match) => match[1]); assert(urls.length <= 45_000, `${child} exceeds 45,000 URLs`); urls.forEach((url) => sitemapUrls.add(url)); }
+for (const page of discovery) assert(sitemapUrls.has(`https://llm7.io${page.path}`) === page.indexable, `Discovery sitemap mismatch: ${page.path}`);
+for (const family of ['features','integrations','calculators','alternatives']) assert(children.includes(`sitemap-${family}.xml`), `Missing thematic sitemap: ${family}`);
 for (const model of models) assert(sitemapUrls.has(`https://llm7.io/models/${model.slug}/`), `Model route missing from sitemap: ${model.slug}`);
 for (const [key] of comparisons) assert(sitemapUrls.has(`https://llm7.io/compare/${key}/`), `Comparison route missing from sitemap: ${key}`);
 for (const url of sitemapUrls) { const file = pathFor(new URL(url).pathname); try { await stat(file); } catch { errors.push(`Sitemap URL has no generated file: ${url}`); } }
-if (errors.length) { console.error(`SEO validation failed (${errors.length} errors):\n${errors.map((error) => `- ${error}`).join("\n")}`); process.exitCode = 1; } else console.log(`SEO validation passed for ${models.length} model pages and ${comparisons.length} comparison pages.`);
+if (errors.length) { console.error(`SEO validation failed (${errors.length} errors):\n${errors.map((error) => `- ${error}`).join("\n")}`); process.exitCode = 1; } else console.log(`SEO validation passed for ${models.length} model pages and ${comparisons.length} comparison pages, plus ${discovery.length} discovery pages.`);

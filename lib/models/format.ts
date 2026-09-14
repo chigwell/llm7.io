@@ -78,12 +78,7 @@ export function formatContext(value: number | null | undefined, label = "tokens"
   return value === null || value === undefined ? "Not specified" : `${new Intl.NumberFormat("en-US").format(value)} ${label}`;
 }
 
-export function parseTokenPricingUnit(unit: string): Decimal | null {
-  const match = unit.trim().match(/^(\d+(?:\.\d+)?)\s*(k|m)?\s+tokens?$/i);
-  if (!match) return null;
-  const multiplier = match[2]?.toLowerCase() === "m" ? "1000000" : match[2]?.toLowerCase() === "k" ? "1000" : "1";
-  return new Decimal(match[1]).times(multiplier);
-}
+export { parseTokenPricingUnit } from "./token-unit.js";
 
 export function pricesDirectlyComparable(left: PublicModel, right: PublicModel): boolean {
   if (isProviderQuoteModel(left) || isProviderQuoteModel(right)) return false;

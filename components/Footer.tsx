@@ -3,13 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/buttonShadcn";
-import {
-  Github,
-  Linkedin,
-  Twitter,
-  Heart,
-  Send,
-} from "lucide-react";
+import { Github, Linkedin, Twitter, Heart, Send } from "lucide-react";
 import { IconBrandDiscordFilled } from "@tabler/icons-react";
 
 export default function Footer() {
@@ -33,18 +27,23 @@ export default function Footer() {
           {/* Brand section */}
           <div className="sm:col-span-2 space-y-4 md:space-y-6">
             <Link href="/" className="flex items-center gap-2 md:gap-3 group">
-              <img src="/llm7.png" alt="LLM7.io Logo" className="w-8 h-8 md:w-10 md:h-10" />
+              <img
+                src="/llm7.png"
+                alt="LLM7.io Logo"
+                className="w-8 h-8 md:w-10 md:h-10"
+              />
               <div>
                 <h2 className="text-xl md:text-2xl font-bold">LLM7.io</h2>
                 <p className="text-xs md:text-sm text-muted-foreground">
-                  An affordable LLM provider. Just start using powerful models instantly.
+                  An affordable LLM provider. Just start using powerful models
+                  instantly.
                 </p>
               </div>
             </Link>
 
             <p className="text-sm md:text-base text-muted-foreground max-w-md leading-relaxed">
-                Empowering developers with seamless access to cutting-edge language models at unbeatable prices.
-
+              Empowering developers with seamless access to cutting-edge
+              language models at unbeatable prices.
             </p>
 
             <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
@@ -103,8 +102,7 @@ export default function Footer() {
                   target="_blank"
                   className="gap-2 justify-center sm:justify-start"
                 >
-                  <Twitter className="w-4 h-4" />
-                  X
+                  <Twitter className="w-4 h-4" />X
                 </Link>
               </Button>
               <Button
@@ -141,7 +139,6 @@ export default function Footer() {
             </div>
           </div>
 
-
           <div className="space-y-4 md:space-y-6">
             <h3 className="font-semibold text-foreground text-sm md:text-base">
               Links
@@ -173,45 +170,68 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  href="/models/features/"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Model capabilities
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/integrations/"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Integrations
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/cost-calculator/"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Cost calculators
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/token-calculator/"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Token calculator
                 </Link>
               </li>
-                <li>
+              <li>
                 <Link
-                    href="#example"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
+                  href="#example"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                    Example
+                  Example
                 </Link>
-                </li>
-                <li>
+              </li>
+              <li>
                 <Link
-                    href="https://llm7.chat"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
+                  href="https://llm7.chat"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                    Chat
+                  Chat
                 </Link>
-                </li>
-                <li>
+              </li>
+              <li>
                 <Link
-                    href="https://dash.llm7.io"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
+                  href="https://dash.llm7.io"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                    Dashboard
+                  Dashboard
                 </Link>
-                </li>
-                <li>
+              </li>
+              <li>
                 <Link
-                    href="https://docs.llm7.io"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
+                  href="https://docs.llm7.io"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                    Docs
+                  Docs
                 </Link>
-                </li>
-
+              </li>
             </ul>
           </div>
 
@@ -345,9 +365,9 @@ export default function Footer() {
 
         {/* Large brand text */}
         <div className="w-full flex mt-12 md:mt-16 items-center justify-center">
-          <h1 className="text-center text-3xl sm:text-4xl md:text-6xl lg:text-8xl xl:text-[8rem] font-black bg-gradient-to-b from-foreground/10 to-foreground/5 bg-clip-text text-transparent select-none leading-none">
+          <p className="text-center text-3xl sm:text-4xl md:text-6xl lg:text-8xl xl:text-[8rem] font-black bg-gradient-to-b from-foreground/10 to-foreground/5 bg-clip-text text-transparent select-none leading-none">
             LLM7.io
-          </h1>
+          </p>
         </div>
       </div>
     </footer>
