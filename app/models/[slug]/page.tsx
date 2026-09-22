@@ -36,6 +36,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 type Model = (typeof publicModels)[number];
 
+function modelTypeLabel(type: string) {
+  return type === "systemone" ? "System One" : type;
+}
+
 function Statistics({ model }: { model: Model }) {
   const stats = model.statistics?.["30d"];
   if (!stats) return null;
@@ -77,7 +81,7 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
         <nav aria-label="Breadcrumb" className="mb-5 text-sm text-muted-foreground"><Link className="transition-colors hover:text-foreground" href="/">Home</Link><span className="px-2">/</span><Link className="transition-colors hover:text-foreground" href="/models/">Models</Link><span className="px-2">/</span><span className="text-foreground">{model.model_id}</span></nav>
 
         <header className="rounded-3xl border border-border/60 bg-gradient-to-br from-card/80 via-card/55 to-primary/5 p-6 shadow-sm backdrop-blur md:p-8">
-          <p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary">{model.model_type} model</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary">{modelTypeLabel(model.model_type)} model</p>
           <div className="mt-3 flex flex-wrap items-start justify-between gap-5">
             <div className="flex min-w-0 items-start gap-4"><ModelLogo model={model} size="lg" /><div><h1 className="text-3xl font-bold tracking-tight md:text-5xl">{model.model_id}</h1><p className="mt-4 max-w-3xl text-muted-foreground">{modelDescription(model)}</p></div></div>
             <span className={"rounded-full border px-3 py-1 text-sm font-medium " + (model.status === "active" ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300" : "border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300")}>{model.status === "active" ? "Available" : "Retired"}</span>

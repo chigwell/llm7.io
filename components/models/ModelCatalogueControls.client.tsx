@@ -3,7 +3,7 @@
 import { useEffect, useId, useState } from "react";
 
 const filters = [
-  ["type", "Model type", ["chat", "image", "video"]], ["tier", "Tier", []], ["status", "Status", ["active", "retired"]], ["input", "Input modality", ["text", "image"]], ["output", "Output modality", ["text", "image", "video"]],
+  ["type", "Model type", ["chat", "systemone", "image", "video"]], ["tier", "Tier", []], ["status", "Status", ["active", "retired"]], ["input", "Input modality", ["text", "json", "image"]], ["output", "Output modality", ["text", "json", "image", "video"]],
   ["tools", "Tool calling", ["true", "false"]], ["reasoning", "Reasoning", ["true", "false"]], ["json", "JSON mode", ["true", "false"]], ["stream", "Streaming", ["true", "false"]],
 ] as const;
 

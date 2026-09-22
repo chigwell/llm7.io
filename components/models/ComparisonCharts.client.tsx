@@ -60,7 +60,7 @@ function MergedMetricChart({ metric, leftName, rightName, leftPoints, rightPoint
   );
 }
 
-export default function ComparisonCharts({ modelType, leftName, rightName, leftPoints, rightPoints }: { modelType: "chat" | "image" | "video"; leftName: string; rightName: string; leftPoints: Point[]; rightPoints: Point[] }) {
+export default function ComparisonCharts({ modelType, leftName, rightName, leftPoints, rightPoints }: { modelType: string; leftName: string; rightName: string; leftPoints: Point[]; rightPoints: Point[] }) {
   const chartable = metricsForType(modelType).filter((metric) => hasChartableSeries(leftPoints, metric) && hasChartableSeries(rightPoints, metric));
   if (!chartable.length) return null;
 
@@ -71,4 +71,3 @@ export default function ComparisonCharts({ modelType, leftName, rightName, leftP
     </section>
   );
 }
-

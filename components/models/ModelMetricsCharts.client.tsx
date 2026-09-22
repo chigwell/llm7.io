@@ -14,12 +14,13 @@ const common: Metric[] = [
 
 const typeMetrics: Record<string, Metric[]> = {
   chat: [{ key: "ttft_avg_ms", title: "Time to first token", shortTitle: "TTFT", unit: "ms" }],
+  systemone: [],
   image: [],
   video: [{ key: "job_success_rate", title: "Video job success rate", shortTitle: "Job success", unit: "%" }],
 };
 
-export function metricsForType(modelType: "chat" | "image" | "video") {
-  return [...common, ...typeMetrics[modelType]];
+export function metricsForType(modelType: string) {
+  return [...common, ...(typeMetrics[modelType] ?? [])];
 }
 
 export function metricValue(point: Point, key: string): number | null {
@@ -77,7 +78,7 @@ function MetricChart({ points, metric }: { points: Point[]; metric: Metric }) {
   );
 }
 
-export default function ModelMetricsCharts({ modelType, points }: { modelType: "chat" | "image" | "video"; points: Point[] }) {
+export default function ModelMetricsCharts({ modelType, points }: { modelType: string; points: Point[] }) {
   const chartable = metricsForType(modelType).filter((metric) => hasChartableSeries(points, metric));
   if (!chartable.length) return null;
 

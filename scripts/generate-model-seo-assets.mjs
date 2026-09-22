@@ -36,7 +36,9 @@ function priceSummary(model) {
 
 function capabilities(model) {
   const facts = [];
-  if (model.modalities.input.includes("image") || model.capabilities.vision) facts.push("Image input");
+  if (model.model_type === "systemone" || model.schema_endpoints?.includes("systemone")) facts.push("System One");
+  if (model.capabilities.typed_answers) facts.push("Typed answers");
+  if (model.modalities.input.includes("image")) facts.push("Image input");
   if (model.tools_calling || model.capabilities.tools) facts.push("Tool calling");
   if (model.capabilities.image_generation) facts.push("Image generation");
   if (model.capabilities.video_generation) facts.push("Video generation");

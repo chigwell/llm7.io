@@ -33,7 +33,7 @@ for (const [key, pair] of comparisons) {
   assert(pair.leftSlug !== pair.rightSlug, `${key} is a self-comparison`); const left = activeBySlug.get(pair.leftSlug); const right = activeBySlug.get(pair.rightSlug); assert(Boolean(left && right), `${key} contains retired or missing model`); assert(left?.model_type === right?.model_type, `${key} is cross-type`); assert(!uniquePairs.has(`${pair.rightSlug}--vs--${pair.leftSlug}`), `${key} has a reverse duplicate`); uniquePairs.add(key);
   const route = `/compare/${key}/`; const source = await html(route); pageChecks(source, route); if (left && right) assert(source.includes(left.model_id) && source.includes(right.model_id), `${route} lacks both model IDs`);
 }
-const expectedCount = (["chat", "image", "video"]).reduce((sum, type) => { const n = models.filter((model) => model.status === "active" && model.model_type === type).length; return sum + n * (n - 1) / 2; }, 0);
+const expectedCount = (["chat", "systemone", "image", "video"]).reduce((sum, type) => { const n = models.filter((model) => model.status === "active" && model.model_type === type).length; return sum + n * (n - 1) / 2; }, 0);
 assert(comparisons.length === expectedCount, `Generated pair count ${comparisons.length} does not equal ${expectedCount}`);
 const discovery = definePages(snapshot);
 for (const page of discovery) {

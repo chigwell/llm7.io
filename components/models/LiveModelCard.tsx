@@ -138,6 +138,12 @@ function ProviderLogo({ model }: { model: PayModel }) {
   );
 }
 
+function chipLabel(chip: string) {
+  if (chip === "systemone") return "System One";
+  if (chip === "noul") return "Noul";
+  return chip;
+}
+
 export function ModelCard({ model, availability }: { model: PayModel; availability?: number }) {
   const [copied, setCopied] = useState(false);
   const hasContextWindow = model.contextWindow !== "Not listed";
@@ -214,7 +220,7 @@ export function ModelCard({ model, availability }: { model: PayModel; availabili
         {model.chips.length > 0 ? (
           model.chips.map((chip) => (
             <span key={chip} className="rounded-full bg-primary/10 px-2 py-1 text-[11px] font-medium capitalize text-primary">
-              {chip}
+              {chipLabel(chip)}
             </span>
           ))
         ) : (
@@ -228,4 +234,3 @@ export function ModelCard({ model, availability }: { model: PayModel; availabili
     </article>
   );
 }
-

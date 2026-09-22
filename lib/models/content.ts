@@ -5,11 +5,18 @@ import { isProviderQuoteModel, providerQuotePriceLabel, providerQuoteTypical } f
 export function capabilitySummary(model: PublicModel): string {
   const capabilities: string[] = [];
   if (model.modalities.input.includes("text")) capabilities.push("text input");
-  if (model.modalities.input.includes("image") || model.capabilities.vision) capabilities.push("image input");
+  if (model.modalities.input.includes("json")) capabilities.push("JSON input");
+  if (model.modalities.output.includes("json")) capabilities.push("JSON output");
+  if (model.modalities.input.includes("image")) capabilities.push("image input");
   if (model.capabilities.tools || model.tools_calling) capabilities.push("tool calling");
   if (model.stream || model.capabilities.stream) capabilities.push("streaming");
   if (model.json_mode || model.capabilities.json_mode) capabilities.push("JSON mode");
   if (model.reasoning || model.capabilities.reasoning) capabilities.push("reasoning");
+  if (model.capabilities.typed_answers) capabilities.push("typed answers");
+  if (model.capabilities.noul) capabilities.push("noul answers");
+  if (model.capabilities.choice) capabilities.push("choice answers");
+  if (model.capabilities.score) capabilities.push("score answers");
+  if (model.capabilities.confidence) capabilities.push("confidence");
   if (model.capabilities.image_generation) capabilities.push("image generation");
   if (model.capabilities.image_edits) capabilities.push("image editing");
   if (model.capabilities.video_generation) capabilities.push("video generation");
@@ -20,6 +27,10 @@ export function modelDescription(model: PublicModel): string {
   if (model.model_type === "chat") {
     const context = model.context_window.tokens ? ` It provides a ${formatContext(model.context_window.tokens)} context window.` : "";
     return `${model.model_id} is a chat model available through the LLM7 API. It supports ${capabilitySummary(model)}.${context} It currently costs ${formatPrice(model)}.`;
+  }
+  if (model.model_type === "systemone") {
+    const context = model.context_window.tokens ? ` It provides a ${formatContext(model.context_window.tokens)} context window.` : "";
+    return `${model.model_id} is a System One model available through the LLM7 API at /v1/systemone. It turns state and typed questions into structured JSON answers, including ${capabilitySummary(model)}.${context} It currently costs ${formatPrice(model)}.`;
   }
   if (model.model_type === "image") {
     return `${model.model_id} is an image-generation model available through the LLM7 API. It supports ${capabilitySummary(model)}, accepts ${model.modalities.input.join(" and ") || "published input modalities"}, and currently costs ${formatPrice(model)}.`;
@@ -52,7 +63,7 @@ export function statisticsSummary(model: PublicModel): string {
 
 export function comparisonFacts(left: PublicModel, right: PublicModel): string[] {
   const facts: string[] = [];
-  if (left.model_type === "chat" && left.context_window.tokens !== null && right.context_window.tokens !== null && left.context_window.tokens !== right.context_window.tokens) {
+  if ((left.model_type === "chat" || left.model_type === "systemone") && left.context_window.tokens !== null && right.context_window.tokens !== null && left.context_window.tokens !== right.context_window.tokens) {
     facts.push(`${left.context_window.tokens > right.context_window.tokens ? left.model_id : right.model_id} has a larger context window.`);
   }
   if (left.modalities.input.includes("image") !== right.modalities.input.includes("image")) facts.push(`${left.modalities.input.includes("image") ? left.model_id : right.model_id} supports image input while the other model does not.`);

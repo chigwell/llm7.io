@@ -4,7 +4,7 @@ import { modelDescription, truncateDescription } from "./content";
 import { absoluteUrl, comparisonPath, modelPath } from "./routes";
 
 export function modelMetadata(model: PublicModel): Metadata {
-  const title = model.model_type === "chat" ? `${model.model_id} API: Pricing, Context and Latest Statistics | LLM7` : model.model_type === "image" ? `${model.model_id} Image API: Pricing and Latest Statistics | LLM7` : `${model.model_id} Video API: Pricing and Latest Statistics | LLM7`;
+  const title = model.model_type === "chat" ? `${model.model_id} API: Pricing, Context and Latest Statistics | LLM7` : model.model_type === "systemone" ? `${model.model_id} System One API: Pricing, Typed Answers and Latest Statistics | LLM7` : model.model_type === "image" ? `${model.model_id} Image API: Pricing and Latest Statistics | LLM7` : `${model.model_id} Video API: Pricing and Latest Statistics | LLM7`;
   const description = truncateDescription(modelDescription(model));
   const canonical = absoluteUrl(modelPath(model.slug));
   return { title, description, alternates: { canonical }, robots: { index: true, follow: true }, openGraph: { title, description, url: canonical, images: [{ url: absoluteUrl(`/generated/og/models/${model.slug}.png`), width: 1200, height: 630, alt: `${model.model_id} on LLM7` }] }, twitter: { card: "summary_large_image", title, description, images: [absoluteUrl(`/generated/og/models/${model.slug}.png`)] } };

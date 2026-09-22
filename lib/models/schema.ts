@@ -112,7 +112,7 @@ export const ModelCoreSchema = z.object({
   slug: z.string().min(1).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Invalid public slug").refine((slug) => !slug.includes("--"), "Public slugs cannot contain --"),
   display_name: z.string().min(1),
   status: z.enum(["active", "retired"]),
-  model_type: z.enum(["chat", "image", "video"]),
+  model_type: z.enum(["chat", "systemone", "image", "video"]),
   tier: z.string().min(1).nullable().optional(),
   pricing: PricingSchema,
   context_window: z.object({ tokens: NonNegativeNumber.nullable(), chars: NonNegativeNumber.nullable() }),
@@ -185,7 +185,7 @@ export const MetricsResponseSchema = z.object({
 
 export const StatisticsSummarySchema = z.object({
   range: z.string(),
-  models: z.object({ total: NonNegativeNumber, active: NonNegativeNumber, retired: NonNegativeNumber, chat: NonNegativeNumber, image: NonNegativeNumber, video: NonNegativeNumber, models_with_requests: NonNegativeNumber }),
+  models: z.object({ total: NonNegativeNumber, active: NonNegativeNumber, retired: NonNegativeNumber, chat: NonNegativeNumber, systemone: NonNegativeNumber.optional(), image: NonNegativeNumber, video: NonNegativeNumber, models_with_requests: NonNegativeNumber }),
   requests: z.object({ total: NonNegativeNumber, successful: NonNegativeNumber, client_errors_4xx: NonNegativeNumber, server_errors_5xx: NonNegativeNumber, timeouts: NonNegativeNumber, rate_limited_429: NonNegativeNumber, cancelled: NonNegativeNumber, success_rate: Rate }),
   usage: z.object({ input_tokens: NonNegativeNumber, output_tokens: NonNegativeNumber, images_generated: NonNegativeNumber, videos_generated: NonNegativeNumber, video_seconds_generated: DecimalString }),
   jobs: z.object({ started: NonNegativeNumber, succeeded: NonNegativeNumber, failed: NonNegativeNumber, cancelled: NonNegativeNumber, success_rate: Rate }),

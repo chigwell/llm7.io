@@ -36,6 +36,10 @@ export async function generateMetadata({ params }: { params: Promise<{ pair: str
 type Model = (typeof publicModels)[number];
 type Difference = { label: string; left: string; right: string; better: "left" | "right" | null };
 
+function modelTypeLabel(type: string) {
+  return type === "systemone" ? "System One" : type;
+}
+
 function specificationDifferences(left: Model, right: Model): Difference[] {
   const rows: Difference[] = [];
   const add = (label: string, leftValue: string, rightValue: string, better: Difference["better"] = null) => {
@@ -53,11 +57,16 @@ function specificationDifferences(left: Model, right: Model): Difference[] {
   if (left.context_window.tokens !== null && right.context_window.tokens !== null) add("Context window", formatContext(left.context_window.tokens), formatContext(right.context_window.tokens), left.context_window.tokens === right.context_window.tokens ? null : left.context_window.tokens > right.context_window.tokens ? "left" : "right");
   add("Input formats", left.modalities.input.join(", ") || "Not specified", right.modalities.input.join(", ") || "Not specified");
   add("Output formats", left.modalities.output.join(", ") || "Not specified", right.modalities.output.join(", ") || "Not specified");
-  addSupport("Vision", Boolean(left.modalities.input.includes("image") || left.capabilities.vision), Boolean(right.modalities.input.includes("image") || right.capabilities.vision));
+  addSupport("Vision", Boolean(left.modalities.input.includes("image")), Boolean(right.modalities.input.includes("image")));
   addSupport("Tool calling", Boolean(left.tools_calling || left.capabilities.tools), Boolean(right.tools_calling || right.capabilities.tools));
   addSupport("Streaming", Boolean(left.stream || left.capabilities.stream), Boolean(right.stream || right.capabilities.stream));
   addSupport("JSON mode", Boolean(left.json_mode || left.capabilities.json_mode), Boolean(right.json_mode || right.capabilities.json_mode));
   addSupport("Reasoning", Boolean(left.reasoning || left.capabilities.reasoning), Boolean(right.reasoning || right.capabilities.reasoning));
+  addSupport("Typed answers", Boolean(left.capabilities.typed_answers), Boolean(right.capabilities.typed_answers));
+  addSupport("Noul answers", Boolean(left.capabilities.noul), Boolean(right.capabilities.noul));
+  addSupport("Choice answers", Boolean(left.capabilities.choice), Boolean(right.capabilities.choice));
+  addSupport("Score answers", Boolean(left.capabilities.score), Boolean(right.capabilities.score));
+  addSupport("Confidence", Boolean(left.capabilities.confidence), Boolean(right.capabilities.confidence));
   addOptions("Supported sizes", left.capabilities.supported_sizes ?? [], right.capabilities.supported_sizes ?? []);
   addOptions("Video duration", left.capabilities.supported_seconds?.map((value) => value + "s") ?? [], right.capabilities.supported_seconds?.map((value) => value + "s") ?? []);
   return rows;
@@ -110,7 +119,7 @@ export default async function ComparisonPage({ params }: { params: Promise<{ pai
         <nav aria-label="Breadcrumb" className="mb-5 text-sm text-muted-foreground"><Link className="transition-colors hover:text-foreground" href="/">Home</Link><span className="px-2">/</span><Link className="transition-colors hover:text-foreground" href="/compare/">Compare</Link><span className="px-2">/</span><span className="text-foreground">{left.model_id} vs {right.model_id}</span></nav>
 
         <header className="rounded-3xl border border-border/60 bg-gradient-to-br from-card/80 via-card/55 to-primary/5 p-6 shadow-sm backdrop-blur md:p-8">
-          <p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary">{left.model_type} comparison</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary">{modelTypeLabel(left.model_type)} comparison</p>
           <div className="mt-3 flex flex-wrap items-center gap-3"><ModelLogo model={left} size="lg" /><h1 className="text-3xl font-bold tracking-tight md:text-5xl">{left.model_id}<span className="px-3 text-muted-foreground">vs</span>{right.model_id}</h1><ModelLogo model={right} size="lg" /></div>
           <p className="mt-4 max-w-3xl text-muted-foreground">Compare the things that matter before you build: current price, capabilities, and latest aggregated LLM7 statistics.</p>
         </header>

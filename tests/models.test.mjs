@@ -64,6 +64,7 @@ test("production comparison generation preserves ordering and excludes retired/c
   });
   assert.deepEqual(comparisonCountByType(models), {
     chat: 1,
+    systemone: 0,
     image: 0,
     video: 0,
   });
@@ -122,4 +123,29 @@ test("comparison facts use production sample thresholds and material differences
   left.statistics["30d"].requests_total = 20;
   right.statistics["30d"].success_rate = 0.985;
   assert(comparisonFacts(left, right).some((f) => f.includes("too close")));
+});
+
+test("system one models use typed JSON copy and /v1/systemone examples", () => {
+  const { codeExamplesForModel } = loadTypeScript("lib/models/code-examples.ts");
+  const { capabilitySummary, modelDescription } = loadTypeScript(
+    "lib/models/content.ts",
+  );
+  const jev = model("jev-latest", "systemone");
+  jev.capabilities.vision = true;
+
+  assert.equal(jev.schema_endpoints[0], "systemone");
+  assert.deepEqual(jev.modalities, {
+    input: ["text", "json"],
+    output: ["json"],
+  });
+  assert.match(modelDescription(jev), /System One model/);
+  assert.match(modelDescription(jev), /\/v1\/systemone/);
+  assert.match(capabilitySummary(jev), /JSON input/);
+  assert.match(capabilitySummary(jev), /typed answers/);
+  assert.doesNotMatch(capabilitySummary(jev), /image input/);
+  assert(
+    codeExamplesForModel(jev).every((example) =>
+      example.code.includes("/v1/systemone"),
+    ),
+  );
 });

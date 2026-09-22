@@ -115,6 +115,67 @@ function imageExamples(model: PublicModel): CodeExample[] {
   return examples;
 }
 
+function systemOneExamples(model: PublicModel): CodeExample[] {
+  const payload = [
+    "{",
+    '  "model": "' + model.model_id + '",',
+    '  "state": {',
+    '    "feature": "billing portal",',
+    '    "user_role": "admin",',
+    '    "requested_action": "issue refund"',
+    "  },",
+    '  "questions": {',
+    '    "can_refund": {',
+    '      "type": "noul",',
+    '      "instructions": "Can this user issue a refund from this state?"',
+    "    },",
+    '    "risk": {',
+    '      "type": "score",',
+    '      "instructions": "Estimate the operational risk of allowing the action."',
+    "    }",
+    "  }",
+    "}",
+  ];
+  const curlCode = [
+    "curl " + API_BASE + "/systemone " + slash,
+    '  -H "Authorization: Bearer $LLM7_API_TOKEN" ' + slash,
+    '  -H "Content-Type: application/json" ' + slash,
+    "  -d '" + payload.join("\n") + "'",
+  ].join("\n");
+  const pythonCode = [
+    "import os",
+    "import requests",
+    "",
+    'response = requests.post("' + API_BASE + '/systemone",',
+    '    headers={"Authorization": "Bearer " + os.environ["LLM7_API_TOKEN"]},',
+    "    json=" + payload.join("\n") + ",",
+    "    timeout=30,",
+    ")",
+    "response.raise_for_status()",
+    "print(response.json()[\"answers\"])",
+  ].join("\n");
+  const javascriptCode = [
+    'const response = await fetch("' + API_BASE + '/systemone", {',
+    '  method: "POST",',
+    "  headers: {",
+    '    Authorization: "Bearer " + process.env.LLM7_API_TOKEN,',
+    '    "Content-Type": "application/json",',
+    "  },",
+    "  body: JSON.stringify(" + payload.join("\n") + "),",
+    "});",
+    "",
+    "if (!response.ok) throw new Error(await response.text());",
+    "const data = await response.json();",
+    "console.log(data.answers);",
+  ].join("\n");
+
+  return [
+    { id: "systemone-curl", label: "cURL", language: "bash", code: curlCode, docsUrl: QUICKSTART },
+    { id: "systemone-python", label: "Python", language: "python", code: pythonCode, docsUrl: QUICKSTART },
+    { id: "systemone-javascript", label: "JavaScript", language: "javascript", code: javascriptCode, docsUrl: QUICKSTART },
+  ];
+}
+
 function videoExamples(model: PublicModel): CodeExample[] {
   const seconds = String(model.capabilities.supported_seconds?.[0] ?? 5);
   const size = model.capabilities.supported_sizes?.[0];
@@ -191,6 +252,7 @@ function verifiedInterfaceExample(model: PublicModel): CodeExample[] {
 
 export function codeExamplesForModel(model: PublicModel): CodeExample[] {
   if (model.model_type === "chat") return chatExamples(model);
+  if (model.model_type === "systemone") return systemOneExamples(model);
   if (model.model_type === "image") return imageExamples(model);
   if (model.model_type === "video") return videoExamples(model);
   return verifiedInterfaceExample(model);

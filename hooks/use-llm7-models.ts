@@ -36,10 +36,17 @@ export type ApiModel = {
     input?: string[];
     output?: string[];
   };
+  schema_endpoints?: string[];
   capabilities?: {
+    systemone?: boolean;
     atlascloud_video?: boolean;
     video_generation?: boolean;
     video_async?: boolean;
+    typed_answers?: boolean;
+    noul?: boolean;
+    choice?: boolean;
+    score?: boolean;
+    confidence?: boolean;
     max_reference_images?: number;
     max_reference_image_bytes?: number;
     supported_seconds?: number[];
