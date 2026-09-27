@@ -8,6 +8,7 @@ import ModelLogo from "@/components/models/ModelLogo";
 import ProviderQuotePricing from "@/components/models/ProviderQuotePricing";
 import VideoPricingBreakdown from "@/components/models/VideoPricingBreakdown";
 import { JsonLd, SeoFooter, SeoNavigation } from "@/components/models/SeoChrome";
+import { modelTypeLabel, trustsNestedCapabilities } from "@/lib/models/model-types";
 import { comparisonFacts } from "@/lib/models/content";
 import { createComparisonPairs } from "@/lib/models/comparisons";
 import { formatBoolean, formatCachePrice, formatContext, formatMs, formatPrice, formatRate, formatUsd, pricesDirectlyComparable } from "@/lib/models/format";
@@ -36,10 +37,6 @@ export async function generateMetadata({ params }: { params: Promise<{ pair: str
 type Model = (typeof publicModels)[number];
 type Difference = { label: string; left: string; right: string; better: "left" | "right" | null };
 
-function modelTypeLabel(type: string) {
-  return type === "systemone" ? "System One" : type;
-}
-
 function specificationDifferences(left: Model, right: Model): Difference[] {
   const rows: Difference[] = [];
   const add = (label: string, leftValue: string, rightValue: string, better: Difference["better"] = null) => {
@@ -54,14 +51,17 @@ function specificationDifferences(left: Model, right: Model): Difference[] {
   };
   const addSupport = (label: string, leftSupported: boolean, rightSupported: boolean) => add(label, formatBoolean(leftSupported), formatBoolean(rightSupported), leftSupported === rightSupported ? null : leftSupported ? "left" : "right");
 
+  const leftCapabilities: Model["capabilities"] = trustsNestedCapabilities(left) ? left.capabilities : {};
+  const rightCapabilities: Model["capabilities"] = trustsNestedCapabilities(right) ? right.capabilities : {};
+
   if (left.context_window.tokens !== null && right.context_window.tokens !== null) add("Context window", formatContext(left.context_window.tokens), formatContext(right.context_window.tokens), left.context_window.tokens === right.context_window.tokens ? null : left.context_window.tokens > right.context_window.tokens ? "left" : "right");
   add("Input formats", left.modalities.input.join(", ") || "Not specified", right.modalities.input.join(", ") || "Not specified");
   add("Output formats", left.modalities.output.join(", ") || "Not specified", right.modalities.output.join(", ") || "Not specified");
   addSupport("Vision", Boolean(left.modalities.input.includes("image")), Boolean(right.modalities.input.includes("image")));
-  addSupport("Tool calling", Boolean(left.tools_calling || left.capabilities.tools), Boolean(right.tools_calling || right.capabilities.tools));
-  addSupport("Streaming", Boolean(left.stream || left.capabilities.stream), Boolean(right.stream || right.capabilities.stream));
-  addSupport("JSON mode", Boolean(left.json_mode || left.capabilities.json_mode), Boolean(right.json_mode || right.capabilities.json_mode));
-  addSupport("Reasoning", Boolean(left.reasoning || left.capabilities.reasoning), Boolean(right.reasoning || right.capabilities.reasoning));
+  addSupport("Tool calling", Boolean(left.tools_calling || leftCapabilities.tools), Boolean(right.tools_calling || rightCapabilities.tools));
+  addSupport("Streaming", Boolean(left.stream || leftCapabilities.stream), Boolean(right.stream || rightCapabilities.stream));
+  addSupport("JSON mode", Boolean(left.json_mode || leftCapabilities.json_mode), Boolean(right.json_mode || rightCapabilities.json_mode));
+  addSupport("Reasoning", Boolean(left.reasoning || leftCapabilities.reasoning), Boolean(right.reasoning || rightCapabilities.reasoning));
   addSupport("Typed answers", Boolean(left.capabilities.typed_answers), Boolean(right.capabilities.typed_answers));
   addSupport("Noul answers", Boolean(left.capabilities.noul), Boolean(right.capabilities.noul));
   addSupport("Choice answers", Boolean(left.capabilities.choice), Boolean(right.capabilities.choice));
@@ -138,7 +138,7 @@ export default async function ComparisonPage({ params }: { params: Promise<{ pai
             <StatisticsComparison left={left} right={right} />
             <ComparisonCharts modelType={left.model_type} leftName={left.model_id} rightName={right.model_id} leftPoints={leftEntry.metrics.points} rightPoints={rightEntry.metrics.points} />
 
-            <section><div className="mb-5"><h2 className="text-2xl font-semibold">Estimate your workload</h2><p className="mt-1 text-sm text-muted-foreground">Fixed-price models can be estimated directly; dynamic models use recent references and are billed from actual provider usage.</p></div><div className="grid gap-5 xl:grid-cols-2">{isProviderQuoteModel(left) ? <ProviderQuotePricing modelId={left.model_id} /> : <ModelCalculator mode={left.pricing.mode} unit={left.pricing.unit} inputPrice={left.pricing.input} outputPrice={left.pricing.output} price={left.pricing.price} minimum={left.pricing.minimum_request_usd} durations={left.capabilities.supported_seconds} variablePricing={Boolean(left.pricing.route_prices_usd_per_second?.length)} />}{isProviderQuoteModel(right) ? <ProviderQuotePricing modelId={right.model_id} /> : <ModelCalculator mode={right.pricing.mode} unit={right.pricing.unit} inputPrice={right.pricing.input} outputPrice={right.pricing.output} price={right.pricing.price} minimum={right.pricing.minimum_request_usd} durations={right.capabilities.supported_seconds} variablePricing={Boolean(right.pricing.route_prices_usd_per_second?.length)} />}</div></section>
+            <section><div className="mb-5"><h2 className="text-2xl font-semibold">Estimate your workload</h2><p className="mt-1 text-sm text-muted-foreground">Fixed-price models can be estimated directly; dynamic models use recent references and are billed from actual provider usage.</p></div><div className="grid gap-5 xl:grid-cols-2">{isProviderQuoteModel(left) ? <ProviderQuotePricing modelId={left.model_id} /> : <ModelCalculator mode={left.pricing.mode} unit={left.pricing.unit} inputPrice={left.pricing.input} outputPrice={left.pricing.output} price={left.pricing.price} minimum={left.pricing.minimum_request_usd} durations={left.capabilities.supported_seconds} audio={left.model_type === "audio_to_text"} variablePricing={Boolean(left.pricing.route_prices_usd_per_second?.length)} />}{isProviderQuoteModel(right) ? <ProviderQuotePricing modelId={right.model_id} /> : <ModelCalculator mode={right.pricing.mode} unit={right.pricing.unit} inputPrice={right.pricing.input} outputPrice={right.pricing.output} price={right.pricing.price} minimum={right.pricing.minimum_request_usd} durations={right.capabilities.supported_seconds} audio={right.model_type === "audio_to_text"} variablePricing={Boolean(right.pricing.route_prices_usd_per_second?.length)} />}</div></section>
 
             {usefulFacts.length ? <section className="rounded-2xl border border-border/60 bg-card/55 p-5 shadow-sm backdrop-blur"><h2 className="text-2xl font-semibold">Quick take</h2><ul className="mt-4 space-y-2">{usefulFacts.map((fact) => <li key={fact} className="rounded-xl border border-border/60 bg-background/45 px-3 py-3 text-sm">{fact}</li>)}</ul></section> : null}
 

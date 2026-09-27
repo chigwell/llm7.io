@@ -1,5 +1,6 @@
 import type { PublicModel } from "@/lib/models/api-types";
 import { formatContext } from "@/lib/models/format";
+import { modelTypeLabel, trustsNestedCapabilities } from "@/lib/models/model-types";
 import ModelLogo from "./ModelLogo";
 
 function Badge({ children }: { children: React.ReactNode }) {
@@ -10,29 +11,28 @@ function Detail({ label, children }: { label: string; children: React.ReactNode 
   return <div className="border-b border-border/50 py-3 last:border-b-0"><dt className="text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">{label}</dt><dd className="mt-1 text-sm">{children}</dd></div>;
 }
 
-function modelTypeLabel(type: string) {
-  return type === "systemone" ? "System One" : type;
-}
-
 export function capabilityLabels(model: PublicModel) {
+  const capabilities: PublicModel["capabilities"] = trustsNestedCapabilities(model) ? model.capabilities : {};
   return [
     model.modalities.input.includes("text") ? "Text input" : null,
     model.modalities.input.includes("json") ? "JSON input" : null,
     model.modalities.output.includes("json") ? "JSON output" : null,
     model.modalities.input.includes("image") ? "Vision" : null,
-    model.model_type === "systemone" || model.capabilities.systemone ? "System One" : null,
-    model.capabilities.typed_answers ? "Typed answers" : null,
-    model.capabilities.noul ? "Noul" : null,
-    model.capabilities.choice ? "Choice" : null,
-    model.capabilities.score ? "Score" : null,
-    model.capabilities.confidence ? "Confidence" : null,
-    model.tools_calling || model.capabilities.tools ? "Tools" : null,
-    model.stream || model.capabilities.stream ? "Streaming" : null,
-    model.json_mode || model.capabilities.json_mode ? "JSON mode" : null,
-    model.reasoning || model.capabilities.reasoning ? "Reasoning" : null,
-    model.capabilities.image_generation ? "Image generation" : null,
-    model.capabilities.image_edits ? "Image editing" : null,
-    model.capabilities.video_generation ? "Video generation" : null,
+    model.modalities.input.includes("audio") ? "Audio input" : null,
+    model.model_type === "audio_to_text" ? "Transcription" : null,
+    model.model_type === "systemone" || capabilities.systemone ? "System One" : null,
+    capabilities.typed_answers ? "Typed answers" : null,
+    capabilities.noul ? "Noul" : null,
+    capabilities.choice ? "Choice" : null,
+    capabilities.score ? "Score" : null,
+    capabilities.confidence ? "Confidence" : null,
+    model.tools_calling || capabilities.tools ? "Tools" : null,
+    model.stream || capabilities.stream ? "Streaming" : null,
+    model.json_mode || capabilities.json_mode ? "JSON mode" : null,
+    model.reasoning || capabilities.reasoning ? "Reasoning" : null,
+    capabilities.image_generation ? "Image generation" : null,
+    capabilities.image_edits ? "Image editing" : null,
+    capabilities.video_generation ? "Video generation" : null,
   ].filter((value): value is string => Boolean(value));
 }
 

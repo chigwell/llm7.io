@@ -64,7 +64,14 @@ export function formatPrice(model: PublicModel): string {
   if (pricing.mode === "token") return `${formatUsd(pricing.input)} input and ${formatUsd(pricing.output)} output per ${pricing.unit}`;
   const startingPrice = pricing.mode === "second" ? startingVideoPrice(pricing) : null;
   if (startingPrice) return `From ${formatUsd(startingPrice)} per ${pricing.unit}`;
+  const perMinute = model.model_type === "audio_to_text" && pricing.mode === "second" ? audioPricePerMinute(pricing.price) : null;
+  if (perMinute) return `${formatUsd(pricing.price)} per ${pricing.unit} (about ${formatUsd(perMinute)} per minute of audio)`;
   return `${formatUsd(pricing.price)} per ${pricing.unit}`;
+}
+
+export function audioPricePerMinute(pricePerSecond: string | null | undefined): string | null {
+  if (!pricePerSecond) return null;
+  return new Decimal(pricePerSecond).times(60).toSignificantDigits(4).toString();
 }
 
 export function formatCachePrice(model: PublicModel): string | null {

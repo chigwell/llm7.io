@@ -1,25 +1,29 @@
 import type { PublicModel } from "./api-types";
 import { formatBoolean, formatContext, formatPrice, formatRate } from "./format";
+import { modelTypeLabel, trustsNestedCapabilities } from "./model-types.js";
 import { isProviderQuoteModel, providerQuotePriceLabel, providerQuoteTypical } from "./video-pricing";
 
 export function capabilitySummary(model: PublicModel): string {
+  const nested: PublicModel["capabilities"] = trustsNestedCapabilities(model) ? model.capabilities : {};
   const capabilities: string[] = [];
   if (model.modalities.input.includes("text")) capabilities.push("text input");
   if (model.modalities.input.includes("json")) capabilities.push("JSON input");
   if (model.modalities.output.includes("json")) capabilities.push("JSON output");
   if (model.modalities.input.includes("image")) capabilities.push("image input");
-  if (model.capabilities.tools || model.tools_calling) capabilities.push("tool calling");
-  if (model.stream || model.capabilities.stream) capabilities.push("streaming");
-  if (model.json_mode || model.capabilities.json_mode) capabilities.push("JSON mode");
-  if (model.reasoning || model.capabilities.reasoning) capabilities.push("reasoning");
-  if (model.capabilities.typed_answers) capabilities.push("typed answers");
-  if (model.capabilities.noul) capabilities.push("noul answers");
-  if (model.capabilities.choice) capabilities.push("choice answers");
-  if (model.capabilities.score) capabilities.push("score answers");
-  if (model.capabilities.confidence) capabilities.push("confidence");
-  if (model.capabilities.image_generation) capabilities.push("image generation");
-  if (model.capabilities.image_edits) capabilities.push("image editing");
-  if (model.capabilities.video_generation) capabilities.push("video generation");
+  if (model.modalities.input.includes("audio")) capabilities.push("audio input");
+  if (model.model_type === "audio_to_text") capabilities.push("speech transcription");
+  if (nested.tools || model.tools_calling) capabilities.push("tool calling");
+  if (model.stream || nested.stream) capabilities.push("streaming");
+  if (model.json_mode || nested.json_mode) capabilities.push("JSON mode");
+  if (model.reasoning || nested.reasoning) capabilities.push("reasoning");
+  if (nested.typed_answers) capabilities.push("typed answers");
+  if (nested.noul) capabilities.push("noul answers");
+  if (nested.choice) capabilities.push("choice answers");
+  if (nested.score) capabilities.push("score answers");
+  if (nested.confidence) capabilities.push("confidence");
+  if (nested.image_generation) capabilities.push("image generation");
+  if (nested.image_edits) capabilities.push("image editing");
+  if (nested.video_generation) capabilities.push("video generation");
   return capabilities.length ? capabilities.join(", ") : "the published API capabilities";
 }
 
@@ -34,6 +38,9 @@ export function modelDescription(model: PublicModel): string {
   }
   if (model.model_type === "image") {
     return `${model.model_id} is an image-generation model available through the LLM7 API. It supports ${capabilitySummary(model)}, accepts ${model.modalities.input.join(" and ") || "published input modalities"}, and currently costs ${formatPrice(model)}.`;
+  }
+  if (model.model_type === "audio_to_text") {
+    return `${model.model_id} is an audio-to-text model available through the LLM7 API at /v1/audio/transcriptions. It supports ${capabilitySummary(model)} and returns text with the detected language, audio duration, and timed segments. Billing is based on input audio duration; it currently costs ${formatPrice(model)}.`;
   }
   const durations = model.capabilities.supported_seconds?.length ? ` Supported durations are ${model.capabilities.supported_seconds.join(", ")} seconds.` : "";
   const sizes = model.capabilities.supported_sizes?.length ? ` Published sizes include ${model.capabilities.supported_sizes.join(", ")}.` : "";
@@ -85,7 +92,7 @@ export function comparisonFacts(left: PublicModel, right: PublicModel): string[]
 
 export function commonSpecificationRows(model: PublicModel): Array<[string, string]> {
   return [
-    ["Model type", model.model_type], ["Tier", model.tier ?? "Not specified"], ["Status", model.status], ["Pricing mode", model.pricing.mode], ["Currency", model.pricing.currency], ["Pricing unit", model.pricing.unit],
+    ["Model type", modelTypeLabel(model.model_type)], ["Tier", model.tier ?? "Not specified"], ["Status", model.status], ["Pricing mode", model.pricing.mode], ["Currency", model.pricing.currency], ["Pricing unit", model.pricing.unit],
     ["Input modalities", model.modalities.input.join(", ") || "Not specified"], ["Output modalities", model.modalities.output.join(", ") || "Not specified"], ["API schemas", model.schema_endpoints.join(", ") || "Not specified"], ["Usage-based only", formatBoolean(model.usage_based_only)], ["Streaming", formatBoolean(model.stream)], ["JSON mode", formatBoolean(model.json_mode)], ["Reasoning", formatBoolean(model.reasoning)], ["Tool calling", formatBoolean(model.tools_calling)],
   ];
 }

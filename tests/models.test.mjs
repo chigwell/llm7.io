@@ -67,6 +67,7 @@ test("production comparison generation preserves ordering and excludes retired/c
     systemone: 0,
     image: 0,
     video: 0,
+    audio_to_text: 0,
   });
   assert.deepEqual(createComparisonPairs([]), {});
   assert.deepEqual(createComparisonPairs([model("one")]), {});
@@ -148,4 +149,47 @@ test("system one models use typed JSON copy and /v1/systemone examples", () => {
       example.code.includes("/v1/systemone"),
     ),
   );
+});
+
+test("audio-to-text models use transcription copy, per-minute pricing, and multipart examples", () => {
+  const { codeExamplesForModel } = loadTypeScript("lib/models/code-examples.ts");
+  const { capabilitySummary, modelDescription } = loadTypeScript(
+    "lib/models/content.ts",
+  );
+  const whisper = model("openai-whisper-large-v3-turbo", "audio_to_text");
+
+  assert.doesNotThrow(() =>
+    schema.ModelDetailSchema.parse({ ...whisper, statistics: whisper.statistics }),
+  );
+  assert.equal(cli.detailResponse.shape.model_type.parse("audio_to_text"), "audio_to_text");
+  assert.match(modelDescription(whisper), /audio-to-text model/);
+  assert.match(modelDescription(whisper), /\/v1\/audio\/transcriptions/);
+  assert.doesNotMatch(modelDescription(whisper), /video/);
+  assert.equal(
+    format.formatPrice(whisper),
+    "$0.00000333 USD per second (about $0.0002 USD per minute of audio)",
+  );
+  // Nested capability flags on audio models are noisy and must not leak into copy.
+  assert.equal(capabilitySummary(whisper), "audio input, speech transcription");
+  const examples = codeExamplesForModel(whisper);
+  assert.equal(examples.length, 3);
+  assert(
+    examples.every(
+      (example) =>
+        example.code.includes("/v1/audio/transcriptions") &&
+        example.code.includes(whisper.model_id),
+    ),
+  );
+  assert(examples.some((example) => example.code.includes('-F "file=@recording.mp3"')));
+});
+
+test("comparison generation groups audio-to-text models separately", () => {
+  const audio = [
+    model("whisper-a", "audio_to_text"),
+    model("whisper-b", "audio_to_text"),
+  ];
+  assert.deepEqual(createComparisonPairs([...models, ...audio]), {
+    "chat-a--vs--chat-b": { leftSlug: "chat-a", rightSlug: "chat-b" },
+    "whisper-a--vs--whisper-b": { leftSlug: "whisper-a", rightSlug: "whisper-b" },
+  });
 });

@@ -14,6 +14,7 @@ type Props = {
   effectiveDate?: string;
   durations?: number[];
   variablePricing?: boolean;
+  audio?: boolean;
 };
 
 const wholeCount = (value: string) => /^\d+$/.test(value) && new Decimal(value || "0").lte("1000000000");
@@ -71,7 +72,7 @@ export default function ModelCalculator(props: Props) {
         return { input, output, raw, total, adjustment: total.minus(raw) };
       }
       if (!wholeCount(first) || (props.mode === "second" && !wholeCount(second))) return null;
-      const units = props.mode === "second" ? new Decimal(duration).times(second) : new Decimal(first);
+      const units = props.mode === "second" ? new Decimal(duration).times(props.audio ? 60 : 1).times(second) : new Decimal(first);
       if (!decimalCount(units.toString())) return null;
       const raw = units.times(props.price ?? 0);
       const total = props.minimum && raw.lessThan(props.minimum) ? new Decimal(props.minimum) : raw;
@@ -86,7 +87,7 @@ export default function ModelCalculator(props: Props) {
     if (props.mode === "token" || props.mode === "image") setFirst(value);
     else setSecond(value);
   };
-  const unitName = props.mode === "token" ? "tokens" : props.mode === "image" ? "images" : "videos";
+  const unitName = props.mode === "token" ? "tokens" : props.mode === "image" ? "images" : props.audio ? "files" : "videos";
 
   return (
     <section className="rounded-2xl border border-border/60 bg-card/55 p-5 shadow-sm backdrop-blur md:p-6" aria-labelledby="calculator-heading">
@@ -110,7 +111,10 @@ export default function ModelCalculator(props: Props) {
           <StepperInput label="Output tokens" value={second} onChange={setSecond} presets={[250, 2500, 25000, 250000]} />
         </> : props.mode === "image" ? (
           <StepperInput label="Images to generate" value={first} onChange={setFirst} presets={[1, 10, 100, 1000]} />
-        ) : <>
+        ) : props.audio ? <>
+          <StepperInput label="Audio minutes per file" value={duration} onChange={setDuration} presets={[1, 5, 30, 60]} suffix=" min" />
+          <StepperInput label="Files to transcribe" value={second} onChange={setSecond} presets={[1, 10, 100, 1000]} />
+        </> : <>
           <div>
             <label className="text-sm font-medium">Video duration</label>
             <div className="mt-2 flex flex-wrap gap-2">{props.durations?.length ? props.durations.map((item) => <button type="button" key={item} onClick={() => setDuration(String(item))} className={"rounded-full border px-3 py-1 text-xs font-medium transition-colors " + (duration === String(item) ? "border-primary bg-primary text-primary-foreground" : "border-border/70 bg-background/60 hover:border-primary")}>{item}s</button>) : <input inputMode="decimal" value={duration} onChange={(event) => setDuration(event.target.value)} className="w-full rounded-xl border border-border/70 bg-background/65 px-3 py-2 outline-none focus:ring-2 focus:ring-ring/50" />}
@@ -125,7 +129,7 @@ export default function ModelCalculator(props: Props) {
           {props.mode === "token" ? <>
             <div className="rounded-xl border border-border/60 bg-background/45 p-3"><p className="text-xs text-muted-foreground">Input estimate</p><p className="mt-1 text-lg font-semibold">{money(calculated.input ?? new Decimal(0))}</p></div>
             <div className="rounded-xl border border-border/60 bg-background/45 p-3"><p className="text-xs text-muted-foreground">Output estimate</p><p className="mt-1 text-lg font-semibold">{money(calculated.output ?? new Decimal(0))}</p></div>
-          </> : <div className="rounded-xl border border-border/60 bg-background/45 p-3"><p className="text-xs text-muted-foreground">{props.mode === "image" ? "Generation estimate" : "Generated seconds"}</p><p className="mt-1 text-lg font-semibold">{props.mode === "image" ? money(calculated.raw) : (calculated.units?.toFixed() ?? "0") + " sec"}</p></div>}
+          </> : <div className="rounded-xl border border-border/60 bg-background/45 p-3"><p className="text-xs text-muted-foreground">{props.mode === "image" ? "Generation estimate" : props.audio ? "Audio seconds" : "Generated seconds"}</p><p className="mt-1 text-lg font-semibold">{props.mode === "image" ? money(calculated.raw) : (calculated.units?.toFixed() ?? "0") + " sec"}</p></div>}
           <div className="rounded-xl border border-primary/30 bg-primary/5 p-3"><p className="text-xs text-muted-foreground">Estimated total</p><p className="mt-1 text-lg font-semibold">{money(calculated.total)}</p>{calculated.adjustment.greaterThan(0) ? <p className="mt-1 text-xs text-muted-foreground">Includes {money(calculated.adjustment)} minimum-request adjustment.</p> : null}</div>
         </div>
       )}

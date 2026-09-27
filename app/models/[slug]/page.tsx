@@ -10,6 +10,7 @@ import ModelMetricsCharts from "@/components/models/ModelMetricsCharts.client";
 import ProviderQuotePricing from "@/components/models/ProviderQuotePricing";
 import VideoPricingBreakdown from "@/components/models/VideoPricingBreakdown";
 import { JsonLd, SeoFooter, SeoNavigation } from "@/components/models/SeoChrome";
+import { modelTypeLabel } from "@/lib/models/model-types";
 import { codeExamplesForModel } from "@/lib/models/code-examples";
 import { modelDescription } from "@/lib/models/content";
 import { createComparisonPairs } from "@/lib/models/comparisons";
@@ -35,10 +36,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 }
 
 type Model = (typeof publicModels)[number];
-
-function modelTypeLabel(type: string) {
-  return type === "systemone" ? "System One" : type;
-}
 
 function Statistics({ model }: { model: Model }) {
   const stats = model.statistics?.["30d"];
@@ -102,7 +99,7 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
               {model.pricing.minimum_request_usd ? <p className="mt-2 text-sm text-muted-foreground">Minimum charge per request: {formatUsd(model.pricing.minimum_request_usd)}.</p> : null}
             </section>
 
-            {providerQuote ? <ProviderQuotePricing modelId={model.model_id} /> : <ModelCalculator mode={model.pricing.mode} unit={model.pricing.unit} inputPrice={model.pricing.input} outputPrice={model.pricing.output} price={model.pricing.price} minimum={model.pricing.minimum_request_usd} durations={model.capabilities.supported_seconds} variablePricing={Boolean(model.pricing.route_prices_usd_per_second?.length)} />}
+            {providerQuote ? <ProviderQuotePricing modelId={model.model_id} /> : <ModelCalculator mode={model.pricing.mode} unit={model.pricing.unit} inputPrice={model.pricing.input} outputPrice={model.pricing.output} price={model.pricing.price} minimum={model.pricing.minimum_request_usd} durations={model.capabilities.supported_seconds} audio={model.model_type === "audio_to_text"} variablePricing={Boolean(model.pricing.route_prices_usd_per_second?.length)} />}
 
             <Statistics model={model} />
             <ModelMetricsCharts modelType={model.model_type} points={metrics.points} />

@@ -141,6 +141,7 @@ function ProviderLogo({ model }: { model: PayModel }) {
 function chipLabel(chip: string) {
   if (chip === "systemone") return "System One";
   if (chip === "noul") return "Noul";
+  if (chip === "audio") return "Audio to text";
   return chip;
 }
 

@@ -238,6 +238,53 @@ function videoExamples(model: PublicModel): CodeExample[] {
   return examples;
 }
 
+function audioToTextExamples(model: PublicModel): CodeExample[] {
+  const curlCode = [
+    "curl " + API_BASE + "/audio/transcriptions " + slash,
+    '  -H "Authorization: Bearer $LLM7_API_TOKEN" ' + slash,
+    '  -F "model=' + model.model_id + '" ' + slash,
+    '  -F "file=@recording.mp3" ' + slash,
+    '  -F "response_format=json"',
+  ].join("\n");
+  const pythonCode = [
+    "import os",
+    "import requests",
+    "",
+    'with open("recording.mp3", "rb") as audio:',
+    '    response = requests.post("' + API_BASE + '/audio/transcriptions",',
+    '        headers={"Authorization": "Bearer " + os.environ["LLM7_API_TOKEN"]},',
+    '        data={"model": "' + model.model_id + '", "response_format": "json"},',
+    '        files={"file": audio},',
+    "        timeout=120,",
+    "    )",
+    "response.raise_for_status()",
+    "result = response.json()",
+    'print(result["text"], result["language"], result["duration"])',
+  ].join("\n");
+  const javascriptCode = [
+    "const form = new FormData();",
+    'form.append("model", "' + model.model_id + '");',
+    'form.append("file", fileInput.files[0]);',
+    'form.append("response_format", "json");',
+    "",
+    'const response = await fetch("' + API_BASE + '/audio/transcriptions", {',
+    '  method: "POST",',
+    '  headers: { Authorization: "Bearer " + apiKey },',
+    "  body: form,",
+    "});",
+    "",
+    "if (!response.ok) throw new Error(await response.text());",
+    "const result = await response.json();",
+    "console.log(result.text, result.language, result.duration);",
+  ].join("\n");
+
+  return [
+    { id: "audio-transcribe-curl", label: "cURL", language: "bash", code: curlCode, docsUrl: QUICKSTART },
+    { id: "audio-transcribe-python", label: "Python", language: "python", code: pythonCode, docsUrl: QUICKSTART },
+    { id: "audio-transcribe-javascript", label: "JavaScript", language: "javascript", code: javascriptCode, docsUrl: QUICKSTART },
+  ];
+}
+
 function verifiedInterfaceExample(model: PublicModel): CodeExample[] {
   const api = model.api_interfaces[0];
   if (!api) return [];
@@ -255,5 +302,6 @@ export function codeExamplesForModel(model: PublicModel): CodeExample[] {
   if (model.model_type === "systemone") return systemOneExamples(model);
   if (model.model_type === "image") return imageExamples(model);
   if (model.model_type === "video") return videoExamples(model);
+  if (model.model_type === "audio_to_text") return audioToTextExamples(model);
   return verifiedInterfaceExample(model);
 }

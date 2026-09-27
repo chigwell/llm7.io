@@ -4,6 +4,7 @@ import ComparisonSelector from "@/components/models/ComparisonSelector.client";
 import ModelLogo from "@/components/models/ModelLogo";
 import { JsonLd, SeoFooter, SeoNavigation } from "@/components/models/SeoChrome";
 import { createComparisonPairs } from "@/lib/models/comparisons";
+import { MODEL_TYPES, modelTypeLabel } from "@/lib/models/model-types";
 import { comparisonPath } from "@/lib/models/routes";
 import { publicModels } from "@/lib/models/snapshot";
 import { siteStructuredData } from "@/lib/models/structured-data";
@@ -19,10 +20,9 @@ export const metadata: Metadata = {
 
 export default function CompareIndexPage() {
   const pairs = Object.values(createComparisonPairs(publicModels));
-  const grouped = (["chat", "systemone", "image", "video"] as const).map((type) => [type, pairs.filter((pair) => publicModels.find((model) => model.slug === pair.leftSlug)?.model_type === type).slice(0, 8)] as const);
+  const grouped = MODEL_TYPES.map((type) => [type, pairs.filter((pair) => publicModels.find((model) => model.slug === pair.leftSlug)?.model_type === type).slice(0, 8)] as const);
   const modelBySlug = (slug: string) => publicModels.find((model) => model.slug === slug);
   const name = (slug: string) => modelBySlug(slug)?.model_id ?? slug;
-  const typeLabel = (type: string) => type === "systemone" ? "System One" : type;
 
   return (
     <>
@@ -39,7 +39,7 @@ export default function CompareIndexPage() {
 
         <section className="mt-10" aria-labelledby="popular-comparisons">
           <div className="mb-6"><h2 id="popular-comparisons" className="text-2xl font-semibold">Start with a popular comparison</h2><p className="mt-1 text-sm text-muted-foreground">Choose a pair to jump straight into the details.</p></div>
-          <div className="grid gap-5 lg:grid-cols-4">{grouped.map(([type, typePairs]) => <section key={type} className="rounded-2xl border border-border/60 bg-card/55 p-5 shadow-sm backdrop-blur"><h3 className="text-lg font-semibold">{typeLabel(type)} models</h3>{typePairs.length ? <div className="mt-4 space-y-2">{typePairs.map((pair) => {
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">{grouped.map(([type, typePairs]) => <section key={type} className="rounded-2xl border border-border/60 bg-card/55 p-5 shadow-sm backdrop-blur"><h3 className="text-lg font-semibold">{modelTypeLabel(type)} models</h3>{typePairs.length ? <div className="mt-4 space-y-2">{typePairs.map((pair) => {
             const left = modelBySlug(pair.leftSlug);
             const right = modelBySlug(pair.rightSlug);
 

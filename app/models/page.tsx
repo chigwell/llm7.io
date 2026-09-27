@@ -12,12 +12,7 @@ import { publicModels } from "@/lib/models/snapshot";
 import { modelPath } from "@/lib/models/routes";
 import { isProviderQuoteModel } from "@/lib/models/video-pricing";
 import { siteStructuredData } from "@/lib/models/structured-data";
-
-const MODEL_TYPES = ["chat", "systemone", "image", "video"] as const;
-
-function modelTypeLabel(type: string) {
-  return type === "systemone" ? "System One" : type;
-}
+import { MODEL_TYPES, modelTypeLabel } from "@/lib/models/model-types";
 
 export const metadata: Metadata = {
   title: "AI Model API Catalogue, Pricing and Latest Statistics | LLM7",
@@ -77,8 +72,8 @@ export default function ModelsPage() {
         <header className="rounded-3xl border border-border/60 bg-gradient-to-br from-card/80 via-card/55 to-primary/5 p-6 shadow-sm backdrop-blur md:p-8">
           <p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary">LLM7 model catalogue</p>
           <h1 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">Find the right model for your build.</h1>
-          <p className="mt-4 max-w-3xl text-muted-foreground">Explore available chat, System One, image, and video models with their pricing and capabilities in one place.</p>
-          <div className="mt-6 grid grid-cols-2 gap-3 sm:max-w-2xl md:grid-cols-4">{counts.map(([type, count]) => <div key={type} className="rounded-xl border border-border/60 bg-background/45 p-3"><p className="text-xs text-muted-foreground">{modelTypeLabel(type)}</p><p className="mt-1 text-2xl font-semibold">{count}</p></div>)}</div>
+          <p className="mt-4 max-w-3xl text-muted-foreground">Explore available chat, System One, image, video, and audio-to-text models with their pricing and capabilities in one place.</p>
+          <div className="mt-6 grid grid-cols-2 gap-3 sm:max-w-3xl md:grid-cols-5">{counts.map(([type, count]) => <div key={type} className="rounded-xl border border-border/60 bg-background/45 p-3"><p className="text-xs text-muted-foreground">{modelTypeLabel(type)}</p><p className="mt-1 text-2xl font-semibold">{count}</p></div>)}</div>
         </header>
 
         <section className="mt-8" aria-labelledby="active-models">

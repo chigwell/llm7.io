@@ -2,13 +2,14 @@
 
 import { useMemo, useState } from "react";
 
-type ModelType = "chat" | "systemone" | "image" | "video";
+type ModelType = "chat" | "systemone" | "image" | "video" | "audio_to_text";
 type ModelOption = { slug: string; display_name: string; model_type: ModelType; status: "active" | "retired" };
 const modelTypes: Array<{ value: ModelType; label: string }> = [
   { value: "chat", label: "Chat" },
   { value: "systemone", label: "System One" },
   { value: "image", label: "Image" },
   { value: "video", label: "Video" },
+  { value: "audio_to_text", label: "Audio to text" },
 ];
 export default function ComparisonSelector({ models }: { models: ModelOption[] }) {
   const [type, setType] = useState<ModelType>("chat");

@@ -7,6 +7,7 @@ import { definePages } from "../lib/discovery/pages.js";
 import { pageState } from "../lib/discovery/fingerprints.js";
 import { modelPath, comparisonKey as pairKey, comparisonPath as pairPath } from "../lib/models/route-values.js";
 import { createComparisonPairs } from "../lib/models/comparison-values.js";
+import { modelTypeLabel, trustsNestedCapabilities } from "../lib/models/model-types.js";
 import { ImageResponse } from "@vercel/og";
 
 const ROOT = resolve(new URL("..", import.meta.url).pathname);
@@ -36,13 +37,16 @@ function priceSummary(model) {
 
 function capabilities(model) {
   const facts = [];
+  const nested = trustsNestedCapabilities(model) ? model.capabilities : {};
+  if (model.model_type === "audio_to_text") facts.push("Speech to text");
+  if (model.modalities.input.includes("audio")) facts.push("Audio input");
   if (model.model_type === "systemone" || model.schema_endpoints?.includes("systemone")) facts.push("System One");
-  if (model.capabilities.typed_answers) facts.push("Typed answers");
+  if (nested.typed_answers) facts.push("Typed answers");
   if (model.modalities.input.includes("image")) facts.push("Image input");
-  if (model.tools_calling || model.capabilities.tools) facts.push("Tool calling");
-  if (model.capabilities.image_generation) facts.push("Image generation");
-  if (model.capabilities.video_generation) facts.push("Video generation");
-  if (model.stream || model.capabilities.stream) facts.push("Streaming");
+  if (model.tools_calling || nested.tools) facts.push("Tool calling");
+  if (nested.image_generation) facts.push("Image generation");
+  if (nested.video_generation) facts.push("Video generation");
+  if (model.stream || nested.stream) facts.push("Streaming");
   return facts.slice(0, 2).join(" · ") || "Published API capabilities";
 }
 
@@ -75,7 +79,7 @@ async function main() {
   const bySlug = new Map(models.map((model) => [model.slug, model]));
   const pairs = Object.values(createComparisonPairs(models));
   await mkdir(resolve(PUBLIC, "generated/og/models"), { recursive: true });
-  await Promise.all(models.map((model) => ogImage(model.display_name, `${model.model_type} model`, priceSummary(model), capabilities(model), resolve(PUBLIC, `generated/og/models/${model.slug}.png`))));
+  await Promise.all(models.map((model) => ogImage(model.display_name, `${modelTypeLabel(model.model_type)} model`, priceSummary(model), capabilities(model), resolve(PUBLIC, `generated/og/models/${model.slug}.png`))));
   await ogImage("Model comparison", "LLM7 API", "Current pricing and latest statistics", "Compare models of the same published type", resolve(PUBLIC, "generated/og/model-comparison.png"));
 
   const modelUrls = models.map((model) => ({ path: modelPath(model.slug), lastmod: latest(model.updated_at, model.latest_metrics_bucket, snapshot.metadata.latest_metrics_bucket) }));

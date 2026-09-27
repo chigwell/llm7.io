@@ -16,6 +16,7 @@ const typeMetrics: Record<string, Metric[]> = {
   chat: [{ key: "ttft_avg_ms", title: "Time to first token", shortTitle: "TTFT", unit: "ms" }],
   systemone: [],
   image: [],
+  audio_to_text: [],
   video: [{ key: "job_success_rate", title: "Video job success rate", shortTitle: "Job success", unit: "%" }],
 };
 
