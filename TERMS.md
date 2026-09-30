@@ -1,6 +1,6 @@
 # Terms of Service
 
-**Last updated: 9 August 2026**
+**Last updated: 30 September 2026**
 
 Thank you for using **LLM7.io** (the **“Service”**). By accessing or using the Service, you agree to these Terms of Service (the **“Terms”**). If you do not accept all of the Terms, do not use the Service.
 
@@ -16,8 +16,7 @@ Thank you for using **LLM7.io** (the **“Service”**). By accessing or using t
 
   - LLM7.io is an educational and research-oriented service for experimenting with large language models, studying how they behave, and learning how to interact with them programmatically through a web UI and API.
   - The Service is not offered as a managed production inference platform, a guaranteed model-hosting service, or a guaranteed direct-access service to any particular model, provider, endpoint, capacity, or output.
-  - Limited anonymous access may be available. Higher limits and paid features require an **API token** issued via **dash.llm7.io**. Current usage tiers are:
-      - **Anonymous**: Up to **500,000 tokens/day** over a rolling 24-hour window, with up to **1 text request/s**, **10 text requests/min**, and **60 text requests/hour**.
+  - Access to the API requires an **API token** issued via **dash.llm7.io**. Current usage tiers are:
       - **Free token**: Up to **1,000,000 tokens/day** over a rolling 24-hour window, with up to **2 text requests/s**, **60 text requests/min**, and **250 text requests/hour**.
       - **Pro** ($12/month): A dynamically managed token allowance calculated across the monthly billing period, including usage relative to the percentage of the billing period that has elapsed. Pro remains subject to model availability, service capacity, fair-use calculations, and abuse-prevention controls. Pro also includes up to **25 text requests/s**, **1,500 text requests/min**, and **15,000 text requests/hour**, plus JSON mode, function calling, and Pro models.
   - Where token limits apply, usage is counted as **input tokens plus output tokens** over a **rolling 24-hour window** or the applicable billing period, as relevant to the tier. Paid, usage-billed requests are not subject to a daily token quota solely by token count unless stated at purchase or in the applicable account controls, but they remain subject to available account balance, per-request or per-token pricing, request rate limits, model availability, service capacity, fair-use calculations, and abuse-prevention controls.
