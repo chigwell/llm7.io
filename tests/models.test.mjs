@@ -6,6 +6,7 @@ import { models, model } from "./fixtures/models.mjs";
 import { schemaResults } from "./support/schema-cases.mjs";
 import * as cli from "../scripts/models/schemas.mjs";
 import {
+  areComparableModels,
   createComparisonPairs,
   comparisonCountByType,
 } from "../lib/models/comparison-values.js";
@@ -75,6 +76,29 @@ test("production comparison generation preserves ordering and excludes retired/c
     Object.keys(createComparisonPairs([...models, model("chat-z")])).length,
     3,
   );
+});
+
+test("comparison generation excludes Anthropic alias self-comparisons", () => {
+  const prefixed = model("anthropic-claude-haiku-4-5");
+  prefixed.model_id = "anthropic/claude-haiku-4-5";
+  const unprefixed = model("claude-haiku-4-5");
+  unprefixed.model_id = "claude-haiku-4-5";
+  const sonnet = model("claude-sonnet-4-5");
+  sonnet.model_id = "claude-sonnet-4-5";
+
+  assert.equal(areComparableModels(prefixed, unprefixed), false);
+  assert.equal(areComparableModels(unprefixed, prefixed), false);
+  assert.deepEqual(createComparisonPairs([prefixed, unprefixed, sonnet]), {
+    "anthropic-claude-haiku-4-5--vs--claude-sonnet-4-5": {
+      leftSlug: "anthropic-claude-haiku-4-5",
+      rightSlug: "claude-sonnet-4-5",
+    },
+    "claude-haiku-4-5--vs--claude-sonnet-4-5": {
+      leftSlug: "claude-haiku-4-5",
+      rightSlug: "claude-sonnet-4-5",
+    },
+  });
+  assert.equal(comparisonCountByType([prefixed, unprefixed, sonnet]).chat, 2);
 });
 test("provider field checks recurse while allowing upstream_attempts", () => {
   assert.doesNotThrow(() =>

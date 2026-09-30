@@ -34,7 +34,7 @@ export default function CompareIndexPage() {
           <p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary">Model comparison</p>
           <h1 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">Compare models with confidence.</h1>
           <p className="mt-4 max-w-3xl text-muted-foreground">Pick two available models of the same kind. We&apos;ll put their price, capabilities, and observed LLM7 usage side by side.</p>
-          <ComparisonSelector models={publicModels.map(({ slug, model_id, model_type, status }) => ({ slug, display_name: model_id, model_type, status }))} />
+          <ComparisonSelector models={publicModels.map(({ slug, model_id, model_type, status }) => ({ slug, model_id, display_name: model_id, model_type, status }))} />
         </header>
 
         <section className="mt-10" aria-labelledby="popular-comparisons">

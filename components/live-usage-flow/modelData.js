@@ -163,16 +163,6 @@ export function stableId(value) {
   return `${safeId(raw) || "item"}-${(hash >>> 0).toString(36)}`;
 }
 
-export function clientLabel(key) {
-  return {
-    a: "anon",
-    t: "token",
-    l: "llm7",
-    p: "paid",
-  }[key] || key;
-}
-
-
 export function statusForModel(model) {
   if (!model.routingHealthy || model.errorRate >= 0.5) return "bad";
   if (model.errorRate >= 0.1 || model.timeouts > 0 || model.errors5xx > 0) return "warn";
