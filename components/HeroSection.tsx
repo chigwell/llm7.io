@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/buttonShadcn";
 import Link from "next/link";
-import { ArrowRight, Layers, Zap, BotMessageSquare } from "lucide-react";
+import { ArrowRight, Layers, Zap, CreditCard } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { HeroStatusPill } from "./HeroStatusPill";
 import { getFormattedTokenCount, formatLiveTokenCount } from "@/lib/hero-metrics";
@@ -351,15 +351,16 @@ Prototype, build, and scale without switching providers.
               </p>
             </div>
             <div className="p-4 md:p-6 rounded-2xl border bg-card/50 backdrop-blur-sm sm:col-span-2 md:col-span-1">
-              <BotMessageSquare className="w-6 h-6 md:w-8 md:h-8 text-primary mx-auto mb-3 md:mb-4" />
+              <CreditCard className="w-6 h-6 md:w-8 md:h-8 text-primary mx-auto mb-3 md:mb-4" />
               <h3 className="font-semibold mb-2 text-sm md:text-base">
-                LLM7 Agent*
+                Card or Crypto
               </h3>
               <p className="text-xs md:text-sm text-muted-foreground">
-                Full-control automation that can interact on your behalf.
-              </p>
-              <p className="text-xs md:text-sm text-muted-foreground">
-                * (Coming soon)
+                Top up your way.
+                <br />
+                Crypto bonus: +10% from $25,
+                <br />
+                +20% from $50.
               </p>
             </div>
           </div>
