@@ -59,7 +59,7 @@ export default function AnalyticsConsent() {
     <aside ref={banner} className="llm7-analytics-banner" aria-label="Analytics preferences">
       <div>
         <strong>Help us improve LLM7</strong>
-        <p>Allow optional analytics cookies to understand how features are used across LLM7.io and the dashboard. Signed-in activity uses an account ID.</p>
+        <p>Allow optional analytics cookies to understand feature use and checkout interactions, including selected top-up amounts, across LLM7.io and the dashboard. Signed-in activity uses an account ID.</p>
         <a href="https://github.com/chigwell/llm7.io/blob/main/PRIVACY.md" target="_blank" rel="noreferrer">Privacy policy</a>
       </div>
       <div className="llm7-analytics-actions">

@@ -172,6 +172,52 @@ test("SDK config disables automatic collection and missing env disables analytic
   disabled.analytics.setConsent(true); disabled.analytics.trackPageView(); await tick();
   assert.deepEqual(disabled.counts(), [0, 0]);
 });
+test("payment fields are strictly validated at capture and outgoing transport", async () => {
+  const f = fixture();
+  f.analytics.setConsent(true);
+  const props = { flow_id: "12345678-1234-1234-1234-123456789abc", sequence: 1,
+    entry_point: "billing_header", step: "crypto_review", method: "oxapay",
+    amount_source: "custom", amount_cents: 4225, amount_bucket: "25_49", currency: "USD",
+    bonus_percent: 10, crypto_bonus_cents: 422, total_credit_cents: 4647,
+    payment_id: "private", checkout_url: "https://pay.test/private", raw_input: "private",
+    userEmail: "private", balance: 123, bonus_policy_version: "private" };
+  f.analytics.track("checkout_created", props);
+  await tick();
+  assert.equal(f.sent[0].properties.amount_cents, 4225);
+  assert.equal(f.sent[0].properties.total_credit_cents, 4647);
+  assert.ok(!JSON.stringify(f.sent).includes("private"));
+  for (const value of [999, 50001, 1000.5, Infinity, "2500", null]) {
+    f.analytics.track("checkout_created", { ...props, amount_cents: value });
+    const safe = f.sent.at(-1).properties;
+    assert.equal(safe.amount_cents, undefined);
+    assert.equal(safe.bonus_percent, undefined);
+    const outgoing = f.config().before_send({ event: "checkout_created", properties: { ...props, amount_cents: value } });
+    assert.equal(outgoing.properties.amount_cents, undefined);
+    assert.equal(outgoing.properties.total_credit_cents, undefined);
+  }
+  for (const invalid of [{ bonus_percent: 101 }, { crypto_bonus_cents: 423 }, { total_credit_cents: 9999 }, { method: "stripe" }]) {
+    const outgoing = f.config().before_send({ event: "checkout_created", properties: { ...props, ...invalid } });
+    for (const field of ["bonus_percent", "crypto_bonus_cents", "total_credit_cents"]) assert.equal(outgoing.properties[field], undefined);
+  }
+  f.analytics.track("topup_action", { ...props, action: "raw private action", blocked_reason: "private" });
+  assert.equal(f.sent.at(-1).properties.action, undefined);
+  assert.equal(f.sent.at(-1).properties.blocked_reason, undefined);
+});
+test("redirect and exit events bypass batching through the SDK without awaiting delivery", async () => {
+  const f = fixture();
+  f.analytics.setConsent(true); f.analytics.start(); await tick();
+  const captures = [];
+  f.client.capture = (...args) => { captures.push(args); return new Promise(() => {}); };
+  for (const event of ["checkout_created", "checkout_redirect_requested", "topup_page_exited"]) {
+    assert.equal(f.analytics.track(event), undefined);
+    assert.deepEqual(captures.at(-1)[2], { transport: "sendBeacon", send_instantly: true });
+  }
+  f.analytics.track("topup_opened");
+  assert.equal(captures.at(-1)[2], undefined);
+  f.analytics.setConsent(false);
+  f.analytics.track("checkout_redirect_requested");
+  assert.equal(captures.length, 4);
+});
 test("bucket boundaries are deterministic and exclude exact amounts and duration", () => {
   assert.deepEqual([0, 999, 1000, 4999, 5000, 30000].map(latencyBucket), ["under_1s","under_1s","1_5s","1_5s","5_30s","over_30s"]);
   assert.deepEqual([1000, 2500, 5000, 10000, 25000].map(amountBucket), ["10_24","25_49","50_99","100_249","250_500"]);

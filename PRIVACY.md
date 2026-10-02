@@ -41,7 +41,13 @@ We do **not** intentionally collect special category data. We do **not** sell pe
 If you choose “Allow analytics”, we use PostHog's EU service to understand page
 visits and selected feature actions across LLM7.io and dash.llm7.io. We send
 query-free page routes, enumerated action outcomes, model/language choices, and
-coarse amount or timing ranges. Landing visitors are initially anonymous; after
+timing ranges. In the dashboard's Add balance flow we also collect opening sources,
+button actions, grouped amount-edit validation states, exact valid selected USD
+top-up amounts, displayed crypto bonus/credit amounts, quote and checkout outcomes,
+and dismissal reasons. Random, in-memory flow IDs link these actions within a modal
+opening; raw typed text is not sent. We do not observe activity inside hosted
+payment-provider pages or infer completed payments from a checkout handoff.
+Landing visitors are initially anonymous; after
 dashboard sign-in we associate consented activity with an opaque account ID and
 subscription tier. Shared first-party PostHog cookies support this attribution.
 We do not include email, passwords, API keys, prompt or generated text, referral

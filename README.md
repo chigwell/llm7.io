@@ -168,6 +168,11 @@ Only allowlisted PostHog events/properties leave the app, including through the 
 `consent_version: 1`. Pageviews are manual; autocapture, replay, surveys, performance
 capture and remote feature flags are disabled. No email, API key, password,
 prompt/output, referral code, payment identifier, raw error or exact balance is sent.
+Dashboard payment-flow events additionally allow exact valid selected USD top-up
+amounts (1000–50000 cents), validated crypto bonus/credit offer amounts, and curated
+button/edit/quote/checkout/dismissal outcomes. Raw input and checkout URLs remain
+excluded. The shared contract and transport are synchronized here; the landing
+does not emit payment-flow events. Consent remains version 1 without re-prompting.
 
 Both apps use a shared PostHog cookie for landing-to-account attribution. Landing
 never calls identify; initial visitors are anonymous. Dashboard identifies only
