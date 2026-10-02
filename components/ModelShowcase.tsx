@@ -1,4 +1,5 @@
 "use client";
+import { track } from "@/lib/analytics";
 
 import { useCallback, type ReactNode } from "react";
 import { motion } from "framer-motion";
@@ -102,7 +103,7 @@ export default function ModelShowcase() {
 
                 <p className="text-sm text-muted-foreground leading-relaxed flex-1">{card.description}</p>
 
-                <Button variant="outline" className="w-full" onClick={scrollToExample}>
+                <Button variant="outline" className="w-full" onClick={() => { track("model_showcase_selected", { model: card.name.toLowerCase() }); scrollToExample(); }}>
                   {card.cta}
                 </Button>
               </div>

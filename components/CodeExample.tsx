@@ -1,4 +1,5 @@
 "use client";
+import { track } from "@/lib/analytics";
 
 import { useEffect, useMemo, useState } from 'react';
 import Image from "next/image";
@@ -218,6 +219,7 @@ export default function ConsoleAnimation() {
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(selectedExample.code);
+    track("code_copied", { language: selectedExample.id === "js" ? "javascript" : selectedExample.id });
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1600);
   };

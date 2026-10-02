@@ -1,0 +1,908 @@
+{
+  "metadata": {
+    "generated_at": "2026-01-01T00:00:00.000Z",
+    "api_base": "https://api.llm7.io/public/v1",
+    "catalog_version": "fixture-v1",
+    "catalog_updated_at": "2026-01-01T00:00:00.000Z",
+    "latest_metrics_bucket": "2026-01-01T00:00:00.000Z",
+    "etags": {
+      "https://api.llm7.io/v1/models": "v1",
+      "https://api.llm7.io/public/v1/models/version": "v1",
+      "https://api.llm7.io/public/v1/models?status=all&page_size=100&metrics_window=30d&page=1": "v1",
+      "https://api.llm7.io/public/v1/models?status=all&page_size=100&metrics_window=30d&page=2": "v1",
+      "https://api.llm7.io/public/v1/models/chat-b": "v1",
+      "https://api.llm7.io/public/v1/models/image-one": "v1",
+      "https://api.llm7.io/public/v1/models/chat-a": "v1",
+      "https://api.llm7.io/public/v1/models/video-one": "v1",
+      "https://api.llm7.io/public/v1/models/retired-chat": "v1",
+      "https://api.llm7.io/public/v1/models/chat-b/metrics?range=30d&interval=1d": "v1",
+      "https://api.llm7.io/public/v1/models/image-one/metrics?range=30d&interval=1d": "v1",
+      "https://api.llm7.io/public/v1/models/chat-a/metrics?range=30d&interval=1d": "v1",
+      "https://api.llm7.io/public/v1/models/video-one/metrics?range=30d&interval=1d": "v1",
+      "https://api.llm7.io/public/v1/models/retired-chat/metrics?range=30d&interval=1d": "v1",
+      "https://api.llm7.io/public/v1/statistics/summary?range=30d": "v1"
+    }
+  },
+  "version": {
+    "schema_version": 1,
+    "catalog_version": "fixture-v1",
+    "catalog_updated_at": "2026-01-01T00:00:00.000Z",
+    "latest_metrics_bucket": "2026-01-01T00:00:00.000Z"
+  },
+  "list_pages": [
+    {
+      "data": [
+        {
+          "model_id": "chat-b",
+          "slug": "chat-b",
+          "display_name": "chat-b",
+          "status": "active",
+          "model_type": "chat",
+          "pricing": {
+            "mode": "token",
+            "currency": "USD",
+            "unit": "1M tokens",
+            "input": "0.1",
+            "output": "0.2"
+          },
+          "context_window": {
+            "tokens": null,
+            "chars": null
+          },
+          "modalities": {
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "capabilities": {},
+          "schema_endpoints": [],
+          "api_interfaces": [
+            {
+              "path": "/v1/chat/completions",
+              "method": "POST",
+              "schema": "chat",
+              "docs_url": null,
+              "operation": "generate",
+              "asynchronous": false
+            }
+          ],
+          "first_seen_at": "2026-01-01T00:00:00.000Z",
+          "updated_at": "2026-01-01T00:00:00.000Z",
+          "statistics": {
+            "window": "30d",
+            "requests_total": 20,
+            "upstream_attempts": 21,
+            "successful_requests": 19,
+            "client_errors_4xx": 0,
+            "server_errors_5xx": 1,
+            "timeouts": 0,
+            "rate_limited_429": 0,
+            "cancelled_requests": 0,
+            "success_rate": 0.95,
+            "input_tokens": 1000,
+            "output_tokens": 500,
+            "images_generated": 0,
+            "videos_generated": 0,
+            "video_seconds_generated": "0",
+            "jobs_started": 0,
+            "jobs_succeeded": 0,
+            "jobs_failed": 0,
+            "jobs_cancelled": 0,
+            "job_success_rate": null,
+            "latency_observations": 20,
+            "latency_avg_ms": 100,
+            "latency_p50_ms": 100,
+            "latency_p95_ms": 120,
+            "ttft_observations": 0,
+            "ttft_avg_ms": null,
+            "ttft_p50_ms": null,
+            "ttft_p95_ms": null,
+            "first_bucket": "2026-01-01T00:00:00.000Z",
+            "last_bucket": "2026-01-01T00:00:00.000Z"
+          }
+        },
+        {
+          "model_id": "image-one",
+          "slug": "image-one",
+          "display_name": "image-one",
+          "status": "active",
+          "model_type": "image",
+          "pricing": {
+            "mode": "image",
+            "currency": "USD",
+            "unit": "image",
+            "price": "0.05"
+          },
+          "context_window": {
+            "tokens": null,
+            "chars": null
+          },
+          "modalities": {
+            "input": [
+              "text"
+            ],
+            "output": [
+              "image"
+            ]
+          },
+          "capabilities": {},
+          "schema_endpoints": [],
+          "api_interfaces": [
+            {
+              "path": "/v1/chat/completions",
+              "method": "POST",
+              "schema": "chat",
+              "docs_url": null,
+              "operation": "generate",
+              "asynchronous": false
+            }
+          ],
+          "first_seen_at": "2026-01-01T00:00:00.000Z",
+          "updated_at": "2026-01-01T00:00:00.000Z",
+          "statistics": {
+            "window": "30d",
+            "requests_total": 20,
+            "upstream_attempts": 21,
+            "successful_requests": 19,
+            "client_errors_4xx": 0,
+            "server_errors_5xx": 1,
+            "timeouts": 0,
+            "rate_limited_429": 0,
+            "cancelled_requests": 0,
+            "success_rate": 0.95,
+            "input_tokens": 1000,
+            "output_tokens": 500,
+            "images_generated": 0,
+            "videos_generated": 0,
+            "video_seconds_generated": "0",
+            "jobs_started": 0,
+            "jobs_succeeded": 0,
+            "jobs_failed": 0,
+            "jobs_cancelled": 0,
+            "job_success_rate": null,
+            "latency_observations": 20,
+            "latency_avg_ms": 100,
+            "latency_p50_ms": 100,
+            "latency_p95_ms": 120,
+            "ttft_observations": 0,
+            "ttft_avg_ms": null,
+            "ttft_p50_ms": null,
+            "ttft_p95_ms": null,
+            "first_bucket": "2026-01-01T00:00:00.000Z",
+            "last_bucket": "2026-01-01T00:00:00.000Z"
+          }
+        },
+        {
+          "model_id": "chat-a",
+          "slug": "chat-a",
+          "display_name": "chat-a",
+          "status": "active",
+          "model_type": "chat",
+          "pricing": {
+            "mode": "token",
+            "currency": "USD",
+            "unit": "1M tokens",
+            "input": "0.1",
+            "output": "0.2"
+          },
+          "context_window": {
+            "tokens": null,
+            "chars": null
+          },
+          "modalities": {
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "capabilities": {},
+          "schema_endpoints": [],
+          "api_interfaces": [
+            {
+              "path": "/v1/chat/completions",
+              "method": "POST",
+              "schema": "chat",
+              "docs_url": null,
+              "operation": "generate",
+              "asynchronous": false
+            }
+          ],
+          "first_seen_at": "2026-01-01T00:00:00.000Z",
+          "updated_at": "2026-01-01T00:00:00.000Z",
+          "statistics": {
+            "window": "30d",
+            "requests_total": 20,
+            "upstream_attempts": 21,
+            "successful_requests": 19,
+            "client_errors_4xx": 0,
+            "server_errors_5xx": 1,
+            "timeouts": 0,
+            "rate_limited_429": 0,
+            "cancelled_requests": 0,
+            "success_rate": 0.95,
+            "input_tokens": 1000,
+            "output_tokens": 500,
+            "images_generated": 0,
+            "videos_generated": 0,
+            "video_seconds_generated": "0",
+            "jobs_started": 0,
+            "jobs_succeeded": 0,
+            "jobs_failed": 0,
+            "jobs_cancelled": 0,
+            "job_success_rate": null,
+            "latency_observations": 20,
+            "latency_avg_ms": 100,
+            "latency_p50_ms": 100,
+            "latency_p95_ms": 120,
+            "ttft_observations": 0,
+            "ttft_avg_ms": null,
+            "ttft_p50_ms": null,
+            "ttft_p95_ms": null,
+            "first_bucket": "2026-01-01T00:00:00.000Z",
+            "last_bucket": "2026-01-01T00:00:00.000Z"
+          }
+        }
+      ],
+      "pagination": {
+        "page": 1,
+        "page_size": 3,
+        "total_items": 5,
+        "total_pages": 2
+      },
+      "catalog_version": "fixture-v1",
+      "catalog_updated_at": "2026-01-01T00:00:00.000Z",
+      "metrics_snapshot_at": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "data": [
+        {
+          "model_id": "video-one",
+          "slug": "video-one",
+          "display_name": "video-one",
+          "status": "active",
+          "model_type": "video",
+          "pricing": {
+            "mode": "second",
+            "currency": "USD",
+            "unit": "second",
+            "price": "0.05",
+            "route_prices_usd_per_second": [
+              {
+                "request_type": "text",
+                "price_tiers_usd_per_second": [
+                  {
+                    "public_price_usd_per_second": "0.04"
+                  }
+                ]
+              }
+            ]
+          },
+          "context_window": {
+            "tokens": null,
+            "chars": null
+          },
+          "modalities": {
+            "input": [
+              "text"
+            ],
+            "output": [
+              "video"
+            ]
+          },
+          "capabilities": {},
+          "schema_endpoints": [],
+          "api_interfaces": [
+            {
+              "path": "/v1/chat/completions",
+              "method": "POST",
+              "schema": "chat",
+              "docs_url": null,
+              "operation": "generate",
+              "asynchronous": false
+            }
+          ],
+          "first_seen_at": "2026-01-01T00:00:00.000Z",
+          "updated_at": "2026-01-01T00:00:00.000Z",
+          "statistics": {
+            "window": "30d",
+            "requests_total": 20,
+            "upstream_attempts": 21,
+            "successful_requests": 19,
+            "client_errors_4xx": 0,
+            "server_errors_5xx": 1,
+            "timeouts": 0,
+            "rate_limited_429": 0,
+            "cancelled_requests": 0,
+            "success_rate": 0.95,
+            "input_tokens": 1000,
+            "output_tokens": 500,
+            "images_generated": 0,
+            "videos_generated": 0,
+            "video_seconds_generated": "0",
+            "jobs_started": 0,
+            "jobs_succeeded": 0,
+            "jobs_failed": 0,
+            "jobs_cancelled": 0,
+            "job_success_rate": null,
+            "latency_observations": 20,
+            "latency_avg_ms": 100,
+            "latency_p50_ms": 100,
+            "latency_p95_ms": 120,
+            "ttft_observations": 0,
+            "ttft_avg_ms": null,
+            "ttft_p50_ms": null,
+            "ttft_p95_ms": null,
+            "first_bucket": "2026-01-01T00:00:00.000Z",
+            "last_bucket": "2026-01-01T00:00:00.000Z"
+          }
+        },
+        {
+          "model_id": "retired-chat",
+          "slug": "retired-chat",
+          "display_name": "retired-chat",
+          "status": "retired",
+          "model_type": "chat",
+          "pricing": {
+            "mode": "token",
+            "currency": "USD",
+            "unit": "1M tokens",
+            "input": "0.1",
+            "output": "0.2"
+          },
+          "context_window": {
+            "tokens": null,
+            "chars": null
+          },
+          "modalities": {
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "capabilities": {},
+          "schema_endpoints": [],
+          "api_interfaces": [
+            {
+              "path": "/v1/chat/completions",
+              "method": "POST",
+              "schema": "chat",
+              "docs_url": null,
+              "operation": "generate",
+              "asynchronous": false
+            }
+          ],
+          "first_seen_at": "2026-01-01T00:00:00.000Z",
+          "updated_at": "2026-01-01T00:00:00.000Z",
+          "statistics": {
+            "window": "30d",
+            "requests_total": 20,
+            "upstream_attempts": 21,
+            "successful_requests": 19,
+            "client_errors_4xx": 0,
+            "server_errors_5xx": 1,
+            "timeouts": 0,
+            "rate_limited_429": 0,
+            "cancelled_requests": 0,
+            "success_rate": 0.95,
+            "input_tokens": 1000,
+            "output_tokens": 500,
+            "images_generated": 0,
+            "videos_generated": 0,
+            "video_seconds_generated": "0",
+            "jobs_started": 0,
+            "jobs_succeeded": 0,
+            "jobs_failed": 0,
+            "jobs_cancelled": 0,
+            "job_success_rate": null,
+            "latency_observations": 20,
+            "latency_avg_ms": 100,
+            "latency_p50_ms": 100,
+            "latency_p95_ms": 120,
+            "ttft_observations": 0,
+            "ttft_avg_ms": null,
+            "ttft_p50_ms": null,
+            "ttft_p95_ms": null,
+            "first_bucket": "2026-01-01T00:00:00.000Z",
+            "last_bucket": "2026-01-01T00:00:00.000Z"
+          }
+        }
+      ],
+      "pagination": {
+        "page": 2,
+        "page_size": 3,
+        "total_items": 5,
+        "total_pages": 2
+      },
+      "catalog_version": "fixture-v1",
+      "catalog_updated_at": "2026-01-01T00:00:00.000Z",
+      "metrics_snapshot_at": "2026-01-01T00:00:00.000Z"
+    }
+  ],
+  "models": [
+    {
+      "model": {
+        "model_id": "chat-a",
+        "slug": "chat-a",
+        "display_name": "chat-a",
+        "status": "active",
+        "model_type": "chat",
+        "pricing": {
+          "mode": "token",
+          "currency": "USD",
+          "unit": "1M tokens",
+          "input": "0.1",
+          "output": "0.2"
+        },
+        "context_window": {
+          "tokens": null,
+          "chars": null
+        },
+        "modalities": {
+          "input": [
+            "text"
+          ],
+          "output": [
+            "text"
+          ]
+        },
+        "capabilities": {},
+        "schema_endpoints": [],
+        "api_interfaces": [
+          {
+            "path": "/v1/chat/completions",
+            "method": "POST",
+            "schema": "chat",
+            "docs_url": null,
+            "operation": "generate",
+            "asynchronous": false
+          }
+        ],
+        "first_seen_at": "2026-01-01T00:00:00.000Z",
+        "updated_at": "2026-01-01T00:00:00.000Z",
+        "statistics": {
+          "30d": {
+            "window": "30d",
+            "requests_total": 20,
+            "upstream_attempts": 21,
+            "successful_requests": 19,
+            "client_errors_4xx": 0,
+            "server_errors_5xx": 1,
+            "timeouts": 0,
+            "rate_limited_429": 0,
+            "cancelled_requests": 0,
+            "success_rate": 0.95,
+            "input_tokens": 1000,
+            "output_tokens": 500,
+            "images_generated": 0,
+            "videos_generated": 0,
+            "video_seconds_generated": "0",
+            "jobs_started": 0,
+            "jobs_succeeded": 0,
+            "jobs_failed": 0,
+            "jobs_cancelled": 0,
+            "job_success_rate": null,
+            "latency_observations": 20,
+            "latency_avg_ms": 100,
+            "latency_p50_ms": 100,
+            "latency_p95_ms": 120,
+            "ttft_observations": 0,
+            "ttft_avg_ms": null,
+            "ttft_p50_ms": null,
+            "ttft_p95_ms": null,
+            "first_bucket": "2026-01-01T00:00:00.000Z",
+            "last_bucket": "2026-01-01T00:00:00.000Z"
+          }
+        }
+      },
+      "metrics": {
+        "range": "30d",
+        "interval": "1d",
+        "points": [],
+        "sample_size": 0,
+        "data_available_from": null,
+        "latest_complete_bucket": null,
+        "generated_at": "2026-01-01T00:00:00.000Z"
+      }
+    },
+    {
+      "model": {
+        "model_id": "chat-b",
+        "slug": "chat-b",
+        "display_name": "chat-b",
+        "status": "active",
+        "model_type": "chat",
+        "pricing": {
+          "mode": "token",
+          "currency": "USD",
+          "unit": "1M tokens",
+          "input": "0.1",
+          "output": "0.2"
+        },
+        "context_window": {
+          "tokens": null,
+          "chars": null
+        },
+        "modalities": {
+          "input": [
+            "text"
+          ],
+          "output": [
+            "text"
+          ]
+        },
+        "capabilities": {},
+        "schema_endpoints": [],
+        "api_interfaces": [
+          {
+            "path": "/v1/chat/completions",
+            "method": "POST",
+            "schema": "chat",
+            "docs_url": null,
+            "operation": "generate",
+            "asynchronous": false
+          }
+        ],
+        "first_seen_at": "2026-01-01T00:00:00.000Z",
+        "updated_at": "2026-01-01T00:00:00.000Z",
+        "statistics": {
+          "30d": {
+            "window": "30d",
+            "requests_total": 20,
+            "upstream_attempts": 21,
+            "successful_requests": 19,
+            "client_errors_4xx": 0,
+            "server_errors_5xx": 1,
+            "timeouts": 0,
+            "rate_limited_429": 0,
+            "cancelled_requests": 0,
+            "success_rate": 0.95,
+            "input_tokens": 1000,
+            "output_tokens": 500,
+            "images_generated": 0,
+            "videos_generated": 0,
+            "video_seconds_generated": "0",
+            "jobs_started": 0,
+            "jobs_succeeded": 0,
+            "jobs_failed": 0,
+            "jobs_cancelled": 0,
+            "job_success_rate": null,
+            "latency_observations": 20,
+            "latency_avg_ms": 100,
+            "latency_p50_ms": 100,
+            "latency_p95_ms": 120,
+            "ttft_observations": 0,
+            "ttft_avg_ms": null,
+            "ttft_p50_ms": null,
+            "ttft_p95_ms": null,
+            "first_bucket": "2026-01-01T00:00:00.000Z",
+            "last_bucket": "2026-01-01T00:00:00.000Z"
+          }
+        }
+      },
+      "metrics": {
+        "range": "30d",
+        "interval": "1d",
+        "points": [],
+        "sample_size": 0,
+        "data_available_from": null,
+        "latest_complete_bucket": null,
+        "generated_at": "2026-01-01T00:00:00.000Z"
+      }
+    },
+    {
+      "model": {
+        "model_id": "image-one",
+        "slug": "image-one",
+        "display_name": "image-one",
+        "status": "active",
+        "model_type": "image",
+        "pricing": {
+          "mode": "image",
+          "currency": "USD",
+          "unit": "image",
+          "price": "0.05"
+        },
+        "context_window": {
+          "tokens": null,
+          "chars": null
+        },
+        "modalities": {
+          "input": [
+            "text"
+          ],
+          "output": [
+            "image"
+          ]
+        },
+        "capabilities": {},
+        "schema_endpoints": [],
+        "api_interfaces": [
+          {
+            "path": "/v1/chat/completions",
+            "method": "POST",
+            "schema": "chat",
+            "docs_url": null,
+            "operation": "generate",
+            "asynchronous": false
+          }
+        ],
+        "first_seen_at": "2026-01-01T00:00:00.000Z",
+        "updated_at": "2026-01-01T00:00:00.000Z",
+        "statistics": {
+          "30d": {
+            "window": "30d",
+            "requests_total": 20,
+            "upstream_attempts": 21,
+            "successful_requests": 19,
+            "client_errors_4xx": 0,
+            "server_errors_5xx": 1,
+            "timeouts": 0,
+            "rate_limited_429": 0,
+            "cancelled_requests": 0,
+            "success_rate": 0.95,
+            "input_tokens": 1000,
+            "output_tokens": 500,
+            "images_generated": 0,
+            "videos_generated": 0,
+            "video_seconds_generated": "0",
+            "jobs_started": 0,
+            "jobs_succeeded": 0,
+            "jobs_failed": 0,
+            "jobs_cancelled": 0,
+            "job_success_rate": null,
+            "latency_observations": 20,
+            "latency_avg_ms": 100,
+            "latency_p50_ms": 100,
+            "latency_p95_ms": 120,
+            "ttft_observations": 0,
+            "ttft_avg_ms": null,
+            "ttft_p50_ms": null,
+            "ttft_p95_ms": null,
+            "first_bucket": "2026-01-01T00:00:00.000Z",
+            "last_bucket": "2026-01-01T00:00:00.000Z"
+          }
+        }
+      },
+      "metrics": {
+        "range": "30d",
+        "interval": "1d",
+        "points": [],
+        "sample_size": 0,
+        "data_available_from": null,
+        "latest_complete_bucket": null,
+        "generated_at": "2026-01-01T00:00:00.000Z"
+      }
+    },
+    {
+      "model": {
+        "model_id": "retired-chat",
+        "slug": "retired-chat",
+        "display_name": "retired-chat",
+        "status": "retired",
+        "model_type": "chat",
+        "pricing": {
+          "mode": "token",
+          "currency": "USD",
+          "unit": "1M tokens",
+          "input": "0.1",
+          "output": "0.2"
+        },
+        "context_window": {
+          "tokens": null,
+          "chars": null
+        },
+        "modalities": {
+          "input": [
+            "text"
+          ],
+          "output": [
+            "text"
+          ]
+        },
+        "capabilities": {},
+        "schema_endpoints": [],
+        "api_interfaces": [
+          {
+            "path": "/v1/chat/completions",
+            "method": "POST",
+            "schema": "chat",
+            "docs_url": null,
+            "operation": "generate",
+            "asynchronous": false
+          }
+        ],
+        "first_seen_at": "2026-01-01T00:00:00.000Z",
+        "updated_at": "2026-01-01T00:00:00.000Z",
+        "statistics": {
+          "30d": {
+            "window": "30d",
+            "requests_total": 20,
+            "upstream_attempts": 21,
+            "successful_requests": 19,
+            "client_errors_4xx": 0,
+            "server_errors_5xx": 1,
+            "timeouts": 0,
+            "rate_limited_429": 0,
+            "cancelled_requests": 0,
+            "success_rate": 0.95,
+            "input_tokens": 1000,
+            "output_tokens": 500,
+            "images_generated": 0,
+            "videos_generated": 0,
+            "video_seconds_generated": "0",
+            "jobs_started": 0,
+            "jobs_succeeded": 0,
+            "jobs_failed": 0,
+            "jobs_cancelled": 0,
+            "job_success_rate": null,
+            "latency_observations": 20,
+            "latency_avg_ms": 100,
+            "latency_p50_ms": 100,
+            "latency_p95_ms": 120,
+            "ttft_observations": 0,
+            "ttft_avg_ms": null,
+            "ttft_p50_ms": null,
+            "ttft_p95_ms": null,
+            "first_bucket": "2026-01-01T00:00:00.000Z",
+            "last_bucket": "2026-01-01T00:00:00.000Z"
+          }
+        }
+      },
+      "metrics": {
+        "range": "30d",
+        "interval": "1d",
+        "points": [],
+        "sample_size": 0,
+        "data_available_from": null,
+        "latest_complete_bucket": null,
+        "generated_at": "2026-01-01T00:00:00.000Z"
+      }
+    },
+    {
+      "model": {
+        "model_id": "video-one",
+        "slug": "video-one",
+        "display_name": "video-one",
+        "status": "active",
+        "model_type": "video",
+        "pricing": {
+          "mode": "second",
+          "currency": "USD",
+          "unit": "second",
+          "price": "0.05",
+          "route_prices_usd_per_second": [
+            {
+              "request_type": "text",
+              "price_tiers_usd_per_second": [
+                {
+                  "public_price_usd_per_second": "0.04"
+                }
+              ]
+            }
+          ]
+        },
+        "context_window": {
+          "tokens": null,
+          "chars": null
+        },
+        "modalities": {
+          "input": [
+            "text"
+          ],
+          "output": [
+            "video"
+          ]
+        },
+        "capabilities": {},
+        "schema_endpoints": [],
+        "api_interfaces": [
+          {
+            "path": "/v1/chat/completions",
+            "method": "POST",
+            "schema": "chat",
+            "docs_url": null,
+            "operation": "generate",
+            "asynchronous": false
+          }
+        ],
+        "first_seen_at": "2026-01-01T00:00:00.000Z",
+        "updated_at": "2026-01-01T00:00:00.000Z",
+        "statistics": {
+          "30d": {
+            "window": "30d",
+            "requests_total": 20,
+            "upstream_attempts": 21,
+            "successful_requests": 19,
+            "client_errors_4xx": 0,
+            "server_errors_5xx": 1,
+            "timeouts": 0,
+            "rate_limited_429": 0,
+            "cancelled_requests": 0,
+            "success_rate": 0.95,
+            "input_tokens": 1000,
+            "output_tokens": 500,
+            "images_generated": 0,
+            "videos_generated": 0,
+            "video_seconds_generated": "0",
+            "jobs_started": 0,
+            "jobs_succeeded": 0,
+            "jobs_failed": 0,
+            "jobs_cancelled": 0,
+            "job_success_rate": null,
+            "latency_observations": 20,
+            "latency_avg_ms": 100,
+            "latency_p50_ms": 100,
+            "latency_p95_ms": 120,
+            "ttft_observations": 0,
+            "ttft_avg_ms": null,
+            "ttft_p50_ms": null,
+            "ttft_p95_ms": null,
+            "first_bucket": "2026-01-01T00:00:00.000Z",
+            "last_bucket": "2026-01-01T00:00:00.000Z"
+          }
+        }
+      },
+      "metrics": {
+        "range": "30d",
+        "interval": "1d",
+        "points": [],
+        "sample_size": 0,
+        "data_available_from": null,
+        "latest_complete_bucket": null,
+        "generated_at": "2026-01-01T00:00:00.000Z"
+      }
+    }
+  ],
+  "summary": {
+    "range": "30d",
+    "models": {
+      "total": 5,
+      "active": 4,
+      "retired": 1,
+      "chat": 3,
+      "image": 1,
+      "video": 1,
+      "models_with_requests": 5
+    },
+    "requests": {
+      "total": 100,
+      "successful": 95,
+      "client_errors_4xx": 0,
+      "server_errors_5xx": 5,
+      "timeouts": 0,
+      "rate_limited_429": 0,
+      "cancelled": 0,
+      "success_rate": 0.95
+    },
+    "usage": {
+      "input_tokens": 5000,
+      "output_tokens": 2500,
+      "images_generated": 0,
+      "videos_generated": 0,
+      "video_seconds_generated": "0"
+    },
+    "jobs": {
+      "started": 0,
+      "succeeded": 0,
+      "failed": 0,
+      "cancelled": 0,
+      "success_rate": null
+    },
+    "latency": {
+      "observations": 100,
+      "average_ms": 100,
+      "p50_ms": 100,
+      "p95_ms": 120
+    },
+    "data_available_from": "2026-01-01T00:00:00.000Z",
+    "latest_complete_bucket": "2026-01-01T00:00:00.000Z",
+    "generated_at": "2026-01-01T00:00:00.000Z"
+  }
+}

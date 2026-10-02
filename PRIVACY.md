@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Last updated:** 10 July 2026
+**Last updated:** 2 October 2026
 
 This Privacy Policy explains how **LLM7.io** (“we”, “us”, “our”) collects and processes your personal data when you use our educational and research-oriented website and API, including `dash.llm7.io`. We operate from the United Kingdom and comply with the **UK GDPR** and, where applicable, the **EU GDPR**. Access to the API requires an **API token** issued via `dash.llm7.io`.
 
@@ -35,6 +35,28 @@ This Privacy Policy explains how **LLM7.io** (“we”, “us”, “our”) col
 We do **not** intentionally collect special category data. We do **not** sell personal data.
 
 ---
+
+## Optional product analytics
+
+If you choose “Allow analytics”, we use PostHog's EU service to understand page
+visits and selected feature actions across LLM7.io and dash.llm7.io. We send
+query-free page routes, enumerated action outcomes, model/language choices, and
+coarse amount or timing ranges. Landing visitors are initially anonymous; after
+dashboard sign-in we associate consented activity with an opaque account ID and
+subscription tier. Shared first-party PostHog cookies support this attribution.
+We do not include email, passwords, API keys, prompt or generated text, referral
+codes, payment identifiers, exact account balance, or raw API errors in these
+events. Autocapture and session replay are disabled.
+
+The necessary preference cookie `llm7_analytics_consent` remembers “Allow analytics”
+or “No thanks” across both sites for 180 days. Optional analytics are not loaded
+before permission. You can withdraw permission using “Analytics preferences” in the footer on
+either site; this stops new collection but does not delete events already received.
+Contact support@llm7.io regarding deletion of previously collected account data.
+The landing site's existing Google Analytics is also gated by this choice.
+
+Consent copy, analytics retention, processor agreements and jurisdiction-specific
+requirements should be reviewed before this analytics configuration is deployed.
 
 ## 3. Purposes and legal bases
 

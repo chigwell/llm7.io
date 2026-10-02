@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/buttonShadcn";
 import { Github, Linkedin, Twitter, Heart, Send } from "lucide-react";
 import { IconBrandDiscordFilled } from "@tabler/icons-react";
+import { AnalyticsPreferences } from "./AnalyticsConsent";
 
 export default function Footer() {
   // This prevents the footer from rendering during initial hydration
@@ -289,6 +290,9 @@ export default function Footer() {
                 >
                   Privacy Policy
                 </Link>
+              </li>
+              <li className="text-muted-foreground hover:text-foreground transition-colors">
+                <AnalyticsPreferences />
               </li>
               <li>
                 <Link

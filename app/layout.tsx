@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Script from "next/script";
+import AnalyticsConsent from "@/components/AnalyticsConsent";
+import AnalyticsLifecycle from "@/components/AnalyticsLifecycle";
+import "./analytics.css";
 import "./globals.css";
 import "@xyflow/react/dist/style.css";
 import "../components/live-usage-flow/live-usage-flow.css";
@@ -130,15 +132,8 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }} />
         {children}
-        <Script id="posthog-toolbar" strategy="afterInteractive">
-          {`
-            if (!window?.posthog) {
-              console.warn('PostHog must be added to the window object on this page, for this to work. This is normally done in the loaded callback of your posthog init code.')
-            } else {
-              window.posthog.loadToolbar({"action":"ph_authorize","token":"phc_yFALCMqbTR6jCJgSq6hw2cBrstJQ7cNk4xWx2nWKipMb","toolbarVersion":"toolbar","instrument":true,"userEmail":"chigwel@gmail.com","distinctId":"BsyPkrrydfNnBnvKPir7jXzKdgS6943bAkrVxnM7N9mY","userIntent":"add-action","uiHost":"https://eu.posthog.com","dataAttributes":["data-attr"]})
-            }
-          `}
-        </Script>
+        <AnalyticsConsent />
+        <AnalyticsLifecycle />
         </body>
     </html>
   );

@@ -1,0 +1,20 @@
+.llm7-analytics-banner {
+  position: fixed; z-index: 110; bottom: 12px; left: 12px; right: 12px; margin: 0 auto;
+  max-width: 960px; display: flex; align-items: center; gap: 20px; padding: 18px;
+  border: 1px solid #64748b; border-radius: 16px; background: #111827; color: #f8fafc;
+  box-shadow: 0 12px 36px #0004; font: 14px/1.5 system-ui, sans-serif;
+}
+.llm7-analytics-banner p { margin: 6px 0; }
+.llm7-analytics-banner a { color: #c4b5fd; text-decoration: underline; }
+.llm7-analytics-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.llm7-analytics-actions button {
+  cursor: pointer; border: 1px solid #64748b; border-radius: 8px; padding: 8px 12px;
+  background: #1f2937; color: #f8fafc; font: inherit;
+}
+.llm7-analytics-actions button:nth-child(2) { background: #6d28d9; border-color: #a78bfa; }
+.llm7-analytics-actions button:focus-visible, .llm7-analytics-preferences-link:focus-visible { outline: 3px solid #c4b5fd; outline-offset: 3px; }
+.llm7-analytics-preferences-link { position: static; display: inline; border: 0; padding: 0; background: none; color: inherit; text-decoration: underline; font: inherit; cursor: pointer; }
+@media (max-width: 700px) {
+  .llm7-analytics-banner { flex-direction: column; align-items: stretch; gap: 12px; max-height: 70vh; overflow: auto; }
+  .llm7-analytics-actions { flex-wrap: wrap; justify-content: flex-end; }
+}

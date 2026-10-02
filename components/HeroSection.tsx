@@ -372,7 +372,7 @@ Prototype, build, and scale without switching providers.
               className="w-full sm:w-auto px-6 md:px-8 py-4 md:py-6 text-base md:text-lg font-semibold"
               asChild
             >
-              <Link href="https://dash.llm7.io/">
+              <Link href="https://dash.llm7.io/" data-analytics-placement="hero">
                 Get a Free API Key
                 <ArrowRight className="w-4 h-4 md:w-5 md:h-5 ml-2" />
               </Link>
@@ -383,7 +383,7 @@ Prototype, build, and scale without switching providers.
               className="w-full sm:w-auto px-6 md:px-8 py-4 md:py-6 text-base md:text-lg font-semibold backdrop-blur-sm"
               asChild
             >
-              <Link href="#example">
+              <Link href="#example" data-analytics-target="example" data-analytics-placement="hero">
                 Example
               </Link>
             </Button>

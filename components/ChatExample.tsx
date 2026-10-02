@@ -1,4 +1,5 @@
 "use client";
+import { analytics } from "@/lib/analytics";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Loader2Icon, GlobeIcon, FlaskConicalIcon, MessageSquareMoreIcon } from "lucide-react";
 import { GoogleOAuthProvider, type CredentialResponse } from "@react-oauth/google";
@@ -32,6 +33,7 @@ export default function MagicalChatInput() {
   const { status, response, error, elapsedTime, showResponse, handleSubmit } = useChatGeneration({ text, model, apiToken, getCookie, fetchApiToken });
 
   const recordClick = useCallback((source: number) => {
+    if (analytics.getConsent() !== "allowed") return;
     const url = `http://api.llm7.io/record-click?source=${source}`;
     try {
       fetch(url, { method: "GET", keepalive: true, mode: "no-cors" }).catch(() => {});

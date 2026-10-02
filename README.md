@@ -148,6 +148,70 @@ This project is made possible thanks to the generous support and infrastructure 
 </table>
 
 
+## Consent-gated analytics
+
+PostHog is optional: no SDK import or PostHog request occurs before consent.
+The `llm7_analytics_consent` cookie stores `v1_allowed` or `v1_declined` for
+180 days on `.llm7.io` (host-only on localhost/preview domains).
+The non-floating “Analytics preferences” footer link reopens the banner; withdrawal drops pending analytics.
+Already-dispatched requests cannot be recalled.
+
+Use the same **public project token** in both builds, never a personal API key.
+The host is `https://eu.i.posthog.com`. Missing configuration disables analytics.
+Local production values belong in ignored `.env.production.local`; deployment
+providers need the corresponding public variables configured **before building**.
+
+The facade is fire-and-forget, with an in-memory queue of at most 50 entries while
+the SDK loads after opt-in. There is no durable/offline backlog or delivery guarantee.
+Only allowlisted PostHog events/properties leave the app, including through the SDK's
+`before_send` hook. Every event has `surface`, a query-free `route`, and
+`consent_version: 1`. Pageviews are manual; autocapture, replay, surveys, performance
+capture and remote feature flags are disabled. No email, API key, password,
+prompt/output, referral code, payment identifier, raw error or exact balance is sent.
+
+Both apps use a shared PostHog cookie for landing-to-account attribution. Landing
+never calls identify; initial visitors are anonymous. Dashboard identifies only
+after a matching balance response supplies the opaque `user_id`, with `plan`
+limited to `0 | 2 | 3`. Logout/session clearing resets the SDK first. Returning
+landing visits may inherit an already-identified shared cookie; landing never
+adds account/person properties itself.
+
+The SDK is pinned to **1.435.6**. Its opt-out does not discard pending batches or
+retries, so a small adapter clears those queues and checks consent at dispatch.
+The unmangled `posthog-js/lib/src/entrypoints/module.slim.es.js` entrypoint preserves
+the internal method names the adapter needs.
+Asynchronous XHR avoids that entrypoint's unbound fetch receiver. Keep both copies of
+`analytics-core.js` synchronized and rerun the real-SDK browser regression on
+every SDK upgrade. Do not replace this entrypoint with the mangled default build.
+
+No production toolbar authorization is embedded. For an explicit developer
+session, use a local build, opt in, then enable external dependency loading through
+`window.posthog.set_config({ disable_external_dependency_loading: false })`
+and launch the toolbar from your authenticated PostHog project. Never commit a
+toolbar authorization payload. Production dashboard CSP intentionally does not
+permit external toolbar scripts.
+
+Before deployment, review consent/privacy copy and processor settings, then check
+the EU project's live event debugger: no requests before consent, one pageview per
+navigation, anonymous-to-identified funnel using only the opaque ID, and reset on
+logout. Cross-subdomain cookie behavior needs an HTTPS check on the real domains.
+Payment **completion** is deliberately not a browser event; add it server-side
+in a separate change if required.
+
+References: [PostHog identity guidance](https://posthog.com/docs/data/anonymous-vs-identified-events)
+and [JavaScript configuration](https://posthog.com/docs/libraries/js/config).
+
+Landing configuration: `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` and
+`NEXT_PUBLIC_POSTHOG_HOST`; see `.env.example`. Run `npm test` and `npm run build`.
+Analytics lifecycle and consent mount in the root layout, independently of the
+homepage marketing providers. Existing Google Analytics and legacy click metrics
+also respect this consent choice.
+
+Events: `$pageview`; `cta_clicked` (dashboard/example/docs/chat, with placement);
+`demo_submitted` and `demo_result` (model, result outcome and latency bucket);
+`code_copied` (language only); `model_showcase_selected` (default/fast/pro);
+`referral_choice` (accepted boolean). The allowlist lives in `lib/analytics-core.js`.
+
 ## License
 
 This project is licensed under the [GNU AFFERO GENERAL PUBLIC LICENSE](LICENSE). 

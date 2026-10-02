@@ -1,4 +1,5 @@
 "use client";
+import { latencyBucket, track } from "@/lib/analytics";
 import { useRef, useState, type FormEventHandler } from "react";
 import { requestChat, type ChatRequest } from "@/lib/chat/request";
 
@@ -36,6 +37,8 @@ export function useChatGeneration({
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     if (!text.trim()) return;
+    const startedAt = Date.now();
+    track("demo_submitted", { model });
 
     setStatus("submitted");
     setError(null);
@@ -53,7 +56,9 @@ export function useChatGeneration({
       });
       setResponse(generatedText);
       setStatus("ready");
+      track("demo_result", { model, outcome: "success", latency_bucket: latencyBucket(Date.now() - startedAt) });
     } catch (err) {
+      track("demo_result", { model, outcome: "failure", latency_bucket: latencyBucket(Date.now() - startedAt) });
       if (err instanceof DOMException && err.name === "AbortError") {
         setError("Request timed out after 180s.");
       } else {

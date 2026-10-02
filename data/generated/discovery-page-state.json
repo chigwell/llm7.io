@@ -1,0 +1,672 @@
+{
+  "/models/features/tool-calling/": {
+    "fingerprint": "f7243312172c604b090a95cfad36d656b1349c46d77e481887a32c884413e245",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/models/features/vision/": {
+    "fingerprint": "43c28e2db528564766a57fad86f810f25be5a13351a89d318c6d69b02392950c",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/features/long-context/": {
+    "fingerprint": "9023e5c4f717badf9ecb228560a12345de0a498cfbe0340df33869d6d7d177e8",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/models/features/json-mode/": {
+    "fingerprint": "0f343746a7b4ff95fac9118772a508758ba1a24e5aabd40c4569d0dd14870674",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/models/features/streaming/": {
+    "fingerprint": "45586fc3365213370fab14d0ad106a8912e6c285d80f86ecb8dd057d2a8c982a",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/models/features/reasoning/": {
+    "fingerprint": "4deb508d9233c3c16bbbb5805289d12a8d8d23b3286c570e3711aea2d278ee8e",
+    "lastmod": "2026-10-01T09:46:39.400Z",
+    "indexable": true
+  },
+  "/integrations/hermes-agent/": {
+    "fingerprint": "356c4050eea6b92081e7d2fa3fda303b856bbcfedde0b02a9909cd247227035b",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/integrations/openclaw/": {
+    "fingerprint": "19286472ed53b9759c6fca2398768f15e51111f40d9691ce6304145bf401a604",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/integrations/n8n/": {
+    "fingerprint": "35f94d66b76905db6cdcc26a4b47adfa04b75c142ce7a109c893002f312c4f9c",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/integrations/langchain/": {
+    "fingerprint": "64cb2c78ee04b20258f49042001cf650b8ba875ef5fd4c69018a63d4b9962057",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/integrations/vercel-ai-sdk/": {
+    "fingerprint": "42791c2d03e21f750cdaae685c2a0b64484822d03f061e1182dd7a93c1716444",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/cost-calculator/customer-support/": {
+    "fingerprint": "d9104335008606d3af1cf0a5654837441754728bccc3f5d592d9dd291b297d1b",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/cost-calculator/document-processing/": {
+    "fingerprint": "af987c093fa20a1aa8f3bb38057b08fefda15fe5e8615879981f65a448310ab0",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/cost-calculator/json-extraction/": {
+    "fingerprint": "3519d2ec6e01f632b805f0265fbf01bf5855cbf754a34e8da432f7ba08d73137",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/models/bytedance-seed-2-0-mini/alternatives/": {
+    "fingerprint": "3f874c58b080a768aab2268651a532bcbe3ea480de1b7ffb6b42ee379e9b741a",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/models/deepseek-v4-flash-0731-d2d1a591/alternatives/": {
+    "fingerprint": "c7953e7332a778e6dc91de6b535f6685df7dbf48cd37c5786d45ef5c1300bfe0",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/deepseek-v4-1-flash/alternatives/": {
+    "fingerprint": "2a7042e6bdd1bdfcfcdd37fff18d90da8c3d9ae546b91474bce40d0da13e7198",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/glm-5-3-flash-e8f0d28d/alternatives/": {
+    "fingerprint": "6318f2a77f0c418adb47b4b7d5b310d69152c9eb58e94c9ad9fb2de018d54a0a",
+    "lastmod": "2026-10-01T09:46:39.400Z",
+    "indexable": true
+  },
+  "/models/inkling/alternatives/": {
+    "fingerprint": "887154b61f9e50bc9a5a18021d3686ffb92c7eec9fd90c464aafdce73541c166",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/inkling-small/alternatives/": {
+    "fingerprint": "c31bdef7dd35f9b5b61c6e4c7358364a134a88c8cfd8561313559246e89bc566",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/l3-8b-lunaris-v1-turbo/alternatives/": {
+    "fingerprint": "5a1adb6b0a74c19d3f342a28d5fb46abf1b1f4f0fe91e49921cfd6a4400bc462",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/models/nemotron-3-5-asr-streaming-multilingual-0-6b/alternatives/": {
+    "fingerprint": "493ab7f1636162cedf99807836e65cadc1adafa06a017e44665c6a9b9088e358",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/qwen3-asr-0-6b/alternatives/": {
+    "fingerprint": "3d3a4549ff58c8b550a66228f3135e43a387850ca0ee92cc704cafe7d35b58f8",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/qwen3-asr-1-7b/alternatives/": {
+    "fingerprint": "4c9c4832a311be4ef314d09a8921268b2fb57d8b9550b50c4110a8fe61ad0082",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/sao10k-l3-8b-lunaris-v1-turbo/alternatives/": {
+    "fingerprint": "8fece7583e6d8085aa665956ebc2f9b14a935ff7134f4e2924a76d7f56748d6e",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/models/voxtral-mini-3b-2507/alternatives/": {
+    "fingerprint": "95cc1249398354810a99b4ab47a0f926684f75727c99a82785ddd711e9b45108",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/voxtral-small-24b-2507/alternatives/": {
+    "fingerprint": "d5ce304b2d3f24bbcc81fb1dd16a4d6e74a4717ebf5cf6652f9d0d83e67bc345",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/xiaomimimo-mimo-v2-5/alternatives/": {
+    "fingerprint": "ee44264b1021a80a50f6dcd1a0c57ec2d7fc518c9581680a0e05de19990adf30",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/models/xiaomimimo-mimo-v2-5-pro/alternatives/": {
+    "fingerprint": "c14948e0c2babc816805c6a1436ea1ea50cc61b0f2ca5e8abd0f795e028c1c94",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/anthropic-claude-haiku-4-5/alternatives/": {
+    "fingerprint": "1169ebe4055d626f1dd474e6f6e67bf88475243b5a92d00dfb85cd1bb10bbe2a",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/anthropic-claude-opus-4-5/alternatives/": {
+    "fingerprint": "cded13a43f1c2be605b6e98b01a1afacfab373163c5c8ae8789ea2de8d305067",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/anthropic-claude-opus-4-6/alternatives/": {
+    "fingerprint": "ac573026209da9cc7d62e82dfb5b1d78e6daf63a887bc2f6af12a9a5e8f08a51",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/anthropic-claude-opus-4-7/alternatives/": {
+    "fingerprint": "f6e6f3e6d4045ccd87c40a94601329bad6903b0f06298226fb8b684e24577338",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/anthropic-claude-opus-4-8/alternatives/": {
+    "fingerprint": "4266fd28697d5a04c951f721c67f418c56c9aebf16d362c7e95d06104055b513",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/anthropic-claude-sonnet-4-5/alternatives/": {
+    "fingerprint": "b94be52e955a15aacbf42f0ef4f42b278b3b5f5c65f033a8227e27a28f20a6bf",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/anthropic-claude-sonnet-4-6/alternatives/": {
+    "fingerprint": "a9bd6b38fe4e8531e12f487116fe14d8e008308f899ab54987ff5fbf4c2ae77d",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/anthropic-claude-sonnet-5/alternatives/": {
+    "fingerprint": "4b86ed0f6c0f39bdb3cc6e9268cecf725a98cb646faebb60d1ede676cfcf364d",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/bytedance-seedance-2-0-fast-image-to-video/alternatives/": {
+    "fingerprint": "ae6894e9cc69f7afd2e03b7782f372d1b0c6745ebfdd433c23859c075143fe63",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/bytedance-seedance-2-0-fast-text-to-video/alternatives/": {
+    "fingerprint": "f7a36748b374218adb100897cbd41cd53583e867ecf701cc11b669f252aa36f8",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/bytedance-seedance-2-0-mini-image-to-video/alternatives/": {
+    "fingerprint": "765a6c8c6b795d16aacf7c6ce3dec8127121d2bf9277e7f6ed24c0a26cbf3ca3",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/bytedance-seedance-2-0-mini-text-to-video/alternatives/": {
+    "fingerprint": "d6bc08ee7d9116ee91d38af2d9b0cd57f7b2123b23c9124c8d35a7c4a2afe255",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/bytedance-seedance-2-0-image-to-video/alternatives/": {
+    "fingerprint": "7e306ec921c25cdaedb292e95c38d68d8851243b8ad50fa0ecc76650d1a3a0c4",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/bytedance-seedance-2-0-text-to-video/alternatives/": {
+    "fingerprint": "e84fcc78ef06c64af045eb33d8aaa35fbf60407276f44839af1e2e9053af2177",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/chroma-v-46-flash/alternatives/": {
+    "fingerprint": "44db3a99f95763e937e4699531ce05e60f733065a9eaaf03ce87e0c46439b2f2",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/claude-fable-5/alternatives/": {
+    "fingerprint": "4e8482a44f1a3838dde41f666f24edab7aded81309b10d0e02881d692ff1ee0c",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/claude-fable-5-1/alternatives/": {
+    "fingerprint": "e1c95239c1b1630699923bb28f84bd808dc7f1e631a623a8f3a09ded06352449",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/claude-haiku-4-5/alternatives/": {
+    "fingerprint": "98a078c7eff4c54d9e8aacc905ef3f3b74ac0456b04c12ece8765a25d02564e6",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/models/claude-opus-4-8/alternatives/": {
+    "fingerprint": "babf19c5070df45dd7cd6a21b0844f6ad2cec08e030b1909ef4eb7e84cf84381",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/claude-opus-5/alternatives/": {
+    "fingerprint": "21555bbec54719c2c8b839d1c45b655bee41bd4df1105728cd36fa4ccc422984",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/claude-opus-5-5/alternatives/": {
+    "fingerprint": "85c38dc40865596afe7252b1532c736ed340751772e3184dea33e1d30f2f101b",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/claude-sonnet-4-6/alternatives/": {
+    "fingerprint": "73b2d37a254f6b58312ef6e77c34f871809f7299beefac7fa8422fbbe671c850",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/claude-sonnet-5/alternatives/": {
+    "fingerprint": "f54671c8c094cac448f3859adc532790e1ca6cc2c27e5bfed35e92d47dadcb1f",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/codestral-latest/alternatives/": {
+    "fingerprint": "bf6bbedd0d8dc034c4ce9cce2d9b508f4234776457bfb52ddb1e0b4dbfdbc355",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/models/dark-beast-krea2/alternatives/": {
+    "fingerprint": "4af3d65bf588e75b38f034b20b2d969466aedb2ff6280452f18ade0d389c4de7",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/deepseek-ai-deepseek-v4-flash-0731/alternatives/": {
+    "fingerprint": "00be33cb6bdccd29fe5bce808b4319db1ad4a2c1601dbe947c764f4c749727e7",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/deepseek-v3/alternatives/": {
+    "fingerprint": "cf0d16ffbb981cd8feef7a6777e8fd062fd823e620e371366fd2dbb4a1a3fb26",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/deepseek-v3-2/alternatives/": {
+    "fingerprint": "4eb68d77258c4672cc44ffe9476943bed63ee5b85e92e91cfd8cff95bfb56272",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/deepseek-v4-flash/alternatives/": {
+    "fingerprint": "e9e8f83ad2ed54e13435349f80d8e94b988ee830e15a89a61ed54a9655b2217d",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/deepseek-v4-flash-0731/alternatives/": {
+    "fingerprint": "2bd4dbfe14d2eabc286d32261271ed360974a0f7c73a17bb533c70daded74ef6",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/deepseek-v4-flash-preview/alternatives/": {
+    "fingerprint": "56e73a39440bee93b83f235e4723f40d62fb97632d84d974ab979d69e5403b88",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/deepseek-v4-flash-0731-925a3661/alternatives/": {
+    "fingerprint": "8101de305307934a83fff5da25489e54613e2e9781da360f5e454f3121783a0b",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/deepseek-v4-pro/alternatives/": {
+    "fingerprint": "8c46a166daea9d26c8ee4c04f9b69f258408730dadc145470d97fd64a8e3c6ca",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/firefly-gpt-image-2/alternatives/": {
+    "fingerprint": "1ee1b9d987a46eee50a3ce844c54685c768501527babd637141fc0124580e510",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/firefly-image-5/alternatives/": {
+    "fingerprint": "221914c2a7b62747a3429e5ea972720d5a193a0a209ee25fa4d029c5af170109",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/firefly-video/alternatives/": {
+    "fingerprint": "af6aab9da000e07730b94962f7569dfd71413a53fd283c36736a55bd9515ed8b",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/flux-klein-2/alternatives/": {
+    "fingerprint": "122aa64bd55f8cc30511d4637884f482c2c36432cf38a384dfe17d380d57e917",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/flux-kontext-max/alternatives/": {
+    "fingerprint": "8fd7a13aa8b5462528aa5f13b9e50ca918cd49e2fdf0ce25eebd667ed753b69e",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gemini-3-flash/alternatives/": {
+    "fingerprint": "365e91a5538920953f984c703fd95658230d7a7ca50363097300db9e74284273",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gemini-3-1-flash-lite/alternatives/": {
+    "fingerprint": "e1487226df80a1ca2fd926b7fe8aeea0b0f4223226215793d5446f1cfc9fd572",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gemini-3-5-flash-low/alternatives/": {
+    "fingerprint": "e7e6f1202b79cabf13fcce2656f0fecea41929e0b7ee168b9c04b4d739142f54",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gemini-3-6-flash-high/alternatives/": {
+    "fingerprint": "5644ad9af43b98c244f8c806d7f60aa968a592cdccab6238532177ebb8c17f02",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gemini-3-7-flash/alternatives/": {
+    "fingerprint": "790b841db21cf31218d15be0d3679a7d99b434242504b69e6008c1925f6a073c",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gemini-3-8-flash-high/alternatives/": {
+    "fingerprint": "ac99e0812fb65e1de78680a224679ba539eec1d86d8f963e3e6942a4ffe8ea07",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gemini-omni-flash/alternatives/": {
+    "fingerprint": "7a929c4a479874f3fd780347ba6a2dcb3c3b1254baf85171ac0757ee2663cf6f",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gemini-veo31/alternatives/": {
+    "fingerprint": "e3f37539846a9e73922dc8e1b33f7b092fd120c18e895d62823a9ae64a49efdb",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gemma4-31b/alternatives/": {
+    "fingerprint": "dd4785607ef7ef44f9a66ba7baeed0279a06e267580866810c3b810d9c09b22e",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/models/glm-5-2/alternatives/": {
+    "fingerprint": "7241005b7f086d2e1c2d7671ffefebda81ba9ae075f3d01e53634e8c73a669e6",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/glm-5-3/alternatives/": {
+    "fingerprint": "b7f8c328812a2be68748e5f2404f4bcdcb67e385bcd83ba68f23fae1080ee3a6",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/glm-5-3-flash/alternatives/": {
+    "fingerprint": "a36a1e8118274888da6b4630d447397dd1123d075cce81fe98983f6c39ebfa2d",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/google-gemini-omni-flash-image-to-video/alternatives/": {
+    "fingerprint": "e2e74c8a1b12732f748d376fd88979c4703c057e2009eb5ba7b83f90dda9cebc",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/google-gemini-omni-flash-text-to-video/alternatives/": {
+    "fingerprint": "51cc476bd6d79ae6971eaf8256bc2893d3578bf530b293f1984928415a87844e",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gpt-5-nano/alternatives/": {
+    "fingerprint": "4c48ccf5124f8950069d65a00204ad839bc0fa81d6c02a5b0f2777fc04304e01",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gpt-5-3-codex-spark/alternatives/": {
+    "fingerprint": "0a30bc7c52aa5b0798469c7ba8806f7f7382b026f7d78521bd6f0ed047bff215",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gpt-5-4/alternatives/": {
+    "fingerprint": "65957e304ff93383cc64f311ecf4ec8737fcef95d3e66911469b65a5df3c3525",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gpt-5-4-mini/alternatives/": {
+    "fingerprint": "e2c9d7ce6f01eb7976f19ac2d94dd345a3d695b6fb38f115c6a27277644c3cfa",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gpt-5-5/alternatives/": {
+    "fingerprint": "7781aaf809b6733a7ab5593a5315fa5b90ae8f04ce765a18c446d913239ac1b9",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gpt-5-5-openai-compact/alternatives/": {
+    "fingerprint": "7be5ee30cf751b7d5c1ce2d11dfa7684a55f507ad4a6233d882e44e375a67fd8",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gpt-5-6-luna/alternatives/": {
+    "fingerprint": "7d6edb408ed573a8d105ef8f3d1a6da08c4eabf05c48320ac51039eb216763a1",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gpt-5-6-sol/alternatives/": {
+    "fingerprint": "bcfa0d13851f05a405366489268f116b1f7c155630cb3f80e80c554c2940e4ab",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gpt-5-6-terra/alternatives/": {
+    "fingerprint": "621dc3dbd3b7189e645b75ecd0e9c844973e5a8105609e60873af1f3e250ed91",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gpt-6-astra/alternatives/": {
+    "fingerprint": "aa209e9920b17a624df2bb80754ddae41d7b58854ffba0c8645530eaa18bdcc2",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gpt-6-sol/alternatives/": {
+    "fingerprint": "ec1989b059f94ce7b8a7a457880fe164a9e0451ffffe01152e05c499cd4dc5ae",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gpt-6-1-sol/alternatives/": {
+    "fingerprint": "8ce1345f4e3cb08efa6a95eda38828df93c399bab8fe468c16f833f1ad44eb0c",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gpt-image-2/alternatives/": {
+    "fingerprint": "941efbdae4056c047a2a5efe6f7dcd564bb3b283cb9115407f5fe682316ec52b",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gpt-image-2-5/alternatives/": {
+    "fingerprint": "8461435a191e231f259ee245501223ac41cfe6b984d3a14e593a1031a137ba71",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gpt-oss/alternatives/": {
+    "fingerprint": "93632237323bb3c717623892bb36581a8e058161e5d2bd295946dbd1f79e73a7",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/gpt-oss-20b/alternatives/": {
+    "fingerprint": "f51929502c65146f2ab386c800c2c9eefd725622014590bd138ec9fa7c620611",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/models/grok-3-mini/alternatives/": {
+    "fingerprint": "8364f845a8141c08e73e3f2e276b0cf04785cadbfdc8de245aadbf56f6b496f7",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/grok-4-5/alternatives/": {
+    "fingerprint": "90ed6fff8c426dfb07a7696ae75550548d013ba2b982d1afc863d7b8891db2b4",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/grok-4-6/alternatives/": {
+    "fingerprint": "cb1535fd4f0f34b542b1b2702ba5791e8125c7980771ed9141c6dde6eed6bbc3",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/imagine-1-5/alternatives/": {
+    "fingerprint": "bf18c6ffc92ca24a66e077123ece2a21f0ab18c990ebee675323147a1573e11b",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/kimi-k2-6/alternatives/": {
+    "fingerprint": "fa63c729acb071ae7c53dfcca158bf0968559a3b728f5419f3de3fb8e43ba82d",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/kimi-k2-7-code/alternatives/": {
+    "fingerprint": "c3c3c14ac7b9a3ca9b98ba0bc63e18e4ab9baa8eaa19b336118411c5b2a9cf03",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/kimi-k3/alternatives/": {
+    "fingerprint": "5f373df4d1179af395baeec3a5ecf2dfe5a04f7a15e5139764d629b7f947dd26",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/kling-v3-0-pro/alternatives/": {
+    "fingerprint": "1e61d61309790fa476dcf0b9708ee54d1fd64384dd187e3ec44385c36a24726f",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/kling-v3-0-turbo/alternatives/": {
+    "fingerprint": "6eabfb04ae2c0b3acc1da68fcc8bfe4a1e89bb78de176e48d9066c9eeb086381",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/kwaivgi-kling-v3-0-pro-image-to-video/alternatives/": {
+    "fingerprint": "9ef17e9f8e4076adc19ec64169fd4e8e7b5db17607c22d675f136641271f53e1",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/kwaivgi-kling-v3-0-pro-text-to-video/alternatives/": {
+    "fingerprint": "ef4d5b5b587e000edce33e08a1ae24f076433f4a8f44d2ae3fa4cbd49884695a",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/kwaivgi-kling-v3-0-turbo-image-to-video/alternatives/": {
+    "fingerprint": "6302a017741c32a4797cb09bb907ea6f863de7a7158e5f5512600615f47a9041",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/kwaivgi-kling-v3-0-turbo-text-to-video/alternatives/": {
+    "fingerprint": "be5bfaeb199f2f084c5de1f3bc1f9025ba66d21122b424cdb5726cb6bade0374",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/llama-4-maverick/alternatives/": {
+    "fingerprint": "324fd5ebd664398434555ec85ac8ccf772d572c1c8923609538edeef181a3110",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/meta-llama-3-1-8b-instruct-turbo/alternatives/": {
+    "fingerprint": "3d2c2f1aa0a2b4f7367d28c73107355d8c96384753acc05384359327ba328316",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/models/meta-llama-meta-llama-3-1-8b-instruct-turbo/alternatives/": {
+    "fingerprint": "e8d3f373427dd3d4ed92ab7cd9e5f2b6cb5f2c70dab309db4f9a5765e850e2d5",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/models/minimax-m2-7/alternatives/": {
+    "fingerprint": "859e3498e84c3e7433b56e2e77128962f3a26e767fbedbc867bbdd110f53bf86",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/minimax-m3/alternatives/": {
+    "fingerprint": "948a88aca6bfdf2fcf7e7adb42a74043ad4e669736a8915c1fc321a025803700",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/mistral-nemo-instruct-2407/alternatives/": {
+    "fingerprint": "f10141f6ed0ca2f1255c0d3bbcbc4af2af29beccf8e30c9fbc927b594142a604",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/models/mistral-small-24b-instruct-2501/alternatives/": {
+    "fingerprint": "ac93a05af7a688c99cc8923ab170e97b2d9ad12a59b6238e887e2de514d4fe77",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/models/mistral-large-3-675b/alternatives/": {
+    "fingerprint": "f62313c2d77f541745cda6e007d2973dd5b598e7eef7f061b3b779e0383bf468",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/mistralai-mistral-nemo-instruct-2407/alternatives/": {
+    "fingerprint": "b8877e3620944d0c59766a3b1029328bb5b26872451a140e78d9ae25cd434296",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/models/mistralai-mistral-small-24b-instruct-2501/alternatives/": {
+    "fingerprint": "cfdb28811e56cd99bf3485af24bdc14eae098b70e3ef30560c4a4161701d30f8",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/models/nvidia-nemotron-3-5-asr-streaming-multilingual-0-6b/alternatives/": {
+    "fingerprint": "542a727dac57307eaa77c7187a27b7676293b6c68cb438f0b090b52c16f804f8",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/openai-whisper-large-v3-turbo/alternatives/": {
+    "fingerprint": "5f037a90808b26abd1b0438e0c669f4dca5fe64faacfae15f66bbed858869d84",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/seed-2-0-mini/alternatives/": {
+    "fingerprint": "5f4ae0a2d121c5a107a360647f7a03162888a0e9483016daa16b28cabb5cfff7",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/models/seedance-2-0/alternatives/": {
+    "fingerprint": "07226f0225cbaaad3852476c55e8555ac9f455fb6e7350df9b20a15255d4d126",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/seedance-2-0-fast/alternatives/": {
+    "fingerprint": "f68d2a95119651e6220e82b99bf33e1907cd32df422d45c7936235f0d1d7a0b4",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/seedance-2-0-fast-unrestricted/alternatives/": {
+    "fingerprint": "619e7fd684f6fa6ed8378116f44a880607e20ed6ee8f4e82c0bc3c05b492bbb0",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/seedance-2-0-mini/alternatives/": {
+    "fingerprint": "bfb9991c6663743358c48a7c893d59f217006605ead5798a2e106cb139f61868",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/seedance-2-0-unrestricted/alternatives/": {
+    "fingerprint": "668023e02d476cc631113b69f83927a9c784d20e632f8f71f2fab1c2f90981bf",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/thinkingmachines-inkling/alternatives/": {
+    "fingerprint": "72a475b2638dabe8c4a8cf53860995270b3c084d1930ed552209ad154a942823",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/whisper-large-v3/alternatives/": {
+    "fingerprint": "464b7de4d4ebd8b552b07450ac9962c53639af488f0ba441c24b50abe04b4852",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/whisper-large-v3-turbo/alternatives/": {
+    "fingerprint": "92092b8daa34eece7838c2d2d0c992fb54d12e00421d8594f5aed1daa68e4335",
+    "lastmod": "2026-09-30T09:09:03.675Z",
+    "indexable": true
+  },
+  "/models/features/": {
+    "fingerprint": "90a3aaed1d8d34a8661f463e8bbf763d3cdff1d722c567c848eee7bb8f1f3080",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/integrations/": {
+    "fingerprint": "2433c753444b067795595d3e2e176b3309b3bfb677fc323c5667ae8c0b09c3af",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  },
+  "/cost-calculator/": {
+    "fingerprint": "ab41508fb52fed8e76ad856714485f62bf50dad7a4c4dac5c4b9e7dea9238931",
+    "lastmod": "2026-10-01T15:31:04.676Z",
+    "indexable": true
+  }
+}

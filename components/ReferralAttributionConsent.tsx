@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { track } from "@/lib/analytics";
 
 const REFERRAL_KEY = "llm7_referral_code";
 const REFERRAL_MAX_AGE = 60 * 60 * 24 * 30;
@@ -21,6 +22,7 @@ export default function ReferralAttributionConsent() {
   if (!validCode(code)) return null;
 
   const decide = (accept: boolean) => {
+    track("referral_choice", { accepted: accept });
     if (accept && !localStorage.getItem(REFERRAL_KEY)) {
       localStorage.setItem(REFERRAL_KEY, code);
       document.cookie = `${REFERRAL_KEY}=${encodeURIComponent(code)}; Domain=llm7.io; Path=/; Max-Age=${REFERRAL_MAX_AGE}; Secure; SameSite=Lax`;
@@ -30,7 +32,7 @@ export default function ReferralAttributionConsent() {
   };
 
   return (
-    <aside className="fixed inset-x-0 bottom-0 z-[100] flex justify-center p-4 pb-[calc(1rem+env(safe-area-inset-bottom))]" role="region" aria-label="Referral attribution">
+    <aside style={{ bottom: "var(--llm7-analytics-height, 0px)" }} className="fixed inset-x-0 bottom-0 z-[100] flex justify-center p-4 pb-[calc(1rem+env(safe-area-inset-bottom))]" role="region" aria-label="Referral attribution">
       <section className="w-full max-w-3xl rounded-2xl border border-border bg-background/95 p-4 shadow-2xl backdrop-blur md:flex md:items-center md:justify-between md:gap-6 md:px-5">
         <div>
           <h2 className="text-sm font-semibold">Referral Programme</h2>

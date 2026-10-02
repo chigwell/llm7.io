@@ -85,7 +85,7 @@ export default function Navigation() {
       {/* Desktop Navigation */}
       <NavBody>
         <NavbarLogo />
-        <NavItems items={navItems} />
+        <div data-analytics-placement="navigation"><NavItems items={navItems} /></div>
         <div className="flex items-center gap-3">
           <ThemeToggle />
           <Link
@@ -128,6 +128,7 @@ export default function Navigation() {
             <Link
               key={`mobile-link-${idx}`}
               href={item.link}
+              data-analytics-placement="navigation"
               onClick={() => setIsMobileMenuOpen(false)}
               className="relative flex min-h-12 w-full items-center rounded-lg px-3 py-3 text-base font-medium text-neutral-600 transition-colors hover:bg-accent hover:text-foreground dark:text-neutral-300"
               target={item.link.startsWith("http") ? "_blank" : undefined}
