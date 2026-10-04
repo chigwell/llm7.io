@@ -209,8 +209,11 @@ and [JavaScript configuration](https://posthog.com/docs/libraries/js/config).
 Landing configuration: `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` and
 `NEXT_PUBLIC_POSTHOG_HOST`; see `.env.example`. Run `npm test` and `npm run build`.
 Analytics lifecycle and consent mount in the root layout, independently of the
-homepage marketing providers. Existing Google Analytics and legacy click metrics
-also respect this consent choice.
+homepage marketing providers. Legacy click metrics also respect this consent
+choice. Google Analytics loads independently of this choice, including when
+consent is unknown or declined. Its existing homepage marketing-provider mount
+and measurement ID are unchanged; it does not subscribe to PostHog consent.
+Review applicable cookie-consent requirements before deploying this configuration.
 
 Events: `$pageview`; `cta_clicked` (dashboard/example/docs/chat, with placement);
 `demo_submitted` and `demo_result` (model, result outcome and latency bucket);

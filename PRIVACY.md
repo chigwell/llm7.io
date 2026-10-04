@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Last updated:** 2 October 2026
+**Last updated:** 4 October 2026
 
 This Privacy Policy explains how **LLM7.io** (“we”, “us”, “our”) collects and processes your personal data when you use our educational and research-oriented website and API, including `dash.llm7.io`. We operate from the United Kingdom and comply with the **UK GDPR** and, where applicable, the **EU GDPR**. Access to the API requires an **API token** issued via `dash.llm7.io`.
 
@@ -55,11 +55,20 @@ codes, payment identifiers, exact account balance, or raw API errors in these
 events. Autocapture and session replay are disabled.
 
 The necessary preference cookie `llm7_analytics_consent` remembers “Allow analytics”
-or “No thanks” across both sites for 180 days. Optional analytics are not loaded
-before permission. You can withdraw permission using “Analytics preferences” in the footer on
-either site; this stops new collection but does not delete events already received.
+or “No thanks” across both sites for 180 days. PostHog is not loaded before
+permission. You can withdraw PostHog permission using “Analytics preferences” in
+the footer on either site; this stops new PostHog collection but does not delete
+events already received.
 Contact support@llm7.io regarding deletion of previously collected account data.
-The landing site's existing Google Analytics is also gated by this choice.
+
+**Google Analytics on the landing site**
+
+Google Analytics loads on the landing homepage independently of the PostHog
+choice, including before a choice is made and after “No thanks”. It uses Google's
+analytics service and cookies to measure visits and usage. The PostHog preference
+does not disable Google Analytics. Our explicit pageview events omit query
+strings and referrers. See [Google's privacy policy](https://policies.google.com/privacy)
+for information about Google's data processing.
 
 Consent copy, analytics retention, processor agreements and jurisdiction-specific
 requirements should be reviewed before this analytics configuration is deployed.

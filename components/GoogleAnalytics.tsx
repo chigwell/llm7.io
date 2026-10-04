@@ -1,8 +1,7 @@
 "use client";
 import Script from "next/script";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { analytics } from "@/lib/analytics";
+import { useEffect, useRef, useState } from "react";
 import { sanitizeRoute } from "@/lib/analytics-core";
 
 type GtagFunction = (...args: unknown[]) => void;
@@ -11,34 +10,26 @@ const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-BRTLYQ
 
 export default function GoogleAnalytics() {
   const pathname = usePathname();
-  const [allowed, setAllowed] = useState(false);
+  const [initialized, setInitialized] = useState(false);
+  const lastPageView = useRef<string | null>(null);
   useEffect(() => {
-    const sync = () => {
-      const consent = analytics.getConsent() === "allowed";
-      (window as unknown as Record<string, unknown>)["ga-disable-" + GA_MEASUREMENT_ID] = !consent;
-      setAllowed(consent);
-    };
-    const unsubscribe = analytics.subscribe(sync);
-    sync();
-    return unsubscribe;
-  }, []);
-  useEffect(() => {
-    if (!allowed) return;
+    if (!initialized || !window.gtag) return;
     const route = sanitizeRoute("landing", { pathname });
-    window.gtag?.("event", "page_view", {
+    if (lastPageView.current === route) return;
+    lastPageView.current = route;
+    window.gtag("event", "page_view", {
       page_path: route, page_location: "https://llm7.io" + route, page_referrer: "",
     });
-  }, [pathname, allowed]);
-  if (!allowed) return null;
+  }, [pathname, initialized]);
+  // Google Analytics runs independently of the optional PostHog consent choice.
   return <>
     <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} strategy="afterInteractive" />
-    <Script id="ga-init" strategy="afterInteractive">{`
+    <Script id="ga-init" strategy="afterInteractive" onReady={() => setInitialized(true)}>{`
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       window.gtag = gtag;
       gtag('js', new Date());
       gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false, page_location: 'https://llm7.io/', page_referrer: '' });
-      gtag('event', 'page_view', { page_path: window.location.pathname, page_location: 'https://llm7.io' + window.location.pathname, page_referrer: '' });
     `}</Script>
   </>;
 }
