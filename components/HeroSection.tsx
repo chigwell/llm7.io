@@ -305,25 +305,12 @@ export default function HeroSectionWithWaves() {
               </span>
               <br />
               <span className="bg-gradient-to-r from-primary via-primary to-primary/60 bg-clip-text text-transparent text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
-                  Your Gateway to AI Innovation
+                  50%+ lower prices
                 </span>
             </h1>
 
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4" style={{marginBottom: '0'}}>
-              Connect to leading AI models with one endpoint.
-              <span className="text-foreground font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text">
-
-              </span>{" "}
-              <span className="text-foreground font-semibold bg-gradient-to-r from-secondary to-primary bg-clip-text">
-
-              </span>
-              {" "}
-              <span className="text-foreground font-semibold bg-gradient-to-r from-secondary to-primary bg-clip-text">
-
-              </span>
-            </p>
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4">
-Prototype, build, and scale without switching providers.
+              Access leading AI models through one OpenAI-compatible endpoint.
             </p>
           </div>
 

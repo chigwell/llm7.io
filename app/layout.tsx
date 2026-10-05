@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LLM7.io | One LLM API. Your Gateway to AI Innovation. Connect to leading AI models with one endpoint. Prototype, build, and scale without switching providers.",
-  description: "Your Gateway to AI Innovation. Connect to leading AI models with one endpoint. Prototype, build, and scale without switching providers.",
+  title: "LLM7.io | One LLM API. 50%+ lower prices.",
+  description: "Access leading AI models through one OpenAI-compatible endpoint.",
   keywords: [
     "LLM7",
     "AI API",
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "LLM7.io",
-    description: "Your Gateway to AI Innovation. Connect to leading AI models with one endpoint. Prototype, build, and scale without switching providers.",
+    description: "One LLM API. 50%+ lower prices. Access leading AI models through one OpenAI-compatible endpoint.",
     url: "https://llm7.io",
     siteName: "LLM7.io",
     type: "website",
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "LLM7.io",
-    description: "Your Gateway to AI Innovation. Connect to leading AI models with one endpoint. Prototype, build, and scale without switching providers.",
+    description: "One LLM API. 50%+ lower prices. Access leading AI models through one OpenAI-compatible endpoint.",
     images: [
       {
         url: "https://llm7.io/api/og",
