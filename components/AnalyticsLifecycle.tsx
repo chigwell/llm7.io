@@ -1,13 +1,14 @@
 "use client";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { openAiPixel } from "@/lib/openai-pixel";
 import { analytics } from "@/lib/analytics";
 import { trackLandingLink } from "@/lib/analytics-links";
 
 export default function AnalyticsLifecycle() {
   const pathname = usePathname();
   useEffect(() => {
-    const page = () => analytics.trackPageView();
+    const page = () => { openAiPixel.pageViewed(pathname); analytics.trackPageView(); };
     const unsubscribe = analytics.subscribe(page);
     page();
     window.addEventListener("popstate", page);

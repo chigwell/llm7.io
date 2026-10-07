@@ -58,7 +58,7 @@ test("GA runs without consent and after decline/withdrawal; PostHog remains opt-
   assert.equal(analytics.getConsent(), "unknown");
   assert.equal(loadSdk.mock.callCount(), 0);
   assert.equal(document.querySelectorAll('script[src^="https://www.googletagmanager.com/gtag/js"]').length, 1);
-  assert.ok(document.body.textContent.includes("This choice controls PostHog only"));
+  assert.equal(document.querySelector('a[href="https://llm7.io/privacy.html"]')?.textContent, "Privacy policy");
   assert.deepEqual(views(), [["event", "page_view", {
     page_path: "/", page_location: "https://llm7.io/", page_referrer: "",
   }]]);
@@ -79,7 +79,8 @@ test("GA runs without consent and after decline/withdrawal; PostHog remains opt-
   assert.equal(loadSdk.mock.callCount(), 0);
 
   await act(async () => button("Analytics preferences").click());
-  await act(async () => button("Allow analytics").click());
+  await act(async () => document.querySelector('input[type="checkbox"]').click());
+  await act(async () => button("Save preferences").click());
   assert.equal(loadSdk.mock.callCount(), 1);
   assert.equal(captured.length, 1);
   assert.equal(views().length, 3);

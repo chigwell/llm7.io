@@ -56,7 +56,8 @@ test("landing root consent and navigation cover non-home pages without query dat
   assert.equal(document.querySelector(".llm7-analytics-preferences"), null);
   assert.ok(button("Analytics preferences").closest("footer"));
   await act(async () => button("Analytics preferences").click());
-  await act(async () => button("Allow analytics").click());
+  await act(async () => document.querySelector('input[type="checkbox"]').click());
+  await act(async () => button("Save preferences").click());
   assert.equal(load.mock.callCount(), 1);
   assert.equal(document.querySelector(".llm7-analytics-banner"), null);
   assert.deepEqual(captured, [{ event: "$pageview", properties: { surface: "landing", consent_version: 1, route: "/models/" } }]);

@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Last updated:** 4 October 2026
+**Last updated:** 7 October 2026
 
 This Privacy Policy explains how **LLM7.io** (“we”, “us”, “our”) collects and processes your personal data when you use our educational and research-oriented website and API, including `dash.llm7.io`. We operate from the United Kingdom and comply with the **UK GDPR** and, where applicable, the **EU GDPR**. Access to the API requires an **API token** issued via `dash.llm7.io`.
 
@@ -38,7 +38,7 @@ We do **not** intentionally collect special category data. We do **not** sell pe
 
 ## Optional product analytics
 
-If you choose “Allow analytics”, we use PostHog's EU service to understand page
+If you enable “Product analytics” in “Analytics preferences”, we use PostHog's EU service to understand page
 visits and selected feature actions across LLM7.io and dash.llm7.io. We send
 query-free page routes, enumerated action outcomes, model/language choices, and
 timing ranges. In the dashboard's Add balance flow we also collect opening sources,
@@ -54,12 +54,41 @@ We do not include email, passwords, API keys, prompt or generated text, referral
 codes, payment identifiers, exact account balance, or raw API errors in these
 events. Autocapture and session replay are disabled.
 
-The necessary preference cookie `llm7_analytics_consent` remembers “Allow analytics”
-or “No thanks” across both sites for 180 days. PostHog is not loaded before
+The necessary preference cookie `llm7_analytics_consent` remembers your product-analytics choice across both sites for 180 days. PostHog is not loaded before
 permission. You can withdraw PostHog permission using “Analytics preferences” in
 the footer on either site; this stops new PostHog collection but does not delete
 events already received.
 Contact support@llm7.io regarding deletion of previously collected account data.
+
+**Optional Google Ads measurement**
+
+Google Ads measurement has its own unchecked choice in “Analytics preferences”.
+Existing product-analytics permission does not authorize advertising measurement.
+If enabled, we keep a Google ad click identifier (`gclid`, `gbraid` or `wbraid`)
+and click time in the first-party `llm7_ads_attribution` cookie for up to **30 days**,
+shared by LLM7.io and dash.llm7.io. The `llm7_ads_consent` preference cookie stores
+your choice, time and random consent receipt for **180 days**. Without permission,
+the Ads integration does not persist the identifier or send it to our payment API.
+The identifier may be held in the current page's memory while you decide.
+
+When you start a top-up with Ads measurement enabled, the dashboard includes the
+consented click and receipt in the payment request. After the payment provider
+confirms payment and your paid balance credit succeeds, our server can send
+Google the click identifier, paid amount, currency, completion time, and a unique
+payment reference to count the purchase once. Promotional bonus credits do not
+increase this value. This integration does not send Google your email, account
+identifier, API keys, prompts, raw page URLs or card details. It does not use a
+Google Ads browser tag or record a purchase from a return-page URL alone.
+
+You can withdraw Ads measurement using the same footer preferences. This stops
+new attribution immediately in the current page, removes the click cookie and
+requests cancellation of uploads for that consent receipt. If the request fails,
+the `llm7_ads_revocations` preference cookie holds up to 32 random receipt IDs for
+180 days so later visits can retry. A connection is needed to notify the server;
+if cookies are blocked, a retry can only be retained while that page is open.
+Withdrawal cannot recall data already sent to Google. Contact support@llm7.io
+about previously collected data. Clearing cookies alone does not notify our
+server about a previous payment. See [Google's privacy policy](https://policies.google.com/privacy).
 
 **Google Analytics on the landing site**
 
@@ -87,6 +116,9 @@ requirements should be reviewed before this analytics configuration is deployed.
 - **Operate the Referral Programme** (store your chosen referral attribution, associate a new account with a referrer, calculate promotional credits, and prevent referral fraud).
   *Legal basis:* **Consent** for browser storage and **legitimate interests** for the server-side programme record and fraud prevention. You can refuse the attribution prompt or clear the browser storage before registration; a recorded referral relationship cannot be reassigned to another referrer.
 
+- **Optional product analytics and advertising measurement** (understand feature use and attribute successful paid top-ups to ads).
+  *Legal basis:* **Consent**. The choices are independent and can be withdrawn in the footer preferences.
+
 - **Legal compliance** (e.g., responding to lawful requests).  
   *Legal basis:* **Legal obligation** (Art. 6(1)(c)).
 
@@ -113,7 +145,7 @@ Data may be transferred internationally. We rely on appropriate safeguards (e.g.
 ## 5. Sharing
 
 We share personal data only with:
-- **Service providers/Processors** (primarily Cloudflare) strictly to operate the service; and
+- **Service providers/Processors** (primarily Cloudflare) strictly to operate the service, PostHog for optional product analytics, and Google for the measurement described above; and
 - **Payment processors, card networks, banks, financial institutions, fraud-prevention services, and other parties involved in payment processing or fraud prevention**, where necessary to process payments, investigate disputes, prevent abuse, or protect the service and affected parties; and
 - **Public authorities, courts, regulators, law enforcement, and other competent bodies** if required by law or where we reasonably believe disclosure is necessary and lawful to report, prevent, investigate, or respond to fraud, unauthorised payment activity, security incidents, or other unlawful activity.
 
@@ -147,7 +179,7 @@ You may lodge a complaint with your local authority. In the UK: **ICO** — <htt
 
 ## 9. Cookies and similar technologies
 
-We use strictly necessary cookies/edge storage for authentication, security, and core operation. Google OAuth and Cloudflare may set cookies required for sign-in and security. We do **not** use third-party advertising cookies.
+We use strictly necessary cookies/edge storage for authentication, security, and core operation. Google OAuth and Cloudflare may set cookies required for sign-in and security. The optional Ads integration uses the first-party attribution and preference cookies described above; it does not add a Google Ads browser tag or third-party advertising cookies. The existing Google Analytics behavior is described separately above.
 
 Where you open a referral link, we ask for your consent before storing the referral code in local storage and a first-party `.llm7.io` cookie for 30 days. Refusing consent does not affect ordinary access to the Service, but we cannot apply the referral attribution. You can withdraw consent by clearing the relevant browser storage; this does not remove an attribution already recorded at account creation. 
 

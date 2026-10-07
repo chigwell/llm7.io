@@ -153,7 +153,7 @@ This project is made possible thanks to the generous support and infrastructure 
 PostHog is optional: no SDK import or PostHog request occurs before consent.
 The `llm7_analytics_consent` cookie stores `v1_allowed` or `v1_declined` for
 180 days on `.llm7.io` (host-only on localhost/preview domains).
-The non-floating “Analytics preferences” footer link reopens the banner; withdrawal drops pending analytics.
+The non-floating “Analytics preferences” footer link reopens separate product-analytics and Google Ads measurement choices; withdrawal drops pending product analytics.
 Already-dispatched requests cannot be recalled.
 
 Use the same **public project token** in both builds, never a personal API key.
@@ -200,8 +200,7 @@ Before deployment, review consent/privacy copy and processor settings, then chec
 the EU project's live event debugger: no requests before consent, one pageview per
 navigation, anonymous-to-identified funnel using only the opaque ID, and reset on
 logout. Cross-subdomain cookie behavior needs an HTTPS check on the real domains.
-Payment **completion** is deliberately not a browser event; add it server-side
-in a separate change if required.
+Payment **completion** is deliberately not a browser event. Successful paid top-ups are measured by the billing server as described below.
 
 References: [PostHog identity guidance](https://posthog.com/docs/data/anonymous-vs-identified-events)
 and [JavaScript configuration](https://posthog.com/docs/libraries/js/config).
@@ -220,6 +219,51 @@ Events: `$pageview`; `cta_clicked` (dashboard/example/docs/chat, with placement)
 `code_copied` (language only); `model_showcase_selected` (default/fast/pro);
 `referral_choice` (accepted boolean). The allowlist lives in `lib/analytics-core.js`.
 
+## Google Ads top-up attribution
+
+The deployed consent dialog links to `https://llm7.io/privacy.html`. Keep the
+readable, script-free `public/privacy.html` synchronized with `PRIVACY.md` when
+changing privacy disclosures; the deployed policy does not depend on a Git push.
+
+`lib/ads-attribution-core.js` is shared verbatim with the dashboard. Its singleton
+starts in the root consent component. Ads measurement has a separate preselected
+choice even when PostHog is already allowed or not configured. The footer remains
+available without PostHog configuration. Existing Google Analytics behavior is
+unchanged and disclosed in the privacy policy.
+
+Before Ads opt-in, a validated `gclid`, `gbraid` or `wbraid` can exist only in page
+memory. After opt-in, `llm7_ads_attribution` lasts at most 30 days; the preference
+and random UUID receipt in `llm7_ads_consent` last 180 days. Production cookies use
+`Domain=llm7.io; Secure; SameSite=Lax; Path=/`; preview/local cookies are host-only.
+The dashboard calls `getAttribution()` immediately before its authenticated top-up
+request. That method rechecks consent and returns only version, click ID/type,
+capture/consent times and the opaque receipt. No Google Ads browser tag, purchase
+event, user identifier, raw URL or secret credential is included in this site.
+
+The billing integration must report only a provider-confirmed payment whose base
+balance credit succeeded, with its actual paid value and a unique payment key.
+The frontend does not infer success from checkout redirects. Ads permission is
+independent of product analytics and does not enable advertising personalization.
+
+Withdrawal immediately denies attribution locally, clears its cookie and sends
+only `{consent_id}` to `https://api-token.llm7.io/ads-consent/revoke` using omitted
+credentials. Only HTTP 204 acknowledges withdrawal. Failed or timed-out requests
+retry with exponential backoff (30 seconds to one hour); a bounded UUID-only cookie
+survives tab closure when cookies work. Storage failures retain denial and retry
+state in memory. Cross-subdomain withdrawal is checked before checkout and on
+focus/pageshow. Server cancellation requires network connectivity, and data already
+uploaded cannot be recalled. A fresh explicit grant is required to override a
+local withdrawal; a blocked cookie write fails closed.
+
+`npm test` covers consent separation, shared cookies, strict allowlists, click
+expiry, malformed inputs, repeated navigation, cross-tab withdrawal, unavailable
+storage, failed/hung revocation requests, and React preference interactions.
+Before production use, verify real HTTPS cross-subdomain cookies, the revocation
+endpoint, and a provider-confirmed top-up in the billing/Ads delivery diagnostics.
+No real payment or Google conversion is created by these tests.
+
 ## License
 
 This project is licensed under the [GNU AFFERO GENERAL PUBLIC LICENSE](LICENSE). 
+
+OpenAI Pixel measures `page_viewed` on route changes and `checkout_started` when a valid dashboard payment request begins. Repeated lifecycle callbacks do not duplicate page views. New consent choices are preselected but are only saved after the visitor confirms; previously declined choices stay off.
