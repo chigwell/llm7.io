@@ -60,9 +60,17 @@ the footer on either site; this stops new PostHog collection but does not delete
 events already received.
 Contact support@llm7.io regarding deletion of previously collected account data.
 
+**Optional OpenAI ad measurement**
+
+The “Google & OpenAI ad measurement” choice enables OpenAI Pixel page views and checkout-start events, plus a server copy of successful checkout starts. Checkboxes are initially selected, but measurement requires saving preferences; “No thanks” declines both. You can change these choices in the footer at any time.
+
+For signed-in customers, we normalize and SHA-256 hash the email address and stable internal customer ID before sending them to OpenAI for conversion matching. We do not send raw email addresses or account IDs to OpenAI. Anonymous visitors have no email identifier. Events may include checkout amounts in USD cents, a shared event ID to prevent double counting, the site origin, and OpenAI click/browser references. No payment-card data, API tokens, prompts, or model responses are included.
+
+With permission, the Pixel stores `__oppref` (up to 30 days) and `__obref` (up to 365 days) in first-party cookies. Revoking ad measurement stops new OpenAI events and clears these cookies. Data already sent cannot be recalled by changing browser preferences. See [OpenAI’s privacy policy](https://openai.com/policies/privacy-policy/).
+
 **Optional Google Ads measurement**
 
-Google Ads measurement has its own unchecked choice in “Analytics preferences”.
+Google and OpenAI ad measurement share a choice in “Analytics preferences”.
 Existing product-analytics permission does not authorize advertising measurement.
 If enabled, we keep a Google ad click identifier (`gclid`, `gbraid` or `wbraid`)
 and click time in the first-party `llm7_ads_attribution` cookie for up to **30 days**,
@@ -145,7 +153,7 @@ Data may be transferred internationally. We rely on appropriate safeguards (e.g.
 ## 5. Sharing
 
 We share personal data only with:
-- **Service providers/Processors** (primarily Cloudflare) strictly to operate the service, PostHog for optional product analytics, and Google for the measurement described above; and
+- **Service providers/Processors** (primarily Cloudflare) strictly to operate the service, PostHog for optional product analytics, and Google and OpenAI for the measurement described above; and
 - **Payment processors, card networks, banks, financial institutions, fraud-prevention services, and other parties involved in payment processing or fraud prevention**, where necessary to process payments, investigate disputes, prevent abuse, or protect the service and affected parties; and
 - **Public authorities, courts, regulators, law enforcement, and other competent bodies** if required by law or where we reasonably believe disclosure is necessary and lawful to report, prevent, investigate, or respond to fraud, unauthorised payment activity, security incidents, or other unlawful activity.
 

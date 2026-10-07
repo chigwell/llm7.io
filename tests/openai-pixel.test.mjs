@@ -1,26 +1,65 @@
-import test from "node:test";
+import { test } from "node:test";
 import assert from "node:assert/strict";
+import { webcrypto, createHash } from "node:crypto";
 import { createOpenAiPixel } from "../lib/openai-pixel.js";
-
-test("pixel page views deduplicate lifecycle repeats but track navigation and return visits", () => {
-  const calls = [], win = {};
-  const pixel = createOpenAiPixel(() => win);
-  pixel.pageViewed("/models/");
-  win.oaiq = (...args) => calls.push(args);
-  pixel.pageViewed("/models/");
-  pixel.pageViewed("/models/");
-  pixel.pageViewed("/pricing/");
-  pixel.pageViewed("/models/");
-  assert.deepEqual(calls, Array.from({ length: 3 }, () => ["measure", "page_viewed", { type: "contents" }]));
+const receipt = { version: 1, choice: "allowed", consent_id: "93c785b3-c9dd-4a98-9c58-fcc67c8126be", consented_at: new Date().toISOString() };
+const hash = value => createHash("sha256").update(value).digest("hex");
+function fixture() {
+  const calls = [], win = { crypto: webcrypto, document: { cookie: `llm7_ads_consent=${encodeURIComponent(JSON.stringify(receipt))}` }, oaiq: (...args) => calls.push(args) };
+  return { calls, win, pixel: createOpenAiPixel(() => win), events: () => calls.filter(([command]) => command === "measure") };
+}
+test("pixel page views require consent and deduplicate repeated lifecycle calls", () => {
+  const f = fixture();
+  f.pixel.pageViewed("/models/"); f.pixel.pageViewed("/models/"); f.pixel.pageViewed("/pricing/"); f.pixel.pageViewed("/models/");
+  assert.equal(f.events().length, 3);
+  f.win.document.cookie = "";
+  f.pixel.pageViewed("/other/");
+  assert.equal(f.events().length, 3);
+  assert.deepEqual(f.calls.at(-1), ["consent", false]);
+});
+test("hashes normalized known identity and clears it on logout without sending raw PII", async () => {
+  const f = fixture();
+  await f.pixel.identify("  Test@Example.com  ", " Customer-42 ");
+  assert.deepEqual(f.calls.at(-1)[1].user, { email_sha256: hash("test@example.com"), external_id_sha256: hash("Customer-42") });
+  assert.ok(!JSON.stringify(f.calls).includes("Test@Example"));
+  await f.pixel.identify("", undefined);
+  assert.deepEqual(f.calls.at(-1)[1].user, {});
+});
+test("checkout waits for matching data, sends cents and shares the server event ID", async () => {
+  const f = fixture();
+  f.pixel.identify("test@example.com", 42);
+  await f.pixel.checkoutStarted(2500, "llm7-topup-real");
+  assert.deepEqual(f.events(), [["measure", "checkout_started", { type: "contents", amount: 2500, currency: "USD" }, { event_id: "llm7-topup-real" }]]);
+  assert.deepEqual(f.pixel.checkoutContext(), { consent_id: receipt.consent_id, consented_at: receipt.consented_at });
+  f.win.document.cookie = "";
+  await f.pixel.checkoutStarted(2500, "llm7-topup-next");
+  assert.equal(f.events().length, 1);
+  assert.equal(f.pixel.checkoutContext(), null);
+});
+test("revoking consent or switching accounts during hashing discards stale identity", async () => {
+  const f = fixture();
+  const old = f.pixel.identify("old@example.com", 1);
+  await f.pixel.identify("new@example.com", 2);
+  await old;
+  assert.equal(f.calls.at(-1)[1].user.email_sha256, hash("new@example.com"));
+  const pending = f.pixel.identify("third@example.com", 3);
+  f.win.document.cookie = ""; f.pixel.syncConsent(); await pending;
+  assert.ok(!JSON.stringify(f.calls).includes(hash("third@example.com")));
+});
+test("storage, crypto and SDK failures never escape into navigation or checkout", async () => {
+  const f = fixture();
+  f.win.oaiq = () => { throw new Error("blocked"); };
+  f.win.crypto = {};
+  await f.pixel.identify("test@example.com", 42);
+  await f.pixel.checkoutStarted(2500, "llm7-topup-real");
+  assert.doesNotThrow(() => f.pixel.pageViewed("/"));
+  await createOpenAiPixel(() => null).checkoutStarted(2500, "event");
 });
 
-test("pixel checkout uses only the requested payload and failures never escape", () => {
-  const calls = [], win = { oaiq: (...args) => calls.push(args) };
-  const pixel = createOpenAiPixel(() => win);
-  pixel.checkoutStarted();
-  assert.deepEqual(calls, [["measure", "checkout_started", { type: "contents" }]]);
-  win.oaiq = () => { throw new Error("blocked SDK"); };
-  assert.doesNotThrow(() => pixel.checkoutStarted());
-  assert.doesNotThrow(() => pixel.pageViewed("/"));
-  assert.doesNotThrow(() => createOpenAiPixel(() => null).checkoutStarted());
+test("an in-memory decline overrides an old allowed cookie when storage writes fail", () => {
+  const f = fixture();
+  f.pixel.setConsentSource(() => "declined");
+  f.pixel.pageViewed("/");
+  assert.equal(f.events().length, 0);
+  assert.equal(f.pixel.checkoutContext(), null);
 });

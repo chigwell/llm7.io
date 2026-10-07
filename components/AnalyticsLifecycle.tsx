@@ -2,17 +2,21 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { openAiPixel } from "@/lib/openai-pixel";
+import { adsAttribution } from "@/lib/ads-attribution";
 import { analytics } from "@/lib/analytics";
 import { trackLandingLink } from "@/lib/analytics-links";
+
+openAiPixel.setConsentSource(() => adsAttribution.getConsent());
 
 export default function AnalyticsLifecycle() {
   const pathname = usePathname();
   useEffect(() => {
     const page = () => { openAiPixel.pageViewed(pathname); analytics.trackPageView(); };
     const unsubscribe = analytics.subscribe(page);
+    const unsubscribeAds = adsAttribution.subscribe(page);
     page();
     window.addEventListener("popstate", page);
-    return () => { unsubscribe(); window.removeEventListener("popstate", page); };
+    return () => { unsubscribe(); unsubscribeAds(); window.removeEventListener("popstate", page); };
   }, [pathname]);
   useEffect(() => {
     const click = (event: MouseEvent) => {

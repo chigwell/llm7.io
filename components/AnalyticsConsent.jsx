@@ -86,7 +86,7 @@ export default function AnalyticsConsent() {
         </label>}
         <label className="llm7-analytics-choice">
           <input type="checkbox" checked={adsAllowed} onChange={event => setAdsAllowed(event.target.checked)} />
-          <span>Google Ads measurement</span>
+          <span>Google & OpenAI ad measurement</span>
         </label>
         </div>
         <p>Optional analytics and ad measurement. Change anytime. <a href="https://llm7.io/privacy.html" target="_blank" rel="noreferrer">Privacy policy</a></p>

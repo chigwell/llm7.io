@@ -37,12 +37,12 @@ test("Ads preferences default to selected but require saving and preserve draft 
   const f = await mount(t);
   assert.ok(f.button("Analytics preferences"));
   assert.equal(f.choice("Product analytics"), undefined);
-  assert.equal(f.choice("Google Ads measurement").checked, true);
+  assert.equal(f.choice("Google & OpenAI ad measurement").checked, true);
   assert.equal(adsAttribution.getAttribution(), null);
-  await act(async () => f.choice("Google Ads measurement").click());
+  await act(async () => f.choice("Google & OpenAI ad measurement").click());
   await act(async () => window.dispatchEvent(new window.Event("focus")));
-  assert.equal(f.choice("Google Ads measurement").checked, false, "focus does not discard an unsaved choice");
-  await act(async () => f.choice("Google Ads measurement").click());
+  assert.equal(f.choice("Google & OpenAI ad measurement").checked, false, "focus does not discard an unsaved choice");
+  await act(async () => f.choice("Google & OpenAI ad measurement").click());
   assert.equal(adsAttribution.getConsent(), "unknown", "checking alone does not save consent");
   await act(async () => f.button("Save preferences").click());
   assert.equal(adsAttribution.getConsent(), "allowed");
@@ -50,7 +50,7 @@ test("Ads preferences default to selected but require saving and preserve draft 
   assert.equal(f.imports.mock.callCount(), 0);
   assert.equal(document.querySelector("aside"), null);
   await act(async () => f.button("Analytics preferences").click());
-  assert.equal(f.choice("Google Ads measurement").checked, true);
+  assert.equal(f.choice("Google & OpenAI ad measurement").checked, true);
   await act(async () => f.button("No thanks").click());
   assert.equal(adsAttribution.getAttribution(), null);
   assert.equal(adsAttribution.getConsent(), "declined");
@@ -59,9 +59,9 @@ test("Ads preferences default to selected but require saving and preserve draft 
 test("existing PostHog permission prompts for Ads without silently opting in", async t => {
   const f = await mount(t, { token: "phc_test", priorProduct: true });
   assert.equal(f.choice("Product analytics").checked, true);
-  assert.equal(f.choice("Google Ads measurement").checked, true);
+  assert.equal(f.choice("Google & OpenAI ad measurement").checked, true);
   assert.equal(adsAttribution.getConsent(), "unknown");
-  await act(async () => f.choice("Google Ads measurement").click());
+  await act(async () => f.choice("Google & OpenAI ad measurement").click());
   await act(async () => f.button("Save preferences").click());
   assert.equal(analytics.getConsent(), "allowed");
   assert.equal(adsAttribution.getConsent(), "declined");
