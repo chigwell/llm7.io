@@ -249,11 +249,11 @@ export default function TokenBudgetCalculator({ models }: { models: TokenBudgetM
           <div className="mt-6 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
             <div className="rounded-xl border border-border/60 bg-background/45 p-3">
               <p className="text-xs text-muted-foreground">Best model</p>
-              <p className="mt-1 text-lg font-semibold">{bestValue ? formatTokens(bestValue.totalTokens) : "0"}</p>
+              <p className="mt-1 text-lg font-semibold">{bestValue ? formatTokens(bestValue.totalTokens) : "Unavailable"}</p>
             </div>
             <div className="rounded-xl border border-border/60 bg-background/45 p-3">
               <p className="text-xs text-muted-foreground">Median model</p>
-              <p className="mt-1 text-lg font-semibold">{medianValue ? formatTokens(medianValue.totalTokens) : "0"}</p>
+              <p className="mt-1 text-lg font-semibold">{medianValue ? formatTokens(medianValue.totalTokens) : "Unavailable"}</p>
             </div>
             <div className="rounded-xl border border-border/60 bg-background/45 p-3">
               <p className="text-xs text-muted-foreground">Models counted</p>
@@ -275,7 +275,7 @@ export default function TokenBudgetCalculator({ models }: { models: TokenBudgetM
         <div className="rounded-2xl border border-border/60 bg-gradient-to-br from-card/80 via-card/55 to-primary/5 p-5 shadow-sm backdrop-blur md:p-6">
           <p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary">Live estimate</p>
           <h3 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl">
-            {bestValue ? formatTokens(bestValue.totalTokens) : "0"} tokens on the best-priced model
+            {bestValue ? `${formatTokens(bestValue.totalTokens)} tokens on the best-priced model` : "Token estimate unavailable"}
           </h3>
           <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
             The budget is applied to each model independently. Each row uses a stable input/output token mix between 68/32 and 86/14. Models with cached-input pricing also get a cached-token share between 15% and 70% of input tokens.
@@ -369,7 +369,7 @@ export default function TokenBudgetCalculator({ models }: { models: TokenBudgetM
           </table>
         </div>
 
-        {!filtered.length ? <p className="border-t border-border/60 p-6 text-sm text-muted-foreground">No text models match this search.</p> : null}
+        {!filtered.length ? <p className="border-t border-border/60 p-6 text-sm text-muted-foreground">{models.length ? "No text models match this search." : "No text models with verified token prices are available."}</p> : null}
       </div>
     </section>
   );

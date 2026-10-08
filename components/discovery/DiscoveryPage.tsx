@@ -8,7 +8,8 @@ import {
 import ModelCodeExamples from "@/components/models/ModelCodeExamples.client";
 import { codeExamplesForModel } from "@/lib/models/code-examples";
 import { areComparableModels } from "@/lib/models/comparisons";
-import { formatPrice, pricesDirectlyComparable } from "@/lib/models/format";
+import { LivePrice, LivePriceComparison } from "@/components/models/LiveModelPricing.client";
+import { withoutSnapshotPrices } from "@/lib/models/current-pricing";
 import { comparisonPath } from "@/lib/models/routes";
 import {
   facts,
@@ -181,7 +182,7 @@ export default function DiscoveryPage({ page }: { page: Page }) {
         {!page.children &&
         page.family !== "alternatives" &&
         page.models.length ? (
-          <Explorer page={page} />
+          <Explorer page={{ ...page, models: page.models.map(withoutSnapshotPrices), original: page.original ? withoutSnapshotPrices(page.original) : undefined }} />
         ) : null}
         {page.family === "features" && page.models[0] ? (
           <section>
@@ -209,12 +210,12 @@ export default function DiscoveryPage({ page }: { page: Page }) {
               last. Similar metadata does not establish equivalent output
               quality.
             </p>
-            <p>
-              Original pricing: {formatPrice(page.original)}. Original context:{" "}
+            <div>
+              <LivePrice modelId={page.original.model_id} />Original context:{" "}
               {page.original.context_window.tokens?.toLocaleString("en-US") ??
                 "Unknown"}{" "}
               tokens.
-            </p>
+            </div>
             {page.models.map((m) => {
               const original = page.original!;
               const before = facts(original),
@@ -254,12 +255,8 @@ export default function DiscoveryPage({ page }: { page: Page }) {
                       : ""}
                     .
                   </p>
-                  <p>
-                    {formatPrice(m)}.{" "}
-                    {pricesDirectlyComparable(original, m)
-                      ? "Prices use the same billing mode, currency, and unit; compare the rates above."
-                      : "Prices are not directly comparable; units, billing modes, or dynamic quotes differ."}
-                  </p>
+                  <LivePrice modelId={m.model_id} />
+                  <LivePriceComparison leftId={original.model_id} rightId={m.model_id} />
                   <p>
                     Change the request model ID from{" "}
                     <code className="break-all">{original.model_id}</code> to{" "}

@@ -14,6 +14,25 @@ Model, comparison, sitemap, and Open Graph assets are generated during `npm run 
 
 Run `npm run test` for data-pipeline utility checks and `npm run validate:seo` after a production build to inspect the exported `out/` pages.
 
+### Live model pricing
+
+Published model pages, the catalogue, comparisons, alternatives, and calculators
+read current prices from `https://api.llm7.io/v1/models` in the browser. They share
+one in-flight request and a three-minute refresh timer per tab, and revalidate
+expired prices when the tab becomes active. Price-only API changes need no build
+or deployment. API-side caching can add a delay before an updated rate appears.
+
+Static HTML preserves model descriptions, capabilities, links, and metadata, but
+contains no fixed prices for these pages. Social-preview images also omit rates.
+Pricing and estimates require JavaScript and a successful API response. Failed,
+missing, malformed, or unsupported prices are marked unavailable and excluded
+from calculations and price sorting; stale snapshot rates are never substituted.
+The homepage retains its explicitly labelled cached-catalogue fallback.
+New model routes and updates to static capabilities or statistics still need a build.
+
+`npm test` verifies shared fetching, refresh/failure handling, decimal and cache
+pricing, and price/calculator updates without rebuilding the application.
+
 LLM7.io provides:
 - **Free access** to powerful LLMs (GPT-4-like, DeepSeek, Mistral, etc.)
 - **Token access**: Use an API token to access the service

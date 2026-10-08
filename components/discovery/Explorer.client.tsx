@@ -1,4 +1,7 @@
 "use client";
+import { useLivePrices } from "@/hooks/use-llm7-models";
+import { withCurrentPricing } from "@/lib/models/current-pricing";
+import { PricingStatus } from "@/components/models/LiveModelPricing.client";
 import { useState } from "react";
 import Link from "next/link";
 import Decimal from "decimal.js-light";
@@ -11,9 +14,11 @@ import {
   validCount,
 } from "@/lib/discovery/pages.js";
 import { formatPrice, parseTokenPricingUnit } from "@/lib/models/format";
+import { isProviderQuoteModel } from "@/lib/models/video-pricing";
 import ModelLogo from "@/components/models/ModelLogo";
 
 export default function Explorer({ page }: { page: DiscoveryPage }) {
+  const { prices, state } = useLivePrices();
   const [selected, setSelected] = useState(page.models[0]?.slug ?? "");
   const [copied, setCopied] = useState("");
   const [sort, setSort] = useState("id");
@@ -25,10 +30,11 @@ export default function Explorer({ page }: { page: DiscoveryPage }) {
   const chosen = page.models.find((m) => m.slug === selected);
   const config = chosen ? configuration(page.slug, chosen) : "";
   const valid = [requests, input, output].every(validCount);
-  const rows = page.models.map((model) => ({
-    model,
-    result: estimate(model, requests, input, output),
-  }));
+  const rows = page.models.map((snapshot) => {
+    const price = prices.get(snapshot.model_id);
+    const model = withCurrentPricing(snapshot, price);
+    return { model, price, result: price ? estimate(model, requests, input, output) : { cost: null, status: "Current pricing unavailable" } };
+  });
   rows.sort((a, b) => {
     if (calculator || sort === "price") {
       const price = (row: typeof a) => {
@@ -61,6 +67,7 @@ export default function Explorer({ page }: { page: DiscoveryPage }) {
   });
   return (
     <section className="space-y-5">
+      {state !== "ready" ? <PricingStatus state={state} /> : null}
       {integration && chosen ? (
         <div className="rounded-2xl border bg-card/55 p-5 space-y-4">
           <label className="block font-medium" htmlFor="integration-model">
@@ -174,7 +181,7 @@ export default function Explorer({ page }: { page: DiscoveryPage }) {
             </tr>
           </thead>
           <tbody>
-            {rows.map(({ model: m, result }) => (
+            {rows.map(({ model: m, result, price }) => (
               <tr key={m.slug} className="border-t">
                 <td className="p-3">
                   <Link
@@ -186,7 +193,7 @@ export default function Explorer({ page }: { page: DiscoveryPage }) {
                   </Link>
                 </td>
                 <td className="p-3 min-w-48">
-                  {formatPrice(m)}
+                  {price ? isProviderQuoteModel(m) ? "Dynamic per-request quote" : formatPrice(m) : "Current pricing unavailable"}
                   {m.pricing.minimum_request_usd ? (
                     <p>Minimum: ${m.pricing.minimum_request_usd}/request</p>
                   ) : null}

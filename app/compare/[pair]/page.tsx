@@ -2,21 +2,18 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ComparisonCharts from "@/components/models/ComparisonCharts.client";
-import ModelCalculator from "@/components/models/ModelCalculator.client";
+import LiveModelPricing, { LiveComparisonPricing } from "@/components/models/LiveModelPricing.client";
 import ModelDetailsCard from "@/components/models/ModelDetailsCard";
 import ModelLogo from "@/components/models/ModelLogo";
-import ProviderQuotePricing from "@/components/models/ProviderQuotePricing";
-import VideoPricingBreakdown from "@/components/models/VideoPricingBreakdown";
 import { JsonLd, SeoFooter, SeoNavigation } from "@/components/models/SeoChrome";
 import { modelTypeLabel, trustsNestedCapabilities } from "@/lib/models/model-types";
 import { comparisonFacts } from "@/lib/models/content";
 import { createComparisonPairs } from "@/lib/models/comparisons";
-import { formatBoolean, formatCachePrice, formatContext, formatMs, formatPrice, formatRate, formatUsd, pricesDirectlyComparable } from "@/lib/models/format";
+import { formatBoolean, formatContext, formatMs, formatRate } from "@/lib/models/format";
 import { comparisonPath, modelPath } from "@/lib/models/routes";
 import { comparisonMetadata } from "@/lib/models/seo";
 import { getModelSnapshot, publicModels } from "@/lib/models/snapshot";
 import { comparisonStructuredData } from "@/lib/models/structured-data";
-import { isProviderQuoteModel } from "@/lib/models/video-pricing";
 
 export const dynamicParams = false;
 
@@ -72,13 +69,6 @@ function specificationDifferences(left: Model, right: Model): Difference[] {
   return rows;
 }
 
-function PricingCard({ model }: { model: Model }) {
-  const providerQuote = isProviderQuoteModel(model);
-  const primary = model.pricing.mode === "token" ? "Input " + formatUsd(model.pricing.input) + " · Output " + formatUsd(model.pricing.output) + " / " + model.pricing.unit : formatPrice(model);
-  const cachePrice = formatCachePrice(model);
-  return <article className="rounded-2xl border border-border/60 bg-background/45 p-4"><p className="text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">{model.model_id}</p><p className="mt-2 text-lg font-semibold">{primary}</p>{model.model_type === "video" && !providerQuote ? <VideoPricingBreakdown pricing={model.pricing} compact /> : null}{providerQuote ? <ProviderQuotePricing modelId={model.model_id} compact /> : null}{cachePrice ? <p className="mt-1 text-xs text-muted-foreground">Cache: {cachePrice}</p> : null}{model.pricing.minimum_request_usd ? <p className="mt-1 text-xs text-muted-foreground">Minimum request: {formatUsd(model.pricing.minimum_request_usd)}</p> : null}</article>;
-}
-
 function StatisticsComparison({ left, right }: { left: Model; right: Model }) {
   const leftStats = left.statistics?.["30d"];
   const rightStats = right.statistics?.["30d"];
@@ -108,7 +98,6 @@ export default async function ComparisonPage({ params }: { params: Promise<{ pai
   const right = rightEntry.model;
   const differences = specificationDifferences(left, right);
   const usefulFacts = comparisonFacts(left, right).filter((fact) => !fact.startsWith("There is not enough") && !fact.startsWith("The observed"));
-  const hasProviderQuote = isProviderQuoteModel(left) || isProviderQuoteModel(right);
   const related = Object.entries(pairMap).filter(([key, item]) => key !== pair && (item.leftSlug === left.slug || item.rightSlug === left.slug || item.leftSlug === right.slug || item.rightSlug === right.slug)).slice(0, 6);
 
   return (
@@ -127,18 +116,14 @@ export default async function ComparisonPage({ params }: { params: Promise<{ pai
         <div className="mt-8 grid gap-7 lg:grid-cols-[20rem_minmax(0,1fr)]">
           <aside className="space-y-4 lg:sticky lg:top-28 lg:self-start"><ModelDetailsCard model={left} title={left.model_id + " details"} /><ModelDetailsCard model={right} title={right.model_id + " details"} /></aside>
           <div className="space-y-8">
-            <section className="rounded-2xl border border-border/60 bg-card/55 p-5 shadow-sm backdrop-blur md:p-6">
-              <div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">Current pricing</p><h2 className="mt-2 text-2xl font-semibold">See the cost difference clearly</h2></div>{pricesDirectlyComparable(left, right) ? <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-700 dark:text-emerald-300">Directly comparable</span> : null}</div>
-              <div className="mt-5 grid gap-3 md:grid-cols-2"><PricingCard model={left} /><PricingCard model={right} /></div>
-              {!pricesDirectlyComparable(left, right) ? <p className="mt-3 text-sm text-muted-foreground">{hasProviderQuote ? "Dynamic per-request quotes cannot be compared from static catalogue rates." : "These prices use different units, so compare them within the context of your workload."}</p> : null}
-            </section>
+            <LiveComparisonPricing leftId={left.model_id} rightId={right.model_id} />
 
             {differences.length ? <section><div className="mb-5"><h2 className="text-2xl font-semibold">What&apos;s different</h2><p className="mt-1 text-sm text-muted-foreground">Only capabilities that differ between these models are listed. Green highlights the broader supported option or larger context window.</p></div><div className="space-y-3">{differences.map((difference) => <article key={difference.label} className="rounded-2xl border border-border/60 bg-card/55 p-4 shadow-sm backdrop-blur"><p className="text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">{difference.label}</p><div className="mt-3 grid gap-3 sm:grid-cols-2"><div className={"rounded-xl border p-3 " + (difference.better === "left" ? "border-emerald-500/35 bg-emerald-500/10" : "border-transparent bg-background/45")}><p className="text-xs text-muted-foreground">{left.model_id}{difference.better === "left" ? <span className="ml-2 rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:text-emerald-300">Better fit</span> : null}</p><p className="mt-1 text-sm font-semibold">{difference.left}</p></div><div className={"rounded-xl border p-3 " + (difference.better === "right" ? "border-emerald-500/35 bg-emerald-500/10" : "border-transparent bg-background/45")}><p className="text-xs text-muted-foreground">{right.model_id}{difference.better === "right" ? <span className="ml-2 rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:text-emerald-300">Better fit</span> : null}</p><p className="mt-1 text-sm font-semibold">{difference.right}</p></div></div></article>)}</div></section> : null}
 
             <StatisticsComparison left={left} right={right} />
             <ComparisonCharts modelType={left.model_type} leftName={left.model_id} rightName={right.model_id} leftPoints={leftEntry.metrics.points} rightPoints={rightEntry.metrics.points} />
 
-            <section><div className="mb-5"><h2 className="text-2xl font-semibold">Estimate your workload</h2><p className="mt-1 text-sm text-muted-foreground">Fixed-price models can be estimated directly; dynamic models use recent references and are billed from actual provider usage.</p></div><div className="grid gap-5 xl:grid-cols-2">{isProviderQuoteModel(left) ? <ProviderQuotePricing modelId={left.model_id} /> : <ModelCalculator mode={left.pricing.mode} unit={left.pricing.unit} inputPrice={left.pricing.input} outputPrice={left.pricing.output} price={left.pricing.price} minimum={left.pricing.minimum_request_usd} durations={left.capabilities.supported_seconds} audio={left.model_type === "audio_to_text"} variablePricing={Boolean(left.pricing.route_prices_usd_per_second?.length)} />}{isProviderQuoteModel(right) ? <ProviderQuotePricing modelId={right.model_id} /> : <ModelCalculator mode={right.pricing.mode} unit={right.pricing.unit} inputPrice={right.pricing.input} outputPrice={right.pricing.output} price={right.pricing.price} minimum={right.pricing.minimum_request_usd} durations={right.capabilities.supported_seconds} audio={right.model_type === "audio_to_text"} variablePricing={Boolean(right.pricing.route_prices_usd_per_second?.length)} />}</div></section>
+            <section><div className="mb-5"><h2 className="text-2xl font-semibold">Estimate your workload</h2><p className="mt-1 text-sm text-muted-foreground">Published rates are loaded from the pricing API; per-request quotes are billed from actual provider usage.</p></div><div className="grid gap-5 xl:grid-cols-2"><LiveModelPricing modelId={left.model_id} showPrice={false} /><LiveModelPricing modelId={right.model_id} showPrice={false} /></div></section>
 
             {usefulFacts.length ? <section className="rounded-2xl border border-border/60 bg-card/55 p-5 shadow-sm backdrop-blur"><h2 className="text-2xl font-semibold">Quick take</h2><ul className="mt-4 space-y-2">{usefulFacts.map((fact) => <li key={fact} className="rounded-xl border border-border/60 bg-background/45 px-3 py-3 text-sm">{fact}</li>)}</ul></section> : null}
 

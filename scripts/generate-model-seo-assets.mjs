@@ -20,19 +20,8 @@ const xml = (value) => value.replace(/[<>&'\"]/g, (character) => ({ "<": "&lt;",
 const iso = (value) => value && !Number.isNaN(Date.parse(value)) ? new Date(value).toISOString() : new Date().toISOString();
 const latest = (...values) => new Date(Math.max(...values.filter(Boolean).map((value) => Date.parse(value)))).toISOString();
 
-function priceSummary(model) {
-  const pricing = model.pricing;
-  if (pricing.billing_strategy === "provider_quote" || model.capabilities?.atlascloud_video === true) {
-    const normalizedId = model.model_id.toLowerCase().replace(/[._/]+/g, "-");
-    const observedRoute = !normalizedId.includes("-to-video") || normalizedId.includes("image-to-video");
-    const typicalPrice = observedRoute && normalizedId.includes("seedance-2-0-mini")
-      ? "$0.85"
-      : observedRoute && normalizedId.includes("seedance-2-0-fast")
-        ? "$1.55"
-        : null;
-    return typicalPrice ? `Typically from ${typicalPrice} for 10s (720p) · dynamic pricing` : "Dynamic per-request quote · no LLM7 markup";
-  }
-  return pricing.mode === "token" ? `$${pricing.input} input · $${pricing.output} output / ${pricing.unit}` : `$${pricing.price} / ${pricing.unit}`;
+function priceSummary() {
+  return "View current pricing on llm7.io";
 }
 
 function capabilities(model) {

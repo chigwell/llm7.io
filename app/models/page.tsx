@@ -5,12 +5,11 @@ import CopyModelId from "@/components/models/CopyModelId.client";
 import { capabilityLabels } from "@/components/models/ModelDetailsCard";
 import ModelLogo from "@/components/models/ModelLogo";
 import ModelUsagePieChart, { type ModelUsageDatum } from "@/components/models/ModelUsagePieChart.client";
-import VideoPricingBreakdown from "@/components/models/VideoPricingBreakdown";
+import { LivePrice } from "@/components/models/LiveModelPricing.client";
 import { JsonLd, SeoFooter, SeoNavigation } from "@/components/models/SeoChrome";
-import { formatCachePrice, formatContext, formatMs, formatPrice, formatRate } from "@/lib/models/format";
+import { formatContext, formatMs, formatRate } from "@/lib/models/format";
 import { publicModels } from "@/lib/models/snapshot";
 import { modelPath } from "@/lib/models/routes";
-import { isProviderQuoteModel } from "@/lib/models/video-pricing";
 import { siteStructuredData } from "@/lib/models/structured-data";
 import { MODEL_TYPES, modelTypeLabel } from "@/lib/models/model-types";
 
@@ -25,9 +24,6 @@ export const metadata: Metadata = {
 
 function ModelCard({ model }: { model: (typeof publicModels)[number] }) {
   const stats = model.statistics?.["30d"];
-  const providerQuote = isProviderQuoteModel(model);
-  const price = providerQuote ? "" : model.pricing.mode === "token" ? model.pricing.input ?? "" : model.pricing.price ?? "";
-  const cachePrice = formatCachePrice(model);
   const capabilities = capabilityLabels(model).slice(0, 4);
   const statisticCards = [
     stats?.success_rate !== null && stats?.success_rate !== undefined ? ["Stability", formatRate(stats.success_rate)] : null,
@@ -35,16 +31,13 @@ function ModelCard({ model }: { model: (typeof publicModels)[number] }) {
   ].filter((item): item is [string, string] => Boolean(item));
 
   return (
-    <article data-model-card data-name={(model.display_name + " " + model.model_id).toLowerCase()} data-type={model.model_type} data-tier={model.tier ?? ""} data-status={model.status} data-input={model.modalities.input.join(" ")} data-output={model.modalities.output.join(" ")} data-tools={String(Boolean(model.tools_calling))} data-reasoning={String(Boolean(model.reasoning))} data-json={String(Boolean(model.json_mode))} data-stream={String(Boolean(model.stream))} data-price={price} data-context={String(model.context_window.tokens ?? 0)} data-success={String(stats?.success_rate ?? -1)} data-latency={String(stats?.latency_p95_ms ?? Number.MAX_SAFE_INTEGER)} data-updated={model.updated_at} className="group rounded-2xl border border-border/60 bg-card/55 p-5 shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:border-primary/45 hover:shadow-md">
+    <article data-model-card data-model-id={model.model_id} data-name={(model.display_name + " " + model.model_id).toLowerCase()} data-type={model.model_type} data-tier={model.tier ?? ""} data-status={model.status} data-input={model.modalities.input.join(" ")} data-output={model.modalities.output.join(" ")} data-tools={String(Boolean(model.tools_calling))} data-reasoning={String(Boolean(model.reasoning))} data-json={String(Boolean(model.json_mode))} data-stream={String(Boolean(model.stream))} data-context={String(model.context_window.tokens ?? 0)} data-success={String(stats?.success_rate ?? -1)} data-latency={String(stats?.latency_p95_ms ?? Number.MAX_SAFE_INTEGER)} data-updated={model.updated_at} className="group rounded-2xl border border-border/60 bg-card/55 p-5 shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:border-primary/45 hover:shadow-md">
       <div className="flex items-start justify-between gap-3">
         <div className="flex min-w-0 items-start gap-3"><ModelLogo model={model} size="sm" /><div className="min-w-0"><p className="text-xs font-semibold uppercase tracking-[0.12em] text-primary">{modelTypeLabel(model.model_type)}{model.tier ? " · " + model.tier : ""}</p><h2 className="mt-2 text-xl font-semibold"><Link href={modelPath(model.slug)} className="underline-offset-4 group-hover:underline">{model.model_id}</Link></h2></div></div>
         <span className={"rounded-full px-2.5 py-1 text-xs font-medium " + (model.status === "active" ? "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300" : "bg-amber-500/10 text-amber-700 dark:text-amber-300")}>{model.status === "active" ? "Available" : "Retired"}</span>
       </div>
       <div className="mt-4 flex items-center gap-2"><code className="min-w-0 truncate rounded-lg bg-background/60 px-2 py-1 text-xs">{model.model_id}</code><CopyModelId modelId={model.model_id} /></div>
-      <p className="mt-4 text-sm font-medium">{formatPrice(model)}</p>
-      {model.model_type === "video" && !providerQuote ? <VideoPricingBreakdown pricing={model.pricing} compact /> : null}
-      {providerQuote ? <p className="mt-2 text-xs text-muted-foreground">Billed at actual provider cost with no LLM7 markup.</p> : null}
-      {cachePrice ? <p className="mt-1 text-xs text-muted-foreground">Cache: {cachePrice}</p> : null}
+      <div className="mt-4"><LivePrice modelId={model.model_id} /></div>
       {model.context_window.tokens ? <p className="mt-2 text-sm text-muted-foreground">{formatContext(model.context_window.tokens)} context</p> : null}
       {capabilities.length ? <div className="mt-4 flex flex-wrap gap-1.5">{capabilities.map((capability) => <span key={capability} className="rounded-full border border-border/70 bg-background/60 px-2.5 py-1 text-xs">{capability}</span>)}</div> : null}
       {statisticCards.length ? <div className="mt-4 grid grid-cols-2 gap-2 border-t border-border/50 pt-4 text-xs">{statisticCards.map(([label, value]) => <p key={label}><span className="block text-muted-foreground">{label}</span><span className="font-medium">{value}</span></p>)}</div> : null}

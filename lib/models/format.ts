@@ -58,7 +58,9 @@ export function formatUsd(value: string | null | undefined): string {
   return `$${new Decimal(value).toFixed(Math.min(Math.max(value.split(".")[1]?.length ?? 0, 2), 8))} USD`;
 }
 
-export function formatPrice(model: PublicModel): string {
+export type PricingModel = Pick<PublicModel, "model_id" | "model_type" | "pricing"> & Partial<Pick<PublicModel, "capabilities">>;
+
+export function formatPrice(model: PricingModel): string {
   const { pricing } = model;
   if (isProviderQuoteModel(model)) return providerQuotePriceLabel(model.model_id);
   if (pricing.mode === "token") return `${formatUsd(pricing.input)} input and ${formatUsd(pricing.output)} output per ${pricing.unit}`;
@@ -74,7 +76,7 @@ export function audioPricePerMinute(pricePerSecond: string | null | undefined): 
   return new Decimal(pricePerSecond).times(60).toSignificantDigits(4).toString();
 }
 
-export function formatCachePrice(model: PublicModel): string | null {
+export function formatCachePrice(model: Pick<PublicModel, "pricing">): string | null {
   const entries = cachePriceEntries(model.pricing);
   if (!entries.length) return null;
 
@@ -87,7 +89,7 @@ export function formatContext(value: number | null | undefined, label = "tokens"
 
 export { parseTokenPricingUnit } from "./token-unit.js";
 
-export function pricesDirectlyComparable(left: PublicModel, right: PublicModel): boolean {
+export function pricesDirectlyComparable(left: PricingModel, right: PricingModel): boolean {
   if (isProviderQuoteModel(left) || isProviderQuoteModel(right)) return false;
   return left.pricing.currency === right.pricing.currency && left.pricing.mode === right.pricing.mode && left.pricing.unit === right.pricing.unit;
 }

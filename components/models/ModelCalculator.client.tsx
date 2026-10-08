@@ -1,7 +1,7 @@
 "use client";
 
 import Decimal from "decimal.js-light";
-import { useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import { Minus, Plus, Sparkles } from "lucide-react";
 
 type Props = {
@@ -41,14 +41,15 @@ function Presets({ values, onChoose, suffix = "" }: { values: number[]; onChoose
 }
 
 function StepperInput({ label, value, onChange, presets, suffix, step = 1 }: { label: string; value: string; onChange: (value: string) => void; presets: number[]; suffix?: string; step?: number }) {
+  const id = useId();
   const decrement = () => onChange(String(Math.max(0, Number(value || 0) - step)));
   const increment = () => onChange(String(Math.min(1_000_000_000, Number(value || 0) + step)));
 
   return <div>
-    <label className="text-sm font-medium">{label}</label>
+    <label htmlFor={id} className="text-sm font-medium">{label}</label>
     <div className="mt-2 flex overflow-hidden rounded-xl border border-border/70 bg-background/65 shadow-inner">
       <button type="button" aria-label={"Decrease " + label} onClick={decrement} className="grid w-11 place-items-center border-r border-border/70 transition-colors hover:bg-accent"><Minus className="h-4 w-4" /></button>
-      <input inputMode="numeric" value={value} onChange={(event) => onChange(event.target.value)} className="min-w-0 flex-1 bg-transparent px-3 py-2 text-center font-semibold outline-none" />
+      <input id={id} inputMode="numeric" value={value} onChange={(event) => onChange(event.target.value)} className="min-w-0 flex-1 bg-transparent px-3 py-2 text-center font-semibold outline-none" />
       <button type="button" aria-label={"Increase " + label} onClick={increment} className="grid w-11 place-items-center border-l border-border/70 transition-colors hover:bg-accent"><Plus className="h-4 w-4" /></button>
     </div>
     <Presets values={presets} onChoose={(preset) => onChange(String(preset))} suffix={suffix} />
@@ -56,6 +57,7 @@ function StepperInput({ label, value, onChange, presets, suffix, step = 1 }: { l
 }
 
 export default function ModelCalculator(props: Props) {
+  const id = useId();
   const [first, setFirst] = useState(props.mode === "token" ? "10000" : "1");
   const [second, setSecond] = useState(props.mode === "token" ? "2500" : "1");
   const [duration, setDuration] = useState(String(props.durations?.[0] ?? 5));
@@ -90,18 +92,18 @@ export default function ModelCalculator(props: Props) {
   const unitName = props.mode === "token" ? "tokens" : props.mode === "image" ? "images" : props.audio ? "files" : "videos";
 
   return (
-    <section className="rounded-2xl border border-border/60 bg-card/55 p-5 shadow-sm backdrop-blur md:p-6" aria-labelledby="calculator-heading">
+    <section className="rounded-2xl border border-border/60 bg-card/55 p-5 shadow-sm backdrop-blur md:p-6" aria-labelledby={`${id}-heading`}>
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h2 id="calculator-heading" className="flex items-center gap-2 text-2xl font-semibold"><Sparkles className="h-5 w-5 text-primary" />Cost calculator</h2>
+          <h2 id={`${id}-heading`} className="flex items-center gap-2 text-2xl font-semibold"><Sparkles className="h-5 w-5 text-primary" />Cost calculator</h2>
           <p className="mt-1 text-sm text-muted-foreground">{props.variablePricing ? "Estimate at the starting rate; resolution, input type, quality, and audio options may change the actual total." : "Adjust the volume to see an instant estimate at the current public price."}</p>
         </div>
         <span className="rounded-full border border-border/70 bg-background/65 px-3 py-1 text-xs font-medium">{props.unit}</span>
       </div>
 
       <div className="mt-6 rounded-xl border border-border/60 bg-background/45 p-4">
-        <div className="flex items-center justify-between gap-4 text-sm"><label htmlFor="usage-volume" className="font-medium">Request volume</label><output className="font-semibold">{formatQuantity(String(sliderValue))} {unitName}</output></div>
-        <input id="usage-volume" type="range" min="0" max="1000000" step={props.mode === "token" ? "1000" : "1"} value={sliderValue} onChange={(event) => onSlider(event.target.value)} className="model-range mt-4 w-full cursor-pointer" />
+        <div className="flex items-center justify-between gap-4 text-sm"><label htmlFor={`${id}-volume`} className="font-medium">Request volume</label><output className="font-semibold">{formatQuantity(String(sliderValue))} {unitName}</output></div>
+        <input id={`${id}-volume`} type="range" min="0" max="1000000" step={props.mode === "token" ? "1000" : "1"} value={sliderValue} onChange={(event) => onSlider(event.target.value)} className="model-range mt-4 w-full cursor-pointer" />
         <div className="mt-2 flex justify-between text-xs text-muted-foreground"><span>0</span><span>1M</span></div>
       </div>
 
