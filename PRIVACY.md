@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Last updated:** 7 October 2026
+**Last updated:** 9 October 2026
 
 This Privacy Policy explains how **LLM7.io** (“we”, “us”, “our”) collects and processes your personal data when you use our educational and research-oriented website and API, including `dash.llm7.io`. We operate from the United Kingdom and comply with the **UK GDPR** and, where applicable, the **EU GDPR**. Access to the API requires an **API token** issued via `dash.llm7.io`.
 
@@ -62,11 +62,11 @@ Contact support@llm7.io regarding deletion of previously collected account data.
 
 **Optional OpenAI ad measurement**
 
-The “Google & OpenAI ad measurement” choice enables OpenAI Pixel page views and checkout-start events, plus a server copy of successful checkout starts. Checkboxes are initially selected, but measurement requires saving preferences; “No thanks” declines both. You can change these choices in the footer at any time.
+The “Google & OpenAI ad measurement” choice enables OpenAI Pixel page views, model-catalogue expansion, Add balance and payment-provider choices, and successful checkout-start events. Our server also sends eligible new registrations, successful checkout starts, and verified paid top-ups after base credit is delivered. Checkboxes are initially selected, but measurement requires saving preferences; “No thanks” declines both. You can change these choices in the footer at any time.
 
-For signed-in customers, we normalize and SHA-256 hash the email address and stable internal customer ID before sending them to OpenAI for conversion matching. We do not send raw email addresses or account IDs to OpenAI. Anonymous visitors have no email identifier. Events may include checkout amounts in USD cents, a shared event ID to prevent double counting, the site origin, and OpenAI click/browser references. No payment-card data, API tokens, prompts, or model responses are included.
+For signed-in customers, we normalize and SHA-256 hash the email address and stable internal customer ID before sending them to OpenAI for conversion matching. We do not send raw email addresses or account IDs to OpenAI. Anonymous visitors have no email identifier. Where available and permitted by your ad-measurement choice, matching also uses your real client IP address and browser user agent captured when you authenticate or start checkout. Events may include checkout or paid top-up amounts in USD cents, a shared event ID to prevent double counting, the site origin, and OpenAI click/browser references. Promotional credits do not increase the paid value. No payment-card data, API tokens, prompts, or model responses are included.
 
-With permission, the Pixel stores `__oppref` (up to 30 days) and `__obref` (up to 365 days) in first-party cookies. Revoking ad measurement stops new OpenAI events and clears these cookies. Data already sent cannot be recalled by changing browser preferences. See [OpenAI’s privacy policy](https://openai.com/policies/privacy-policy/).
+With permission, the Pixel stores `__oppref` (up to 30 days) and `__obref` (up to 365 days) in first-party cookies. Revoking ad measurement stops new OpenAI events, clears these cookies, and requests cancellation of pending server deliveries for that consent receipt. A connection is needed to notify the server; failed requests are retried through the consent-revocation mechanism described below. Matching data for pending server delivery is removed after acceptance, suppression, or expiry. Data already sent or being transmitted cannot be recalled by changing browser preferences. See [OpenAI’s privacy policy](https://openai.com/policies/privacy-policy/).
 
 **Optional Google Ads measurement**
 

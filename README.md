@@ -281,8 +281,14 @@ Before production use, verify real HTTPS cross-subdomain cookies, the revocation
 endpoint, and a provider-confirmed top-up in the billing/Ads delivery diagnostics.
 No real payment or Google conversion is created by these tests.
 
+## OpenAI Ads measurement
+
+OpenAI Pixel measures `page_viewed` on route changes and `contents_viewed` on the first homepage model-catalogue expansion in a page lifetime. Collapse, rerender, remount, and subsequent expansions do not emit additional catalogue events. Expanding without consent is never replayed after permission is granted. OpenAI measurement is optional; SDK or identity failures must not block catalogue interaction or navigation. Production pixel debugging is disabled.
+
+The free API key CTA remains available. Paid-model CTAs link to `https://dash.llm7.io/#/billing`, show the $10 minimum top-up, and leave payment initiation to an explicit dashboard action. The dashboard restores the allowlisted billing destination through supported same-tab authentication flows. Its shared pixel helper measures payment-provider choices and `checkout_started` only when a provider checkout is created; registration and verified paid orders are delivered by the server.
+
+New consent choices are preselected but are only saved after the visitor confirms; previously declined choices stay off. `npm test` covers catalogue expansion/collapse, actual consent-gated event emission, denied-consent non-replay, remount deduplication, and the paid/free CTA destinations. Before releasing, verify shared consent and attribution cookies on real HTTPS landing and dashboard domains; local tests cannot prove cross-domain attribution.
+
 ## License
 
-This project is licensed under the [GNU AFFERO GENERAL PUBLIC LICENSE](LICENSE). 
-
-OpenAI Pixel measures `page_viewed` on route changes and `checkout_started` when a valid dashboard payment request begins. Repeated lifecycle callbacks do not duplicate page views. New consent choices are preselected but are only saved after the visitor confirms; previously declined choices stay off.
+This project is licensed under the [GNU AFFERO GENERAL PUBLIC LICENSE](LICENSE).

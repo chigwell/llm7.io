@@ -63,3 +63,66 @@ test("an in-memory decline overrides an old allowed cookie when storage writes f
   assert.equal(f.events().length, 0);
   assert.equal(f.pixel.checkoutContext(), null);
 });
+
+test("catalogue expansion is measured once per page lifetime and custom names match Ads configuration", async () => {
+  const f = fixture();
+  await f.pixel.contentsViewed();
+  await f.pixel.contentsViewed();
+  await f.pixel.addBalanceClicked();
+  await f.pixel.paymentProviderChosen("stripe");
+  await f.pixel.paymentProviderChosen("oxapay");
+  await f.pixel.paymentProviderChosen("unsupported");
+  assert.deepEqual(f.events(), [
+    ["measure", "contents_viewed", { type: "contents" }],
+    ["measure", "custom", { type: "custom" }, { custom_event_name: "addbalanceclick" }],
+    ["measure", "custom", { type: "custom" }, { custom_event_name: "choosestripe" }],
+    ["measure", "custom", { type: "custom" }, { custom_event_name: "chooseoxapya" }],
+  ]);
+});
+
+test("actions without consent are never replayed after consent is granted", async () => {
+  const f = fixture();
+  f.win.document.cookie = "";
+  const tasks = [f.pixel.contentsViewed(), f.pixel.addBalanceClicked(), f.pixel.paymentProviderChosen("stripe"), f.pixel.checkoutStarted(2500, "checkout")];
+  f.win.document.cookie = `llm7_ads_consent=${encodeURIComponent(JSON.stringify(receipt))}`;
+  await Promise.all(tasks);
+  await f.pixel.contentsViewed();
+  assert.equal(f.events().length, 0);
+  await f.pixel.addBalanceClicked();
+  assert.equal(f.events().length, 1);
+});
+
+test("pending actions cannot inherit a different account while matching data is prepared", async () => {
+  const f = fixture();
+  let release;
+  f.win.crypto = { subtle: { digest: () => new Promise(resolve => { release = resolve; }) } };
+  const identified = f.pixel.identify("old@example.com");
+  const action = f.pixel.addBalanceClicked();
+  await f.pixel.identify("", undefined);
+  release(new Uint8Array(32));
+  await Promise.all([identified, action]);
+  assert.equal(f.events().length, 0);
+});
+
+test("revocation or a new consent receipt suppresses pending actions", async () => {
+  for (const nextCookie of ["", `llm7_ads_consent=${encodeURIComponent(JSON.stringify({ ...receipt, consent_id: "new-receipt" }))}`]) {
+    const f = fixture();
+    let release;
+    f.win.crypto = { subtle: { digest: () => new Promise(resolve => { release = resolve; }) } };
+    const identified = f.pixel.identify("test@example.com");
+    const action = f.pixel.paymentProviderChosen("stripe");
+    f.win.document.cookie = nextCookie;
+    release(new Uint8Array(32));
+    await Promise.all([identified, action]);
+    assert.equal(f.events().length, 0);
+  }
+});
+
+test("opaque attribution cookies pass through unchanged while consent is decoded", () => {
+  const f = fixture();
+  f.win.document.cookie += "; __oppref=opaque%2Bclick%3D; __obref=opaque%2Fbrowser%25";
+  assert.deepEqual(f.pixel.checkoutContext(), {
+    consent_id: receipt.consent_id, consented_at: receipt.consented_at,
+    oppref: "opaque%2Bclick%3D", obref: "opaque%2Fbrowser%25",
+  });
+});

@@ -353,7 +353,7 @@ export default function HeroSectionWithWaves() {
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center mb-12 md:mb-20 px-4">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 md:gap-4 justify-center items-center px-4">
             <Button
               size="lg"
               className="w-full sm:w-auto px-6 md:px-8 py-4 md:py-6 text-base md:text-lg font-semibold"
@@ -370,11 +370,19 @@ export default function HeroSectionWithWaves() {
               className="w-full sm:w-auto px-6 md:px-8 py-4 md:py-6 text-base md:text-lg font-semibold backdrop-blur-sm"
               asChild
             >
+              <Link href="https://dash.llm7.io/#/billing" data-analytics-placement="hero">
+                Access paid models
+              </Link>
+            </Button>
+            <Button size="lg" variant="ghost" asChild>
               <Link href="#example" data-analytics-target="example" data-analytics-placement="hero">
                 Example
               </Link>
             </Button>
           </div>
+          <p className="mt-4 mb-12 md:mb-20 px-4 text-sm text-muted-foreground">
+            Paid models: top up from $10 and pay as you go. Free API access remains available.
+          </p>
 
           {/* Stats */}
           <div className="relative -top-2 md:-top-4 flex justify-center items-start gap-4 sm:gap-6 md:gap-8 lg:gap-16 text-center px-4">

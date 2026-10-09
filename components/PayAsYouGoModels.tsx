@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { openAiPixel } from "@/lib/openai-pixel";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { Button } from "@/components/ui/buttonShadcn";
 import { ModelCard } from "./models/LiveModelCard";
@@ -23,7 +24,12 @@ export default function PayAsYouGoModels() {
     return sortedModels.slice(0, 3);
   }, [models, showAll]);
 
-  const hiddenCount = Math.max(models.length - visibleModels.length, 0);
+  const canExpand = models.length > 3;
+
+  function toggleModels() {
+    if (!showAll) void openAiPixel.contentsViewed();
+    setShowAll(!showAll);
+  }
 
   return (
     <section id="models" aria-labelledby="payg-heading" className="mx-auto w-full max-w-md scroll-mt-24 md:max-w-[61rem]">
@@ -41,7 +47,7 @@ export default function PayAsYouGoModels() {
         {modelsState === "error" ? "Showing cached model pricing while live pricing is unavailable." : null}
       </div>
 
-      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div id="payg-model-list" className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
         {visibleModels.map((model) => {
           const availability = latestPingSnapshot?.modelAvailability[model.id.toLowerCase()];
 
@@ -57,9 +63,9 @@ export default function PayAsYouGoModels() {
         .
       </p>
 
-      {hiddenCount > 0 ? (
+      {canExpand ? (
         <div className="mt-5 flex justify-center">
-          <Button variant="outline" onClick={() => setShowAll((value) => !value)}>
+          <Button variant="outline" onClick={toggleModels} aria-expanded={showAll} aria-controls="payg-model-list">
             {showAll ? (
               <>
                 Show less <ChevronUpIcon className="h-4 w-4" />
@@ -73,11 +79,21 @@ export default function PayAsYouGoModels() {
         </div>
       ) : null}
 
-      {showAll ? <div className="mt-4 flex justify-center">
-        <Button asChild variant="outline">
-          <Link href="/models/">Browse the full model catalogue</Link>
-        </Button>
-      </div> : null}
+      {showAll ? (
+        <div className="mt-5 flex flex-col items-center gap-3 text-center">
+          <div className="flex flex-col justify-center gap-3 sm:flex-row">
+            <Button asChild>
+              <Link href="https://dash.llm7.io/#/billing" data-analytics-placement="content">
+                Add credit for paid models
+              </Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href="/models/">Browse the full model catalogue</Link>
+            </Button>
+          </div>
+          <p className="text-sm text-muted-foreground">Top up from $10. Pay as you go at the listed model rates.</p>
+        </div>
+      ) : null}
 
     </section>
   );

@@ -89,7 +89,7 @@ export default function AnalyticsConsent() {
           <span>Google & OpenAI ad measurement</span>
         </label>
         </div>
-        <p>Optional analytics and ad measurement. Change anytime. <a href="https://llm7.io/privacy.html" target="_blank" rel="noreferrer">Privacy policy</a></p>
+        <p>Optional analytics and ad measurement. Ad matching may use hashed email/customer IDs, browser identifiers, your IP address and browser details. Change anytime. <a href="https://llm7.io/privacy.html" target="_blank" rel="noreferrer">Privacy policy</a></p>
       </div>
       <div className="llm7-analytics-actions">
         <button type="button" onClick={() => choose(false, false)}>No thanks</button>
