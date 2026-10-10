@@ -206,3 +206,167 @@ test("a hung withdrawal is aborted, kept pending, and retried after backoff", as
   await new Promise(resolve => setTimeout(resolve, 15));
   assert.equal(f.requests.length, 2);
 });
+
+const OPENAI_COOKIE = "llm7_openai_attribution";
+const OPENAI_SEARCH = "?utm_source=%20OpenAI%20&utm_campaign=campaign-1&ad_id=ad-2&click_id=opaque_click-1";
+
+test("OpenAI eligibility requires a single qualifying source and separate advertising consent", () => {
+  for (const search of ["", "?utm_source=google", "?oppref=click", "?click_id=click", "?utm_source=openai&utm_source=openai", "?utm_source=openai&utm_source=google"]) {
+    const f = fixture({ search });
+    f.api.setConsent(true);
+    assert.equal(f.api.getOpenAiAttribution(), null, search);
+    assert.equal(f.jar.has(OPENAI_COOKIE), false);
+    assert.deepEqual(f.requests, []);
+  }
+  const f = fixture({ search: OPENAI_SEARCH });
+  f.api.start();
+  assert.equal(f.api.getOpenAiAttribution(), null);
+  assert.equal(f.jar.has(OPENAI_COOKIE), false);
+  assert.deepEqual(f.writes, []);
+  f.api.setConsent(true);
+  assert.deepEqual(f.api.getOpenAiAttribution(), { version: 1, source: "openai", captured_at: "2026-10-07T10:00:00.000Z", oppref: "opaque_click-1" });
+  assert.ok(f.writes.find(line => line.startsWith(OPENAI_COOKIE + "=")).includes("Max-Age=2592000; SameSite=Lax; Domain=llm7.io; Secure"));
+  assert.equal(JSON.stringify([...f.jar]).includes("campaign-1"), false, "only required eligibility and matching information is retained");
+});
+
+test("OpenAI parameters are captured before authentication URL cleanup without writing before consent", () => {
+  const f = fixture({ search: OPENAI_SEARCH });
+  f.win.location.search = "";
+  assert.deepEqual(f.writes, []);
+  f.advance(60000);
+  f.api.setConsent(true);
+  assert.equal(f.api.getOpenAiAttribution().oppref, "opaque_click-1");
+  assert.equal(f.api.getOpenAiAttribution().captured_at, "2026-10-07T10:00:00.000Z");
+  assert.ok(f.writes.find(line => line.startsWith(OPENAI_COOKIE + "=")).includes("Max-Age=2591940;"));
+});
+
+test("OpenAI source-only arrivals qualify; canonical references win and malformed aliases are ignored", () => {
+  for (const [suffix, oppref] of [
+    ["", undefined], ["&click_id=alias", "alias"], ["&oppref=canonical&click_id=alias", "canonical"],
+    ["&oppref=&click_id=alias", "alias"], ["&oppref=a&oppref=b&click_id=alias", "alias"],
+    ["&oppref=original%2Bopaque%2Fvalue%3D", "original+opaque/value="],
+    ["&click_id=", undefined], ["&click_id={oppref}", undefined], ["&click_id=%7Boppref%7D", undefined],
+    ["&click_id=a&click_id=b", undefined], ["&click_id=bad%20reference", undefined],
+    ["&click_id=" + "x".repeat(4097), undefined],
+  ]) {
+    const f = fixture({ search: "?utm_source=openai" + suffix }); f.api.setConsent(true);
+    assert.deepEqual(f.api.getOpenAiAttribution(), { version: 1, source: "openai", captured_at: "2026-10-07T10:00:00.000Z", ...(oppref === undefined ? {} : { oppref }) }, suffix);
+  }
+});
+
+test("OpenAI survives direct and other-channel visits across subdomains without changing Google attribution", () => {
+  const f = fixture({ search: OPENAI_SEARCH + "&gclid=google-existing" }); f.api.setConsent(true);
+  const first = f.api.getOpenAiAttribution();
+  const dash = fixture({ jar: f.jar, hostname: "dash.llm7.io", search: "" }); dash.advance(DAY);
+  assert.deepEqual(dash.api.getOpenAiAttribution(), first);
+  dash.win.location.search = "?utm_source=google&gclid=google-new";
+  assert.equal(dash.api.getAttribution().click_id, "google-new");
+  assert.deepEqual(dash.api.getOpenAiAttribution(), first);
+  f.advance(DAY);
+  assert.equal(f.api.getAttribution().click_id, "google-new");
+});
+
+test("OpenAI reloads and source-only arrivals preserve expiry, while distinct clicks refresh the window", () => {
+  const f = fixture({ search: OPENAI_SEARCH }); f.api.setConsent(true);
+  const first = f.api.getOpenAiAttribution();
+  f.advance(DAY); f.api.syncConsent();
+  assert.deepEqual(f.api.getOpenAiAttribution(), first);
+  const reload = fixture({ jar: f.jar, search: OPENAI_SEARCH }); reload.advance(DAY);
+  assert.deepEqual(reload.api.getOpenAiAttribution(), first);
+  reload.win.location.search = "?utm_source=openai";
+  assert.deepEqual(reload.api.getOpenAiAttribution(), first);
+  f.win.location.search = "?utm_source=openai&click_id=new-click";
+  assert.deepEqual(f.api.getOpenAiAttribution(), { ...first, oppref: "new-click", captured_at: "2026-10-08T10:00:00.000Z" });
+  assert.deepEqual(reload.api.getOpenAiAttribution(), f.api.getOpenAiAttribution(), "an older tab cannot overwrite the latest shared arrival");
+});
+
+test("OpenAI expiry is strict at 30 days and not renewed by an unchanged URL", () => {
+  const f = fixture({ search: OPENAI_SEARCH }); f.api.setConsent(true);
+  f.advance(30 * DAY - 1);
+  assert.ok(f.api.getOpenAiAttribution());
+  f.advance(1);
+  assert.equal(f.api.getOpenAiAttribution(), null);
+  f.advance(DAY); f.api.syncConsent();
+  assert.equal(f.api.getOpenAiAttribution(), null);
+});
+
+test("OpenAI eligibility rejects malformed, future, wrong-consent, and injected cookie data", () => {
+  const f = fixture({ search: OPENAI_SEARCH }); f.api.setConsent(true);
+  const valid = f.data(OPENAI_COOKIE);
+  for (const update of [{ version: 2 }, { source: "google" }, { captured_at: "nonsense" }, { captured_at: "2026-10-07T10:00:00.001Z" },
+    { captured_at: "2026-09-07T10:00:00.000Z" }, { consent_id: UUID2 }, { consented_at: "2026-10-07T09:00:00.000Z" },
+    { oppref: "" }, { oppref: null }, { oppref: 4 }, { oppref: "{oppref}" }]) {
+    const other = fixture({ jar: new Map(f.jar), search: "" });
+    other.put(OPENAI_COOKIE, { ...valid, ...update });
+    assert.equal(other.api.getOpenAiAttribution(), null, JSON.stringify(update));
+  }
+  const clean = fixture({ jar: new Map(f.jar), search: "" });
+  clean.put(OPENAI_COOKIE, { ...valid, email: "private", client: { ip_address: "fake" } });
+  assert.deepEqual(clean.api.getOpenAiAttribution(), f.api.getOpenAiAttribution());
+});
+
+test("OpenAI withdrawal clears eligibility and never replays the original tagged visit on re-grant", async () => {
+  const f = fixture({ search: OPENAI_SEARCH }); f.api.setConsent(true);
+  const dash = fixture({ jar: f.jar, hostname: "dash.llm7.io", search: OPENAI_SEARCH }); dash.api.start();
+  f.api.setConsent(false);
+  assert.equal(f.jar.has(OPENAI_COOKIE), false);
+  assert.equal(dash.api.getOpenAiAttribution(), null);
+  await tick();
+  f.win.crypto.randomUUID = () => UUID2;
+  f.api.setConsent(true);
+  assert.equal(f.api.getOpenAiAttribution(), null);
+  assert.equal(dash.api.getOpenAiAttribution(), null);
+  f.win.location.search = "?utm_source=openai&click_id=new-after-withdrawal";
+  assert.equal(f.api.getOpenAiAttribution().oppref, "new-after-withdrawal");
+});
+
+test("OpenAI denied visits do not become candidates after reload and consent grant", async () => {
+  const f = fixture({ search: OPENAI_SEARCH }); f.api.setConsent(false);
+  const reload = fixture({ jar: f.jar, search: OPENAI_SEARCH, uuid: UUID2 });
+  reload.api.setConsent(true);
+  assert.equal(reload.api.getOpenAiAttribution(), null);
+  await tick();
+});
+
+test("OpenAI blocked writes fail closed, even if an existing consent grant remains readable", () => {
+  for (const throws of [true, false]) {
+    const f = fixture({ search: "" }); f.api.setConsent(true);
+    const cookie = Object.getOwnPropertyDescriptor(f.win.document, "cookie");
+    Object.defineProperty(f.win.document, "cookie", { ...cookie, set: () => { if (throws) throw new Error("blocked"); } });
+    f.win.location.search = OPENAI_SEARCH;
+    assert.equal(f.api.getOpenAiAttribution(), null);
+    assert.equal(f.jar.has(OPENAI_COOKIE), false);
+  }
+});
+
+test("OpenAI subscribers observe eligibility capture, cross-tab changes and expiry without recursive notifications", () => {
+  const f = fixture({ search: "" }); f.api.setConsent(true);
+  const changes = [];
+  f.api.subscribe(() => changes.push(f.api.getOpenAiAttribution()));
+  f.win.location.search = OPENAI_SEARCH; f.api.syncConsent();
+  assert.equal(changes.length, 1);
+  const dash = fixture({ jar: f.jar, search: "?utm_source=openai&click_id=another" }); dash.advance(DAY);
+  dash.api.syncConsent();
+  f.advance(DAY); f.api.syncConsent();
+  assert.equal(changes.length, 2);
+  assert.equal(changes[1].oppref, "another");
+  f.advance(30 * DAY); f.api.syncConsent();
+  assert.equal(changes.length, 3);
+  assert.equal(changes[2], null);
+});
+
+test("legacy Pixel cookies cannot qualify a direct visitor", () => {
+  const f = fixture({ search: "" });
+  f.jar.set("__oppref", "legacy-click"); f.jar.set("__obref", "legacy-browser");
+  f.api.setConsent(true);
+  assert.equal(f.api.getOpenAiAttribution(), null);
+});
+
+test("an old tab cannot rebind its candidate when withdrawal and a fresh grant happen in another tab", async () => {
+  const f = fixture({ search: OPENAI_SEARCH }); f.api.setConsent(true);
+  const oldTab = fixture({ jar: f.jar, search: OPENAI_SEARCH }); oldTab.api.start();
+  f.api.setConsent(false); await tick();
+  f.win.crypto.randomUUID = () => UUID2; f.api.setConsent(true);
+  assert.equal(oldTab.api.getOpenAiAttribution(), null);
+  assert.equal(f.jar.has(OPENAI_COOKIE), false);
+});

@@ -7,6 +7,7 @@ import { analytics } from "@/lib/analytics";
 import { trackLandingLink } from "@/lib/analytics-links";
 
 openAiPixel.setConsentSource(() => adsAttribution.getConsent());
+openAiPixel.setAttributionSource(() => adsAttribution.getOpenAiAttribution());
 
 export default function AnalyticsLifecycle() {
   const pathname = usePathname();

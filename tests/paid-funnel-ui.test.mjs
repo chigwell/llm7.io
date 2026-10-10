@@ -27,6 +27,8 @@ async function mount(t, { allowed = true, data = models } = {}) {
   window.oaiq = (...args) => calls.push(args);
   if (allowed) document.cookie = `llm7_ads_consent=${receipt()}; Path=/`;
   Object.assign(openAiPixel, createOpenAiPixel());
+  const attribution = { version: 1, source: "openai", captured_at: new Date().toISOString() };
+  openAiPixel.setAttributionSource(() => attribution);
   Object.assign(liveModelsStore, createLiveModelsStore({ fetcher: async () => Response.json({ data }) }));
   const root = createRoot(document.getElementById("root"));
   const render = async key => act(async () => root.render(React.createElement(React.StrictMode, {}, React.createElement(Catalogue, { key }))));
