@@ -1,0 +1,86 @@
+name: Deploy landing to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Finish an in-flight publication before deploying a newer revision.
+concurrency:
+  group: cloudflare-pages-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+      WRANGLER_SEND_METRICS: 'false'
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Test
+        run: npm test
+
+      - name: Build production export
+        env:
+          NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN: ${{ vars.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN }}
+          NEXT_PUBLIC_POSTHOG_HOST: ${{ vars.NEXT_PUBLIC_POSTHOG_HOST }}
+        run: |
+          : "${NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN:?Set the public PostHog project token in repository Actions Variables}"
+          : "${NEXT_PUBLIC_POSTHOG_HOST:?Set the public PostHog host in repository Actions Variables}"
+          npm run build
+
+      - name: Validate complete export
+        run: |
+          npm run validate:seo
+          test -s out/index.html
+          test -s out/privacy.html
+          test -d out/_next/static
+
+      - name: Retain verified export and public build inputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: landing-${{ github.sha }}
+          retention-days: 7
+          if-no-files-found: error
+          path: |
+            out/
+            data/generated/public-model-data.json
+            data/generated/model-route-map.json
+            data/generated/discovery-page-state.json
+
+      - name: Publish to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          : "${CLOUDFLARE_API_TOKEN:?Add CLOUDFLARE_API_TOKEN to repository Actions Secrets}"
+          : "${CLOUDFLARE_ACCOUNT_ID:?Add CLOUDFLARE_ACCOUNT_ID to repository Actions Secrets}"
+          npx --no-install wrangler pages deploy out \
+            --project-name=llm7-landing \
+            --branch=main \
+            --commit-hash="$GITHUB_SHA" \
+            --commit-message='ci: deploy verified landing build' \
+            --commit-dirty=true
+
+      - name: Record release
+        run: |
+          printf 'Published landing commit `%s` to https://llm7.io via Cloudflare Pages project `llm7-landing`.\n' "$GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"

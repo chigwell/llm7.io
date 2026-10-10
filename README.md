@@ -14,6 +14,39 @@ Model, comparison, sitemap, and Open Graph assets are generated during `npm run 
 
 Run `npm run test` for data-pipeline utility checks and `npm run validate:seo` after a production build to inspect the exported `out/` pages.
 
+### Automatic Cloudflare deployment
+
+The [Cloudflare Pages workflow](.github/workflows/cloudflare-pages.yml) builds and
+publishes `llm7-landing` on every push to `main`. It can also be started from
+**Actions → Deploy landing to Cloudflare Pages → Run workflow**, selecting `main`.
+Builds and uploads run on GitHub's runner; a local static export is not required.
+
+Configure these repository **Actions Secrets**:
+
+| Name | Value |
+| --- | --- |
+| `CLOUDFLARE_API_TOKEN` | Cloudflare token with **Account → Cloudflare Pages → Edit**, scoped to the account containing `llm7-landing`. |
+| `CLOUDFLARE_ACCOUNT_ID` | That Cloudflare account's ID. |
+
+Configure **Actions Variables** `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` and
+`NEXT_PUBLIC_POSTHOG_HOST` with the existing public project token and ingestion
+host. Missing values stop the build to prevent silently disabling product
+analytics. These are public browser configuration; the Cloudflare credentials
+are supplied only to the publication step.
+
+The workflow uses Node 24 and locked dependencies, runs the test suite, generates
+the full catalogue/export, and checks SEO output and required export files.
+Only successful checks allow publication.
+The verified export and public catalogue inputs are retained as a seven-day
+Actions artifact. Concurrent releases publish sequentially. A failed build or
+upload leaves the previous deployment live; after correcting missing secrets or
+other errors, rerun the workflow from `main`.
+
+Publish the complete export for shared-layout or tracking changes. A homepage-only
+overlay would retain old scripts on other routes.
+
+Credential setup follows [Cloudflare's Direct Upload CI guide](https://developers.cloudflare.com/pages/how-to/use-direct-upload-with-continuous-integration/).
+
 ### Live model pricing
 
 Published model pages, the catalogue, comparisons, alternatives, and calculators
