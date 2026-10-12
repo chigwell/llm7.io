@@ -51,13 +51,7 @@ export default function Footer() {
               <span>Built with</span>
               <Heart className="w-3 h-3 md:w-4 md:h-4 text-red-500 fill-current" />
               <span>by</span>
-              <Link
-                href="https://www.linkedin.com/in/eugene-evstafev/"
-                target="_blank"
-                className="text-foreground hover:text-primary transition-colors font-medium"
-              >
-                Eugene Evstafev
-              </Link>
+              <span className="text-foreground font-medium">LLM7 Team</span>
             </div>
 
             {/* Social buttons */}
