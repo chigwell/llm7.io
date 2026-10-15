@@ -1,6 +1,6 @@
 # Terms of Service
 
-**Last updated: 30 September 2026**
+**Last updated: 15 October 2026**
 
 Thank you for using **LLM7.io** (the **“Service”**). By accessing or using the Service, you agree to these Terms of Service (the **“Terms”**). If you do not accept all of the Terms, do not use the Service.
 
@@ -154,7 +154,10 @@ You agree to **defend, indemnify, and hold harmless** us and our contributors fr
   - You must not use another person's or organisation's payment method, bank card, payment link, billing profile, Stripe account, direct debit details, bank account, or source of funds to pay for your account, unless we have expressly approved that arrangement in writing before payment is made. General permission from the payment method owner may not be sufficient if the arrangement misrepresents the true account holder, payer, beneficial user, billing relationship, or source of funds.
   - We may decline, delay, review, reverse, refund, suspend, or cancel a payment, subscription, top-up, referral credit, promotional credit, or account access where payment information is incomplete, inconsistent, disputed, charged back, high-risk, unauthorised, or reasonably suspected to involve third-party payment misuse, fraud, sanctions evasion, account farming, limit evasion, or other abuse.
   - We may update prices, subscription limits, or features. Changes apply on renewal or as otherwise notified.
-  - Taxes may apply. Refunds (if any) follow the terms shown at purchase and any mandatory consumer protections in your jurisdiction.
+  - Taxes may apply. The refund rules below are subject to any mandatory consumer protections in your jurisdiction. Nothing in these rules limits any refund or cancellation rights that cannot be waived under applicable law.
+  - **Pro subscription refunds:** Only your **first Pro subscription payment** is eligible for a refund, and you must request the refund **within fourteen (14) days of that payment**. The refund is calculated as the amount paid **minus the actual expenses we incurred in providing the Service to you** during the subscription period covered by that payment. Renewal payments and any subsequent Pro subscription payments are not refundable under this policy.
+  - **Balance top-up refunds:** You may request a refund of a paid balance top-up **only within fourteen (14) days of that top-up payment**. Only the **unused portion of that payment** is eligible for a refund. Amounts already spent on **API requests or other Service usage are non-refundable**. Any applicable **payment gateway fees are deducted** from the unused amount. After these deductions, the **minimum refund amount is US$1.00**, and the **maximum refund amount is US$490.00 per top-up payment**. If the remaining refundable amount is less than US$1.00, no refund is available under this policy.
+  - To request a refund under either policy, contact **[support@llm7.io](mailto:support@llm7.io)** within the applicable fourteen-day period.
   - If your account has no activity for **six consecutive months**, we may apply an inactive-account balance reduction to help cover continued storage and maintenance of archived account-related records, including usage statistics, account technical metadata, and other data associated with operating, securing, and maintaining the account. For this purpose, **activity** means either a successful authentication to your account or an API request authenticated with your account credentials.
   - After the six-month inactivity period, the remaining account balance may be reduced by **10% per day**, calculated against the remaining balance at the time of each reduction. The reduction will stop if activity resumes. If the remaining balance reaches **US$0.10 or less**, we may reduce the remaining balance to **US$0.00**. This reduction will not create a negative balance and applies only to the account balance, subject to any non-waivable rights you may have under applicable law.
 
