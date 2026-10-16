@@ -91,7 +91,7 @@ export default function PayAsYouGoModels() {
               <Link href="/models/">Browse the full model catalogue</Link>
             </Button>
           </div>
-          <p className="text-sm text-muted-foreground">Top up from $10. Pay as you go at the listed model rates.</p>
+          <p className="text-sm text-muted-foreground">Top up from $5. Pay as you go at the listed model rates.</p>
         </div>
       ) : null}
 

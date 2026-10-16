@@ -381,7 +381,7 @@ export default function HeroSectionWithWaves() {
             </Button>
           </div>
           <p className="mt-4 mb-12 md:mb-20 px-4 text-sm text-muted-foreground">
-            Paid models: top up from $10 and pay as you go. Free API access remains available.
+            Paid models: top up from $5 and pay as you go. Free API access remains available.
           </p>
 
           {/* Stats */}

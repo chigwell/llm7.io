@@ -55,7 +55,7 @@ test("catalogue expansion emits one real standard event and retains collapse plu
   assert.match(f.button().textContent, /Show less/);
   assert.deepEqual(f.events(), [["measure", "contents_viewed", { type: "contents" }]]);
   assert.equal(document.querySelector("a[href='https://dash.llm7.io/#/billing']").textContent.trim(), "Add credit for paid models");
-  assert.match(document.body.textContent, /Top up from \$10/);
+  assert.match(document.body.textContent, /Top up from \$5/);
   await f.click();
   assert.equal(document.querySelectorAll("#payg-model-list article").length, 3);
   assert.equal(document.querySelector("a[href='https://dash.llm7.io/#/billing']"), null);
@@ -91,7 +91,7 @@ test("hero preserves free access and exposes a separately described paid billing
     const links = [...dom.window.document.querySelectorAll("a")];
     assert.equal(links.find(link => link.textContent.includes("Get a Free API Key")).getAttribute("href"), "https://dash.llm7.io/");
     assert.equal(links.find(link => link.textContent.includes("Access paid models")).getAttribute("href"), "https://dash.llm7.io/#/billing");
-    assert.match(dom.window.document.body.textContent, /Paid models: top up from \$10/);
+    assert.match(dom.window.document.body.textContent, /Paid models: top up from \$5/);
     assert.ok(links.some(link => link.getAttribute("href") === "#example"));
   } finally { dom.window.close(); }
 });
