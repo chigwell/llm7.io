@@ -186,7 +186,22 @@ test("payment fields are strictly validated at capture and outgoing transport", 
   assert.equal(f.sent[0].properties.amount_cents, 4225);
   assert.equal(f.sent[0].properties.total_credit_cents, 4647);
   assert.ok(!JSON.stringify(f.sent).includes("private"));
-  for (const value of [999, 50001, 1000.5, Infinity, "2500", null]) {
+  for (const method of ["stripe", "oxapay"]) {
+    for (const value of [500, 501, 999, 1000, 50000]) {
+      const valid = { ...props, method, amount_cents: value, amount_bucket: amountBucket(value),
+        bonus_percent: 0, crypto_bonus_cents: 0, total_credit_cents: value };
+      f.analytics.track("checkout_created", valid);
+      const safe = f.sent.at(-1).properties;
+      assert.equal(safe.amount_cents, value);
+      assert.equal(safe.total_credit_cents, value);
+      assert.equal(safe.amount_bucket, value < 1000 ? "5_9" : amountBucket(value));
+      const outgoing = f.config().before_send({ event: "checkout_created", properties: valid });
+      assert.equal(outgoing.properties.amount_cents, value);
+      assert.equal(outgoing.properties.total_credit_cents, value);
+      assert.equal(outgoing.properties.amount_bucket, safe.amount_bucket);
+    }
+  }
+  for (const value of [499, 50001, 500.5, Infinity, "500", null]) {
     f.analytics.track("checkout_created", { ...props, amount_cents: value });
     const safe = f.sent.at(-1).properties;
     assert.equal(safe.amount_cents, undefined);
@@ -220,5 +235,5 @@ test("redirect and exit events bypass batching through the SDK without awaiting 
 });
 test("bucket boundaries are deterministic and exclude exact amounts and duration", () => {
   assert.deepEqual([0, 999, 1000, 4999, 5000, 30000].map(latencyBucket), ["under_1s","under_1s","1_5s","1_5s","5_30s","over_30s"]);
-  assert.deepEqual([1000, 2500, 5000, 10000, 25000].map(amountBucket), ["10_24","25_49","50_99","100_249","250_500"]);
+  assert.deepEqual([500, 999, 1000, 2499, 2500, 5000, 10000, 25000, 50000].map(amountBucket), ["5_9","5_9","10_24","10_24","25_49","50_99","100_249","250_500","250_500"]);
 });
