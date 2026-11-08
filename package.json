@@ -7,7 +7,7 @@
   "license": "GNU AFFERO GENERAL PUBLIC LICENSE",
   "scripts": {
     "dev": "next dev --turbopack",
-    "prebuild": "node scripts/GenerateSourceMap.js && node scripts/sync-public-model-data.mjs && node scripts/generate-model-seo-assets.mjs",
+    "prebuild": "node scripts/GenerateSourceMap.js && node scripts/sync-public-model-data.mjs && node scripts/generate-model-scores.mjs && node scripts/generate-model-seo-assets.mjs",
     "build": "npx next build",
     "start": "next start",
     "lint": "node scripts/sync-public-model-data.mjs && next lint",

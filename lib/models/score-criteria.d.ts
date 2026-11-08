@@ -1,0 +1,15 @@
+export type ScoreRequirement = "image_input" | "image_edits" | "multi_reference";
+export type ScoreCriterion = { key: string; group: string; label: string; description: string; requires?: ScoreRequirement };
+export type ScoreGroup = { key: string; label: string };
+export type ScoreSet = { version: number; groups: ScoreGroup[]; criteria: ScoreCriterion[]; field: string; basis: string };
+type ScoredModelShape = { model_type: string; modalities: { input: string[] }; capabilities?: { image_edits?: boolean | null; max_reference_images?: number | null } };
+export declare const SCORE_CRITERIA_VERSION: number;
+export declare const IMAGE_SCORE_CRITERIA_VERSION: number;
+export declare const SCORE_REQUIREMENTS: Record<ScoreRequirement, { test: (model: ScoredModelShape) => boolean; note: string }>;
+export declare const SCORE_GROUPS: ScoreGroup[];
+export declare const SCORE_CRITERIA: ScoreCriterion[];
+export declare const IMAGE_SCORE_GROUPS: ScoreGroup[];
+export declare const IMAGE_SCORE_CRITERIA: ScoreCriterion[];
+export declare const SCORE_SETS: Record<"chat" | "image", ScoreSet>;
+export function scoreSetFor(model: { model_type: string }): ScoreSet | null;
+export function meetsRequirement(criterion: ScoreCriterion, model: ScoredModelShape): boolean;

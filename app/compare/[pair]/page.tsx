@@ -5,10 +5,11 @@ import ComparisonCharts from "@/components/models/ComparisonCharts.client";
 import LiveModelPricing, { LiveComparisonPricing } from "@/components/models/LiveModelPricing.client";
 import ModelDetailsCard from "@/components/models/ModelDetailsCard";
 import ModelLogo from "@/components/models/ModelLogo";
+import { ComparisonScoresSection } from "@/components/models/ModelScores";
 import { JsonLd, SeoFooter, SeoNavigation } from "@/components/models/SeoChrome";
 import { modelTypeLabel, trustsNestedCapabilities } from "@/lib/models/model-types";
 import { comparisonFacts } from "@/lib/models/content";
-import { createComparisonPairs } from "@/lib/models/comparisons";
+import { createComparisonPairs, seededPick } from "@/lib/models/comparisons";
 import { formatBoolean, formatContext, formatMs, formatRate } from "@/lib/models/format";
 import { comparisonPath, modelPath } from "@/lib/models/routes";
 import { comparisonMetadata } from "@/lib/models/seo";
@@ -98,7 +99,9 @@ export default async function ComparisonPage({ params }: { params: Promise<{ pai
   const right = rightEntry.model;
   const differences = specificationDifferences(left, right);
   const usefulFacts = comparisonFacts(left, right).filter((fact) => !fact.startsWith("There is not enough") && !fact.startsWith("The observed"));
-  const related = Object.entries(pairMap).filter(([key, item]) => key !== pair && (item.leftSlug === left.slug || item.rightSlug === left.slug || item.leftSlug === right.slug || item.rightSlug === right.slug)).slice(0, 6);
+  const involving = (slug: string) => Object.entries(pairMap).filter(([key, item]) => key !== pair && (item.leftSlug === slug || item.rightSlug === slug));
+  const leftRelated = seededPick(involving(left.slug), pair, 3, ([key]) => key);
+  const related = [...leftRelated, ...seededPick(involving(right.slug).filter(([key]) => !leftRelated.some(([picked]) => picked === key)), pair, 3, ([key]) => key)];
 
   return (
     <>
@@ -119,6 +122,8 @@ export default async function ComparisonPage({ params }: { params: Promise<{ pai
             <LiveComparisonPricing leftId={left.model_id} rightId={right.model_id} />
 
             {differences.length ? <section><div className="mb-5"><h2 className="text-2xl font-semibold">What&apos;s different</h2><p className="mt-1 text-sm text-muted-foreground">Only capabilities that differ between these models are listed. Green highlights the broader supported option or larger context window.</p></div><div className="space-y-3">{differences.map((difference) => <article key={difference.label} className="rounded-2xl border border-border/60 bg-card/55 p-4 shadow-sm backdrop-blur"><p className="text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">{difference.label}</p><div className="mt-3 grid gap-3 sm:grid-cols-2"><div className={"rounded-xl border p-3 " + (difference.better === "left" ? "border-emerald-500/35 bg-emerald-500/10" : "border-transparent bg-background/45")}><p className="text-xs text-muted-foreground">{left.model_id}{difference.better === "left" ? <span className="ml-2 rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:text-emerald-300">Better fit</span> : null}</p><p className="mt-1 text-sm font-semibold">{difference.left}</p></div><div className={"rounded-xl border p-3 " + (difference.better === "right" ? "border-emerald-500/35 bg-emerald-500/10" : "border-transparent bg-background/45")}><p className="text-xs text-muted-foreground">{right.model_id}{difference.better === "right" ? <span className="ml-2 rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:text-emerald-300">Better fit</span> : null}</p><p className="mt-1 text-sm font-semibold">{difference.right}</p></div></div></article>)}</div></section> : null}
+
+            <ComparisonScoresSection left={left} right={right} />
 
             <StatisticsComparison left={left} right={right} />
             <ComparisonCharts modelType={left.model_type} leftName={left.model_id} rightName={right.model_id} leftPoints={leftEntry.metrics.points} rightPoints={rightEntry.metrics.points} />

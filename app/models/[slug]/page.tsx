@@ -7,11 +7,12 @@ import ModelCodeExamples from "@/components/models/ModelCodeExamples.client";
 import ModelDetailsCard from "@/components/models/ModelDetailsCard";
 import ModelLogo from "@/components/models/ModelLogo";
 import ModelMetricsCharts from "@/components/models/ModelMetricsCharts.client";
+import { ModelScoresSection } from "@/components/models/ModelScores";
 import { JsonLd, SeoFooter, SeoNavigation } from "@/components/models/SeoChrome";
 import { modelTypeLabel } from "@/lib/models/model-types";
 import { codeExamplesForModel } from "@/lib/models/code-examples";
 import { modelDescription } from "@/lib/models/content";
-import { createComparisonPairs } from "@/lib/models/comparisons";
+import { createComparisonPairs, seededPick } from "@/lib/models/comparisons";
 import { formatMs, formatRate } from "@/lib/models/format";
 import { comparisonPath, modelPath } from "@/lib/models/routes";
 import { modelMetadata } from "@/lib/models/seo";
@@ -60,9 +61,9 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
   if (!entry) notFound();
 
   const { model, metrics } = entry;
-  const sameType = publicModels.filter((item) => item.status === "active" && item.model_type === model.model_type && item.slug !== model.slug).sort((left, right) => left.model_id.localeCompare(right.model_id)).slice(0, 6);
+  const sameType = seededPick(publicModels.filter((item) => item.status === "active" && item.model_type === model.model_type && item.slug !== model.slug), model.slug, 6, (item) => item.slug);
   const pairs = createComparisonPairs(publicModels);
-  const relatedComparisons = Object.entries(pairs).filter(([, pair]) => pair.leftSlug === model.slug || pair.rightSlug === model.slug).slice(0, 6);
+  const relatedComparisons = seededPick(Object.entries(pairs).filter(([, pair]) => pair.leftSlug === model.slug || pair.rightSlug === model.slug), model.slug, 6, ([key]) => key);
   const examples = codeExamplesForModel(model);
 
   return (
@@ -87,6 +88,8 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
           <aside className="lg:sticky lg:top-28 lg:self-start"><ModelDetailsCard model={model} title="Capabilities & details" /></aside>
           <div className="space-y-8">
             <LiveModelPricing modelId={model.model_id} />
+
+            <ModelScoresSection model={model} />
 
             <Statistics model={model} />
             <ModelMetricsCharts modelType={model.model_type} points={metrics.points} />
