@@ -158,7 +158,7 @@ export default function HeroSectionWithWaves() {
           if (!window.THREE) {
             const script1 = document.createElement("script");
             script1.src =
-              "https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js";
+              "/vendor/three.min.js";
             document.head.appendChild(script1);
 
             await new Promise((resolve, reject) => {
@@ -172,7 +172,7 @@ export default function HeroSectionWithWaves() {
           if (!window.VANTA) {
             const script2 = document.createElement("script");
             script2.src =
-              "https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js";
+              "/vendor/vanta.waves.min.js";
             document.head.appendChild(script2);
 
             await new Promise((resolve, reject) => {
