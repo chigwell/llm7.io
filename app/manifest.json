@@ -1,7 +1,7 @@
 {
     "name": "LLM7.io",
     "short_name": "LLM7",
-    "description": "LLM7 is an AI assistant developed by Eugene Evstafev.",
+    "description": "LLM7 is an AI assistant.",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#000000",
