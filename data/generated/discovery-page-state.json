@@ -1,7 +1,7 @@
 {
   "/models/features/tool-calling/": {
-    "fingerprint": "3831375a2dceb23573360942c073b0c39537c8909b1cf0d6e7d4200db1b74ec4",
-    "lastmod": "2026-11-11T09:52:04.842Z",
+    "fingerprint": "31ac59768dc040126138e99cb25217c15585f8c61f6ddb02ffe2b32b43bb0c48",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/features/vision/": {
@@ -10,63 +10,63 @@
     "indexable": true
   },
   "/models/features/long-context/": {
-    "fingerprint": "238bad01074a4ea60d9d8ec21c680583bb2431d6ba8ee399000db449dd886c2b",
-    "lastmod": "2026-11-11T09:52:04.842Z",
+    "fingerprint": "7ff08ee3a3c6bae420750976defaddc5868839c4794b0d844c69cd88eafc2d88",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/features/json-mode/": {
-    "fingerprint": "6ecac7faceda8409de38d63efba90468ab833e8723fee1e183ea93d192949468",
-    "lastmod": "2026-11-11T09:52:04.842Z",
+    "fingerprint": "33a47c8e32d528a22526690e992a40f48bc4fd8f862f09e88035479ed92a2e19",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/features/streaming/": {
-    "fingerprint": "03adc12e1a72f26b7a4e716d4e217f26fe04d655640f4c213300fe66f898ca2b",
-    "lastmod": "2026-11-11T09:52:04.842Z",
+    "fingerprint": "9be5c125c10ccc39a54560cd072725f1f9fa24cdffe60ebaa56ca2290847a9b3",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/features/reasoning/": {
-    "fingerprint": "36031e7e7c82da590572a7d34b51ffbcd0859131aa292fb059bd406ffaf603b3",
-    "lastmod": "2026-11-11T09:52:04.842Z",
+    "fingerprint": "ca4c55d9ba68ac13dbb25473f44b31e6053336bf03d37fc9be57a1cffe61b222",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/integrations/hermes-agent/": {
-    "fingerprint": "4bd86ddca660fd8a6f952af6c50efc90dda68d745994466a4d17d33270b8c18b",
-    "lastmod": "2026-11-11T09:52:04.842Z",
+    "fingerprint": "abfd19d2b4a6b6a77e0fa954032737e71588b7bd67dd3a811dac9db75a917e41",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/integrations/openclaw/": {
-    "fingerprint": "ac7f7ff96c8391f62e50e721c09779bf631272d515a9c413d05434f4173eedc2",
-    "lastmod": "2026-11-11T09:52:04.842Z",
+    "fingerprint": "a357ae89d4b42d07d0873b39fca4cbad5442d9f975a7f24f0feca7697f180453",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/integrations/n8n/": {
-    "fingerprint": "949e7e034fa0ba1fa6debf43d28b2a45a953819f06e33a576154bcc0dbb7b525",
-    "lastmod": "2026-11-11T09:52:04.842Z",
+    "fingerprint": "3433019371c98ab7b2c002896bfa8f8e06aace06dda68293cf876edd74866729",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/integrations/langchain/": {
-    "fingerprint": "c6cba732243092239518a71c40469d11ed08895b5ec80e986acfea8d75aae615",
-    "lastmod": "2026-11-11T09:52:04.842Z",
+    "fingerprint": "3418bdc69ecde2ea83e340ff425a1cdc6be27a408eb138b8fde5e9eca05661f0",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/integrations/vercel-ai-sdk/": {
-    "fingerprint": "17bc5c6b608db6776be4d29e3cf1b7032f5451ffc75cf8bb0ba9bb8a8951b1a8",
-    "lastmod": "2026-11-11T09:52:04.842Z",
+    "fingerprint": "4b9d3d9ee77367cab076b275df99670478976a067b2c5d2a4c4df4fc4cf618de",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/cost-calculator/customer-support/": {
-    "fingerprint": "d03614e434600448b52157058822d13fbe80fbd57a0ab0cc8d3f8480f707e1ca",
-    "lastmod": "2026-11-11T09:52:04.842Z",
+    "fingerprint": "f0ca5b65c6df569df75b6bf0a85db71eb169d6cfff4b1a897ed238d17adc4e96",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/cost-calculator/document-processing/": {
-    "fingerprint": "321c36bb47d1c044dbd9edd3753f3691b69fa9fca66567e88a866feaae44f995",
-    "lastmod": "2026-11-11T09:52:04.842Z",
+    "fingerprint": "44421f2423962fd1a4de659302b6377309d17674a5e38026c9c8c1e76a535204",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/cost-calculator/json-extraction/": {
-    "fingerprint": "05b7519803577a7344f62ac83c3b732919c011d6943710889713af41d2f0e0dc",
-    "lastmod": "2026-11-11T09:52:04.842Z",
+    "fingerprint": "9a7ed4f1f2fc064876529d0a0cbbc3d9666fae233e6404aa65affed064976be5",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/bytedance-seed-2-0-mini/alternatives/": {
@@ -75,8 +75,8 @@
     "indexable": true
   },
   "/models/deepseek-v4-flash-0731-d2d1a591/alternatives/": {
-    "fingerprint": "ca8f8387aeaa6b8683d5be7a52e2599bc826391497546119c4468ecd4d0a45e0",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "a292464582085fdf912f22803c9d8ef52c18899b2500b34fa1670245ae9d489a",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/deepseek-v4-1-flash/alternatives/": {
@@ -85,18 +85,18 @@
     "indexable": true
   },
   "/models/glm-5-3-flash-e8f0d28d/alternatives/": {
-    "fingerprint": "c83d1047355a5ae713537c9883cf28a0ed46c9bfb3a4b522f7165f5d1facdc1b",
-    "lastmod": "2026-11-09T08:42:24.106Z",
+    "fingerprint": "d220397ff2307ba4686228c01516fcc6058f73ffeae528de6598fb3c06a0d947",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/inkling/alternatives/": {
-    "fingerprint": "da001d8dd71ccc8b5e6213354e6274c9d78176626fa1cf15547cd35deeab58b1",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "0c6e82d2b570234efca424977f9e26d8735f646b4028663ba68bf0fe11dfc429",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/inkling-small/alternatives/": {
-    "fingerprint": "4c1fcb52e277108bdcccb1ba8fea23cfc75a72eb3ac56c11ad1d304e69e7aa31",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "f463ffdbee59c41445ee286f8b523d6fd6d1040a6fb529c364d655b35da1d727",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/l3-8b-lunaris-v1-turbo/alternatives/": {
@@ -135,8 +135,8 @@
     "indexable": true
   },
   "/models/xiaomimimo-mimo-v2-5/alternatives/": {
-    "fingerprint": "2dfafd8383d8cafbfc175aa80ad5ec0f0d62346938386da0c53505f07d5b29ce",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "ef2df55ed00fb0640fc99e0008910730942cc26ce1ad2e21c549755bacf5e8e8",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/xiaomimimo-mimo-v2-5-pro/alternatives/": {
@@ -240,8 +240,8 @@
     "indexable": true
   },
   "/models/claude-haiku-4-5/alternatives/": {
-    "fingerprint": "cdcee1f92f38764d220f66d75b81105961ba2472d684c52ab54c8183bc38782b",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "e2508bbe2ca613b87502dc075cf44f408e66f57daa1765340e7b52fe79ecb84a",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/claude-haiku-5-5/alternatives/": {
@@ -275,8 +275,8 @@
     "indexable": true
   },
   "/models/codestral-latest/alternatives/": {
-    "fingerprint": "6cf7fdf46e597c939754cb259b2746390e1a3c48d95d3dcb44fafcde507f2daf",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "ea9fd7d3b6a7c716c0e880f4600bbd6a151cf0aabbfb955d7d227c71dc3dd220",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/dark-beast-krea2/alternatives/": {
@@ -295,8 +295,8 @@
     "indexable": true
   },
   "/models/deepseek-v3-2/alternatives/": {
-    "fingerprint": "b07b8ac51b9e09976ff4bedb2db8b158fb68fbe385e27af7ac097c5e27105209",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "9fedf9091cc11734d99400e804daa958e5ca63f353d147dc35bbe2179f2f7750",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/deepseek-v4-flash/alternatives/": {
@@ -355,8 +355,8 @@
     "indexable": true
   },
   "/models/gemini-2-5-flash-lite/alternatives/": {
-    "fingerprint": "d44c0bfd9fd3b074e4a68cd2378502054ce785418b0fd80124370ba390d12a52",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "816e02eae30e178771f95cad96b8ba904b40e033dc9872dcd8b64b83ed76bf8c",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/gemini-3-flash/alternatives/": {
@@ -380,8 +380,8 @@
     "indexable": true
   },
   "/models/gemini-3-1-pro/alternatives/": {
-    "fingerprint": "7ca331f194ff7720d0dd76e7b8c1210de50db30e7f7d1396799b15769322cf66",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "0123938320a15a051b0c7ce86679e833df013a552623aad3886537b542f97ad6",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/gemini-3-5-flash-low/alternatives/": {
@@ -410,8 +410,8 @@
     "indexable": true
   },
   "/models/gemini-4-carbon/alternatives/": {
-    "fingerprint": "f375197c19a84a1ceb3a09c3b148e306d98d70b9822bc871ce4a52b507fa4624",
-    "lastmod": "2026-11-11T09:52:04.842Z",
+    "fingerprint": "935d3ebe89f3aba29124d89fae79b6b8a8afd07018ac44f345882a1a8476cfd5",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/gemini-nano-banana-2-1/alternatives/": {
@@ -430,8 +430,8 @@
     "indexable": true
   },
   "/models/gemma4-31b/alternatives/": {
-    "fingerprint": "0f71e0b96a56447beb9cd376b5f73bbe734677a2c9375bf0e5b08714e172e88e",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "699e58e27f749d0a19d05d69fbe2af53c4845c2bd8fff98d7593c36c28807979",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/glm-5-2/alternatives/": {
@@ -445,8 +445,8 @@
     "indexable": true
   },
   "/models/glm-5-3-flash/alternatives/": {
-    "fingerprint": "718d37bd6309c80d790850450a7bb4ca665f0afe2acbe70d1fb6fb4139914119",
-    "lastmod": "2026-11-10T08:44:28.357Z",
+    "fingerprint": "00cfcefff9903610d0a5236ff1b2c5d1f9dc0e617f90391c1e053bbeb38cc806",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/google-gemini-omni-flash-image-to-video/alternatives/": {
@@ -465,8 +465,8 @@
     "indexable": true
   },
   "/models/gpt-5-3-codex-spark/alternatives/": {
-    "fingerprint": "4b73d1aa03098dfe352005ece4c28f057f1ee76780e47f778ccf1e6cad5cbd15",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "03e597161028e0abbe54c6f3bf645b5ae426e2db40cc174c327ac1cbeeb2872e",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/gpt-5-4/alternatives/": {
@@ -485,8 +485,8 @@
     "indexable": true
   },
   "/models/gpt-5-5-openai-compact/alternatives/": {
-    "fingerprint": "ac549f1b0a1d3f79746e5b3b2457c93037c82c89fd69f0c608dfd1022de71e4b",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "4861c70f9c96a45e24086061e1f8d413a90ac5118e164ca09b6985def0f2f06c",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/gpt-5-6-luna/alternatives/": {
@@ -510,8 +510,8 @@
     "indexable": true
   },
   "/models/gpt-6-luna/alternatives/": {
-    "fingerprint": "fba1b2bf160dd15d1795c8c117d37282bea9384350b8e0421974da81b7379e84",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "ea15bdedd8f9ed4eece725ecd795aba38cd2fceced46a8f7f3564c90813cc924",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/gpt-6-sol/alternatives/": {
@@ -540,38 +540,38 @@
     "indexable": true
   },
   "/models/gpt-oss/alternatives/": {
-    "fingerprint": "9997b7375a53a9acba0a897e5da70bdf9d9616501b7873c984fe0012342afda8",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "f63e92b05bb920b15b7665152693cea14f9caabd520e027c10dd6408c0f3f031",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/gpt-oss-20b/alternatives/": {
-    "fingerprint": "c3a15bd0d7dbf4c1eb754cb5e6b6deab91b864fe7ae3c94834f704988e7c524f",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "2440e3e63c54c5d864936a7ad0b6db8a3bfd26b4d71e1d49eb7063fe86e21246",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/grok-3-mini/alternatives/": {
-    "fingerprint": "7d16fd4b8f113d3362b7f8cefd6da0a9b253bbdbbcf93ee7ebd92876e4544878",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "a7350374f4ab306a5c263c01277e76c4afa70c487dda246bf26a9bc063a4210b",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/grok-4-5/alternatives/": {
-    "fingerprint": "ec43239ee19d335ef769d62a3d44bf5f356c408c84d369594b419a221e5c7307",
-    "lastmod": "2026-10-23T19:14:59.449Z",
+    "fingerprint": "67317a1d1d6baf2f285dc03cf863dbf164aa5ff8a7abbe193246a8db91a99afa",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/grok-4-6/alternatives/": {
-    "fingerprint": "4456efb89bfc953a89ec814ddc3c03eb996451e277f9deb056e264e29d567554",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "fe8d42eadf0a449cecfd3a6bd93dbe0ee5a776870515acbe7bdfbdde37a3a0d9",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/grok-4-7/alternatives/": {
-    "fingerprint": "6706cd3e95456f0b86026dfd47cd5fd7d7b7fab96213b527d9bd62ccf92f2e60",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "b7dbe6f5e813519de1ba431ec8e8599d1c015feb365ca3a7d8c180981000a2de",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/grok-4-7-x/alternatives/": {
-    "fingerprint": "008086f15f65ef4f68b92ecef835f5723464290558da8d148aa3a69ed864d58f",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "da25f3e2937e78f278a76294ef484f79bfbdf85a4bdf3574aa11843ea3d1f7b3",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/imagine-1-5/alternatives/": {
@@ -580,13 +580,13 @@
     "indexable": true
   },
   "/models/kimi-k2-6/alternatives/": {
-    "fingerprint": "199b899f6fc3530e710336f8361fc4ee9a9b493fe2a24c6e8e2ba903583cacaf",
-    "lastmod": "2026-10-23T19:14:59.449Z",
+    "fingerprint": "e3b7c091ba1cf823f552af7af4912b16139bc6cac15fb01f5c3184fbc9475f66",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/kimi-k2-7-code/alternatives/": {
-    "fingerprint": "4ea60572eaee61830d642e146cd02755c418372e12c38bc88d2769b78286c4ec",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "cd9cdabd1c63aac9ffb73b694787d6c06a8302d84b26526f9002978ce04969fe",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/kimi-k3/alternatives/": {
@@ -635,8 +635,8 @@
     "indexable": true
   },
   "/models/meta-llama-3-1-8b-instruct-turbo/alternatives/": {
-    "fingerprint": "3f704b8404ebdc6c7c2411b1b00a9624048c0e2bc178634ef3806d59e10a3f81",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "c8e87f7abd072fc5ba8f9da90ced5cee4906e4b3d3dd218e8d6f3d82d6992bda",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/meta-llama-meta-llama-3-1-8b-instruct-turbo/alternatives/": {
@@ -655,8 +655,8 @@
     "indexable": true
   },
   "/models/minimax-m2-7/alternatives/": {
-    "fingerprint": "3871e090710d809054651335d242ef5df1a1d412e41063ebd011ed1220943bfe",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "babdbd8ae57c25953b17783ba662cc99691900599b0bdd32b0eb42fb34628824",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/minimax-m3/alternatives/": {
@@ -665,8 +665,8 @@
     "indexable": true
   },
   "/models/mistral-nemo-instruct-2407/alternatives/": {
-    "fingerprint": "fb4e815ceae194552bf1603d9c84c8225c1260ba79673c520781b919b467268f",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "b9cb04adfe329e10de37e0a4735082e74a7a8448abc32bce671307df5c36868a",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/mistral-small-24b-instruct-2501/alternatives/": {
@@ -690,8 +690,8 @@
     "indexable": true
   },
   "/models/muse-spark-1-3/alternatives/": {
-    "fingerprint": "09b2cbe773138e2ea3250ac085d06f7121db43d0794c0f82cb010ac11f7c28b0",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "dd1fe6de0b63cc85ed281ea81dd5b9e8a1b9b549b515ca49eeeaa5a5828b14ac",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/nemotron-3-nano-30b/alternatives/": {
@@ -710,8 +710,8 @@
     "indexable": true
   },
   "/models/seed-2-0-mini/alternatives/": {
-    "fingerprint": "fc504250c14072cad6326c2e1dd7431acb2ce4285c90458c418852e5a1236ff5",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "2f22f574953c0afc040e6ea68d0044690f620c776eeb470e3142d83821837515",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/seedance-2-0/alternatives/": {
@@ -740,8 +740,8 @@
     "indexable": true
   },
   "/models/thinkingmachines-inkling/alternatives/": {
-    "fingerprint": "42acf3db0cf66a0d4e5aa815dc7d508797e6792cf113e071391a29e9ab3c63c5",
-    "lastmod": "2026-11-08T09:02:51.190Z",
+    "fingerprint": "d7e14f1e910674c4c171aed65401eab2237315cfdac10be4da179ce40b9ca991",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/models/whisper-large-v3/alternatives/": {
@@ -755,18 +755,18 @@
     "indexable": true
   },
   "/models/features/": {
-    "fingerprint": "001dd285f3a5fa447f8ffbd867117a80624cfb0c894d0a7f434a366eae4a421c",
-    "lastmod": "2026-11-11T09:52:04.842Z",
+    "fingerprint": "dae10c35705c5c0b2a01ea19f58a82682c6da2ce5daa4c1baa7c71241bd1b4dd",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/integrations/": {
-    "fingerprint": "c960587095a5282b6547f3c8eec88a844509541ba60ae0e4e44042941d6f2a47",
-    "lastmod": "2026-11-11T09:52:04.842Z",
+    "fingerprint": "636e6d6643be545c12a05a9d4d303bd88f445cd868a8a6e2377d9784760cc644",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   },
   "/cost-calculator/": {
-    "fingerprint": "de72c535c4765e0b1f7cec8050405c342d2d9fbe230b5e5a5b160d620114973f",
-    "lastmod": "2026-11-11T09:52:04.842Z",
+    "fingerprint": "5a5fad0c2739c212420d1f4536c90cb55bc449c1d654265842f5deef655ee86d",
+    "lastmod": "2026-11-14T12:21:32.621Z",
     "indexable": true
   }
 }
