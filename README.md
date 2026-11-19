@@ -4,324 +4,55 @@
   </a>
 </div>
 
-This repository contains the source code for the landing page of [LLM7.io](https://llm7.io), a pay-as-you-go API for accessing top LLMs (Large Language Models) without requiring heavy hardware.
+[LLM7.io](https://llm7.io) provides an OpenAI-compatible API for text, image, and video generation.
 
-## Overview
+## Quickstart
 
-### Public model catalogue refresh
+Get an API token from [dash.llm7.io](https://dash.llm7.io).
 
-Model, comparison, sitemap, and Open Graph assets are generated during `npm run build` from the public API snapshot. For direct-upload Cloudflare Pages projects, scheduled refreshes should build the static `out/` directory in CI or another runner and upload it with Wrangler, for example `wrangler pages deploy out --project-name llm7-landing --branch main`. Cloudflare Pages deploy hooks only apply when Cloudflare has a connected build source.
+### Python
 
-Run `npm run test` for data-pipeline utility checks and `npm run validate:seo` after a production build to inspect the exported `out/` pages.
+Install the OpenAI SDK:
 
-### Automatic Cloudflare deployment
-
-The [Cloudflare Pages workflow](.github/workflows/cloudflare-pages.yml) builds and
-publishes `llm7-landing` on every push to `main`. It can also be started from
-**Actions → Deploy landing to Cloudflare Pages → Run workflow**, selecting `main`.
-Builds and uploads run on GitHub's runner; a local static export is not required.
-
-Configure these repository **Actions Secrets**:
-
-| Name | Value |
-| --- | --- |
-| `CLOUDFLARE_API_TOKEN` | Cloudflare token with **Account → Cloudflare Pages → Edit**, scoped to the account containing `llm7-landing`. |
-| `CLOUDFLARE_ACCOUNT_ID` | That Cloudflare account's ID. |
-
-Configure **Actions Variables** `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` and
-`NEXT_PUBLIC_POSTHOG_HOST` with the existing public project token and ingestion
-host. Missing values stop the build to prevent silently disabling product
-analytics. These are public browser configuration; the Cloudflare credentials
-are supplied only to the publication step.
-
-The workflow uses Node 24 and locked dependencies, runs the test suite, generates
-the full catalogue/export, and checks SEO output and required export files.
-Only successful checks allow publication.
-The verified export and public catalogue inputs are retained as a seven-day
-Actions artifact. Concurrent releases publish sequentially. A failed build or
-upload leaves the previous deployment live; after correcting missing secrets or
-other errors, rerun the workflow from `main`.
-
-Publish the complete export for shared-layout or tracking changes. A homepage-only
-overlay would retain old scripts on other routes.
-
-Credential setup follows [Cloudflare's Direct Upload CI guide](https://developers.cloudflare.com/pages/how-to/use-direct-upload-with-continuous-integration/).
-
-### Live model pricing
-
-Published model pages, the catalogue, comparisons, alternatives, and calculators
-read current prices from `https://api.llm7.io/v1/models` in the browser. They share
-one in-flight request and a three-minute refresh timer per tab, and revalidate
-expired prices when the tab becomes active. Price-only API changes need no build
-or deployment. API-side caching can add a delay before an updated rate appears.
-
-Static HTML preserves model descriptions, capabilities, links, and metadata, but
-contains no fixed prices for these pages. Social-preview images also omit rates.
-Pricing and estimates require JavaScript and a successful API response. Failed,
-missing, malformed, or unsupported prices are marked unavailable and excluded
-from calculations and price sorting; stale snapshot rates are never substituted.
-The homepage retains its explicitly labelled cached-catalogue fallback.
-New model routes and updates to static capabilities or statistics still need a build.
-
-`npm test` verifies shared fetching, refresh/failure handling, decimal and cache
-pricing, and price/calculator updates without rebuilding the application.
-
-LLM7.io provides:
-- **Pay-as-you-go access** to powerful LLMs (GPT-4-like, DeepSeek, Mistral, etc.)
-- **Token access**: Use an API token to access the service
-- **Account balance**: Add funds via [dash.llm7.io](https://dash.llm7.io)
-- **OpenAI-compatible API** for seamless integration with existing tools
-
-The landing page highlights the core features, usage instructions, and goals of the service.
-
-## Features
-
-- **Token-required access**: Use an API token and funded account to call the service
-- **Account balance**: Add funds via [dash.llm7.io](https://dash.llm7.io)
-- **Responsive design**: Clean layout showcasing LLM7.io's benefits
-- **Quick start guides**: Python, Node.js, and CLI examples
-- **Documentation links**: Jumpstart your LLM integration
-
-## Getting Started (Local Development)
-
-1. **Clone the Repo**  
-   ```bash
-   git clone https://github.com/chigwell/llm7.io.git
-   ```
-2. **Install Dependencies**  
-   ```bash
-   cd llm7.io
-   npm install
-   ```
-3. **Run Development Server**  
-   ```bash
-   npm run dev
-   ```
-   Access at http://localhost:3000
-
-4. **Production Build**  
-   ```bash
-   npm run build
-   npm run start
-   ```
-
-## Using LLM7.io API
-### With tokens:
-```python
-import openai
-client = openai.OpenAI(
-    base_url="https://api.llm7.io/v1",
-    api_key="YOUR_API_KEY"  # Get from https://dash.llm7.io
-)
-response = client.chat.completions.create(model="gpt-4", messages=[...])
+```bash
+pip install openai
 ```
 
-## Refactor verification
+Create a chat completion:
 
-See [the refactor review record](documentation/refactor-plan.md) and [behavior contracts](documentation/behavior-contracts.md) for preserved interfaces, checks, and separate migration tasks.
+```python
+import openai
 
-`npm test` exercises production model, synchronization, chat, and metrics helpers. `node scripts/build-fixture.mjs` verifies an export from frozen synthetic model data, restoring existing generated inputs and build artifacts afterward. Run that check with other builds and development servers stopped.
+client = openai.OpenAI(
+    base_url="https://api.llm7.io/v1",
+    api_key="YOUR_LLM7_API_TOKEN",
+)
 
-## Contributing
-We welcome contributions! Please:
-- Report bugs via GitHub issues
-- Suggest features with use cases
-- Submit PRs with clear descriptions
+response = client.chat.completions.create(
+    model="default",
+    messages=[{"role": "user", "content": "Tell me a short story."}],
+)
 
-## Powered By
+print(response.choices[0].message.content)
+```
 
-This project is made possible thanks to the generous support and infrastructure provided by:
+### curl
 
-<table>
-  <tr>
-    <td align="center">
-      <a href="https://azure.microsoft.com/en-us/products/ai-foundry/models/?utm_source=llm7.io&utm_medium=llm7.io" target="_blank">
-        <img src="https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Microsoft_Azure.svg/240px-Microsoft_Azure.svg.png&h=48&output=webp" alt="Azure" /><br/>
-        <sub><b>Azure</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://cloudflare.com/?utm_source=llm7.io&utm_medium=llm7.io" target="_blank">
-        <img src="https://wsrv.nl/?url=cdn.prod.website-files.com/6640cd28f51f13175e577c05/664e007b3edcb1f1cd6c7871_7a675b16-95cc-5699-bd72-d4ab79b979bf.svg&h=48&output=webp" alt="Cloudflare" /><br/>
-        <sub><b>Cloudflare</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://deepseek.ai/?utm_source=llm7.io&utm_medium=llm7.io" target="_blank">
-        <img src="https://wsrv.nl/?url=registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/deepseek-color.png&h=48&output=webp" alt="DeepSeek" /><br/>
-        <sub><b>DeepSeek</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://ollama.com/?utm_source=llm7.io&utm_medium=llm7.io" target="_blank">
-        <img src="https://wsrv.nl/?url=ollama.com/public/ollama.png&h=48&output=webp" alt="LLaMA / Ollama" /><br/>
-        <sub><b>LLaMA / Ollama</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://mistral.ai/?utm_source=llm7.io&utm_medium=llm7.io" target="_blank">
-        <img src="https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Mistral_AI_logo_%282025%E2%80%93%29.svg/500px-Mistral_AI_logo_%282025%E2%80%93%29.svg.png&h=48&output=webp" alt="Mistral" /><br/>
-        <sub><b>Mistral</b></sub>
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <a href="https://nebius.com/?utm_source=llm7.io&utm_medium=llm7.io" target="_blank">
-        <img src="https://wsrv.nl/?url=https://cdn-1.webcatalog.io/catalog/nebius/nebius-icon-filled-256.webp&w=48&output=webp" alt="Nebius" /><br/>
-        <sub><b>Nebius</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://www.nebulablock.com/?utm_source=llm7.io&utm_medium=llm7.io" target="_blank">
-        <img src="https://wsrv.nl/?url=https://i.ibb.co/Y7MKnWfT/nebula-block-logo.jpg&w=48&output=webp" alt="Nebula Block" /><br/>
-        <sub><b>Nebula Block</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://openai.com/?utm_source=llm7.io&utm_medium=llm7.io" target="_blank">
-        <img src="https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/6/66/OpenAI_logo_2025_%28symbol%29.svg/330px-OpenAI_logo_2025_%28symbol%29.svg.png&h=48&output=webp" alt="OpenAI" /><br/>
-        <sub><b>OpenAI</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://pollinations.ai/?utm_source=llm7.io&utm_medium=llm7.io" target="_blank">
-        <img src="https://wsrv.nl/?url=avatars.githubusercontent.com/u/86964862&h=48&output=webp" alt="Pollinations" /><br/>
-        <sub><b>Pollinations</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://www.scaleway.com/?utm_source=llm7.io&utm_medium=llm7.io" target="_blank">
-        <img src="https://wsrv.nl/?url=avatars.githubusercontent.com/u/5185491&h=48&output=webp" alt="Scaleway" /><br/>
-        <sub><b>Scaleway</b></sub>
-      </a>
-    </td>
-  </tr>
-</table>
+```bash
+curl https://api.llm7.io/v1/chat/completions \
+  -H "Authorization: Bearer YOUR_LLM7_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"model":"default","messages":[{"role":"user","content":"Tell me a short story."}]}'
+```
 
+## Documentation
 
-## Consent-gated analytics
-
-PostHog is optional: no SDK import or PostHog request occurs before consent.
-The `llm7_analytics_consent` cookie stores `v1_allowed` or `v1_declined` for
-180 days on `.llm7.io` (host-only on localhost/preview domains).
-The non-floating “Analytics preferences” footer link reopens separate product-analytics and Google Ads measurement choices; withdrawal drops pending product analytics.
-Already-dispatched requests cannot be recalled.
-
-Use the same **public project token** in both builds, never a personal API key.
-The host is `https://eu.i.posthog.com`. Missing configuration disables analytics.
-Local production values belong in ignored `.env.production.local`; deployment
-providers need the corresponding public variables configured **before building**.
-
-The facade is fire-and-forget, with an in-memory queue of at most 50 entries while
-the SDK loads after opt-in. There is no durable/offline backlog or delivery guarantee.
-Only allowlisted PostHog events/properties leave the app, including through the SDK's
-`before_send` hook. Every event has `surface`, a query-free `route`, and
-`consent_version: 1`. Pageviews are manual; autocapture, replay, surveys, performance
-capture and remote feature flags are disabled. No email, API key, password,
-prompt/output, referral code, payment identifier, raw error or exact balance is sent.
-Dashboard payment-flow events additionally allow exact valid selected USD top-up
-amounts (500–50000 cents), validated crypto bonus/credit offer amounts, and curated
-button/edit/quote/checkout/dismissal outcomes. Raw input and checkout URLs remain
-excluded. The shared contract and transport are synchronized here; the landing
-does not emit payment-flow events. Consent remains version 1 without re-prompting.
-
-Both apps use a shared PostHog cookie for landing-to-account attribution. Landing
-never calls identify; initial visitors are anonymous. Dashboard identifies only
-after a matching balance response supplies the opaque `user_id`, with `plan`
-limited to `0 | 2 | 3`. Logout/session clearing resets the SDK first. Returning
-landing visits may inherit an already-identified shared cookie; landing never
-adds account/person properties itself.
-
-The SDK is pinned to **1.435.6**. Its opt-out does not discard pending batches or
-retries, so a small adapter clears those queues and checks consent at dispatch.
-The unmangled `posthog-js/lib/src/entrypoints/module.slim.es.js` entrypoint preserves
-the internal method names the adapter needs.
-Asynchronous XHR avoids that entrypoint's unbound fetch receiver. Keep both copies of
-`analytics-core.js` synchronized and rerun the real-SDK browser regression on
-every SDK upgrade. Do not replace this entrypoint with the mangled default build.
-
-No production toolbar authorization is embedded. For an explicit developer
-session, use a local build, opt in, then enable external dependency loading through
-`window.posthog.set_config({ disable_external_dependency_loading: false })`
-and launch the toolbar from your authenticated PostHog project. Never commit a
-toolbar authorization payload. Production dashboard CSP intentionally does not
-permit external toolbar scripts.
-
-Before deployment, review consent/privacy copy and processor settings, then check
-the EU project's live event debugger: no requests before consent, one pageview per
-navigation, anonymous-to-identified funnel using only the opaque ID, and reset on
-logout. Cross-subdomain cookie behavior needs an HTTPS check on the real domains.
-Payment **completion** is deliberately not a browser event. Successful paid top-ups are measured by the billing server as described below.
-
-References: [PostHog identity guidance](https://posthog.com/docs/data/anonymous-vs-identified-events)
-and [JavaScript configuration](https://posthog.com/docs/libraries/js/config).
-
-Landing configuration: `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` and
-`NEXT_PUBLIC_POSTHOG_HOST`; see `.env.example`. Run `npm test` and `npm run build`.
-Analytics lifecycle and consent mount in the root layout, independently of the
-homepage marketing providers. Legacy click metrics also respect this consent
-choice. Google Analytics loads independently of this choice, including when
-consent is unknown or declined. Its existing homepage marketing-provider mount
-and measurement ID are unchanged; it does not subscribe to PostHog consent.
-Review applicable cookie-consent requirements before deploying this configuration.
-
-Events: `$pageview`; `cta_clicked` (dashboard/example/docs/chat, with placement);
-`demo_submitted` and `demo_result` (model, result outcome and latency bucket);
-`code_copied` (language only); `model_showcase_selected` (default/fast/pro);
-`referral_choice` (accepted boolean). The allowlist lives in `lib/analytics-core.js`.
-
-## Google Ads top-up attribution
-
-The deployed consent dialog links to `https://llm7.io/privacy.html`. Keep the
-readable, script-free `public/privacy.html` synchronized with `PRIVACY.md` when
-changing privacy disclosures; the deployed policy does not depend on a Git push.
-
-`lib/ads-attribution-core.js` is shared verbatim with the dashboard. Its singleton
-starts in the root consent component. Ads measurement has a separate preselected
-choice even when PostHog is already allowed or not configured. The footer remains
-available without PostHog configuration. Existing Google Analytics behavior is
-unchanged and disclosed in the privacy policy.
-
-Before Ads opt-in, a validated `gclid`, `gbraid` or `wbraid` can exist only in page
-memory. After opt-in, `llm7_ads_attribution` lasts at most 30 days; the preference
-and random UUID receipt in `llm7_ads_consent` last 180 days. Production cookies use
-`Domain=llm7.io; Secure; SameSite=Lax; Path=/`; preview/local cookies are host-only.
-The dashboard calls `getAttribution()` immediately before its authenticated top-up
-request. That method rechecks consent and returns only version, click ID/type,
-capture/consent times and the opaque receipt. No Google Ads browser tag, purchase
-event, user identifier, raw URL or secret credential is included in this site.
-
-The billing integration must report only a provider-confirmed payment whose base
-balance credit succeeded, with its actual paid value and a unique payment key.
-The frontend does not infer success from checkout redirects. Ads permission is
-independent of product analytics and does not enable advertising personalization.
-
-Withdrawal immediately denies attribution locally, clears its cookie and sends
-only `{consent_id}` to `https://api-token.llm7.io/ads-consent/revoke` using omitted
-credentials. Only HTTP 204 acknowledges withdrawal. Failed or timed-out requests
-retry with exponential backoff (30 seconds to one hour); a bounded UUID-only cookie
-survives tab closure when cookies work. Storage failures retain denial and retry
-state in memory. Cross-subdomain withdrawal is checked before checkout and on
-focus/pageshow. Server cancellation requires network connectivity, and data already
-uploaded cannot be recalled. A fresh explicit grant is required to override a
-local withdrawal; a blocked cookie write fails closed.
-
-`npm test` covers consent separation, shared cookies, strict allowlists, click
-expiry, malformed inputs, repeated navigation, cross-tab withdrawal, unavailable
-storage, failed/hung revocation requests, and React preference interactions.
-Before production use, verify real HTTPS cross-subdomain cookies, the revocation
-endpoint, and a provider-confirmed top-up in the billing/Ads delivery diagnostics.
-No real payment or Google conversion is created by these tests.
-
-## OpenAI Ads measurement
-
-OpenAI Pixel measures `page_viewed` on route changes and `contents_viewed` on the first homepage model-catalogue expansion in a page lifetime. Collapse, rerender, remount, and subsequent expansions do not emit additional catalogue events. Expanding without consent is never replayed after permission is granted. OpenAI measurement is optional; SDK or identity failures must not block catalogue interaction or navigation. Production pixel debugging is disabled.
-
-The API key CTA links to the dashboard. Paid-model CTAs link to `https://dash.llm7.io/#/billing`, show the $5 minimum top-up, and leave payment initiation to an explicit dashboard action. The dashboard restores the allowlisted billing destination through supported same-tab authentication flows. Its shared pixel helper measures payment-provider choices and `checkout_started` only when a provider checkout is created; registration and verified paid orders are delivered by the server.
-
-New consent choices are preselected but are only saved after the visitor confirms; previously declined choices stay off. `npm test` covers catalogue expansion/collapse, actual consent-gated event emission, denied-consent non-replay, remount deduplication, and the API key and billing CTA destinations. Before releasing, verify shared consent and attribution cookies on real HTTPS landing and dashboard domains; local tests cannot prove cross-domain attribution.
+- [Quickstart](https://docs.llm7.io/quickstart)
+- [Available models](https://docs.llm7.io/guides/models) and [Models API](https://docs.llm7.io/guides/models-api)
+- [Image generation and edits](https://docs.llm7.io/guides/image-generation)
+- [Video generation](https://docs.llm7.io/guides/video-generation)
+- [Full documentation](https://docs.llm7.io/)
 
 ## License
 
-This project is licensed under the [GNU AFFERO GENERAL PUBLIC LICENSE](LICENSE).
+[GNU Affero General Public License](LICENSE)
