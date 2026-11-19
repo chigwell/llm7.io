@@ -85,13 +85,13 @@ test("a catalogue with at most three models does not offer an artificial expansi
   assert.equal(f.events().length, 0);
 });
 
-test("hero preserves free access and exposes a separately described paid billing destination", () => {
+test("hero links to API keys and pay-as-you-go billing", () => {
   const dom = new JSDOM(renderToString(React.createElement(Hero)));
   try {
     const links = [...dom.window.document.querySelectorAll("a")];
-    assert.equal(links.find(link => link.textContent.includes("Get a Free API Key")).getAttribute("href"), "https://dash.llm7.io/");
+    assert.equal(links.find(link => link.textContent.includes("Get an API Key")).getAttribute("href"), "https://dash.llm7.io/");
     assert.equal(links.find(link => link.textContent.includes("Access paid models")).getAttribute("href"), "https://dash.llm7.io/#/billing");
-    assert.match(dom.window.document.body.textContent, /Paid models: top up from \$5/);
+    assert.match(dom.window.document.body.textContent, /Top up from \$5/);
     assert.ok(links.some(link => link.getAttribute("href") === "#example"));
   } finally { dom.window.close(); }
 });
