@@ -10,14 +10,15 @@ import { existsSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { SCORE_SETS, meetsRequirement } from "../lib/models/score-criteria.js";
+import { createScoreRequester } from "./score-request-retry.mjs";
 
 const ROOT = resolve(new URL("..", import.meta.url).pathname);
 const SNAPSHOT = resolve(ROOT, "data/generated/public-model-data.json");
 const HINTS = resolve(ROOT, "data/model-score-hints.json");
 const ENDPOINT = "https://api.typesafe.pro/v1/systemone";
 const CONCURRENCY = Number(process.env.SCORE_CONCURRENCY) || 8;
-const ATTEMPTS = 4;
 const SAVE_EVERY = 50;
+const request = createScoreRequester();
 
 function loadToken() {
   if (!process.env.TYPESAFEPRO_TOKEN && existsSync(resolve(ROOT, ".env"))) {
@@ -112,14 +113,12 @@ async function judgeOnce(type, first, second, context) {
     instructions: `Which model is better at ${label.toLowerCase()}? ${description}`,
     criteria: { a: `Model A (${first.model_id}) is better`, tie: "They are about equal", b: `Model B (${second.model_id}) is better` },
   }]));
-  const response = await fetch(ENDPOINT, {
+  const response = await request(ENDPOINT, {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${context.token}` },
     body: JSON.stringify({ state: TYPES[type].state(first, second, context.hints, context.usage), model: "jev-latest", questions }),
-    signal: AbortSignal.timeout(60_000),
   });
   const body = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(`HTTP ${response.status} ${JSON.stringify(body).slice(0, 200)}`);
   return {
     engine: body.model ?? null,
     wins: Object.fromEntries(criteria.map(({ key }) => {
@@ -134,17 +133,6 @@ async function judgePair(type, left, right, context) {
   const [forward, backward] = await Promise.all([judgeOnce(type, left, right, context), judgeOnce(type, right, left, context)]);
   const wins = Object.fromEntries(Object.keys(forward.wins).map((key) => [key, Math.round(((forward.wins[key] + 1 - backward.wins[key]) / 2) * 1000) / 1000]));
   return { engine: forward.engine, judged_at: new Date().toISOString(), wins };
-}
-
-async function withRetries(task) {
-  for (let attempt = 1; ; attempt += 1) {
-    try {
-      return await task();
-    } catch (error) {
-      if (attempt >= ATTEMPTS) throw error;
-      await new Promise((done) => setTimeout(done, 2000 * attempt));
-    }
-  }
 }
 
 // One pair per line keeps the cache diff-friendly.
@@ -208,7 +196,7 @@ async function scoreType(type, entries, context) {
       for (let item = queue.shift(); item; item = queue.shift()) {
         const [left, right] = item;
         try {
-          store.pairs[pairKey(left.model_id, right.model_id)] = { ...(await withRetries(() => judgePair(type, left, right, context))), hints: hintHash(left, right) };
+          store.pairs[pairKey(left.model_id, right.model_id)] = { ...(await judgePair(type, left, right, context)), hints: hintHash(left, right) };
           done += 1;
           if (done % SAVE_EVERY === 0) { await persist(); console.log(`  ${done}/${pending.length} pairs judged`); }
         } catch (error) {
