@@ -79,19 +79,9 @@ export default function Disclaimer({
               <h2 className="text-xl font-semibold text-foreground">Disclaimer</h2>
               <div className="mt-8 px-4 max-w-2xl text-gray-700 text-sm text-center">
                 <p className="text-justify">
-                  LLM7.io offers a free tier supported by donors and a paid subscription: <b>Pro</b> (highest limits plus JSON mode, function calling, and Pro models).
-                </p>
-                <p className="text-justify">
-                  Current access limits include free-token access up to 100,000 tokens/day with 250 requests/hour, 60 requests/minute,
-                  and 1 request/second; and Pro subscription access with 15,000 requests/hour, 1,500 requests/minute,
-                  and 25 requests/second. Pro token allowance is calculated dynamically across the billing period.
-                  Usage-billed paid requests are not limited by a daily token quota, but remain subject
-                  to available balance, rate limits, model availability, fair-use calculations, and abuse-prevention controls.
-                </p>
-                <p className="text-justify">
-                  Free-token quotas are offered at no charge and may be reduced without notice based on demand, service capacity,
-                  model availability, fair-use calculations, abuse-prevention controls, and other operational factors. Subscription
-                  features, limits, and pricing may change at any time.
+                  LLM7.io offers pay-as-you-go access. Usage is subject to applicable pricing, available balance,
+                  rate limits, model availability, fair-use calculations, and abuse-prevention controls.
+                  Existing Pro subscriptions remain subject to their applicable terms; new Pro subscriptions are not available.
                 </p>
                 <p className="text-justify">
                   All third-party names, logos, trademarks, service marks, model names, provider names, and media materials are the property of their respective owners, and their display does not imply endorsement, sponsorship, or affiliation unless expressly stated.

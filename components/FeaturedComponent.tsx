@@ -14,12 +14,9 @@ export default function FeaturedComponents() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8 justify-items-center lg:max-w-5xl lg:mx-auto mb-12">
             <div className="w-full max-w-md text-xs text-muted-foreground space-y-1">
-              <p>* Limits depend on the model and may be lower.</p>
-              <p>** Pro token availability is calculated dynamically across the billing month, including usage relative to the percentage of the billing period elapsed.</p>
-              <p>Free token access is limited to 100,000 tokens/day with 250 r/h, 60 r/m, and 1 r/s. Free-token quotas may be reduced without notice based on demand, service capacity, model availability, fair-use calculations, abuse-prevention controls, and other operational factors.</p>
-              <p>Daily token usage is input tokens plus output tokens over a rolling 24-hour window. Usage-billed paid requests are not limited by a daily token quota, but remain subject to balance, rate limits, and availability.</p>
-              <p>If you need more capacity, please contact us via {" "}
-               <a href="mailto:support@llm7.io?subject=Subscription Inquiry&body=Hey, I would like to discuss subscription options." className="text-primary underline underline-offset-4">
+              <p>Usage is billed at the applicable model rates and is subject to available balance, rate limits, and model availability.</p>
+              <p>If you need more capacity, contact {" "}
+               <a href="mailto:support@llm7.io?subject=Capacity%20Inquiry" className="text-primary underline underline-offset-4">
                   support@llm7.io
                   </a>.</p>
             </div>
