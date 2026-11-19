@@ -4,7 +4,7 @@
   </a>
 </div>
 
-This repository contains the source code for the landing page of [LLM7.io](https://llm7.io), a free, open endpoint for accessing top LLMs (Large Language Models) without requiring heavy hardware.
+This repository contains the source code for the landing page of [LLM7.io](https://llm7.io), a pay-as-you-go API for accessing top LLMs (Large Language Models) without requiring heavy hardware.
 
 ## Overview
 
@@ -67,17 +67,17 @@ New model routes and updates to static capabilities or statistics still need a b
 pricing, and price/calculator updates without rebuilding the application.
 
 LLM7.io provides:
-- **Free access** to powerful LLMs (GPT-4-like, DeepSeek, Mistral, etc.)
+- **Pay-as-you-go access** to powerful LLMs (GPT-4-like, DeepSeek, Mistral, etc.)
 - **Token access**: Use an API token to access the service
-- **Free tokens**: Get higher rate limits via [dash.llm7.io](https://dash.llm7.io)
+- **Account balance**: Add funds via [dash.llm7.io](https://dash.llm7.io)
 - **OpenAI-compatible API** for seamless integration with existing tools
 
 The landing page highlights the core features, usage instructions, and goals of the service.
 
 ## Features
 
-- **Token-required access**: Use a free API token to call the service
-- **Free tokens**: Get higher rate limits via [dash.llm7.io](https://dash.llm7.io)
+- **Token-required access**: Use an API token and funded account to call the service
+- **Account balance**: Add funds via [dash.llm7.io](https://dash.llm7.io)
 - **Responsive design**: Clean layout showcasing LLM7.io's benefits
 - **Quick start guides**: Python, Node.js, and CLI examples
 - **Documentation links**: Jumpstart your LLM integration
@@ -111,7 +111,7 @@ The landing page highlights the core features, usage instructions, and goals of 
 import openai
 client = openai.OpenAI(
     base_url="https://api.llm7.io/v1",
-    api_key="YOUR_FREE_TOKEN"  # Get from https://dash.llm7.io
+    api_key="YOUR_API_KEY"  # Get from https://dash.llm7.io
 )
 response = client.chat.completions.create(model="gpt-4", messages=[...])
 ```
@@ -318,9 +318,9 @@ No real payment or Google conversion is created by these tests.
 
 OpenAI Pixel measures `page_viewed` on route changes and `contents_viewed` on the first homepage model-catalogue expansion in a page lifetime. Collapse, rerender, remount, and subsequent expansions do not emit additional catalogue events. Expanding without consent is never replayed after permission is granted. OpenAI measurement is optional; SDK or identity failures must not block catalogue interaction or navigation. Production pixel debugging is disabled.
 
-The free API key CTA remains available. Paid-model CTAs link to `https://dash.llm7.io/#/billing`, show the $5 minimum top-up, and leave payment initiation to an explicit dashboard action. The dashboard restores the allowlisted billing destination through supported same-tab authentication flows. Its shared pixel helper measures payment-provider choices and `checkout_started` only when a provider checkout is created; registration and verified paid orders are delivered by the server.
+The API key CTA links to the dashboard. Paid-model CTAs link to `https://dash.llm7.io/#/billing`, show the $5 minimum top-up, and leave payment initiation to an explicit dashboard action. The dashboard restores the allowlisted billing destination through supported same-tab authentication flows. Its shared pixel helper measures payment-provider choices and `checkout_started` only when a provider checkout is created; registration and verified paid orders are delivered by the server.
 
-New consent choices are preselected but are only saved after the visitor confirms; previously declined choices stay off. `npm test` covers catalogue expansion/collapse, actual consent-gated event emission, denied-consent non-replay, remount deduplication, and the paid/free CTA destinations. Before releasing, verify shared consent and attribution cookies on real HTTPS landing and dashboard domains; local tests cannot prove cross-domain attribution.
+New consent choices are preselected but are only saved after the visitor confirms; previously declined choices stay off. `npm test` covers catalogue expansion/collapse, actual consent-gated event emission, denied-consent non-replay, remount deduplication, and the API key and billing CTA destinations. Before releasing, verify shared consent and attribution cookies on real HTTPS landing and dashboard domains; local tests cannot prove cross-domain attribution.
 
 ## License
 

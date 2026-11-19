@@ -1,6 +1,6 @@
 # Responsible Disclosure Program
 
-**Last updated: 13 August 2026**
+**Last updated: 19 November 2026**
 
 LLM7.io welcomes good-faith security reports from users, developers, and independent researchers. If you believe you have found a vulnerability in LLM7.io, `dash.llm7.io`, `api.llm7.io`, or another official LLM7.io service, please report it privately before sharing details publicly.
 
@@ -81,7 +81,7 @@ We prioritise issues based on severity, exploitability, affected users or system
 
 ## Potential recognition
 
-Confirmed, meaningful vulnerabilities may be eligible for discretionary, non-cash recognition. When we decide to recognise a report, recognition may take the form of temporary **LLM7.io Pro** subscription access, which includes higher inference rate limits and a larger allowance for supported state-of-the-art LLM models, subject to model availability, service capacity, fair-use controls, and the current Pro plan terms.
+Confirmed, meaningful vulnerabilities may be eligible for discretionary, non-cash recognition. Any recognition is determined at our discretion.
 
 As a general reference only, eligible recognition may range from around **one month of Pro access** for a confirmed lower-risk vulnerability to up to **six months of Pro access** for an exceptional vulnerability that we verify as service-breaking or severely compromising security.
 

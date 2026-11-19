@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Last updated:** 9 October 2026
+**Last updated:** 19 November 2026
 
 This Privacy Policy explains how **LLM7.io** (“we”, “us”, “our”) collects and processes your personal data when you use our educational and research-oriented website and API, including `dash.llm7.io`. We operate from the United Kingdom and comply with the **UK GDPR** and, where applicable, the **EU GDPR**. Access to the API requires an **API token** issued via `dash.llm7.io`.
 
@@ -21,7 +21,7 @@ This Privacy Policy explains how **LLM7.io** (“we”, “us”, “our”) col
 
 **Tokens, subscriptions & usage (service operation)**
 - Token issuance/revocation, expiry, status.
-- Subscription plan selection/status (e.g., Free, Pro), renewal dates, and applied promotions (e.g., promo codes).
+- Account billing and legacy subscription status, renewal dates, and applied promotions (e.g., promo codes).
 - Usage counters/quotas and timestamps for rate-limiting, abuse prevention, reliability, and troubleshooting.
 - Basic performance/error metrics.
 - Fraud-prevention signals, such as account, token, usage, billing, payment-status, chargeback, device, network, and security-event metadata used to detect unauthorised payment activity, account farming, limit evasion, or abuse.

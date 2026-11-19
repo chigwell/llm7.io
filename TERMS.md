@@ -1,6 +1,6 @@
 # Terms of Service
 
-**Last updated: 15 October 2026**
+**Last updated: 19 November 2026**
 
 Thank you for using **LLM7.io** (the **“Service”**). By accessing or using the Service, you agree to these Terms of Service (the **“Terms”**). If you do not accept all of the Terms, do not use the Service.
 
@@ -16,10 +16,8 @@ Thank you for using **LLM7.io** (the **“Service”**). By accessing or using t
 
   - LLM7.io is an educational and research-oriented service for experimenting with large language models, studying how they behave, and learning how to interact with them programmatically through a web UI and API.
   - The Service is not offered as a managed production inference platform, a guaranteed model-hosting service, or a guaranteed direct-access service to any particular model, provider, endpoint, capacity, or output.
-  - Access to the API requires an **API token** issued via **dash.llm7.io**. Current usage tiers are:
-      - **Free token**: Up to **100,000 tokens/day** over a rolling 24-hour window, with up to **1 text request/s**, **60 text requests/min**, and **250 text requests/hour**. Free-token quotas are provided at no charge and may be reduced without notice based on demand, service capacity, model availability, fair-use calculations, abuse-prevention controls, and other operational factors.
-      - **Pro** ($12/month): A dynamically managed token allowance calculated across the monthly billing period, including usage relative to the percentage of the billing period that has elapsed. Pro remains subject to model availability, service capacity, fair-use calculations, and abuse-prevention controls. Pro also includes up to **25 text requests/s**, **1,500 text requests/min**, and **15,000 text requests/hour**, plus JSON mode, function calling, and Pro models.
-  - Where token limits apply, usage is counted as **input tokens plus output tokens** over a **rolling 24-hour window** or the applicable billing period, as relevant to the tier. Paid, usage-billed requests are not subject to a daily token quota solely by token count unless stated at purchase or in the applicable account controls, but they remain subject to available account balance, per-request or per-token pricing, request rate limits, model availability, service capacity, fair-use calculations, and abuse-prevention controls.
+  - Access to the API requires an **API token** issued via **dash.llm7.io**. Pay-as-you-go usage is charged at the applicable model rates and is subject to available account balance, request rate limits, model availability, service capacity, fair-use calculations, and abuse-prevention controls.
+  - Existing **Pro** subscribers retain their applicable subscription terms. Pro is closed to new subscriptions. The legacy Pro plan is $12/month, with a dynamically managed token allowance calculated across the monthly billing period, including usage relative to the percentage of the billing period that has elapsed. It is subject to model availability, service capacity, fair-use calculations, and abuse-prevention controls, and includes up to **25 text requests/s**, **1,500 text requests/min**, and **15,000 text requests/hour**, plus JSON mode, function calling, and Pro models.
   - To improve Service performance, reliability, and abuse-prevention, we may temporarily cache responses for up to **five (5) minutes**. During that period, if the same authenticated user, account, or API token submits an identical request, the Service may return the previously generated response exactly as originally provided, without reprocessing, regenerating, updating, or otherwise modifying it. Cached responses are treated as normal Service responses and may be counted and billed in the same way as non-cached responses, including for applicable request, token, quota, rate-limit, subscription, or usage-balance calculations.
   - **Features, limits, models, and pricing may change at any time** without notice.
   - The Service is intended for education, experimentation, development, and research. It is **not** for life-critical, safety-critical, emergency, production, or other uses where stable, uninterrupted, or guaranteed model access is required.
@@ -29,7 +27,7 @@ Thank you for using **LLM7.io** (the **“Service”**). By accessing or using t
 ## 3\. Accounts, API tokens, and security
 
   - If you use **`dash.llm7.io`** to issue access tokens for **LLM7.io**, you must keep those tokens **secret** and **secure**. Tokens are issued to the account holder and are non-transferable, except where we have expressly approved a resale, redistribution, embedded integration, or other downstream-access arrangement in writing.
-  - Each account is for one user or organisation. You must not create, use, or coordinate multiple accounts, identities, API tokens, payment profiles, or similar arrangements to bypass or increase Service limits, including concurrent request limits, rate limits, token quotas, free-tier allowances, usage caps, billing requirements, abuse-prevention controls, or other technical or commercial restrictions.
+  - Each account is for one user or organisation. You must not create, use, or coordinate multiple accounts, identities, API tokens, payment profiles, or similar arrangements to bypass or increase Service limits, including concurrent request limits, rate limits, token quotas, usage caps, billing requirements, abuse-prevention controls, or other technical or commercial restrictions.
   - We may **rate-limit**, **suspend**, or **revoke** tokens to protect the Service from abuse.
   - You are responsible for all activity performed using your tokens or account.
   - You agree to receive **transactional/service emails** required to operate your account (e.g., authentication, security, incident or material-change notices). **Optional product updates/announcements** are sent only with your **consent** or, where permitted by law, under **legitimate interests** with a clear **opt-out** (an unsubscribe link is included in every such email).
@@ -147,9 +145,9 @@ You agree to **defend, indemnify, and hold harmless** us and our contributors fr
 
 -----
 
-## 14\. Paid subscriptions and billing
+## 14\. Pay-as-you-go and legacy subscription billing
 
-  - Paid subscriptions are purchased via **dash.llm7.io**. Subscriptions are currently **monthly**: **Pro** ($12/month) with the limits described in Section 2.
+  - Pay-as-you-go balance can be topped up via **dash.llm7.io**. Existing monthly **Pro** subscriptions continue under their applicable terms, including the limits described in Section 2; new Pro subscriptions are not available.
   - You must provide accurate billing information and use only payment methods that belong to you or to the organisation you validly represent. This includes cards, bank accounts, direct debit details, billing accounts, Stripe or other processor-hosted payment links, and any other payment instrument or payment arrangement used to purchase or top up the Service.
   - You must not use another person's or organisation's payment method, bank card, payment link, billing profile, Stripe account, direct debit details, bank account, or source of funds to pay for your account, unless we have expressly approved that arrangement in writing before payment is made. General permission from the payment method owner may not be sufficient if the arrangement misrepresents the true account holder, payer, beneficial user, billing relationship, or source of funds.
   - We may decline, delay, review, reverse, refund, suspend, or cancel a payment, subscription, top-up, referral credit, promotional credit, or account access where payment information is incomplete, inconsistent, disputed, charged back, high-risk, unauthorised, or reasonably suspected to involve third-party payment misuse, fraud, sanctions evasion, account farming, limit evasion, or other abuse.
