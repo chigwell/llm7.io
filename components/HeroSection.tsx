@@ -5,11 +5,10 @@ import Link from "next/link";
 import { ArrowRight, Layers, Zap, CreditCard } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { HeroStatusPill } from "./HeroStatusPill";
-import { getFormattedTokenCount, formatLiveTokenCount } from "@/lib/hero-metrics";
+import { createUsageLoader, formatUsageCount, USAGE_CACHE_MS, type Usage30d } from "@/lib/usage-30d";
 import { CountUp } from "@/components/vui/text/CountUp";
 import { useTheme } from "next-themes";
 import { useLlm7Models } from "@/hooks/use-llm7-models";
-import { usePingMetrics } from "@/hooks/use-ping-metrics";
 
 declare global {
   interface Window {
@@ -38,8 +37,6 @@ declare global {
   }
 }
 
-const TOKEN_INTRO_COMPLETE_MS = 4_200;
-
 function supportsWebGL() {
   try {
     const canvas = document.createElement("canvas");
@@ -57,66 +54,22 @@ export default function HeroSectionWithWaves() {
   const [vantaLoading, setVantaLoading] = useState(true);
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const [countVisitors, setCountVisitors] = useState(44);
+  const [usage, setUsage] = useState<Usage30d | null>(null);
   const { models, modelsState } = useLlm7Models();
-  const { latest: latestPingSnapshot } = usePingMetrics();
-  const [tokenIntroTarget, setTokenIntroTarget] = useState<number | null>(null);
-  const [tokenIntroComplete, setTokenIntroComplete] = useState(false);
-  const [displayTokenCount, setDisplayTokenCount] = useState(0);
-  const hasStartedTokenIntro = useRef(false);
-  const latestTokenCountRef = useRef(0);
-  const tokenIntroTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const availableModelCount = modelsState === "ready" && models.length > 0 ? models.length : 10;
-  const liveTokenCount = latestPingSnapshot?.totalTokens ?? 0;
-  const introTokenCount = getFormattedTokenCount(tokenIntroTarget ?? 0);
 
   useEffect(() => {
-    latestTokenCountRef.current = liveTokenCount;
-  }, [liveTokenCount]);
-
-  useEffect(() => {
-    if (!latestPingSnapshot || hasStartedTokenIntro.current) return;
-
-    hasStartedTokenIntro.current = true;
-    setTokenIntroTarget(latestPingSnapshot.totalTokens);
-
-    tokenIntroTimerRef.current = setTimeout(() => {
-      setDisplayTokenCount(latestTokenCountRef.current);
-      setTokenIntroComplete(true);
-    }, TOKEN_INTRO_COMPLETE_MS);
-  }, [latestPingSnapshot]);
-
-  useEffect(() => {
-    return () => {
-      if (tokenIntroTimerRef.current) {
-        clearTimeout(tokenIntroTimerRef.current);
-      }
-    };
+    let storage: Storage | undefined;
+    try { storage = window.localStorage; } catch { /* Storage is optional. */ }
+    const load = createUsageLoader({ storage });
+    let active = true;
+    const refresh = () => { if (document.visibilityState !== "hidden") void load().then((data) => { if (active) setUsage(data); }).catch(() => {}); };
+    refresh();
+    const timer = setInterval(refresh, USAGE_CACHE_MS);
+    window.addEventListener("focus", refresh);
+    document.addEventListener("visibilitychange", refresh);
+    return () => { active = false; clearInterval(timer); window.removeEventListener("focus", refresh); document.removeEventListener("visibilitychange", refresh); };
   }, []);
-
-  useEffect(() => {
-    if (!tokenIntroComplete || !latestPingSnapshot) return;
-
-    setDisplayTokenCount(latestPingSnapshot.totalTokens);
-  }, [latestPingSnapshot, tokenIntroComplete]);
-
-  // Fetch dynamic stats on mount
-  useEffect(() => {
-    async function fetchStats() {
-      try {
-        const response = await fetch("https://api.llm7.io/v1/unique-visitors");
-        const data = await response.json();
-        if (data && data.unique_visitors_last_30_days) {
-          const visitors = Math.round(data.unique_visitors_last_30_days / 1000);
-          setCountVisitors(visitors);
-        }
-      } catch (error) {
-        console.warn("Failed to fetch visitor stats:", error);
-      }
-
-    }
-    fetchStats();
-  }, [setCountVisitors]);
 
   // Get the current theme, defaulting to system theme if not explicitly set
   const currentTheme = theme === "system" ? systemTheme : theme;
@@ -388,25 +341,21 @@ export default function HeroSectionWithWaves() {
           <div className="relative -top-2 md:-top-4 flex justify-center items-start gap-4 sm:gap-6 md:gap-8 lg:gap-16 text-center px-4">
                 <div className="w-20 sm:w-24 md:w-28 flex-shrink-0">
                   <div className="h-8 md:h-10 flex items-start justify-center text-xl sm:text-2xl md:text-3xl font-bold leading-none text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
-                    {tokenIntroComplete ? (
-                      <span aria-live="polite">{formatLiveTokenCount(displayTokenCount)}</span>
-                    ) : (
-                      <CountUp
-                        to={introTokenCount.value}
-                        suffix={introTokenCount.suffix}
-                        decimals={introTokenCount.decimals}
-                        duration={3}
-                        delay={1}
-                        effect="bounce"
-                        colorTransition
-                        hoverEffect
-                      />
-                    )}
+                    <span>{usage ? formatUsageCount(usage.total_tokens) : "—"}</span>
                   </div>
                   <div className="text-xs md:text-sm text-muted-foreground">
-                    Tokens/min
+                    Tokens (30d)
                   </div>
                 </div>
+              <div className="w-px h-8 md:h-12 mt-0.5 bg-gradient-to-b from-transparent via-border to-transparent"></div>
+              <div className="w-16 sm:w-20 md:w-24 flex-shrink-0">
+                <div className="h-8 md:h-10 flex items-start justify-center text-xl sm:text-2xl md:text-3xl font-bold leading-none text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
+                  <span>{usage ? formatUsageCount(usage.total_requests) : "—"}</span>
+                </div>
+                <div className="text-xs md:text-sm text-muted-foreground">
+                  Requests (30d)
+                </div>
+              </div>
               <div className="w-px h-8 md:h-12 mt-0.5 bg-gradient-to-b from-transparent via-border to-transparent"></div>
               <div className="w-16 sm:w-20 md:w-24 flex-shrink-0">
                 <div className="h-8 md:h-10 flex items-start justify-center text-xl sm:text-2xl md:text-3xl font-bold leading-none text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
@@ -421,23 +370,6 @@ export default function HeroSectionWithWaves() {
                 </div>
                 <div className="text-xs md:text-sm text-muted-foreground">
                   Models
-                </div>
-              </div>
-              <div className="w-px h-8 md:h-12 mt-0.5 bg-gradient-to-b from-transparent via-border to-transparent"></div>
-              <div className="w-16 sm:w-20 md:w-24 flex-shrink-0">
-                <div className="h-8 md:h-10 flex items-start justify-center text-xl sm:text-2xl md:text-3xl font-bold leading-none text-foreground mb-1 bg-gradient-to-r from-secondary to-primary bg-clip-text">
-                  <CountUp
-                    to={countVisitors}
-                    suffix="k+"
-                    duration={3}
-                    delay={1}
-                    effect="bounce"
-                    colorTransition
-                    hoverEffect
-                  />
-                </div>
-                <div className="text-xs md:text-sm text-muted-foreground">
-                  Visitors (30d)
                 </div>
               </div>
               <div className="w-px h-8 md:h-12 mt-0.5 bg-gradient-to-b from-transparent via-border to-transparent"></div>
